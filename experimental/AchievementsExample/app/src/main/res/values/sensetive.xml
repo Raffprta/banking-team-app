@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_id">689728249892</string>
+
+    <string name="ach_id_1">CgkIpMCHuIkUEAIQAQ</string>
+    <string name="ach_id_2">CgkIpMCHuIkUEAIQAw</string>
+    <string name="ach_id_3">CgkIpMCHuIkUEAIQBQ</string>
+    <string name="lead_id">CgkIpMCHuIkUEAIQBg</string>
+
+</resources>
