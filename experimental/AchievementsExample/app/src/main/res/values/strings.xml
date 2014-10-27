@@ -23,7 +23,8 @@
 
 
 
-    <string name="error_no_sign_in">Please ensure you are connected to Google Play (with an authorised test account)</string>
+    <string name="error_no_sign_in">Sign in failed: please ensure you are connected to a network with
+        Google Play supported (with an authorised test account)</string>
 
 </resources>
 
