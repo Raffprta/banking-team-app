@@ -15,9 +15,9 @@ The recommended tools for building are currently:
   * *N.B.* Android Studio is constantly evolving with new features and fixes, and the pre-packaged beta bundles are a bit behind. A manual install of the latest Canary (experimental/bleeding-edge) build is recommended. The latest builds are able to self-update going forward.
 * **Android SDK Tools / SDK 21 (Lollipop)** - [available here](https://developer.android.com/sdk/index.html). Windows users, grab the installer.
 
-For emulating Android device
+For emulating Android devices:
 
-* ***EASY*** - **Official Android deivce emulator** (included in SDK) with [Intel HAXM Android device emulator acceleration package](https://software.intel.com/en-us/android/articles/intel-hardware-accelerated-execution-manager). This package will speed up official Google Android emulators using **x86** or **x86_64** CPU architectures. *Highly recommended*.
+* ***EASY*** - **Official Android device emulator** (included in SDK) with [Intel HAXM Android device emulator acceleration package](https://software.intel.com/en-us/android/articles/intel-hardware-accelerated-execution-manager). This package will speed up official Google Android emulators using **x86** or **x86_64** CPU architectures. *Highly recommended*.
   * **NOTE**: When creating Android virtual devices with the official emulator, be sure to choose **x86_64** or **x86** CPU architectures and not **ARM**. Also, be   sure to choose a target including **Google APIs (Lollipop)**.
 
 ***OR...***
