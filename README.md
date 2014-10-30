@@ -59,14 +59,14 @@ The following will help you set up tools for web server and client side developm
 
 1. Download and install **one** of either [XAMPP](https://www.apachefriends.org/index.html), [WAMP](http://www.wampserver.com/en/), [LAMP](http://lamphowto.com/) or [MAMP](http://www.mamp.info/en/). XAMPP *should* be cross-platform, but I've only tested it on Windows. The rest are Windows, Linux and Mac specific solutions, respectively. I personally reccomend XAMPP due to it being cross platform. 
 2. Follow the installation process (generally an installer wizard) and apache, PHP and MySQL will be installed.
-3. Open up the respective application control panel to your installation. You can now start the services `Apache` and `MySQL` though at this stage of the project, PHP is likely all you will need running unless you want to do some Database development. By going into the `Config` option you may also set these services to run at the opreating system's startup as services.
+3. Open up the respective application control panel to your installation. You can now start the services `Apache` and `MySQL` though at this stage of the project, PHP is likely all you will need running unless you want to do some Database development. By going into the `Config` option you may also set these services to run at the operating system's startup as services.
 4. To test that you have a working AMP package, go to your web browser and visit `127.0.0.1`. This should load a page specified to your AMP bundle generally.
 5. **Optional**: If that does not work, or you wish to change the port your server listens at (because of other servers listening at port 80) then locate the `apache/conf/httpd.conf` file in your installation directory and change the line `Listen 80` to `Listen #` where # is the number of the port. This will mean you will have to type `127.0.0.1:#` when accessing pages loaded by the server in the future.
 6. You should now have a working AMP bundle! Feel free to configure it by adding in a server password, under the `127.0.0.1/security` page.
 
 ### Configuring PHPStorm to your AMP installation
 
-1. Open up XAMPP and go to **File > Settings**
+1. Open up PHPStorm and go to **File > Settings**
 2. Follow this short [guide](https://confluence.jetbrains.com/display/PhpStorm/Installing+and+Configuring+XAMPP+with+PhpStorm+IDE#InstallingandConfiguringXAMPPwithPhpStormIDE-IntegratingthePHPexecutable) on integrating XAMPP with PHPStorm. If you downloaded another bundle, then the process should be the same within their respective install directories.
 3. Create a new test project, and within it create a file called `index.php`. Within it type: `<?php phpinfo(); ?>` and save it.
 4. Now run the project on your favourite browser (if it prompts you to configure a PHP intepreter to your project select from the dropdown the one you set up in the above tutorial). If you a table of debug information related to PHP properties then everything relating to setting up a working environment for client side + PHP development. Feel free to also run the quick MySQL configuration illustrated on that web page though at this stage it is probably not necessary.
