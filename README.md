@@ -8,7 +8,7 @@ This repository is to be used for all programming-related work in connection wit
 * **/keys** - Security keys required for signing the experimental code and using the shared API keys included in the source.
 * ... (more to follow)
 
-### Preparing the build environment
+### Preparing the build environment - Android
 The recommended tools for building are currently:
 
 * **Android Studio 0.8.14** - [available here](http://tools.android.com/download/studio/canary/latest) for Windows/OS X/Linux.
@@ -42,3 +42,31 @@ To install the build environment under **Windows**:
 9. Copy the `debug.keystore` file from this repository to `C:\Users\<yourname>\.android\` (overwriting any existing file). This ensures Android Studio will sign your compiled applications with the same security code as other team members, allowing us to share Google API keys.
 
 If you want to build a project from this repository, use the *Import Project...* feature of Android Studio to import it and generate the necessary files specific to your system.
+
+### Preparing the build environment - Web Development
+The following will help you set up tools for web server and client side development. These are reccomended tools, but if you wish to use other tools for development (for example, a text editor instead of an IDE) you can skip that installation process but the AMP bundle must be installed in some shape or form for you to be able to run and develop the web site.
+
+#### The PHP Development Environment
+
+1. Register a free student account with [Jetbrains](https://www.jetbrains.com/estore/students) - this will allow you to download their products for free.
+2. Download [PHPStorm](http://www.jetbrains.com/phpstorm/download) - this IDE comes with various useful frameworks and tools pre-configured to it, such as twig and dependancy managers. 
+3. Install it to a convenient location (the detailled installation process is elaborated in the link above). 
+4. The first time you open PHPStorm you will be prompted for a license key, select the option "JetBrains Account" and use the login details you previously created.
+5. You now have a working version of PHPStorm. The next step is to set up a working version of the Apache web server, PHP and MySQL.
+
+#### Installing the Apache, MySQL and PHP Bundle
+**Word of warning, this assumes you have not already installed these items separately or in a bundle already, if you have, then proceed to configuring PHPStorm to your AMP installations**
+
+1. Download and install **one** of either [XAMPP](https://www.apachefriends.org/index.html), [WAMP](http://www.wampserver.com/en/), [LAMP](http://lamphowto.com/) or [MAMP](http://www.mamp.info/en/). XAMPP *should* be cross-platform, but I've only tested it on Windows. The rest are Windows, Linux and Mac specific solutions, respectively. I personally reccomend XAMPP due to it being cross platform. 
+2. Follow the installation process (generally an installer wizard) and apache, PHP and MySQL will be installed.
+3. Open up the respective application control panel to your installation. You can now start the services `Apache` and `MySQL` though at this stage of the project, PHP is likely all you will need running unless you want to do some Database development. By going into the `Config` option you may also set these services to run at the opreating system's startup as services.
+4. To test that you have a working AMP package, go to your web browser and visit `127.0.0.1`. This should load a page specified to your AMP bundle generally.
+5. **Optional**: If that does not work, or you wish to change the port your server listens at (because of other servers listening at port 80) then locate the `apache/conf/httpd.conf` file in your installation directory and change the line `Listen 80` to `Listen #` where # is the number of the port. This will mean you will ahve to type `127.0.0.1:#` when accessing pages loaded by the server in the future.
+6. You should now have a working AMP bundle! Feel free to configure it by adding in a server password, under the `127.0.0.1/security` page.
+
+### Configuring PHPStorm to your AMP installation
+
+1. Open up XAMPP and go to **File > Settings**
+2. Follow this short [guide](https://confluence.jetbrains.com/display/PhpStorm/Installing+and+Configuring+XAMPP+with+PhpStorm+IDE#InstallingandConfiguringXAMPPwithPhpStormIDE-IntegratingthePHPexecutable) on integrating XAMPP with PHPStorm. If you downloaded another bundle, then the process should be the same within their respective install directories.
+3. Create a new test project, and within it create a file called `index.php`. Within it type: `<?php phpinfo(); ?>` and save it.
+4. Now run the project on your favourite browser (if it prompts you to configure a PHP intepreter to your project select from the dropdown the one you set up in the above tutorial). If you a table of debug information related to PHP properties then everything relating to setting up a working environment for client side + PHP development. Feel free to also run the quick MySQL configuration illustrated on that web page though at this stage it is probably not necessary.
