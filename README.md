@@ -61,7 +61,7 @@ The following will help you set up tools for web server and client side developm
 2. Follow the installation process (generally an installer wizard) and apache, PHP and MySQL will be installed.
 3. Open up the respective application control panel to your installation. You can now start the services `Apache` and `MySQL` though at this stage of the project, PHP is likely all you will need running unless you want to do some Database development. By going into the `Config` option you may also set these services to run at the opreating system's startup as services.
 4. To test that you have a working AMP package, go to your web browser and visit `127.0.0.1`. This should load a page specified to your AMP bundle generally.
-5. **Optional**: If that does not work, or you wish to change the port your server listens at (because of other servers listening at port 80) then locate the `apache/conf/httpd.conf` file in your installation directory and change the line `Listen 80` to `Listen #` where # is the number of the port. This will mean you will ahve to type `127.0.0.1:#` when accessing pages loaded by the server in the future.
+5. **Optional**: If that does not work, or you wish to change the port your server listens at (because of other servers listening at port 80) then locate the `apache/conf/httpd.conf` file in your installation directory and change the line `Listen 80` to `Listen #` where # is the number of the port. This will mean you will have to type `127.0.0.1:#` when accessing pages loaded by the server in the future.
 6. You should now have a working AMP bundle! Feel free to configure it by adding in a server password, under the `127.0.0.1/security` page.
 
 ### Configuring PHPStorm to your AMP installation
