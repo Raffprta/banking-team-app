@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +17,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,6 +33,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.ac.ncl.team19.googleplaces.GooglePlacesResponse;
+import uk.ac.ncl.team19.googleplaces.Place;
+
 public class MainActivity extends Activity {
     // Types of search query
     private static final int QUERY_ATM = 0;
@@ -42,6 +44,10 @@ public class MainActivity extends Activity {
     // Constants
     private static final String BRANCH_FINDER_POST_URL = "http://www.lloydsbank.com/branch_locator/application.asp?inapplication=yes";
     private static final String BRANCH_FINDER_REFERER_URL = "http://www.lloydsbank.com/branch_locator/search.asp";
+
+    private static final String GOOGLE_PLACES_POST_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&types=bank&name=Lloyds&key=AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M";
+
+    private static final int SEARCH_RADIUS = 10000;
 
     // Logging tag
     private final String TAG = getClass().getSimpleName();
@@ -70,10 +76,6 @@ public class MainActivity extends Activity {
 
         // References to UI elements
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.googleMap)).getMap();
-        final Button findBranchesButton = (Button) findViewById(R.id.findBranchesButton);
-
-        // Set button disabled until location is determined
-        findBranchesButton.setEnabled(false);
 
         // Map will try to determine location
         map.setMyLocationEnabled(true);
@@ -104,22 +106,6 @@ public class MainActivity extends Activity {
 
                 map.moveCamera(CameraUpdateFactory.zoomBy(7));
                 map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                // Enable find button
-                findBranchesButton.setEnabled(true);
-            }
-        });
-
-        // Find button handler
-        findBranchesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Enable progress bar
-                setProgressBarIndeterminate(true);
-                setProgressBarVisibility(true);
-
-                QueryBranchLocationsTask qb = new QueryBranchLocationsTask();
-                qb.execute(myLocation);
             }
         });
     }
@@ -138,15 +124,28 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_find_branches_scraper) {
+            // Enable progress bar
+            setProgressBarIndeterminate(true);
+            setProgressBarVisibility(true);
+
+            QueryLloydsBranchFinderTask qb = new QueryLloydsBranchFinderTask();
+            qb.execute(myLocation);
+            return true;
+        } else if (id == R.id.action_find_branches_gplaces) {
+            // Enable progress bar
+            setProgressBarIndeterminate(true);
+            setProgressBarVisibility(true);
+
+            QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
+            qg.execute(myLocation);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private List<Branch> queryBranchFinder(int queryType, Location location) throws IOException {
+    private List<Branch> queryLloydsBranchFinder(int queryType, Location location) throws IOException {
         // Attempt to convert location to postcode
         String postcode = Utility.locationToPostcode(getApplicationContext(), location);
 
@@ -211,7 +210,7 @@ public class MainActivity extends Activity {
             // Convert the InputStream into a string
             String responseBody = Utility.inputStreamToString(inputStream);
 
-            return parseResults(responseBody);
+            return parseHtmlResponse(responseBody);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -227,7 +226,52 @@ public class MainActivity extends Activity {
         return null;
     }
 
-    private List<Branch> parseResults(String html) {
+    private GooglePlacesResponse queryGooglePlaces(Location location) throws IOException {
+        // Input stream for holding the response
+        InputStream inputStream = null;
+
+        // Output stream for sending the POST data
+        DataOutputStream dataOutputStream = null;
+
+        try {
+            // Insert latitude, longitude and radius into the Google Place API URL
+            URL url = new URL(String.format(GOOGLE_PLACES_POST_URL, location.getLatitude(), location.getLongitude(), SEARCH_RADIUS));
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);     // milliseconds
+            conn.setConnectTimeout(15000);  // milliseconds
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+
+            // Starts the query
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            Log.d(TAG, "The response was: " + responseCode);
+
+            inputStream = conn.getInputStream();
+
+            // Convert the InputStream into a string
+            String responseBody = Utility.inputStreamToString(inputStream);
+
+            // Convert JSON response into Java objects
+            Gson gson = new Gson();
+            return gson.fromJson(responseBody, GooglePlacesResponse.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close streams no matter what happens
+            if (inputStream != null) {
+                inputStream.close();
+            }
+
+            if (dataOutputStream != null) {
+                dataOutputStream.close();
+            }
+        }
+        return null;
+    }
+
+    private List<Branch> parseHtmlResponse(String html) {
         // List of parsed Branches
         List<Branch> addresses = new ArrayList<Branch>();
 
@@ -304,12 +348,54 @@ public class MainActivity extends Activity {
         return addresses;
     }
 
-    private class QueryBranchLocationsTask extends AsyncTask<Location, Void, List<Branch>> {
+    private class QueryGooglePlacesTask extends AsyncTask<Location, Void, GooglePlacesResponse> {
+        @Override
+        protected GooglePlacesResponse doInBackground(Location... locations) {
+            // Attempt to query the Lloyds Branch Finder
+            try {
+                return queryGooglePlaces(locations[0]);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(GooglePlacesResponse googlePlacesResponse) {
+            // Stop progress bar
+            setProgressBarVisibility(false);
+
+            if (googlePlacesResponse == null) {
+                // Query failed
+                Toast.makeText(getApplicationContext(), "No branches found.", Toast.LENGTH_LONG).show();
+            } else {
+                List<Place> places = googlePlacesResponse.getResults();
+
+                // Query succeeded
+                Log.d (TAG, places.size() + " branches found!");
+
+                for (Place p: places) {
+                    uk.ac.ncl.team19.googleplaces.Location location = p.getGeometry().getLocation();
+                    double lat = location.getLatitude();
+                    double lng = location.getLongitude();
+                    if (lat != 0 && lng != 0) {
+                        // Add map markers
+                        map.addMarker(new MarkerOptions()
+                                .title(p.getName())
+                                .snippet(p.getVicinity())
+                                .position(new LatLng(lat, lng))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    }
+                }
+            }
+        }
+    }
+
+    private class QueryLloydsBranchFinderTask extends AsyncTask<Location, Void, List<Branch>> {
         @Override
         protected List<Branch> doInBackground(Location... locations) {
             // Attempt to query the Lloyds Branch Finder
             try {
-                return queryBranchFinder(QUERY_BRANCH, locations[0]);
+                return queryLloydsBranchFinder(QUERY_BRANCH, locations[0]);
             } catch (IOException e) {
                 return null;
             }
@@ -331,10 +417,10 @@ public class MainActivity extends Activity {
                     if (b.getLongitude() != 0 && b.getLatitude() != 0) {
                         // Add map markers
                         map.addMarker(new MarkerOptions()
-                                .title(b.getName())
+                                .title(b.getName() + " (Scraped)")
                                 .snippet(b.getAddressLines().toString())
                                 .position(new LatLng(b.getLatitude(), b.getLongitude()))
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                     }
                 }
 
