@@ -55,7 +55,9 @@ public class LeaderboardActivity extends BaseGameManagerActivity {
                 }
 
                 final int score = tempScore;
-
+                // Progress bar
+                setProgressBarIndeterminate(true);
+                setProgressBarVisibility(true);
                 // Retrieve the score and set callback to notify us of the retrieval.
                 Games.Leaderboards.loadCurrentPlayerLeaderboardScore(getGoogleAPI(), getString(R.string.lead_id),
                                      LeaderboardVariant.TIME_SPAN_ALL_TIME, LeaderboardVariant.COLLECTION_PUBLIC).
@@ -82,6 +84,7 @@ public class LeaderboardActivity extends BaseGameManagerActivity {
 
                                                 submitText.setText("");
                                                 submitButton.setEnabled(false);
+                                                setProgressBarVisibility(false);
 
                                             }
 

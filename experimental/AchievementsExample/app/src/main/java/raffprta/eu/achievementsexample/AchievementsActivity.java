@@ -45,11 +45,14 @@ public class AchievementsActivity extends BaseGameManagerActivity{
         ImageView turnThePage = (ImageView) findViewById(R.id.imageView);
 
 
-        // Attempt to asycnhronously load the data to a buffer.
+        // Attempt to asynchronously load the data to a buffer.
         runOnUiThread(new Runnable(){
 
             @Override
             public void run() {
+                // Progress bar code idea, taken from Dale's application.
+                setProgressBarIndeterminate(true);
+                setProgressBarVisibility(true);
                 new AchievementsGrabber().execute();
             }
 
@@ -127,6 +130,7 @@ public class AchievementsActivity extends BaseGameManagerActivity{
                     Games.Achievements.increment(getGoogleAPI(), getString(achievementId), incrementValue);
                 else
                     Games.Achievements.unlock(getGoogleAPI(), getString(achievementId));
+                toaster.grabToastForWearable(getString(stringIdResource), getString(R.string.ach_unclock), achievementDrawable);
                 toaster.grabToast(getString(stringIdResource),achievementDrawable);
             }else{
                 Toast.makeText(getApplicationContext(), R.string.already_unlocked, Toast.LENGTH_LONG).show();
@@ -160,6 +164,11 @@ public class AchievementsActivity extends BaseGameManagerActivity{
             AchievementBuffer buffer = r.getAchievements();
             buff = buffer;
             return buffer;
+        }
+
+        @Override
+        protected void onPostExecute(AchievementBuffer buff) {
+            setProgressBarVisibility(false);
         }
     }
 

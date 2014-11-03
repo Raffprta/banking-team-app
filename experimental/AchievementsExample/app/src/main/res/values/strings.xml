@@ -20,7 +20,7 @@
     <string name="sel_ach">Achievements Mockup</string>
     <string name="sel_lead">Leaderboard Mockup</string>
 
-
+    <string name="ach_unclock">Unlocked!</string>
 
 
     <string name="error_no_sign_in">Sign in failed: please ensure you are connected to a network with

@@ -1,12 +1,18 @@
 package raffprta.eu.achievementsexample;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
 
 /**
  * @author Raffaello Perrotta
@@ -21,6 +27,11 @@ public class Toaster{
     private ImageView img;
     private Activity a;
     private TextView text;
+    private String title;
+
+    // Static int accumulates notification ids for wearables
+    private static int id = 0;
+    private final String NOTIFICATION_ID = "notification_id";
 
     /***
      * Displays an iconised image to the left of the custom toast.
@@ -45,8 +56,53 @@ public class Toaster{
      */
     public void grabToast(String text, int imageResource){
         this.text.setText(text);
-        img.setImageResource(imageResource);
+        this.img.setImageResource(imageResource);
         toast.show();
+    }
+
+    /**
+     * Modify the title of a notification passed to an Android smart watch.
+     * @param text the title of the notification
+     */
+    public void modifyWearableTitle(String text){
+        this.title = title;
+    }
+
+    /**
+     * Effectively the same as grabToast but the notification is sent to a smart watch.
+     * @param text, the text you want to display in the notification
+     * @param previewText the smaller text you want to display underneath the icon of the watch. No longer than a word is ideal.
+     * @param imageResource the image resource displayed in the circular watch notification slot, i.e. from R.drawable
+     */
+    public void grabToastForWearable(String text, String previewText, int imageResource){
+        // Increment the id of the notification
+        this.id++;
+
+        // Builds the intent which will be launched to the wearable device
+        Intent viewIntent = new Intent(this.a, WearableActivity.class);
+        viewIntent.putExtra(NOTIFICATION_ID, this.id);
+
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this.a, 0, viewIntent, 0);
+        // Build the notification, defaults will ensure the watch will vibrate when receiving
+        // such a notification and auto cancel dismisses the notification on the user clicking it.
+        // Add action sets the icon with a small preview text attached to it.
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this.a)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(this.title)
+                        .setContentText(text)
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setAutoCancel(true)
+                        .setContentIntent(viewPendingIntent)
+                        .addAction(imageResource,previewText, viewPendingIntent);
+
+        // Get an instance of the NotificationManager service
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this.a);
+
+        // Build the notification and issues it with notification manager.
+        notificationManager.notify(this.id, notificationBuilder.build());
+
     }
 
 }
