@@ -13,6 +13,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
+import com.google.gson.Gson;
 
 /**
  * @author Raffaello Perrotta
@@ -25,6 +26,7 @@ public class BaseGameManagerActivity extends Activity implements GoogleApiClient
         GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
+    private GoogleApiWrapper api;
     // This variable tracks the APIs ability to attempt a resolution to a Play error or unforseen event
     private boolean mResolvingError = false;
     // Variable to store the state for the resolution variable
@@ -49,6 +51,8 @@ public class BaseGameManagerActivity extends Activity implements GoogleApiClient
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
                 .addApi(Games.API).addScope(Games.SCOPE_GAMES).build();
+
+        api = new GoogleApiWrapper(mGoogleApiClient);
 
         final Button selectAchievements = (Button) findViewById(R.id.button6);
         final Button selectLeaderboard = (Button) findViewById(R.id.button7);

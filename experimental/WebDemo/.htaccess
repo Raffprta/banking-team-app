@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Enfore HTTPS for all requests -- This should be uncommented on our final site.
+# RewriteCond %{HTTPS} !=on
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Direct all requests through index.php.
+# NB: Set RewriteBase to the correct subfolder if needed,
+#     eg. for http://foo.com/bar/<installation here>
+#         RewriteBase '/bar/'
+#         for http://foo.com/<installation here>
+#         RewriteBase '/'
+RewriteBase /WebDemo/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+# Add MIME types for SVG images
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz

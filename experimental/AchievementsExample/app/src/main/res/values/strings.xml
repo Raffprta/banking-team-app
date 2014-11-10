@@ -22,6 +22,8 @@
 
     <string name="ach_unclock">Unlocked!</string>
 
+    <string name="extras_api">api</string>
+
 
     <string name="error_no_sign_in">Sign in failed: please ensure you are connected to a network with
         Google Play supported (with an authorised test account)</string>
