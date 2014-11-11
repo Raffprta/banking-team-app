@@ -35,6 +35,11 @@ $klein->respond('GET', '/index.php', function () {
     return $twig->render('index.twig', array('loggedInUser' => false));
 });
 
+$klein->respond('GET', '/', function () {
+    global $twig;
+    return $twig->render('index.twig', array('loggedInUser' => false));
+});
+
 $klein->respond('GET', '/login', function () {
     global $twig;
     return $twig->render('logged_in_index.twig', array('loggedInUser' => true));
