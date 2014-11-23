@@ -97,6 +97,11 @@ article{
         display:none;
     }
 
+    #features div.features-wrapper{
+        width:85%;
+    }
 }
+
+
 
 
