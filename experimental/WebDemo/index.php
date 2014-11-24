@@ -20,7 +20,7 @@ $twig = new Twig_Environment($loader);
 // Add the global base, which will be used by the templates.
 $twig->addGlobal('baseURL', BASE_URL);
 
-// Init Klein router -- so far unused, but will be used in the final application.
+// Init Klein router
 $klein = new \Klein\Klein();
 
 // Render the child page which extends base.twig with some dummy variables

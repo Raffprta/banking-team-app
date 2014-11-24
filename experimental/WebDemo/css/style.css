@@ -91,6 +91,10 @@ article{
     display:inline;
 }
 
+#slider{
+    margin-left:3px;
+}
+
 /**Media sheets to ensure that the screenshots are dropped after their size gets too large for the screen **/
 @media all and (max-width: 1220px) {
     #features div.img-wrapper{
