@@ -21,7 +21,6 @@
             <p class="big">
                The application aims to educate students about money management by creating a fun
                and engaging experience that rewards them for good budgeting and sensible spending patterns.
-
             </p>
         </div>
 
@@ -45,17 +44,20 @@
 
         </div>
         <div class="col-md-12">
-            <div class="col-md-4 img-wrapper text-right">
-                <img class="" src="images/achievements.png" title="Achievements Image" alt="Achievements Image" />
-            </div>
-            <div class="col-md-4 inline">
+            <div class="col-md-6 col-md-offset-1 inline features-wrapper">
 
-                <span class="glyphicon glyphicon-gbp"></span><h3> PLACEHOLDER: MAIN PAGE!</h3>
+                <span class="glyphicon glyphicon-user"></span><h3> Educative and Encourages Personal Financing</h3>
                 <p>
-                    The screenshot on the left is temporary, this will be replaced by most likely the main app page
-                    where you can see all the accounts, and such as it makes sense for a landing page about mobile banking
-                    to actually make sure to show the banking stuff. Of course that will be for after the Christmas time
-                    when we start programming on the real deal. :-)
+                    Transform your banking experience to being fully in control of your budgets and expenditures with
+                    handy graphs and pie charts. Receive alerts as soon as transactions are completed; monitor your
+                    bank account's health in real-time whilst keeping on top of your financial information with interactive
+                    help guides!
+                </p>
+
+                <span class="glyphicon glyphicon-th"></span><h3> Clean, easy to use Interface</h3>
+                <p>
+                    A user interface based on Google's latest "material design" philosophies, leading to an easy to use
+                    and crisp looking application!
                 </p>
 
                 <img class="" src="images/play.png" alt="Google Play Compatible" title="Google Play Compatible" />
@@ -82,7 +84,7 @@
                     details are always secure!
                 </p>
 
-                <span class="glyphicon glyphicon-map-marker"></span><h3> Locate your nearest Branch/ATM!</h3>
+                <span class="glyphicon glyphicon-map-marker"></span><h3> Locate your nearest Branch or ATM!</h3>
                 <p>
                     Always on the go? Unsure where your nearest ATM or Lloyd's Branch is located? No worries! This application
                     provides a one click method of showing you a Google Maps integrated listing of all the nearest branches available and
@@ -90,15 +92,22 @@
                 </p>
 
             </div>
-            <div class="col-md-4 inline img-wrapper">
-                <img class="hidden-xs" src="images/maps.png" title="Maps Image" alt="Maps Image" />
+            <div class="col-md-4 inline img-wrapper hidden-xs">
+                <button class="btn btn-default btn-lg btn-lg" id="goLeft"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                <img id="slider" src="images/slide_1.png" width="237" height="450" title="Slider Images" alt="Slider Images" />
+                <button class="btn btn-default btn-lg" id="goRight"><span class="glyphicon glyphicon-chevron-right"></span></button>
             </div>
+
         </div>
     </article>
 
     <!-- By no means does this mean the articles have ended, feel free to add in your own if there are any relevant
          landing page sections you can think of :-) -->
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="script/index.js"></script>
 {% endblock %}
 
 
