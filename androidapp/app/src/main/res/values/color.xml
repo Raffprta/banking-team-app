@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Taken from Lloyds website -->
+    <color name="lloyds_darkgreen">#ff0d573d</color>
+    <color name="lloyds_lightgreen">#ff6ca291</color>
+</resources>
