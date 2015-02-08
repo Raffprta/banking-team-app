@@ -1,5 +1,6 @@
 package uk.ac.ncl.team19.lloydsapp;
 
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+
 
 /**
  * @author Dale Whinham, Raffaello Perrotta
@@ -87,7 +89,8 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 6:
                 mTitle = getString(R.string.title_section7);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                DialogFragment confirm = new LogOffDialog();
+                confirm.show(fragmentManager, "LogOffDialog");
                 break;
         }
     }

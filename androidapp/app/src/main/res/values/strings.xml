@@ -27,4 +27,11 @@
     <string name="error_no_results">"No results found."</string>
     <string name="places_request_url" formatted="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&amp;radius=%d&amp;types=%s&amp;name=%s&amp;key=AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M</string>
 
+    <!-- For dialogs -->
+    <string name="logoff">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+
+
 </resources>
