@@ -1,19 +1,17 @@
 package uk.ac.ncl.team19.lloydsapp;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Window;
-
-
 
 /**
  * @author Dale Whinham, Raffaello Perrotta
@@ -59,7 +57,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         // TODO : Replace the switch to default fragments with upcoming fragments
         switch(position){
@@ -92,10 +90,7 @@ public class MainActivity extends ActionBarActivity
                 fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
                 break;
         }
-
-
     }
-
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -103,7 +98,6 @@ public class MainActivity extends ActionBarActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -164,8 +158,5 @@ public class MainActivity extends ActionBarActivity
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
-
-
     }
-
 }
