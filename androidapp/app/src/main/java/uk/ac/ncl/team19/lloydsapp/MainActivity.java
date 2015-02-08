@@ -4,20 +4,21 @@ import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+import android.view.Window;
 
+
+
+/**
+ * @author Dale Whinham, Raffaello Perrotta
+ * Main activity associated with the drawer layout menu.
+ */
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -34,9 +35,14 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Progress Bar available to all Fragments.
+        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
+        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        // Set the content.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Build up the drawer menu.
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -45,30 +51,51 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
+
+    private MapsFragment map = new MapsFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-    }
+        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
+        // TODO : Replace the switch to default fragments with upcoming fragments
+        switch(position){
+            case 0:
                 mTitle = getString(R.string.title_section1);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                break;
+            case 1:
+                mTitle = getString(R.string.title_section2);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.title_section3);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(R.string.title_section4);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                break;
+            case 4:
+                mTitle = getString(R.string.title_section5);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                break;
+            case 5:
+                mTitle = getString(R.string.title_section6);
+                fragmentManager.beginTransaction().replace(R.id.container, map).commit();
+                break;
+            case 6:
+                mTitle = getString(R.string.title_section7);
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
                 break;
         }
+
+
     }
+
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -138,12 +165,7 @@ public class MainActivity extends ActionBarActivity
             return rootView;
         }
 
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+
     }
 
 }

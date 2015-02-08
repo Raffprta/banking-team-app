@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Concept adapted from: http://www.technotalkative.com/android-custom-toast-notification/ -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentBottom="true"
+    android:id="@+id/toastLayout"
+    android:background="#DAAA">
+
+    <TextView
+        android:id="@+id/toastText"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="Placeholder Text"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/toastIcon"
+        android:layout_toRightOf="@+id/toastIcon"
+        android:layout_toEndOf="@+id/toastIcon">
+    </TextView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toastIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
