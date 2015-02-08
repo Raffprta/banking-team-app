@@ -4,8 +4,6 @@ package uk.ac.ncl.team19.lloydsapp;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,12 +23,13 @@ import com.google.gson.Gson;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import uk.ac.ncl.team19.lloydsapp.utils.maps.*;
+import uk.ac.ncl.team19.lloydsapp.utils.maps.GooglePlacesResponse;
+import uk.ac.ncl.team19.lloydsapp.utils.maps.Place;
+import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
 
 /**
  * @Author Dale Whinham, with conversion to Fragment from Raffaello Perrotta
@@ -42,6 +41,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.maps.*;
  *  - Progress Bar needs to be its own separate view.
  *  - Better UI for getting bank locations and entering custom location. The buttons are just to
  *  - demonstrate what code you would use in the UI components to update the map fragment.
+ *  - use Raff's Toaster class for errors.
  *
  */
 
@@ -50,9 +50,6 @@ public class MapsFragment extends SupportMapFragment {
     // Types of search query
     private static final int QUERY_ATM = 0;
     private static final int QUERY_BRANCH = 1;
-
-    // Default POST URL
-    private String GOOGLE_PLACES_POST_URL;
 
     // 10 Kilometres (10,000 metres)
     private static final int SEARCH_RADIUS = 10000;
@@ -65,9 +62,6 @@ public class MapsFragment extends SupportMapFragment {
 
     // Google Map
     private GoogleMap map = null;
-
-    // List of branches
-    private List<Branch> branches;
 
     // Branch finder button.
     Button branchButton;
@@ -95,7 +89,7 @@ public class MapsFragment extends SupportMapFragment {
     /**
      * Set up the map from the view.
      */
-    private void makeMap(){
+    private void makeMap() {
         // Get the fragment, located in the child fragment manager.
         FragmentManager myFragmentManager = getChildFragmentManager();
         SupportMapFragment mySupportMapFragment
@@ -140,15 +134,20 @@ public class MapsFragment extends SupportMapFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Enable cookie storage
-        CookieManager.setDefault(new CookieManager());
         // Make all map related items
         makeMap();
+
         // Set up buttons
         branchButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                // Bail out if location is undetermined
+                if (myLocation == null) {
+                    Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
                 map.addMarker(new MarkerOptions()
@@ -165,6 +164,12 @@ public class MapsFragment extends SupportMapFragment {
 
             @Override
             public void onClick(View v) {
+                // Bail out if location is undetermined
+                if (myLocation == null) {
+                    Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
                 map.addMarker(new MarkerOptions()
@@ -181,22 +186,39 @@ public class MapsFragment extends SupportMapFragment {
 
 
     private GooglePlacesResponse queryGooglePlaces(Location location, int type) throws IOException {
+        String nameField = "";
+        String typeField = "";
 
-        // Determine what kind of query was requested and pass it to the request URL.
-        if(type == QUERY_ATM)
-            GOOGLE_PLACES_POST_URL = getString(R.string.POST_ATM);
-        else if(type == QUERY_BRANCH)
-            GOOGLE_PLACES_POST_URL = getString(R.string.POST_BRANCH);
+        // Determine what kind of query was requested and set up correct query string.
+        switch (type) {
+            // Leave name field empty for ATMs (so ATMs from other branches are returned)
+            case QUERY_ATM:
+                typeField = "atm";
+                break;
+
+            // Supply company name to Google Places when searching for bank branches
+            case QUERY_BRANCH:
+                typeField = "bank";
+                nameField = "Lloyds";
+                break;
+        }
+
+        // Insert latitude, longitude, radius and search fields into the Google Places API URL (defined in strings.xml)
+        String postURL = String.format(getString(R.string.places_request_url,
+                location.getLatitude(),
+                location.getLongitude(),
+                SEARCH_RADIUS,
+                typeField,
+                nameField));
 
         // Input stream for holding the response
         InputStream inputStream = null;
 
         // Output stream for sending the POST data
         DataOutputStream dataOutputStream = null;
-        Log.w("S", GOOGLE_PLACES_POST_URL);
+        Log.i(TAG, "Querying Google Places using URL: " + postURL);
         try {
-            // Insert latitude, longitude and radius into the Google Place API URL
-            URL url = new URL(String.format(GOOGLE_PLACES_POST_URL, location.getLatitude(), location.getLongitude(), SEARCH_RADIUS));
+            URL url = new URL(postURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);     // milliseconds
             conn.setConnectTimeout(15000);  // milliseconds
@@ -236,7 +258,7 @@ public class MapsFragment extends SupportMapFragment {
     private class QueryGooglePlacesTask extends AsyncTask<Object, Void, GooglePlacesResponse> {
         @Override
         protected GooglePlacesResponse doInBackground(Object... params) {
-            // Attempt to query the Lloyds Branch Finder
+            // Attempt to query Google Places
             try {
                 return queryGooglePlaces((Location)params[0], (int)params[1]);
             } catch (IOException e) {
@@ -249,12 +271,12 @@ public class MapsFragment extends SupportMapFragment {
 
             if (googlePlacesResponse == null) {
                 // Query failed
-                Toast.makeText(getActivity().getApplicationContext(), "No results found.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_no_results), Toast.LENGTH_LONG).show();
             } else {
                 List<Place> places = googlePlacesResponse.getResults();
 
                 // Query succeeded
-                Log.d (TAG, places.size() + "results found!");
+                Log.d (TAG, places.size() + " results found!");
 
                 for (Place p: places) {
                     uk.ac.ncl.team19.lloydsapp.utils.maps.Location location = p.getGeometry().getLocation();
@@ -272,6 +294,4 @@ public class MapsFragment extends SupportMapFragment {
             }
         }
     }
-
-
 }
