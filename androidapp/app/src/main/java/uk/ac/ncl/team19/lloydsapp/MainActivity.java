@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    private MapsFragment map = new MapsFragment();
+    private PushFragment push = new PushFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, push).commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_section3);
@@ -85,10 +85,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
-                fragmentManager.beginTransaction().replace(R.id.container, map).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new MapsFragment()).commit();
                 break;
             case 6:
-                mTitle = getString(R.string.title_section7);
                 DialogFragment confirm = new LogOffDialog();
                 confirm.show(fragmentManager, "LogOffDialog");
                 break;

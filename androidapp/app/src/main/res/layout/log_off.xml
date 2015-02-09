@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/logoff"
-        android:id="@+id/textView"
+        android:id="@+id/areYouSure"
         android:textColor="#ffffffff"
         android:textAlignment="center"
         android:padding="20dp"
