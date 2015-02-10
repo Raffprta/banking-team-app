@@ -5,9 +5,9 @@
 
     <!-- For each of the menu sections. -->
     <string name="title_section1">Profile</string>
-    <string name="title_section2">Notifications</string>
-    <string name="title_section3">Other Products</string>
-    <string name="title_section4">Settings</string>
+    <string name="title_section2">Accounts Dashboard</string>
+    <string name="title_section3">Notifications</string>
+    <string name="title_section4">Other Products</string>
     <string name="title_section5">Feedback</string>
     <string name="title_section6">Location Services</string>
     <string name="title_section7">Log Off</string>
@@ -32,6 +32,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Menu -->
+    <string name="action_help">Help</string>
 
 
 </resources>

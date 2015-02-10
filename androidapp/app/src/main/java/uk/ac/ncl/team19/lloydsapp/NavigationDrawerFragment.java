@@ -251,8 +251,8 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.action_settings) {
+            Toast.makeText(getActivity(), "Settings Menu will be linked here.", Toast.LENGTH_SHORT).show();
             return true;
         }
 

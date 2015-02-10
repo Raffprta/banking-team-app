@@ -1,7 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp;
 
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
 
 
 /**
@@ -55,6 +56,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     private PushFragment push = new PushFragment();
+    private MapsFragment map = new MapsFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -69,11 +71,11 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
-                fragmentManager.beginTransaction().replace(R.id.container, push).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, push).commit();
                 break;
             case 3:
                 mTitle = getString(R.string.title_section4);
@@ -85,7 +87,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
-                fragmentManager.beginTransaction().replace(R.id.container, new MapsFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, map).commit();
                 break;
             case 6:
                 DialogFragment confirm = new LogOffDialog();
@@ -123,6 +125,7 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Settings Menu will be linked here.", Toast.LENGTH_SHORT).show();
             return true;
         }
 
