@@ -30,6 +30,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotificationAdapter;
 import uk.ac.ncl.team19.lloydsapp.utils.push.NotificationsDataSource;
+import uk.ac.ncl.team19.lloydsapp.utils.push.SwipeableRecyclerViewTouchListener;
 
 /**
  * @author Dale Whinham with minor conversion to fragment by Raffaello Perrotta
