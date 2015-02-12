@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity
 
     private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
+    private FeedbackFragment feedback = new FeedbackFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -83,7 +84,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section5);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, feedback).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);

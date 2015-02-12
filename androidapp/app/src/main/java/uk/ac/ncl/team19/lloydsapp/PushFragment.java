@@ -25,6 +25,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 import java.util.List;
 
+import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotificationAdapter;
@@ -56,6 +57,10 @@ public class PushFragment extends Fragment {
 
     // Project number from developer console
     private static final String SENDER_ID = "689728249892";
+
+    // Database access
+    private NotificationsDataSource dataSource;
+
 
     GoogleCloudMessaging gcm;
     String regId;
@@ -98,6 +103,45 @@ public class PushFragment extends Fragment {
             // Setup RecyclerView adapter
             mAdapter = new LloydsNotificationAdapter(mListDataSet);
             mRecyclerView.setAdapter(mAdapter);
+
+            // Set up swiping for removing push notification cards.
+            SwipeableRecyclerViewTouchListener swipeTouchListener =
+                    new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                            new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                                @Override
+                                public boolean canSwipe(int position) {
+                                    return true;
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        int id = mListDataSet.get(position).getId();
+                                        mListDataSet.remove(position);
+                                        dataSource.open();
+                                        dataSource.deleteRow(DBOpenHelper.TABLE_NOTIFICATIONS, id);
+                                        dataSource.close();
+                                        mAdapter.notifyItemRemoved(position);
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        int id = mListDataSet.get(position).getId();
+                                        mListDataSet.remove(position);
+                                        dataSource.open();
+                                        dataSource.deleteRow(DBOpenHelper.TABLE_NOTIFICATIONS, id);
+                                        dataSource.close();
+                                        mAdapter.notifyItemRemoved(position);
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            });
+
+            mRecyclerView.addOnItemTouchListener(swipeTouchListener);
+
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
@@ -225,9 +269,10 @@ public class PushFragment extends Fragment {
         editor.commit();
     }
 
+
     private void getNotificationsFromDB() {
         // Get notifications from database for RecyclerView
-        NotificationsDataSource dataSource = new NotificationsDataSource(context);
+        dataSource = new NotificationsDataSource(context);
 
         // Open database
         dataSource.open();
