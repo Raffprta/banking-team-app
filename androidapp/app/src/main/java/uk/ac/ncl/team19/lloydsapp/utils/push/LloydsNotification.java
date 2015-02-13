@@ -2,11 +2,13 @@ package uk.ac.ncl.team19.lloydsapp.utils.push;
 
 
 public class LloydsNotification {
+    private int id;
     private long dateInMillis;
     private String notificationType;
     private String notificationMessage;
 
-    public LloydsNotification(long dateInMillis, String notificationType, String notificationMessage) {
+    public LloydsNotification(int id, long dateInMillis, String notificationType, String notificationMessage) {
+        this.id = id;
         this.dateInMillis = dateInMillis;
         this.notificationType = notificationType;
         this.notificationMessage = notificationMessage;
@@ -34,5 +36,9 @@ public class LloydsNotification {
 
     public void setNotificationMessage(String notificationMessage) {
         this.notificationMessage = notificationMessage;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }

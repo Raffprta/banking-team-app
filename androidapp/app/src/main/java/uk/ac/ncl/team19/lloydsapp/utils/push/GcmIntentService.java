@@ -22,7 +22,7 @@ public class GcmIntentService extends IntentService {
     private static final long[] VIBRATE_PATTERN = { 0, 500, 150, 500 };
     private static final int NOTIFICATION_ID = 1;
 
-    public static final String DATA_REFRESH_INTENT = "uk.ac.ncl.team19.pushnotifications.refreshdata";
+    public static final String DATA_REFRESH_INTENT = "uk.ac.ncl.team19.lloydsapp.utils.push.refreshdata";
 
     private NotificationManager mNotificationManager;
 
@@ -89,7 +89,7 @@ public class GcmIntentService extends IntentService {
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, PushActivity.class), 0);
+                new Intent(this, PushFragment.class), 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

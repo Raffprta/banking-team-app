@@ -1,6 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
+
 
 /**
  * @author Dale Whinham, Raffaello Perrotta
@@ -52,7 +55,9 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
+    private FeedbackFragment feedback = new FeedbackFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -71,7 +76,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, push).commit();
                 break;
             case 3:
                 mTitle = getString(R.string.title_section4);
@@ -79,15 +84,15 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section5);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, feedback).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
                 fragmentManager.beginTransaction().replace(R.id.container, map).commit();
                 break;
             case 6:
-                mTitle = getString(R.string.title_section7);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                DialogFragment confirm = new LogOffDialog();
+                confirm.show(fragmentManager, "LogOffDialog");
                 break;
         }
     }
@@ -121,6 +126,7 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, "Settings Menu will be linked here.", Toast.LENGTH_SHORT).show();
             return true;
         }
 

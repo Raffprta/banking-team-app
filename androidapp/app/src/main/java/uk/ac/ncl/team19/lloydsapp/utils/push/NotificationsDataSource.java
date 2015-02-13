@@ -59,7 +59,7 @@ public class NotificationsDataSource {
                 null, null, null);
 
         cursor.moveToFirst();
-        LloydsNotification notification = new LloydsNotification(cursor.getLong(1), cursor.getString(2), cursor.getString(3));
+        LloydsNotification notification = new LloydsNotification(cursor.getInt(0), cursor.getLong(1), cursor.getString(2), cursor.getString(3));
         cursor.close();
         return notification;
     }
@@ -75,7 +75,7 @@ public class NotificationsDataSource {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            notifications.add(new LloydsNotification(cursor.getLong(1), cursor.getString(2), cursor.getString(3)));
+            notifications.add(new LloydsNotification(cursor.getInt(0), cursor.getLong(1), cursor.getString(2), cursor.getString(3)));
             cursor.moveToNext();
         }
 
