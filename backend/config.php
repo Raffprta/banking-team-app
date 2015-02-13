@@ -8,15 +8,21 @@
 //
 //================================================================================
 
-define('BASE_URL', 'https://localhost/');       // Root URL of this app (include https:// and trailing slash)
+define('BASE_URL', 'http://localhost:8080/');   // Root URL of this app (include https:// and trailing slash)
 define('DATABASE_HOST', 'localhost');           // Database location
 define('DATABASE_NAME', 'lloydsapp');           // Database name
 define('DATABASE_USERNAME', 'root');            // Database username
-define('DATABASE_PASSWORD', 'root');            // Database password
+define('DATABASE_PASSWORD', '');                // Database password
 
 define('MINIMUM_PASSWORD_LENGTH', 6);           // Minimum password length
 define('WEB_SESSION_EXPIRY_TIME', 3600);        // Time in seconds before a website user is automatically logged-out (60 * 60 = 1 hour)
 define('DEVICE_TOKEN_EXPIRY_TIME', 2592000);    // Time in seconds before a device token expires (60 * 60 * 24 * 30 = 30 days)
+
+define('REDBEAN_FREEZE_ENABLED', false);        // Freeze RedBean for production use (performance increase)
+define('REDBEAN_DEBUG_ENABLED', false);         // RedBean debug mode
+
+// Server API key from Google Developer console
+define('GOOGLE_SERVER_API_KEY', 'AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M');
 
 //================================================================================
 // DO NOT MODIFY BELOW THIS LINE
