@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -47,8 +46,6 @@ public class PushFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private LloydsNotificationAdapter mAdapter;
-
-    private TextView mStatusTextView;
 
     private List<LloydsNotification> mListDataSet;
 
@@ -252,11 +249,6 @@ public class PushFragment extends Fragment {
                     // exponential back-off.
                 }
                 return msg;
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-                mStatusTextView.append(msg + "\n");
             }
 
         }.execute(null, null, null);
