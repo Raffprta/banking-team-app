@@ -81,9 +81,9 @@ The following will help you set up tools for web server and client side developm
 ### Coding style guidelines
 Some hints for coding styles and conventions used in this project.
 
-## Android
+#### Android
 * XML IDs for buttons, views, and so on - Use **CamelCase** for these, ***suffixed*** with the type. Examples: **loginButton**, **userNameEditText**, **passwordEditText**, **loginFormScrollView**. If you have multiple items that can be described in the same way, add a number suffix, for example **logoTextView1**, **logoTextView2**.
 * Strings should always be placed into the `strings.xml` resource file, even when not required from Java. String names are freeform, but should be **snake_case** and descriptive. If the string is used for a menu action or an error message, consider adding a prefix. Example: `<string name="error_no_results">No results found.</string>`, `<string name="action_settings">Settings</string>`.
 
-## Twig Templates
- * Use Twig comments - {# #} instead of HTML comments - <!-- --> within the templates. This ensures that comments only intended to be seen by us (the developers) will not be included in the web pages that users receive.
+#### Twig Templates
+ * Use Twig comments - `{# #}` instead of HTML comments - `<!-- -->` within the templates. This ensures that comments only intended to be seen by us (the developers) will not be included in the web pages that users receive.
