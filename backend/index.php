@@ -30,11 +30,13 @@ require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/rb.php';
 
 // Init RedBean
-R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
-// Freeze RedBean for production use (performance increase)
-//R::freeze(true);
-// RedBean debug mode
-//R::debug(true);
+R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, REDBEAN_FREEZE_ENABLED);
+if (!R::testConnection()) {
+    die('Error: Couldn\'t connect to database. Please check configuration.');
+}
+
+// Enable debug mode
+R::debug(REDBEAN_DEBUG_ENABLED);
 
 // Update request when app is installed in a subdirectory
 $base = dirname($_SERVER['PHP_SELF']);
@@ -60,6 +62,23 @@ $twig->addFunction(new Twig_SimpleFunction('userIdToName', function ($userId) {
     $user = R::findOne('user', 'id = ?', array($userId));
     return is_null($user) ? null : $user->firstName . ' ' . $user->surname;
 }));
+
+// Init admin account if one doesn't exist
+$admin = R::findOne('user', 'id = ?', array(1));
+if (is_null($admin)) {
+    $admin = R::dispense('user');
+
+    $registrationdata = array(
+        'firstName' => 'Administrator',
+        'surname' => '',
+        'email' => 'admin@lloyds.com',
+        'password' => 'admin'
+    );
+
+    createUser($registrationdata, true);
+
+    die('An administrator account has been created.');
+}
 
 //================================================================================
 // Separate routes for admin and API namespaces
@@ -98,7 +117,7 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
     }
 
     // Attempt login
-    $user = R::findOne( 'user', 'email = ?', array($username));
+    $user = R::findOne('user', 'email = ?', array($username));
     if (is_null($user) || !password_verify($password, $user->password)) {
         $errorMessages[] = 'The username or password was incorrect.';
         displayLoginError($errorMessages, $username, $password);
@@ -150,7 +169,7 @@ $klein->respond('POST', '/register', function ($request, $response, $service) us
     else {
         try {
             // Create the user
-            createUser($registrationData);
+            createUser($registrationData, false);
 
             // Pass success message to login form
             $service->flash('Your account has been created. You may now log in.', FLASH_SUCCESS);
@@ -327,7 +346,7 @@ function validateRegistrationData($formattedRegistrationData, $checkPasswords) {
 }
 
 // Creates a user
-function createUser($registrationData) {
+function createUser($registrationData, $admin) {
     // Create RedBean object
     $user = R::dispense('user');
 
@@ -335,7 +354,7 @@ function createUser($registrationData) {
     $user->email = $registrationData['email'];
     $user->firstName = $registrationData['firstName'];
     $user->surname = $registrationData['surname'];
-    $user->accessLevel = ACCESS_LEVEL_USER;
+    $user->accessLevel = $admin ? ACCESS_LEVEL_ADMINISTRATOR : ACCESS_LEVEL_USER;
     $user->password = password_hash($registrationData['password'], PASSWORD_DEFAULT);
     $user->deviceId = null;
 
@@ -452,4 +471,50 @@ function checkAccessLevel($accessLevel) {
 
 function emailAddressExists($email) {
     return R::findOne('user', 'email LIKE "' . $email . '"') !== null;
+}
+
+// Send a push notification to one or more registered devices using Google Cloud Messaging
+function sendGoogleCloudMessage($message, $ids) {
+    // URL to GCM API
+    $url = 'https://android.googleapis.com/gcm/send';
+
+    // POST variables
+    $post = array( 'registration_ids'  => $ids,
+                   'data'              => $message );
+
+    // HTTP request headers
+    $headers = array( 'Authorization: key=' . GOOGLE_SERVER_API_KEY,
+                      'Content-Type: application/json' );
+
+    // Initialize curl
+    $ch = curl_init();
+
+    // Set URL to GCM API URL
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    // Set request method to POST
+    curl_setopt($ch, CURLOPT_POST, true);
+
+    // Set custom headers
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // Get the response back as string instead of printing it
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    // Set post data as JSON
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+
+    // Send the push!
+    $result = curl_exec($ch);
+
+    // If there was an error, display it
+    if (curl_errno($ch)) {
+        echo 'GCM error: ' . curl_error($ch);
+    }
+
+    // Close curl handle
+    curl_close( $ch );
+
+    // Debug GCM response
+    echo $result;
 }

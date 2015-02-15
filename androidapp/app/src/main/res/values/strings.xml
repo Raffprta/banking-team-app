@@ -5,9 +5,9 @@
 
     <!-- For each of the menu sections. -->
     <string name="title_section1">Profile</string>
-    <string name="title_section2">Notifications</string>
-    <string name="title_section3">Other Products</string>
-    <string name="title_section4">Settings</string>
+    <string name="title_section2">Accounts Dashboard</string>
+    <string name="title_section3">Notifications</string>
+    <string name="title_section4">Other Products</string>
     <string name="title_section5">Feedback</string>
     <string name="title_section6">Location Services</string>
     <string name="title_section7">Log Off</string>
@@ -36,12 +36,21 @@
     <string name="visit_website">If you don\'t want to register your device with Mobile Banking right now you can still use our mobile site.</string>
     <string name="visit_website_link">Visit our website</string>
 
-    <!--Security Page -->
+    <!-- Security Page -->
     <string name="your_security_code">Your Security Code</string>
     <string name="enter_security_code">Please enter the indicated characters from your security code</string>
     <string name="next">Next</string>
     <string name="first">1st</string>
     <string name="second">2nd</string>
     <string name="third">3rd</string>
+
+    <!-- For dialogs -->
+    <string name="logoff">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Menu -->
+    <string name="action_help">Help</string>
 
 </resources>

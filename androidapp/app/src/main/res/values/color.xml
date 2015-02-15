@@ -3,6 +3,7 @@
     <!-- Taken from Lloyds website -->
     <color name="lloyds_darkgreen">#ff0d573d</color>
     <color name="lloyds_lightgreen">#ff6ca291</color>
+    <color name="lloyds_lightergreen">#6ACA25</color>
 
     <color name="lloyds_darkgreen_menu">#0a523c</color>
 

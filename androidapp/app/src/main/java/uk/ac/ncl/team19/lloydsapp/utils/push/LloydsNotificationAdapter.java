@@ -61,4 +61,5 @@ public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotifi
         return mDataset.size();
     }
 
+
 }

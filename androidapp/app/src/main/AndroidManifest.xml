@@ -2,11 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.ac.ncl.team19.lloydsapp" >
 
+    <!-- General Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <!-- Google Cloud specific permissions -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- App specific permissions; prevents other apps from intercepting messages -->
+    <permission android:name="uk.ac.ncl.team19.lloydsapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="uk.ac.ncl.team19.lloydsapp.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +35,16 @@
             </intent-filter>
         </activity>
 
-
+        <!-- Receiver for GCM -->
+        <receiver
+            android:name="uk.ac.ncl.team19.lloydsapp.utils.push.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="uk.ac.ncl.team19.lloydsapp" />
+            </intent-filter>
+        </receiver>
+        <service android:name="uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService" />
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA8a5cTvL05FPcr52Mf0TAP3N9epM2a6sM"/>
