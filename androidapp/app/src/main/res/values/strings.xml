@@ -53,4 +53,11 @@
     <!-- Menu -->
     <string name="action_help">Help</string>
 
+    <!-- Account information fillers -->
+    <string name="int_stu_account">International Student Account</string>
+    <string name="acc_current">Current Account</string>
+    <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
+    <string name="acc_funds_filler">£999.99</string>
+    <string name="acc_avail_funds_filler">Available funds: £899.99</string>
+    <string name="acc_saving_filler">Savings Account</string>
 </resources>
