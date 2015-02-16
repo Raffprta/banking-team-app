@@ -1,0 +1,36 @@
+{% extends "base.twig" %}
+
+{% block title %}Send Push Messages{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Send Push Messages</h1>
+    </div>
+
+    {% if recipients %}
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th class="col-md-1">Name</th>
+                <th class="col-md-1">Surname</th>
+                <th class="col-md-2">Email</th>
+                <th class="col-md-2">Device ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for recipient in recipients %}
+                <tr>
+                    <td>{{ recipient.firstName }}</td>
+                    <td>{{ recipient.surname }}</td>
+                    <td>{{ recipient.email }}</td>
+                    <td>{{ recipient.deviceId }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <p><span class="glyphicon glyphicon-info-sign"></span> No users with paired devices available.</p>
+        </div>
+    {% endif %}
+{% endblock %}
