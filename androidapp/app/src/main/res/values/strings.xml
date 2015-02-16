@@ -60,4 +60,5 @@
     <string name="acc_funds_filler">£999.99</string>
     <string name="acc_avail_funds_filler">Available funds: £899.99</string>
     <string name="acc_saving_filler">Savings Account</string>
+    <string name="acc_filler_john_smith">John Smith</string>
 </resources>
