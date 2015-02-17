@@ -12,57 +12,186 @@
 
     </ScrollView>
 
-    <TextView
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/acc_current"
-        android:id="@+id/textView11"
+        android:background="@color/lloyds_lightgreen"
+        android:paddingLeft="1dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginTop="112dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="113dp"
-        android:textColor="@color/lloyds_lightergreen" />
+        android:id="@+id/gridLayout3">
 
-    <EditText
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffffffff"
+            android:id="@+id/"
+            android:paddingLeft="50dp"
+            android:paddingTop="4dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/acc_current"
+                android:id="@+id/textView11"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:paddingLeft="0dp"
+                android:textColor="@color/lloyds_lightergreen" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/acc_filler_john_smith"
+                android:ems="10"
+                android:id="@+id/editText6"
+                android:layout_row="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText5"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:inputType="text"
+                android:text="@string/account_info_number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView15"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:textColor="#ff3f3f3f"
+                android:text="@string/account_info_balance" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:inputType="text"
+                android:text="@string/account_info_sort_code" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_row="4"
+                android:layout_column="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView14"
+                android:layout_row="6"
+                android:layout_column="0"
+                android:textColor="@color/lloyds_lightgreen"
+                android:text="@string/account_info_avail_funds" />
+
+        </GridLayout>
+    </GridLayout>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText5"
-        android:text="Account Number: 12345678"
-        android:layout_below="@+id/editText6"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/button6"
+        android:layout_below="@+id/button4"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp"
+        android:textColor="@color/lloyds_darkgreen"
+        android:background="@color/dim_foreground_material_dark"
+        android:text="@string/account_info_profile_button" />
 
-    <EditText
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="@string/acc_filler_john_smith"
-        android:ems="10"
-        android:id="@+id/editText6"
-        android:layout_below="@+id/textView11"
-        android:layout_alignLeft="@+id/editText5"
-        android:layout_alignStart="@+id/editText5"
-        android:layout_alignRight="@+id/editText5"
-        android:layout_alignEnd="@+id/editText5" />
+        android:text="@string/account_info_acc_button"
+        android:id="@+id/button7"
+        android:background="@color/dim_foreground_material_dark"
+        android:textColor="@color/lloyds_darkgreen"
+        android:layout_below="@+id/button5"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/acc_funds_filler"
-        android:id="@+id/textView14"
-        android:layout_below="@+id/editText5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Balance:"
-        android:id="@+id/textView15"
-        android:layout_below="@+id/editText5"
-        android:layout_alignLeft="@+id/textView14"
-        android:layout_alignStart="@+id/textView14"
+        android:text="@string/account_info_transfer_button"
+        android:id="@+id/button3"
+        android:background="#ffffffff"
+        android:textColor="#ff34ae80"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp"
+        android:layout_below="@+id/gridLayout3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_info_transac_button"
+        android:id="@+id/button"
+        android:background="#ffffffff"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp"
+        android:textColor="#ff34ae80"
+        android:layout_above="@+id/button5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_info_pend_button"
+        android:id="@+id/button5"
+        android:background="#ff34ae80"
+        android:textColor="#ffffffff"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp"
+        android:layout_below="@+id/button3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:background="#ff34ae80"
+        android:textColor="#ffffffff"
+        android:paddingLeft="10dp"
+        android:paddingTop="0dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp"
+        android:layout_above="@+id/button7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="@string/account_info_make_pay_button" />
 
 </RelativeLayout>
