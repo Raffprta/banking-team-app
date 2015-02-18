@@ -66,8 +66,6 @@ $twig->addFunction(new Twig_SimpleFunction('userIdToName', function ($userId) {
 // Init admin account if one doesn't exist
 $admin = R::findOne('user', 'id = ?', array(1));
 if (is_null($admin)) {
-    $admin = R::dispense('user');
-
     $registrationdata = array(
         'firstName' => 'Administrator',
         'surname' => '',
@@ -243,7 +241,11 @@ $klein->respond('GET', '/logout', function ($request, $response, $service) {
 // Public: Default page
 //================================================================================
 $klein->respond('GET', '/', function () use ($twig) {
-    displayPage('index.twig', null);
+    if (userIsLoggedIn()) {
+        displayPage('logged_in_index.twig', null);
+    } else {
+        displayPage('index.twig', null);
+    }
 });
 
 // URL routing handlers are now installed; try to dispatch the request
@@ -252,6 +254,21 @@ $klein->dispatch();
 //================================================================================
 // Utility functions
 //================================================================================
+function userIsLoggedIn() {
+    $user = null;
+    if (isset($_SESSION['userId'])) {
+        $user = R::findOne('user', 'id = ?', array($_SESSION['userId']));
+    }
+
+    if (!is_null($user)) {
+        // Update session data
+        refreshSessionData($user);
+        return true;
+    }
+
+    return false;
+}
+
 function checkAuthentication() {
     // If session has expired, destroy it
     if (isset($_SESSION['lastActivity']) && $_SESSION['lastActivity'] < time() - WEB_SESSION_EXPIRY_TIME) {
@@ -260,21 +277,14 @@ function checkAuthentication() {
     }
 
     // If not logged in with a valid user ID or session has expired, redirect to the login form
-    $user = null;
-    if (isset($_SESSION['userId'])) {
-        $user = R::findOne('user', 'id = ?', array($_SESSION['userId']));
-    }
-
-    if (is_null($user)) {
+    if (!userIsLoggedIn()) {
         destroySession();
         header('Location: ' . BASE_URL . 'login');
         exit;
     }
-
-    // Update session data
-    refreshSessionData($user);
 }
 
+// Copies user data from database into PHP session for processing
 function refreshSessionData($user) {
     $_SESSION['userId'] = (int) $user->id;
     $_SESSION['firstName'] = $user->firstName;
