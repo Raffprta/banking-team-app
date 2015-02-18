@@ -69,11 +69,12 @@ public class MapsFragment extends SupportMapFragment {
     // ATM Finder button.
     Button atmButton;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,10 +105,14 @@ public class MapsFragment extends SupportMapFragment {
         map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
+
+
                 // Store location
                 myLocation = location;
 
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 9));
+
                 String postcode = Utility.locationToPostcode(getActivity().getApplicationContext(), location);
 
                 if (postcode != null) {
@@ -123,17 +128,21 @@ public class MapsFragment extends SupportMapFragment {
                         .snippet(getString(R.string.loc_now))
                         .position(latLng));
 
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 9));
-
             }
         });
 
     }
 
     @Override
+    public void onAttach(android.app.Activity activity){
+        super.onAttach(activity);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
+
         // Make all map related items
         makeMap();
 
@@ -204,12 +213,12 @@ public class MapsFragment extends SupportMapFragment {
         }
 
         // Insert latitude, longitude, radius and search fields into the Google Places API URL (defined in strings.xml)
-        String postURL = String.format(getString(R.string.places_request_url,
+        String postURL = String.format(getString(R.string.places_request_url),
                 location.getLatitude(),
                 location.getLongitude(),
                 SEARCH_RADIUS,
                 typeField,
-                nameField));
+                nameField);
 
         // Input stream for holding the response
         InputStream inputStream = null;
@@ -258,9 +267,16 @@ public class MapsFragment extends SupportMapFragment {
     private class QueryGooglePlacesTask extends AsyncTask<Object, Void, GooglePlacesResponse> {
         @Override
         protected GooglePlacesResponse doInBackground(Object... params) {
+
+            // Show loading
+            ProgressDialog.showLoading(MapsFragment.this);
+
             // Attempt to query Google Places
             try {
-                return queryGooglePlaces((Location)params[0], (int)params[1]);
+                GooglePlacesResponse response = queryGooglePlaces((Location)params[0], (int)params[1]);
+                // Loading has finished so remove the fragment.
+                ProgressDialog.removeLoading(MapsFragment.this);
+                return response;
             } catch (IOException e) {
                 return null;
             }

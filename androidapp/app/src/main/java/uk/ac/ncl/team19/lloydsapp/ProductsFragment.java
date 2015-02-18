@@ -1,13 +1,18 @@
 package uk.ac.ncl.team19.lloydsapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+
+
 
 /**
  * @Author Raffaello Perrotta
@@ -33,6 +38,14 @@ public class ProductsFragment extends Fragment{
         // This loads the web view.
         productsPage.loadUrl(LLOYDS_URL);
 
+        productsPage.setWebChromeClient(new WebChromeClient(){
+            public void onProgressChanged(WebView view, int progress) {
+                (new ProgressTask()).executeShow(true, ProductsFragment.this);
+                if(progress == 100)
+                    (new ProgressTask()).executeShow(false, ProductsFragment.this);
+            }
+        });
+
         // Set the web client, i.e. all hyperlinks will continue to open within the view.
         productsPage.setWebViewClient(new WebViewClient() {
             // Handles URL opening to default browser client
@@ -55,7 +68,7 @@ public class ProductsFragment extends Fragment{
                             webView.goBack();
                             return true;
                         }
-                    }
+                }
 
                 return false;
             }
@@ -63,6 +76,25 @@ public class ProductsFragment extends Fragment{
 
         return webView;
 
+    }
+
+    private class ProgressTask extends AsyncTask<Fragment, Void, Void>{
+
+        private boolean show;
+
+        public void executeShow(boolean show, Fragment... params){
+            this.show = show;
+            doInBackground(params);
+        }
+
+        @Override
+        protected Void doInBackground(Fragment... params) {
+            if(show)
+                ProgressDialog.showLoading(params[0]);
+            else
+                ProgressDialog.removeLoading(params[0]);
+            return null;
+        }
     }
 
 
