@@ -59,5 +59,9 @@
     <string name="submit_feedback">Submit Feedback</string>
     <string name="team_email">csc2-team19@mailnesia.com</string>
     <string name="error_form">Please ensure you have given a rating or some feedback.</string>
+    <string name="error_email">A network error when attempting to send the email occurred.</string>
+    <string name="email_subject">Feedback Form</string>
+    <string name="rating">RATING: </string>
+    <string name="feedback">FEEDBACK: </string>
 
 </resources>

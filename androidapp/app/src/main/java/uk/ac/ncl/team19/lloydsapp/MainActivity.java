@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         // Set the content.
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         // Build up the drawer menu.

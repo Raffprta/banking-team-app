@@ -46,6 +46,8 @@ public class ProductsFragment extends Fragment{
             }
         });
 
+
+
         // Set the web client, i.e. all hyperlinks will continue to open within the view.
         productsPage.setWebViewClient(new WebViewClient() {
             // Handles URL opening to default browser client
@@ -54,6 +56,7 @@ public class ProductsFragment extends Fragment{
                 view.loadUrl(url);
                 return false;
             }
+
         });
 
         // Listen for when the back button is pressed by the user.

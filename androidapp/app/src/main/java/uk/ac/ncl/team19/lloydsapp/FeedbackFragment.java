@@ -1,6 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp;
 
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
 
 /**
  * @Author Raffaello Perrotta
@@ -41,8 +44,6 @@ public class FeedbackFragment extends Fragment{
                 // Get the rating the user submitted and the feeedback.
                 float rating = feedbackRating.getRating();
                 String feedback = feedbackEditText.getText().toString();
-                // Get configured email to send the message to
-                String email = getString(R.string.team_email);
 
                 // Check if any data was entered - if there wasn't give an error message.
                 if(rating <= 0.0f || feedback.toString().length() == 0){
@@ -50,7 +51,10 @@ public class FeedbackFragment extends Fragment{
                     return;
                 }
 
-
+                ProgressDialog.showLoading(FeedbackFragment.this);
+                (new EmailTask()).execute(getString(R.string.email_subject),
+                        getString(R.string.rating) + "\n" + rating + "\n\n" +
+                                getString(R.string.feedback) + "\n" + feedback.toString());
 
 
 
@@ -59,6 +63,32 @@ public class FeedbackFragment extends Fragment{
 
         return feedbackView;
 
+    }
+
+    private class EmailTask extends AsyncTask<String, Void, Void>{
+
+        @Override
+        protected Void doInBackground(String... params) {
+            // Attempt to send email
+            // TODO REPLACE raffprta@gmail with API call to get the User's email when backend is done
+            MailHelper mailer = new MailHelper(getString(R.string.team_email),
+                    "raffprta@gmail.com", params[0], params[1], FeedbackFragment.this);
+            try {
+                // Send the email itself.
+                mailer.sendAuthenticated();
+            } catch (Exception e) {
+                // An error occured
+                Toast.makeText(FeedbackFragment.this.getActivity().getApplicationContext(), getString(R.string.error_email), Toast.LENGTH_SHORT).show();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            // Remove the loading dialog.
+            ProgressDialog.removeLoading(FeedbackFragment.this);
+        }
     }
 
 
