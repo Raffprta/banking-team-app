@@ -72,7 +72,7 @@ public class FeedbackFragment extends Fragment{
             // Attempt to send email
             // TODO REPLACE raffprta@gmail with API call to get the User's email when backend is done
             MailHelper mailer = new MailHelper(getString(R.string.team_email),
-                    "raffprta@gmail.com", params[0], params[1], FeedbackFragment.this);
+                    getString(R.string.team_email), params[0], params[1], FeedbackFragment.this);
             try {
                 // Send the email itself.
                 mailer.sendAuthenticated();
