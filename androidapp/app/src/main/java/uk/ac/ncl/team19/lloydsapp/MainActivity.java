@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Toast;
 
 
@@ -36,11 +35,9 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Progress Bar available to all Fragments.
-        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
-        supportRequestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         // Set the content.
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         // Build up the drawer menu.
@@ -57,7 +54,7 @@ public class MainActivity extends ActionBarActivity
 
     private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
-    private FeedbackFragment feedback = new FeedbackFragment();
+    private ProductsFragment products = new ProductsFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -80,11 +77,12 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section4);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, products).commit();
                 break;
             case 4:
                 mTitle = getString(R.string.title_section5);
-                fragmentManager.beginTransaction().replace(R.id.container, feedback).commit();
+                // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);

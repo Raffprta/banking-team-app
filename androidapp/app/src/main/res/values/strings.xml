@@ -53,4 +53,15 @@
     <!-- Menu -->
     <string name="action_help">Help</string>
 
+    <!-- Feedback -->
+    <string name="rating_prompt">Rate your experience:</string>
+    <string name="rating_feedback">Provide feedback about the application:</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="team_email">csc2-team19@ncl.ac.uk</string>
+    <string name="error_form">Please ensure you have given a rating or some feedback.</string>
+    <string name="error_email">A network error when attempting to send the email occurred.</string>
+    <string name="email_subject">Feedback Form</string>
+    <string name="rating">RATING: </string>
+    <string name="feedback">FEEDBACK: </string>
+
 </resources>
