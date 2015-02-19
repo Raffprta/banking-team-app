@@ -12,11 +12,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|right"
             android:text = "Your Account"
             android:layout_marginTop="60dp"
             android:textColor="#ff53ff4b"
-            android:textSize="@dimen/abc_text_size_headline_material" />
+            android:textSize="@dimen/abc_text_size_headline_material"
+            android:layout_marginRight="20dp" />
 
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
