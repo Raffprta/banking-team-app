@@ -4,6 +4,7 @@ import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class FeedbackFragment extends Fragment{
         final Button feedbackSubmitButton = (Button) feedbackView.findViewById(R.id.submitFeedbackButton);
         final EditText feedbackEditText = (EditText) feedbackView.findViewById(R.id.feedbackEditText);
         final RatingBar feedbackRating = (RatingBar) feedbackView.findViewById(R.id.ratingBar);
+
 
         // Set a listener for when submit is pressed.
         feedbackSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -70,14 +72,13 @@ public class FeedbackFragment extends Fragment{
         @Override
         protected Void doInBackground(String... params) {
             // Attempt to send email
-            // TODO REPLACE raffprta@gmail with API call to get the User's email when backend is done
             MailHelper mailer = new MailHelper(getString(R.string.team_email),
                     getString(R.string.team_email), params[0], params[1], FeedbackFragment.this);
             try {
                 // Send the email itself.
                 mailer.sendAuthenticated();
             } catch (Exception e) {
-                // An error occured
+                // An error occurred
                 Toast.makeText(FeedbackFragment.this.getActivity().getApplicationContext(), getString(R.string.error_email), Toast.LENGTH_SHORT).show();
             }
 
@@ -88,6 +89,10 @@ public class FeedbackFragment extends Fragment{
         protected void onPostExecute(Void v) {
             // Remove the loading dialog.
             ProgressDialog.removeLoading(FeedbackFragment.this);
+            // Load new Fragment in place telling the user the message was submitted.
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, new FeedbackSubmittedFragment()).commit();
+
         }
     }
 

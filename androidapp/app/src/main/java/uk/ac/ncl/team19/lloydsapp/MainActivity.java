@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarActivity
 
     private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
-    private FeedbackFragment feedback = new FeedbackFragment();
     private ProductsFragment products = new ProductsFragment();
 
     @Override
@@ -82,7 +81,8 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section5);
-                fragmentManager.beginTransaction().replace(R.id.container, feedback).commit();
+                // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
