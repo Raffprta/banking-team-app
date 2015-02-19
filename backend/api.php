@@ -14,3 +14,7 @@
 // TODO: Store/update game state for a user
 
 // TODO: Complete TODO list ;)
+
+$this->respond('GET', '/test', function () {
+    checkAuthentication();
+});

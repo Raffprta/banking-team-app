@@ -9,7 +9,7 @@
         {# Custom styles #}
         <link rel="stylesheet" href="/css/style.css">
 
-        {# Bootstrap includes, library offered by: http://getbootstrap.com #}
+        {# Bootstrap styles - available at: http://getbootstrap.com #}
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 
@@ -26,20 +26,70 @@
                 </a>
             </div>
             <nav class="login col-md-6 col-md-offset-3 text-right">
-                <div class="link-container">
-
-                    {# If a user is logged in -- currently assuming we only have one state of login user levels #}
+                <div class="navbar-collapse navbar-right collapse">
+                    {# If a user is logged in #}
                     {% if loggedInUser %}
-                        <a href="/achievements">Achievements</a>
-                        <a href="/leaderboards">Leaderboards</a>
-                        {% if loggedInUser.accessLevel == constant('ACCESS_LEVEL_ADMINISTRATOR') %}
-                            <a href="/admin"><span class="glyphicon glyphicon-cog"></span> Admin Tools</a>
+                        {# Administrator functions #}
+                        {% if loggedInUser.accessLevel >= constant('ACCESS_LEVEL_ADMINISTRATOR') %}
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span> Admin Tools<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="admin/mobilesessions"><span class="glyphicon glyphicon-phone"></span> Mobile App Sessions</a></li>
+                                        <li><a href="admin/users"><span class="glyphicon glyphicon-user"></span> User Management</a></li>
+                                        <li><a href="admin/users"><span class="glyphicon glyphicon-piggy-bank"></span> Bank Account Management</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="admin/activitylog"><span class="glyphicon glyphicon-list-alt"></span> Activity Log</a></li>
+                                        <li><a href="admin/pushmessages"><span class="glyphicon glyphicon-envelope"></span> Push Messages</a></li>
+                                        <li><a href="admin/phpinfo"><span class="glyphicon glyphicon-usd"></span> PHP Info</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        {# User functions #}
+                        {% else %}
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="/achievements"><span class="glyphicon glyphicon-education"></span> Achievements</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="/leaderboards"><span class="glyphicon glyphicon-stats"></span> Leaderboards</a>
+                                </li>
+                            </ul>
                         {% endif %}
-                        <a href="/logout" id="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+
+                        {# Logout button #}
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ loggedInUser.firstName }} {{ loggedInUser.surname }}
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    {# Show product info links if not logged in #}
                     {% else %}
-                        <a href="/about">About</a>
-                        <a href="#features">Features</a>
-                        <a href="/login" id="login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="/about"><span class="glyphicon glyphicon-info-sign"></span> About</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="#features"><span class="glyphicon glyphicon-ok-circle"></span> Features</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                            </li>
+                        </ul>
                     {% endif %}
                 </div>
             </nav>

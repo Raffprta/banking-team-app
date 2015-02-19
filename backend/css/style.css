@@ -38,10 +38,6 @@ nav.login a:hover{
     text-decoration:none;
 }
 
-.clearfix{
-    clear:both;
-}
-
 section{
     width:100% !important;
 }
