@@ -55,7 +55,7 @@
         android:id="@+id/submitFeedbackButton"
         android:text="@string/submit_feedback"
         android:layout_gravity="center"
-        android:layout_marginTop="-50dp"
+        android:layout_marginTop="-80dp"
         android:background="@color/accent_material_dark" />
 
     </LinearLayout>
