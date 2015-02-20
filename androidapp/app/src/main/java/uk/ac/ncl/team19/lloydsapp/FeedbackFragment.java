@@ -50,6 +50,8 @@ public class FeedbackFragment extends Fragment{
                 // Check if any data was entered - if there wasn't give an error message.
                 if(rating <= 0.0f || feedback.toString().length() == 0){
                     Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_form), Toast.LENGTH_SHORT).show();
+                    feedbackSubmitButton.getBackground().clearColorFilter();
+                    feedbackSubmitButton.invalidate();
                     return;
                 }
 
