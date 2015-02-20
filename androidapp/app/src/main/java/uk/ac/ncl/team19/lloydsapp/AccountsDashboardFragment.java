@@ -11,6 +11,8 @@ import android.view.ViewGroup;
  */
 public class AccountsDashboardFragment extends Fragment {
 
+    public static String mTitle = "Accounts Dashboard";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

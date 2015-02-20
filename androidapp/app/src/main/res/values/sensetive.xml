@@ -4,5 +4,16 @@
     <string name="mailer_user">team.19.service@gmail.com</string>
     <string name="mailer_pass">Team1919</string>
 
+    <string name="app_id_play">689728249892</string>
+
+    <string name="old_timer_achievement">CgkIpMCHuIkUEAIQAQ</string>
+    <string name="first_timer_achievement">CgkIpMCHuIkUEAIQAw</string>
+    <string name="magic_number_achievement">CgkIpMCHuIkUEAIQBQ</string>
+    <string name="login_master_achievement">CgkIpMCHuIkUEAIQCQ</string>
+    <string name="branch_explorer_achievement">CgkIpMCHuIkUEAIQCg</string>
+
+    <string name="leaderboard_id">CgkIpMCHuIkUEAIQBg</string>
+
+
 
 </resources>

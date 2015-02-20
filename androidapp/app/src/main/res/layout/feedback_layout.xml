@@ -18,7 +18,8 @@
         android:text="@string/rating_prompt"
         android:id="@+id/ratingTextView"
         android:textSize="25dp"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:layout_marginTop="38dp" />
 
     <RatingBar
         android:layout_width="wrap_content"

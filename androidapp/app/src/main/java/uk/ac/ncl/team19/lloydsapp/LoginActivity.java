@@ -30,4 +30,9 @@ public class LoginActivity extends Activity{
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Prevent going back to the previous page.
+    }
+
 }

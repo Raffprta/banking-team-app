@@ -30,4 +30,9 @@ public class SecurityActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Prevent going back to the login page.
+    }
+
 }

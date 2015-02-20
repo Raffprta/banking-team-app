@@ -56,6 +56,7 @@ public class ProgressDialog extends DialogFragment {
 
     }
 
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
@@ -69,8 +70,11 @@ public class ProgressDialog extends DialogFragment {
         AlertDialog dialog =  builder.create();
         // Prevent the user from cancelling the dialog.
         dialog.setCanceledOnTouchOutside(false);
+        // Idem for the back button
+        dialog.setCancelable(false);
         return dialog;
     }
+
 
 
 }

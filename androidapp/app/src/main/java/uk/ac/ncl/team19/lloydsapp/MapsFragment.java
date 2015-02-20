@@ -87,6 +87,7 @@ public class MapsFragment extends SupportMapFragment {
         return mapView;
     }
 
+
     /**
      * Set up the map from the view.
      */
