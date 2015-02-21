@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" >
+
+    </ScrollView>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/lloyds_lightergreen_transparent"
+        android:paddingLeft="3dp"
+        android:paddingTop="3dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="14dp"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gridLayout3">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffffffff"
+            android:id="@+id/accountsGrid"
+            android:paddingLeft="50dp"
+            android:paddingTop="4dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/acc_current"
+                android:id="@+id/textView11"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:paddingLeft="0dp"
+                android:textColor="@color/lloyds_lightergreen" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@string/acc_filler_john_smith"
+                android:ems="10"
+                android:id="@+id/editText6"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:textColor="@color/lloyds_darkgreen_menu" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText5"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:inputType="text"
+                android:text="@string/account_info_number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView15"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:textColor="#ff3f3f3f"
+                android:text="@string/account_info_balance" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:inputType="text"
+                android:text="@string/account_info_sort_code" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_row="4"
+                android:layout_column="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView14"
+                android:layout_row="6"
+                android:layout_column="0"
+                android:textColor="@color/hint_foreground_material_light"
+                android:text="@string/account_info_avail_funds" />
+
+        </GridLayout>
+
+        <Button
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="@string/account_info_transac_button"
+            android:id="@+id/button"
+            android:background="#ffffffff"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="0dp"
+            android:textColor="@color/lloyds_darkgreen"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/gridLayout3"
+            android:layout_alignLeft="@+id/gridLayout3"
+            android:layout_alignStart="@+id/gridLayout3"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_marginLeft="12dp" />
+
+        <Button
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            android:background="#ffffffff"
+            android:textColor="@color/lloyds_darkgreen"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="0dp"
+            android:text="@string/account_info_make_pay_button"
+            android:layout_alignTop="@+id/button"
+            android:layout_alignRight="@+id/gridLayout3"
+            android:layout_alignEnd="@+id/gridLayout3"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp" />
+
+        <Button
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="@string/account_info_transfer_button"
+            android:id="@+id/button3"
+            android:background="#ffffffff"
+            android:textColor="@color/lloyds_darkgreen"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="0dp"
+            android:layout_below="@+id/button4"
+            android:layout_alignRight="@+id/button4"
+            android:layout_alignEnd="@+id/button4"
+            android:layout_marginTop="10dp"
+            android:layout_alignLeft="@+id/button4"
+            android:layout_alignStart="@+id/button4"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_marginLeft="12dp" />
+
+        <Button
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:text="@string/account_info_acc_button"
+            android:id="@+id/button7"
+            android:background="@color/lloyds_acc_info_green_button"
+            android:textColor="#ffffffff"
+            android:paddingLeft="10dp"
+            android:paddingTop="0dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="0dp"
+            android:layout_alignTop="@+id/button3"
+            android:layout_alignLeft="@+id/button"
+            android:layout_alignStart="@+id/button"
+            android:layout_alignRight="@+id/button"
+            android:layout_alignEnd="@+id/button"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp" />
+    </GridLayout>
+
+</RelativeLayout>
