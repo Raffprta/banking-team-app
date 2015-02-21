@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</LinearLayout>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background">
+
+<LinearLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/rating_prompt"
+        android:id="@+id/ratingTextView"
+        android:textSize="25dp"
+        android:padding="10dp"
+        android:layout_marginTop="38dp" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="104dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/rating_feedback"
+        android:id="@+id/feedbackPromptTextView"
+        android:textSize="25dp"
+        android:padding="20dp" />
+
+        <EditText
+            android:id="@+id/feedbackEditText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:ems="10"
+            android:gravity="left|top"
+            android:inputType="textMultiLine"
+            android:background="@color/dim_foreground_material_dark"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="100dp">
+            <requestFocus />
+        </EditText>
+
+    <Button
+        android:layout_width="223dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitFeedbackButton"
+        android:text="@string/submit_feedback"
+        android:layout_gravity="center"
+        android:layout_marginTop="-80dp"
+        android:background="@color/accent_material_dark" />
+
+    </LinearLayout>
+</ScrollView>

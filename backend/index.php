@@ -8,7 +8,6 @@
 //
 //================================================================================
 
-// TODO: Integrate web landing page and add logged-in/logged-out functionality
 // TODO: User logged-in area with account overview and device pairing status
 
 //================================================================================

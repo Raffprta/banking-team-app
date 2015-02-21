@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".LoginPage">
+    tools:context=".LoginPage" >
 
     <ImageView
         android:layout_width="160dp"
@@ -13,7 +13,8 @@
         android:layout_gravity="center_horizontal|top"
         android:background="@drawable/logo"
         android:contentDescription="@string/logo"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+       />
 
     <EditText
         android:layout_width="197dp"
@@ -40,7 +41,6 @@
         android:layout_gravity="center"
         android:background="#ff006846"
         android:textColor="#ffffffff"
-        android:nestedScrollingEnabled="false"
         android:layout_marginTop="5dp" />
 
     <TextView

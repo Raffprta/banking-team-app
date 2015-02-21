@@ -20,7 +20,7 @@ import android.widget.Toast;
  * Main activity associated with the drawer layout menu.
  */
 
-public class MainActivity extends ActionBarActivity
+public class MainMenuActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -32,6 +32,9 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
+    // Store the Tags to be restored to mTitle when back is pressed.
+    private String TAGS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,20 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    // Override clicking the back button as the user may not access the login and security page.
+    // Fragments are instead kept track of.
+    @Override
+    public void onBackPressed() {
+        // TODO Fix Bugs with popping fragments.
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        // Check to see if there are fragments on the stack.
+//        if(fragmentManager.getBackStackEntryCount() > 1){
+//            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-2).getName();
+//            fragmentManager.popBackStackImmediate();
+//            restoreActionBar();
+//        }
+    }
+
     private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
     private ProductsFragment products = new ProductsFragment();
@@ -62,32 +79,32 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // TODO : Replace the switch to default fragments with upcoming fragments
         switch(position){
             case 0:
                 mTitle = getString(R.string.title_section1);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
-                fragmentManager.beginTransaction().replace(R.id.container, accountsDashboard).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, accountsDashboard, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 2:
                 mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction().replace(R.id.container, push).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, push, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 3:
                 mTitle = getString(R.string.title_section4);
-                fragmentManager.beginTransaction().replace(R.id.container, products).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, products, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 4:
-                mTitle = getString(R.string.title_section5);
+                mTitle = getString(R.string.title_section5, mTitle.toString());
                 // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
+                // TODO ISSUE : Bug in adding and POPPING from the stack, needs to be fixed.
                 fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
-                fragmentManager.beginTransaction().replace(R.id.container, map).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 6:
                 DialogFragment confirm = new LogOffDialog();

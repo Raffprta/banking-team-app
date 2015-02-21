@@ -53,19 +53,41 @@
     <!-- Menu -->
     <string name="action_help">Help</string>
 
+    <!-- Feedback -->
+    <string name="rating_prompt">Rate your experience:</string>
+    <string name="rating_feedback">Provide feedback about the application:</string>
+    <string name="submit_feedback">Submit Feedback</string>
+    <string name="team_email">csc2-team19@ncl.ac.uk</string>
+    <string name="error_form">Please ensure you have given a rating or some feedback.</string>
+    <string name="error_email">A network error when attempting to send the email occurred.</string>
+    <string name="email_subject">Feedback Form</string>
+    <string name="rating">RATING: </string>
+    <string name="feedback">FEEDBACK: </string>
+
+    <!-- Google play -->
+    <string name="app_id">689728249892</string>
+    <string name="sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="app_misconfigured">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="license_failed">License check failed.</string>
+    <string name="unknown_error">Unknown error.</string>
+    <string name="gamehelper_sign_in_failed">Failed to sign in. Please check your network connection and try again.</string>
+    <string name="gamehelper_app_misconfigured">The application is incorrectly configured. Check that the package name and signing certificate match the client ID created in Developer Console. Also, if the application is not yet published, check that the account you are trying to sign in with is listed as a tester account. See logs for more information.</string>
+    <string name="gamehelper_license_failed">License check failed.</string>
+    <string name="gamehelper_unknown_error">Unknown error.</string>
+
     <!-- Account information fillers -->
     <string name="int_stu_account">International Student Account</string>
     <string name="acc_current">Current Account</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
-    <string name="acc_funds_filler">Â£999.99</string>
-    <string name="acc_avail_funds_filler">Available funds: Â£899.99</string>
+    <string name="acc_funds_filler">£999.99</string>
+    <string name="acc_avail_funds_filler">Available funds: £899.99</string>
     <string name="acc_saving_filler">Savings Account</string>
     <string name="acc_filler_john_smith">John Smith</string>
     <string name="acco_number_info">Account Number: 12345678</string>
     <string name="account_info_number">12345678</string>
-    <string name="account_info_balance">Balance: Â£999.99</string>
+    <string name="account_info_balance">Balance: £999.99</string>
     <string name="account_info_sort_code">00-00-00</string>
-    <string name="account_info_avail_funds">Available funds: Â£899.99</string>
+    <string name="account_info_avail_funds">Available funds: £899.99</string>
     <string name="account_info_profile_button">Profile details</string>
     <string name="account_info_acc_button">Account details</string>
     <string name="account_info_transfer_button">Transfer funds</string>

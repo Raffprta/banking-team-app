@@ -113,17 +113,23 @@ public class PushFragment extends Fragment {
 
                                 @Override
                                 public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    // For each of the cards, get the one that was swiped
                                     for (int position : reverseSortedPositions) {
+                                        // Get the id of the card.
                                         int id = mListDataSet.get(position).getId();
+                                        // Remove it from the card view.
                                         mListDataSet.remove(position);
+                                        // Delete the message from the actual database
                                         dataSource.open();
                                         dataSource.deleteRow(DBOpenHelper.TABLE_NOTIFICATIONS, id);
                                         dataSource.close();
+                                        // Notify that the item was removed.
                                         mAdapter.notifyItemRemoved(position);
                                     }
                                     mAdapter.notifyDataSetChanged();
                                 }
 
+                                // Idem as above, though with actions for being swiped to the right.
                                 @Override
                                 public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                     for (int position : reverseSortedPositions) {
