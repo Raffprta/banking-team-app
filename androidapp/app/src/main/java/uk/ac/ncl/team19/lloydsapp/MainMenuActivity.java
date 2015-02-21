@@ -142,12 +142,14 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             case 4:
                 mTitle = getString(R.string.title_section5, mTitle.toString());
                 // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
-                // TODO ISSUE : Bug in adding and POPPING from the stack, needs to be fixed.
-                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
-                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                // Temporary remove adding to stack TODO : Bug in duplication.
+                if(map == null || !map.isAdded())
+                    map = new MapsFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
                 break;
             case 6:
                 DialogFragment confirm = new LogOffDialog();

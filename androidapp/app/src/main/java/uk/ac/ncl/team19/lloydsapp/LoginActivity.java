@@ -23,7 +23,7 @@ public class LoginActivity extends Activity{
                 // UI effects.
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
-                /// TODO Login auth. is done here.
+                /// TODO Login auth. Login is done here.
                 Intent securityIntent = new Intent(LoginActivity.this, SecurityActivity.class);
                 startActivity(securityIntent);
             }
