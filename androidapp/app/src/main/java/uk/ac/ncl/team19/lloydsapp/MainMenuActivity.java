@@ -1,5 +1,6 @@
 package uk.ac.ncl.team19.lloydsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +17,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.plus.Plus;
+
+import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
+
 
 /**
  * @author Dale Whinham, Raffaello Perrotta
- * Main activity associated with the drawer layout menu.
+ * Main activity associated with the drawer layout menu. Google Play services are also
+ * enabled within this activity as well as the Fragment Management
  */
 
-public class MainMenuActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainMenuActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -33,8 +44,8 @@ public class MainMenuActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    // Store the Tags to be restored to mTitle when back is pressed.
-    private String TAGS;
+    // The API Client
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +53,13 @@ public class MainMenuActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        // Builds the APIs we want to access; it *seems* Google+ is necessary
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES).build();
 
         // Build up the drawer menu.
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -53,6 +71,31 @@ public class MainMenuActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        // Force the drawer to close as in the activity creation the drawer is closed after the menu is inflated
+        // hence interfering with the Google Splash screen.
+        if(mNavigationDrawerFragment.isDrawerOpen()){
+            ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(Gravity.LEFT);
+        }
+
+        // Builds the APIs we want to access; it *seems* Google+ is necessary
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES).build();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGoogleApiClient.disconnect();
     }
 
     // Override clicking the back button as the user may not access the login and security page.
@@ -62,8 +105,8 @@ public class MainMenuActivity extends ActionBarActivity
         // TODO Fix Bugs with popping fragments.
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        // Check to see if there are fragments on the stack.
-//        if(fragmentManager.getBackStackEntryCount() > 1){
-//            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-2).getName();
+//        if(fragmentManager.getBackStackEntryCount() > 0){
+//            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
 //            fragmentManager.popBackStackImmediate();
 //            restoreActionBar();
 //        }
@@ -99,12 +142,14 @@ public class MainMenuActivity extends ActionBarActivity
             case 4:
                 mTitle = getString(R.string.title_section5, mTitle.toString());
                 // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
-                // TODO ISSUE : Bug in adding and POPPING from the stack, needs to be fixed.
-                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
-                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                // Temporary remove adding to stack TODO : Bug in duplication.
+                if(map == null || !map.isAdded())
+                    map = new MapsFragment();
+                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
                 break;
             case 6:
                 DialogFragment confirm = new LogOffDialog();
@@ -148,6 +193,71 @@ public class MainMenuActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Google API related callbacks.
+     */
+
+    private static int RC_SIGN_IN = 9001;
+
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
+    private boolean mSignInClicked = false;
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (mResolvingConnectionFailure) {
+            // already resolving
+            return;
+        }
+
+        // if the sign-in button was clicked or if auto sign-in is enabled,
+        // launch the sign-in flow
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+            mResolvingConnectionFailure = true;
+
+            // Attempt to resolve the connection failure using BaseGameUtils.
+            if (!BaseGameUtils.resolveConnectionFailure(this,
+                    mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, getString(R.string.gamehelper_sign_in_failed))) {
+                mResolvingConnectionFailure = false;
+            }
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i("INFO: ", "Google Play Services Connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        // Attempt to reconnect
+        mGoogleApiClient.connect();
+    }
+
+    /**
+     *
+     * Int the event of a failed sign in.
+     */
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+
+                BaseGameUtils.showActivityResultError(this,
+                        requestCode, resultCode, R.string.gamehelper_sign_in_failed);
+            }
+        }
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.
