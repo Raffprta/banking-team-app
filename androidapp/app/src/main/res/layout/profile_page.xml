@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your Profile"
+        android:id="@+id/textView16"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/lloyds_lightergreen" />
+
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="20dp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_launcher"
+                android:layout_row="0"
+                android:layout_column="0" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:src="@drawable/hpbar"
+                android:paddingTop="15dp" />
+
+        </GridLayout>
+    </GridLayout>
+</LinearLayout>
