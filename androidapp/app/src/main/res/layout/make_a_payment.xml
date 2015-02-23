@@ -12,7 +12,8 @@
         android:id="@+id/textView18"
         android:layout_gravity="center_horizontal|right"
         android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:textColor="@color/lloyds_lightergreen" />
 
     <view
         android:layout_width="match_parent"
@@ -161,5 +162,7 @@
         android:layout_height="wrap_content"
         android:text ="Proceed"
         android:layout_gravity="right"
-        android:layout_margin="5dp" />
+        android:layout_margin="10dp"
+        android:background="@color/lloyds_darkgreen"
+        android:textColor="#ffffffff" />
 </LinearLayout>
