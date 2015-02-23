@@ -116,6 +116,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     private MapsFragment map = new MapsFragment();
     private ProductsFragment products = new ProductsFragment();
     private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
+    private ProfileFragment profile = new ProfileFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -125,7 +126,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         switch(position){
             case 0:
                 mTitle = getString(R.string.title_section1);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, profile, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
