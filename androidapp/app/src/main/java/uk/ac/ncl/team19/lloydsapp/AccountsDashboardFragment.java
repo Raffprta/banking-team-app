@@ -24,7 +24,7 @@ public class AccountsDashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).addToBackStack(getString(R.string.title_section2)).addToBackStack(getString(R.string.title_section2)).commit();
             }
         });
 
@@ -32,7 +32,7 @@ public class AccountsDashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).addToBackStack(getString(R.string.title_section2)).addToBackStack(getString(R.string.title_section2)).commit();
             }
         });
 

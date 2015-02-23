@@ -3,7 +3,6 @@ package uk.ac.ncl.team19.lloydsapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -18,8 +17,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
-
-import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
@@ -101,14 +98,13 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     // Fragments are instead kept track of.
     @Override
     public void onBackPressed() {
-        // TODO Fix Bugs with popping fragments.
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        // Check to see if there are fragments on the stack.
-//        if(fragmentManager.getBackStackEntryCount() > 0){
-//            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
-//            fragmentManager.popBackStackImmediate();
-//            restoreActionBar();
-//        }
+        // TODO Fix Minor bug with the titles
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // Check to see if there are fragments on the stack.
+        if(fragmentManager.getBackStackEntryCount() > 1){
+            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
+            fragmentManager.popBackStackImmediate();
+        }
     }
 
     private PushFragment push = new PushFragment();
@@ -117,12 +113,12 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
     private ProfileFragment profile = new ProfileFragment();
 
-   
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+
 
         switch(position){
             case 0:
