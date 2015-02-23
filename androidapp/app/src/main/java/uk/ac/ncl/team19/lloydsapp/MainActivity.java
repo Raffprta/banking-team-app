@@ -52,21 +52,27 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    @Override
+    public void onBackPressed() {
+        // Prevent going back to the security page
+        // TODO : Pop fragments off the stack. Bug.
+    }
+
     private PushFragment push = new PushFragment();
     private MapsFragment map = new MapsFragment();
     private ProductsFragment products = new ProductsFragment();
     private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
+    private ProfileFragment profile = new ProfileFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // TODO : Replace the switch to default fragments with upcoming fragments
         switch(position){
             case 0:
                 mTitle = getString(R.string.title_section1);
-                fragmentManager.beginTransaction().replace(R.id.container, new PlaceholderFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, profile).commit();
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
