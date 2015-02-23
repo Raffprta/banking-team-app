@@ -155,4 +155,11 @@
         </TableRow>
     </TableLayout>
     </view>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text ="Proceed"
+        android:layout_gravity="right"
+        android:layout_margin="5dp" />
 </LinearLayout>

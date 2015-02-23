@@ -57,7 +57,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:text ="12345678"
                     android:ems="10"
                     android:id="@+id/editText8"
                     android:layout_column="1" />
@@ -85,7 +85,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:text = "00-00-00"
                     android:ems="10"
                     android:id="@+id/editText9"
                     android:layout_column="1" />
@@ -121,7 +121,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:text="87654321"
                     android:ems="10"
                     android:id="@+id/editText10"
                     android:layout_column="1" />
@@ -148,7 +148,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:text ="00-00-00"
                     android:ems="10"
                     android:id="@+id/editText11"
                     android:layout_column="1" />
@@ -157,18 +157,21 @@
     </view>
 
 <LinearLayout
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_gravity="right">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Cancel"/>
+        android:text = "Cancel"
+        android:layout_margin="5dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"/>
+        android:text="Confirm"
+        android:layout_margin="5dp" />
 
 </LinearLayout>
 </LinearLayout>
