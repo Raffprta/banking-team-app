@@ -4,7 +4,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/security_background"
-    tools:context=".SecurityPage">
+    tools:context=".SecurityPage"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="150dp"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#ff15ff1f" />
+        android:textColor="@color/lloyds_lightergreen" />
 
     <TextView
         android:layout_width="210dp"
@@ -26,32 +27,77 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp" />
 
+
+
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
 
-
-        <EditText
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2nd"
+                android:textSize="@dimen/abc_text_size_large_material" />
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/editText3"
-            android:layout_weight="1" />
+            android:inputType="text"
+            android:text="2"
+            android:background="@color/lloyds_lightergreen_transparent" />
 
-        <EditText
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4th"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/editText"
-            android:layout_weight="1"
-            android:layout_gravity="left" />
+            android:inputType="text"
+            android:text="4"
+            android:background="@color/lloyds_lightergreen_transparent" />
+        </LinearLayout>
 
-        <EditText
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6th"
+                android:textSize="@dimen/abc_text_size_large_material"
+                 />
+
+        <EditText
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/editText4"
-            android:layout_weight="1" />
+            android:inputType="text"
+            android:text="2"
+            android:background="@color/lloyds_lightergreen_transparent" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -61,7 +107,8 @@
         android:id="@+id/securityButton"
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffffff"
-        android:background="#ff006846" />
+        android:background="#ff006846"
+        android:layout_margin="30dp" />
 
 
 </LinearLayout>
