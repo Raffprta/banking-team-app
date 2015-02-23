@@ -1,5 +1,6 @@
 package uk.ac.ncl.team19.lloydsapp;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,8 @@ public class AccountsInfoFragment extends Fragment {
         accountsInfoView.findViewById(R.id.makePayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).commit();
             }
@@ -30,6 +33,8 @@ public class AccountsInfoFragment extends Fragment {
         accountsInfoView.findViewById(R.id.makeTransfer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new TransferFundsFragment()).commit();
             }

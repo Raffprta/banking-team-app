@@ -10,8 +10,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Transfer funds"
         android:id="@+id/textView25"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp" />
+        android:layout_gravity="center_horizontal|right"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp" />
 
     <view
         class="android.support.v7.widget.CardView"

@@ -10,8 +10,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Make a payment"
         android:id="@+id/textView18"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp" />
+        android:layout_gravity="center_horizontal|right"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp" />
 
     <view
         android:layout_width="match_parent"
