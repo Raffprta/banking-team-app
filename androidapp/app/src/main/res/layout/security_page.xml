@@ -31,27 +31,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
 
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:padding="10dp"
+            android:maxLength="1"
+            android:background="@drawable/security_box"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:layout_weight="1" />
+            android:id="@+id/codeOne"
+            android:layout_marginRight="15dp"
+            android:layout_margin="15dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:padding="10dp"
+            android:background="@drawable/security_box"
+            android:maxLength="1"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_weight="1"
-            android:layout_gravity="left" />
+            android:id="@+id/codeTwo"
+            android:layout_marginRight="15dp"
+            android:layout_margin="15dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:padding="10dp"
+            android:background="@drawable/security_box"
+            android:maxLength="1"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:layout_weight="1" />
+            android:id="@+id/codeThree"
+            android:layout_margin="15dp" />
     </LinearLayout>
 
     <Button
@@ -61,7 +72,8 @@
         android:id="@+id/securityButton"
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffffff"
-        android:background="#ff006846" />
+        android:background="#ff006846"
+        android:layout_marginTop="30dp" />
 
 
 </LinearLayout>

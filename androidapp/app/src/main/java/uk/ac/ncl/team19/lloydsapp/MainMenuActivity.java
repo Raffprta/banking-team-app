@@ -103,7 +103,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         // Check to see if there are fragments on the stack.
         if(fragmentManager.getBackStackEntryCount() > 1){
             mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
-            fragmentManager.popBackStackImmediate();
+            fragmentManager.popBackStack();
         }
     }
 
@@ -140,7 +140,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             case 4:
                 mTitle = getString(R.string.title_section5, mTitle.toString());
                 // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
-                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).addToBackStack(mTitle.toString()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section6);
