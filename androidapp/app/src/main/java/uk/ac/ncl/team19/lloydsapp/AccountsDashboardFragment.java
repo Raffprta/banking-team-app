@@ -17,10 +17,10 @@ public class AccountsDashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View accountsDashboardView = inflater.inflate(R.layout.account_dashboard_page, container, false);
+        View accountsDashboardView = inflater.inflate(R.layout.account_dashboard, container, false);
 
         // TODO : Are we only having two accounts, if not then this needs to be more programmatic
-        accountsDashboardView.findViewById(R.id.accountCardView1).setOnClickListener(new View.OnClickListener() {
+        accountsDashboardView.findViewById(R.id.currentAccounts).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -28,7 +28,7 @@ public class AccountsDashboardFragment extends Fragment {
             }
         });
 
-        accountsDashboardView.findViewById(R.id.accountCardView2).setOnClickListener(new View.OnClickListener() {
+        accountsDashboardView.findViewById(R.id.savingsAccounts).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

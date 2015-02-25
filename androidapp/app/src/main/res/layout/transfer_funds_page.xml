@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:id="@+id/scrollView"
+    android:layout_centerHorizontal="true"
+    android:layout_alignParentTop="true" >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
     <TextView
         android:layout_width="wrap_content"
@@ -118,7 +125,7 @@
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/">
+                android:id="@+id/transfers">
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -211,4 +218,5 @@
             android:background="@color/lloyds_acc_info_green_button"
             android:textColor="#ffffffff" />
     </GridLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
