@@ -32,7 +32,6 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="logo">App Logo</string>
-    <string name="forgotten_password_link">Forgotten your log in password?</string>
     <string name="visit_website">If you don\'t want to register your device with Mobile Banking right now you can still use our mobile site.</string>
     <string name="visit_website_link">Visit our website</string>
 

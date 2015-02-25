@@ -31,7 +31,8 @@
         android:ems="10"
         android:id="@+id/editText2"
         android:layout_gravity="center"
-        android:hint="@string/password" />
+        android:hint="@string/password"
+        android:layout_marginTop="5dp" />
 
     <Button
         android:layout_width="142dp"
@@ -41,18 +42,8 @@
         android:layout_gravity="center"
         android:background="#ff006846"
         android:textColor="#ffffffff"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/forgotten_password_link"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ff006846"
-        android:textSize="@dimen/abc_text_size_body_2_material"
-        android:autoLink="web"
-        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="250dp"
@@ -73,5 +64,5 @@
         android:textColor="#ff006846"
         android:autoLink="web"
         android:textSize="@dimen/abc_text_size_medium_material"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="20dp" />
 </LinearLayout>
