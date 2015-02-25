@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -61,8 +63,16 @@ public class HelpMenuOverlayDialog extends DialogFragment {
             }
         });
 
-        // Create the AlertDialog object and return it
+        // Create dialog and position it.
         builtDialog = builder.create();
+        WindowManager.LayoutParams wmlp = builtDialog.getWindow().getAttributes();
+
+        wmlp.gravity = Gravity.TOP | Gravity.RIGHT;
+        // offset by our triangle height + a few pixels
+        wmlp.y += 58;
+        wmlp.x = 35;
+
+
         return builtDialog;
     }
 

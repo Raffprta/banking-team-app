@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @Author Yao Tong, conversion to Fragment by Raffaello Perrotta
+ * @Author Yao Tong, Yessengerey Bolatov conversion to Fragment by Raffaello Perrotta
  */
 public class AccountsDashboardFragment extends Fragment {
 
