@@ -57,12 +57,14 @@
     <string name="rating_prompt">Rate your experience:</string>
     <string name="rating_feedback">Provide feedback about the application:</string>
     <string name="submit_feedback">Submit Feedback</string>
+    <string name="submit_success">Your feedback was successfully submitted.</string>
     <string name="team_email">csc2-team19@ncl.ac.uk</string>
     <string name="error_form">Please ensure you have given a rating or some feedback.</string>
     <string name="error_email">A network error when attempting to send the email occurred.</string>
     <string name="email_subject">Feedback Form</string>
     <string name="rating">RATING: </string>
     <string name="feedback">FEEDBACK: </string>
+    <string name="back_to_profile">Back to Profile</string>
 
     <!-- Google play -->
     <string name="app_id">689728249892</string>
@@ -94,5 +96,8 @@
     <string name="account_info_transac_button">Transactions</string>
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
+
+
+
 </resources>
 
