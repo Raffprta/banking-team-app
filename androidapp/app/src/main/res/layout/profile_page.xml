@@ -10,9 +10,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Your Profile"
         android:id="@+id/textView16"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_horizontal|right"
         android:layout_marginTop="60dp"
-        android:textColor="@color/lloyds_lightergreen" />
+        android:textColor="@color/lloyds_lightergreen"
+        android:layout_marginRight="20dp" />
 
     <GridLayout
         android:layout_width="fill_parent"

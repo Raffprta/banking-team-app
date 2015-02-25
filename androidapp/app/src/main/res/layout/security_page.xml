@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="150dp"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#ff15ff1f" />
+        android:textColor="@color/lloyds_lightergreen" />
 
     <TextView
         android:layout_width="210dp"
@@ -26,32 +26,99 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp" />
 
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
 
-
-        <EditText
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:layout_weight="1" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
-        <EditText
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2nd"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
+            android:layout_width="50dp"
+            android:inputType="text"
+            android:padding="10dp"
+            android:maxLength="1"
+            android:background="@drawable/security_box"
+            android:layout_height="wrap_content"
+            android:id="@+id/codeOne"
+            android:imeOptions="actionNext"
+            android:layout_marginRight="15dp"
+            android:layout_margin="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_weight="1"
-            android:layout_gravity="left" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
-        <EditText
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4th"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:id="@+id/codeTwo"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:layout_weight="1" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6th"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:inputType="text"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:id="@+id/codeThree"
+                android:imeOptions="actionDone"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -61,7 +128,8 @@
         android:id="@+id/securityButton"
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffffff"
-        android:background="#ff006846" />
+        android:background="#ff006846"
+        android:layout_marginTop="30dp" />
 
 
 </LinearLayout>

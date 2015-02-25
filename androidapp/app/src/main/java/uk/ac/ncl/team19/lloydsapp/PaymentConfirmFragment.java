@@ -9,38 +9,37 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @author XML by Yessengerey Bolatov, conversion into Fragment by Raffaello Perrotta
+ * @author Ivy Tong (XML), Raffaello Perrotta
  */
-public class AccountsInfoFragment extends Fragment {
+public class PaymentConfirmFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View accountsInfoView = inflater.inflate(R.layout.account_information, container, false);
-
-        accountsInfoView.findViewById(R.id.makePayment).setOnClickListener(new View.OnClickListener() {
+        View paymentConfirmView = inflater.inflate(R.layout.payment_confirm, container, false);
+        // On Clicking the Confirm button
+        paymentConfirmView.findViewById(R.id.confirmPayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new PaymentSuccessfulFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
-
-        accountsInfoView.findViewById(R.id.makeTransfer).setOnClickListener(new View.OnClickListener() {
+        // On Clicking the cancel button, return to the previous page.
+        paymentConfirmView.findViewById(R.id.cancelPayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new TransferFundsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                fragmentManager.popBackStack();
             }
         });
-
-        return accountsInfoView;
+        return paymentConfirmView;
 
     }
 
