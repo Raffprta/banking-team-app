@@ -168,7 +168,8 @@
         android:text = "Cancel"
         android:layout_margin="10dp"
         android:background="@color/lloyds_darkgreen"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:id="@+id/cancelPayment" />
 
     <Button
         android:layout_width="wrap_content"
@@ -176,7 +177,8 @@
         android:text="Confirm"
         android:layout_margin="10dp"
         android:background="@color/lloyds_darkgreen"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:id="@+id/confirmPayment" />
 
 </LinearLayout>
 </LinearLayout>

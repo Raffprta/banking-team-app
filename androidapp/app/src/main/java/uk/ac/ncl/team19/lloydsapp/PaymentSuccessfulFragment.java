@@ -9,29 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * @author Yessengerey Bolatov (XML Design), Raffaello Perrotta
- *
- * Fragment for making payments to other accounts.
+ * @author Ivy Tong (XML), Raffaello Perrotta
  */
-
-public class MakePaymentFragment extends Fragment {
+public class PaymentSuccessfulFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View paymentView = inflater.inflate(R.layout.make_a_payment, container, false);
-        paymentView.findViewById(R.id.proceedPayment).setOnClickListener(new View.OnClickListener() {
+        View paymentSuccessView = inflater.inflate(R.layout.payment_success, container, false);
+
+
+        paymentSuccessView.findViewById(R.id.returnToAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new PaymentConfirmFragment()).addToBackStack(getString(R.string.title_section2)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).addToBackStack(getString(R.string.title_section2)).commit();
             }
         });
-        return paymentView;
+
+        return paymentSuccessView;
 
     }
 
