@@ -10,11 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -102,14 +99,13 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     // Fragments are instead kept track of.
     @Override
     public void onBackPressed() {
-        // TODO Fix Bugs with popping fragments.
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        // Check to see if there are fragments on the stack.
-//        if(fragmentManager.getBackStackEntryCount() > 0){
-//            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
-//            fragmentManager.popBackStackImmediate();
-//            restoreActionBar();
-//        }
+        // TODO Fix Minor bug with the titles
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // Check to see if there are fragments on the stack.
+        if(fragmentManager.getBackStackEntryCount() > 1){
+            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
+            fragmentManager.popBackStack();
+        }
     }
 
     private PushFragment push = new PushFragment();
@@ -121,38 +117,44 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+
 
         switch(position){
             case 0:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.profile_page);
                 fragmentManager.beginTransaction().replace(R.id.container, profile, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 1:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.accounts_dashboard_page);
                 fragmentManager.beginTransaction().replace(R.id.container, accountsDashboard, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 2:
-                mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction().replace(R.id.container, push, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                mTitle = getString(R.string.account_health_page);
+                fragmentManager.beginTransaction().replace(R.id.container, new Fragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 3:
-                mTitle = getString(R.string.title_section4);
-                fragmentManager.beginTransaction().replace(R.id.container, products, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                mTitle = getString(R.string.notifications_page);
+                fragmentManager.beginTransaction().replace(R.id.container, push, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 4:
-                mTitle = getString(R.string.title_section5, mTitle.toString());
-                // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
-                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment()).addToBackStack(mTitle.toString()).commit();
+                mTitle = getString(R.string.other_products_page);
+                fragmentManager.beginTransaction().replace(R.id.container, products, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 5:
-                mTitle = getString(R.string.title_section6);
+                mTitle = getString(R.string.feedback_page, mTitle.toString());
+                // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
+                fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                break;
+            case 6:
+                mTitle = getString(R.string.location_page);
                 // Temporary remove adding to stack TODO : Bug in duplication.
                 if(map == null || !map.isAdded())
                     map = new MapsFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
                 break;
-            case 6:
+            case 7:
                 DialogFragment confirm = new LogOffDialog();
                 confirm.show(fragmentManager, "LogOffDialog");
                 break;
@@ -259,37 +261,4 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         }
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
 }

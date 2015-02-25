@@ -4,8 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/security_background"
-    tools:context=".SecurityPage"
-    >
+    tools:context=".SecurityPage">
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,73 +28,95 @@
 
 
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="center"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2nd"
                 android:textSize="@dimen/abc_text_size_large_material" />
-        <EditText
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/editText3"
+
+
+            <EditText
+            android:layout_width="50dp"
             android:inputType="text"
-            android:text="2"
-            android:background="@color/lloyds_lightergreen_transparent" />
+            android:padding="10dp"
+            android:maxLength="1"
+            android:background="@drawable/security_box"
+            android:layout_height="wrap_content"
+            android:id="@+id/codeOne"
+            android:imeOptions="actionNext"
+            android:layout_marginRight="15dp"
+            android:layout_margin="15dp" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4th"
                 android:textSize="@dimen/abc_text_size_large_material" />
 
-        <EditText
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/editText"
-            android:inputType="text"
-            android:text="4"
-            android:background="@color/lloyds_lightergreen_transparent" />
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:id="@+id/codeTwo"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
+
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6th"
-                android:textSize="@dimen/abc_text_size_large_material"
-                 />
+                android:textSize="@dimen/abc_text_size_large_material" />
 
-        <EditText
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/editText4"
-            android:inputType="text"
-            android:text="2"
-            android:background="@color/lloyds_lightergreen_transparent" />
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:inputType="text"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:id="@+id/codeThree"
+                android:imeOptions="actionDone"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -108,7 +129,7 @@
         android:layout_gravity="center_horizontal"
         android:textColor="#ffffffff"
         android:background="#ff006846"
-        android:layout_margin="30dp" />
+        android:layout_marginTop="30dp" />
 
 
 </LinearLayout>
