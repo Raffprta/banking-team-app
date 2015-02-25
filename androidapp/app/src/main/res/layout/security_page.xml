@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="150dp"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="#ff15ff1f" />
+        android:textColor="@color/lloyds_lightergreen" />
 
     <TextView
         android:layout_width="210dp"
@@ -26,6 +26,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp" />
 
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -34,8 +36,21 @@
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
 
-        <EditText
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2nd"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
             android:layout_width="50dp"
             android:padding="10dp"
             android:maxLength="1"
@@ -45,24 +60,59 @@
             android:layout_marginRight="15dp"
             android:layout_margin="15dp" />
 
-        <EditText
-            android:layout_width="50dp"
-            android:padding="10dp"
-            android:background="@drawable/security_box"
-            android:maxLength="1"
-            android:layout_height="wrap_content"
-            android:id="@+id/codeTwo"
-            android:layout_marginRight="15dp"
-            android:layout_margin="15dp" />
+        </LinearLayout>
 
-        <EditText
-            android:layout_width="50dp"
-            android:padding="10dp"
-            android:background="@drawable/security_box"
-            android:maxLength="1"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/codeThree"
-            android:layout_margin="15dp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4th"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:id="@+id/codeTwo"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6th"
+                android:textSize="@dimen/abc_text_size_large_material" />
+
+
+            <EditText
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:maxLength="1"
+                android:background="@drawable/security_box"
+                android:layout_height="wrap_content"
+                android:id="@+id/codeThree"
+                android:layout_marginRight="15dp"
+                android:layout_margin="15dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
