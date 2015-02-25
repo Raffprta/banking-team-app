@@ -28,7 +28,7 @@ public class MakePaymentFragment extends Fragment {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new PaymentConfirmFragment()).addToBackStack(getString(R.string.title_section2)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new PaymentConfirmFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
         return paymentView;

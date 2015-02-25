@@ -3,6 +3,7 @@ package uk.ac.ncl.team19.lloydsapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -122,34 +123,38 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
 
         switch(position){
             case 0:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.profile_page);
                 fragmentManager.beginTransaction().replace(R.id.container, profile, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 1:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.accounts_dashboard_page);
                 fragmentManager.beginTransaction().replace(R.id.container, accountsDashboard, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 2:
-                mTitle = getString(R.string.title_section3);
-                fragmentManager.beginTransaction().replace(R.id.container, push, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                mTitle = getString(R.string.account_health_page);
+                fragmentManager.beginTransaction().replace(R.id.container, new Fragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 3:
-                mTitle = getString(R.string.title_section4);
-                fragmentManager.beginTransaction().replace(R.id.container, products, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                mTitle = getString(R.string.notifications_page);
+                fragmentManager.beginTransaction().replace(R.id.container, push, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 4:
-                mTitle = getString(R.string.title_section5, mTitle.toString());
+                mTitle = getString(R.string.other_products_page);
+                fragmentManager.beginTransaction().replace(R.id.container, products, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                break;
+            case 5:
+                mTitle = getString(R.string.feedback_page, mTitle.toString());
                 // State saving is unimportant and undesirable for the feedback section, hence load a new Object.
                 fragmentManager.beginTransaction().replace(R.id.container, new FeedbackFragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
-            case 5:
-                mTitle = getString(R.string.title_section6);
+            case 6:
+                mTitle = getString(R.string.location_page);
                 // Temporary remove adding to stack TODO : Bug in duplication.
                 if(map == null || !map.isAdded())
                     map = new MapsFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
                 break;
-            case 6:
+            case 7:
                 DialogFragment confirm = new LogOffDialog();
                 confirm.show(fragmentManager, "LogOffDialog");
                 break;

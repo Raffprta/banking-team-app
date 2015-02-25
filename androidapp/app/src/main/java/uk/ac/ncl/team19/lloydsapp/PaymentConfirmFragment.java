@@ -26,7 +26,7 @@ public class PaymentConfirmFragment extends Fragment{
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new PaymentSuccessfulFragment()).addToBackStack(getString(R.string.title_section2)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new PaymentSuccessfulFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
         // On Clicking the cancel button, return to the previous page.
