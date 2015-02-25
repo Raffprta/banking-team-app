@@ -4,7 +4,7 @@
 
     <!-- Show the help icon if there is room on the action bar -->
 
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/action_help"
         android:icon="@drawable/ic_action_help"
         android:title="@string/action_help"
         app:showAsAction="ifRoom" />

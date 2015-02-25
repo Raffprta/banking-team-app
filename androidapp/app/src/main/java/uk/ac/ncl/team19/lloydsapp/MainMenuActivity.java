@@ -194,6 +194,16 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             return true;
         }
 
+        // If the help menu was clicked.
+        if (id == R.id.action_help){
+            Bundle bundle = new Bundle();
+            bundle.putString(getString(R.string.help_bundle), "Some placeholder text for now");
+            HelpMenuOverlayDialog help = new HelpMenuOverlayDialog();
+            help.setArguments(bundle);
+            help.show(getSupportFragmentManager(), "Help Menu");
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
