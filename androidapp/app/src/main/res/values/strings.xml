@@ -96,12 +96,14 @@
     <string name="account_info_transac_button">Transactions</string>
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
-
+    <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
 
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>
 
     <!-- Help manual Strings -->
+
+
 
 
 </resources>

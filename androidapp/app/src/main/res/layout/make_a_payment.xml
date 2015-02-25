@@ -4,22 +4,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Make a payment"
-        android:id="@+id/textView18"
-        android:layout_gravity="center_horizontal|right"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/lloyds_lightergreen" />
-
     <view
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         class="android.support.v7.widget.CardView"
-        android:id="@+id/view"
+        android:id="@+id/paymentCardView"
         android:layout_gravity="center_horizontal"
         android:layout_margin="20dp">
 
@@ -38,7 +27,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="From:"
                 android:id="@+id/textView21"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="@color/lloyds_lightergreen" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +38,6 @@
                 android:id="@+id/textView19"
                 android:layout_column="1"
                 android:layout_marginLeft="10dp" />
-
         </TableRow>
 
         <TableRow
@@ -76,7 +65,6 @@
                 android:id="@+id/textView20"
                 android:layout_column="1"
                 android:layout_marginLeft="10dp" />
-
         </TableRow>
 
         <TableRow
@@ -102,7 +90,36 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="To:"
                 android:id="@+id/textView23"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="@color/lloyds_lightergreen" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name"
+                android:id="@+id/textView33"
+                android:layout_column="1"
+                android:layout_marginLeft="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="e.g. John Smith"
+                android:ems="10"
+                android:id="@+id/editText3"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,7 +129,6 @@
                 android:id="@+id/textView22"
                 android:layout_column="1"
                 android:layout_marginLeft="10dp" />
-
         </TableRow>
 
         <TableRow
@@ -154,16 +170,62 @@
                 android:id="@+id/editText11"
                 android:layout_column="1" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Amount:"
+                android:id="@+id/textView26"
+                android:layout_column="0"
+                android:textColor="@color/lloyds_darkgreen" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editText4"
+                android:layout_column="1" />
+        </TableRow>
+
     </TableLayout>
     </view>
 
-    <Button
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text ="Proceed"
-        android:layout_gravity="right"
-        android:layout_margin="10dp"
-        android:background="@color/lloyds_darkgreen"
-        android:textColor="#ffffffff"
-        android:id="@+id/proceedPayment" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/lloyds_lightergreen_transparent"
+        android:padding="10dp" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:id="@+id/continuePayment"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:background="#ffffffff"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/cancelPayment"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:background="@color/lloyds_acc_info_green_button"
+            android:textColor="#ffffffff" />
+    </GridLayout>
+
 </LinearLayout>
