@@ -22,7 +22,7 @@ public class MakePaymentFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         View paymentView = inflater.inflate(R.layout.make_a_payment, container, false);
-        paymentView.findViewById(R.id.proceedPayment).setOnClickListener(new View.OnClickListener() {
+        paymentView.findViewById(R.id.continuePayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);

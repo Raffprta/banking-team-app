@@ -4,26 +4,31 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your Profile"
-        android:id="@+id/textView16"
-        android:layout_gravity="center_horizontal|right"
-        android:layout_marginTop="60dp"
-        android:textColor="@color/lloyds_lightergreen"
-        android:layout_marginRight="20dp" />
-
     <GridLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:background="@color/lloyds_lightergreen_transparent">
 
-        <GridLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp">
+            android:layout_height="wrap_content"
+            android:background="@color/lloyds_white"
+            android:layout_margin="5dp"
+            android:paddingBottom="40dp"
+            android:layout_row="0"
+            android:layout_column="0">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:src="@drawable/hpbar"
+                android:paddingTop="15dp"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_centerHorizontal="true" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -31,17 +36,101 @@
                 android:id="@+id/imageView2"
                 android:src="@drawable/ic_launcher"
                 android:layout_row="0"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp" />
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView3"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:src="@drawable/hpbar"
-                android:paddingTop="15dp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/acc_filler_john_smith"
+                android:id="@+id/textView16"
+                android:layout_marginTop="25dp"
+                android:textColor="@color/lloyds_lightgreen"
+                android:layout_below="@+id/imageView2"
+                android:layout_alignLeft="@+id/imageView2"
+                android:layout_alignStart="@+id/imageView2" />
 
-        </GridLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Status:"
+                android:id="@+id/profile_status"
+                android:layout_below="@+id/textView16"
+                android:layout_alignLeft="@+id/textView16"
+                android:layout_alignStart="@+id/textView16"
+                android:textColor="@color/lloyds_lightergreen" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_status_edit_text"
+                android:layout_below="@+id/textView16"
+                android:layout_toRightOf="@+id/profile_status"
+                android:layout_toEndOf="@+id/profile_status"
+                android:inputType="text"
+                android:text="@string/profile_status_filler_love_lloyds" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Bio:"
+                android:id="@+id/textView25"
+                android:layout_below="@+id/profile_status_edit_text"
+                android:layout_alignLeft="@+id/profile_status"
+                android:layout_alignStart="@+id/profile_status"
+                android:textColor="@color/lloyds_lightergreen" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:text="Your story..."
+                android:layout_below="@+id/profile_status_edit_text"
+                android:layout_alignLeft="@+id/profile_status_edit_text"
+                android:layout_alignStart="@+id/profile_status_edit_text" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Dashboard"
+            android:id="@+id/button2"
+            android:layout_below="@+id/button"
+            android:layout_centerHorizontal="true"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:background="@color/lloyds_white"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Health"
+            android:id="@+id/button"
+            android:layout_below="@+id/editText"
+            android:layout_centerHorizontal="true"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:background="@color/lloyds_white"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Google Play"
+            android:id="@+id/button3"
+            android:layout_below="@+id/button2"
+            android:layout_centerHorizontal="true"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:background="@color/lloyds_acc_info_green_button"
+            android:layout_margin="5dp"
+            android:textColor="@color/lloyds_white" />
     </GridLayout>
 </LinearLayout>
