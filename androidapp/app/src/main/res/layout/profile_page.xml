@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="20dp"
+        android:id="@+id/profileGrid"
         android:background="@color/lloyds_lightergreen_transparent">
 
         <RelativeLayout
@@ -100,8 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Account Dashboard"
-            android:id="@+id/button2"
-            android:layout_below="@+id/acountDashBoard"
+            android:id="@+id/accountDashBoard"
             android:layout_centerHorizontal="true"
             android:layout_row="1"
             android:layout_column="0"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Account Health"
-            android:id="@+id/acountHealth"
+            android:id="@+id/accountHealth"
             android:layout_below="@+id/editText"
             android:layout_centerHorizontal="true"
             android:layout_row="2"

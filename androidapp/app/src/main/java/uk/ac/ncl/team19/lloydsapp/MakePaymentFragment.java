@@ -22,6 +22,8 @@ public class MakePaymentFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         View paymentView = inflater.inflate(R.layout.make_a_payment, container, false);
+
+
         paymentView.findViewById(R.id.continuePayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,6 +33,19 @@ public class MakePaymentFragment extends Fragment {
                 fragmentManager.beginTransaction().replace(R.id.container, new PaymentConfirmFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
+
+        paymentView.findViewById(R.id.cancelPayment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                v.invalidate();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.popBackStack();
+            }
+        });
+
+
+
         return paymentView;
 
     }
