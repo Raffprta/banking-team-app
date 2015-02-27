@@ -159,10 +159,10 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 break;
             case 6:
                 mTitle = getString(R.string.location_page);
-                // Temporary remove adding to stack TODO : Bug in duplication.
+
                 if(map == null || !map.isAdded())
                     map = new MapsFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 7:
                 DialogFragment confirm = new LogOffDialog();

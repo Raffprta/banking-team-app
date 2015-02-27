@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ public class MapsFragment extends SupportMapFragment {
     // Postcode entry EditText
     EditText postcodeEntryEditText;
 
+    private static View mapView;
+
 
 
     @Override
@@ -86,7 +89,20 @@ public class MapsFragment extends SupportMapFragment {
                              Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
-        View mapView = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        // Check to see if a map view exists.
+        if (mapView != null) {
+            ViewGroup parent = (ViewGroup) mapView.getParent();
+            // Remove the map to prevent XML fragment duplication
+            if (parent != null)
+                parent.removeView(mapView);
+        }
+        try {
+            mapView = inflater.inflate(R.layout.fragment_maps, container, false);
+        } catch (InflateException e) {
+            Log.e("Error", "Fatal error on inflation of map fragment.");
+        }
+
         branchButton =  (Button) mapView.findViewById(R.id.branchFinder);
         atmButton = (Button) mapView.findViewById(R.id.atmFinder);
         postcodeEntryEditText = (EditText) mapView.findViewById(R.id.postCode);
