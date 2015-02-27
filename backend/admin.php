@@ -8,8 +8,6 @@
 //
 //================================================================================
 
-// TODO: Bank account creation/management
-// TODO: Basic admin pages showing accounts and users
 // TODO: Transaction simulation methods
 
 //================================================================================
@@ -28,13 +26,8 @@ $this->respond('GET', '/users', function () {
 
     $users = R::findAll('user');
 
-    $usersArray = array();
-    foreach ($users as $user) {
-        $usersArray[] = userToArray($user);
-    }
-
     try {
-        displayPage('users.twig', array('users' => $usersArray));
+        displayPage('users.twig', array('users' => $users));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
@@ -60,11 +53,9 @@ $this->respond('GET', '/edituser/[i:userId]', function ($request, $response, $se
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     try {
-        $userBean = R::findOne('user', 'id = ?', array($request->userId));
-        if (!is_null($userBean)) {
-            $user = userToArray($userBean);
-
-            displayPage('edituser.twig', array_merge(array('editMode' => true), $user));
+        $user = R::findOne('user', 'id = ?', array($request->userId));
+        if (!is_null($user)) {
+            displayPage('edituser.twig', array('editMode' => true, 'user' => $user));
         } else {
             displayError('User not found.');
         }
@@ -82,6 +73,126 @@ $this->respond('GET', '/pushmessages', function () {
     try {
         $recipients = R::find('user', 'device_id IS NOT NULL');
         displayPage('pushmessages.twig', array('recipients' => $recipients));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Bank account management
+//================================================================================
+$this->respond('GET', '/bankaccounts/[i:userId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $user = R::findOne('user', 'id = ?', array($request->userId));
+        if (!is_null($user)) {
+            displayPage('bankaccounts.twig', array('user' => $user, 'accounts' => $user->xownAccountList));
+        } else {
+            displayError('User not found.');
+        }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Create bank account
+//================================================================================
+$this->respond('GET', '/createbankaccount/[i:userId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $user = R::findOne('user', 'id = ?', array($request->userId));
+        if (!is_null($user)) {
+            displayPage('editbankaccount.twig', array('user' => $user));
+        } else {
+            displayError('User not found.');
+        }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Edit bank account
+//================================================================================
+$this->respond('GET', '/editbankaccount/[i:accountId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $account = R::findOne('account', 'id = ?', array($request->accountId));
+        //$account->user;
+
+        if (!is_null($account)) {
+            displayPage('editbankaccount.twig', array('editMode' => true, 'account' => $account, 'user' => $account->user));
+        } else {
+            displayError('Account not found.');
+        }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Create bank account
+//================================================================================
+$this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $user = R::findOne('user', 'id = ?', array($request->userId));
+
+        // Bail out if the user isn't valid
+        if (is_null($user)) {
+            displayError('User not found.');
+            exit;
+        } else {
+            $bankAccountData = formatBankAccountData($_POST);
+            $errorMessages = validateBankAccountData($bankAccountData, false);
+
+            // Display any form errors and re-populate registration form
+            if (count($errorMessages) > 0) {
+                displayPage('editbankaccount.twig', array(
+                        'user' => $user,
+                        'errorMessages' => $errorMessages,
+
+                        // Pass any bad data back to the form so it can be amended
+                        'account' => $bankAccountData
+                    )
+                );
+                logActivity('Account creation failed: validation errors.');
+            }
+
+            // We're good, notify success and display correct page
+            else {
+                // Create the bank account
+                createBankAccount($user, $bankAccountData);
+
+                // Flash success message
+                $service->flash('The bank account has been created.', FLASH_SUCCESS);
+
+                // Return to edit bank account page
+                $service->back();
+                $response->send();
+
+                logActivity('Account creation succeeded (' . $bankAccountData['email'] . ').');
+            }
+        }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+        logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Create bank account
+//================================================================================
+$this->respond('GET', '/editbankaccount', function () {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        displayPage('editbankaccount.twig', null);
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
@@ -108,11 +219,7 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
                 'errorMessages' => $errorMessages,
 
                 // Pass the bad data back to the form so the user can amend it
-                'firstName' => $userData['firstName'],
-                'surname' => $userData['surname'],
-                'email' => $userData['email'],
-                'password' => $userData['password'],
-                'passwordVerify' => $userData['passwordVerify']
+                'user' => $userData
             )
         );
         logActivity('Account creation failed: validation errors.');
@@ -196,6 +303,53 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
 });
 
 //================================================================================
+// Admin Action: Edit bank account
+//================================================================================
+$this->respond('POST', '/editbankaccount/[i:accountId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    $updatedBankAccountData = formatBankAccountData($_POST);
+    $errorMessages = validateBankAccountData($updatedBankAccountData, true);
+
+    // Display any validation errors
+    if (count($errorMessages) > 0) {
+        // Pass validation errors to edit user page
+        foreach ($errorMessages as $errorMessage) {
+            $service->flash($errorMessage, FLASH_ERROR);
+        }
+    }
+
+    // Validation succeeded
+    else {
+        try {
+            $accountBean = R::findOne('account', 'id = ?', array($request->accountId));
+            if (!is_null($accountBean)) {
+                $accountBean->accountType = $updatedBankAccountData['accountType'];
+                $accountBean->nickname = $updatedBankAccountData['nickname'];
+                $accountBean->accountNumber = $updatedBankAccountData['accountNumber'];
+                $accountBean->sortCode = $updatedBankAccountData['sortCode'];
+                $accountBean->interest = $updatedBankAccountData['interest'];
+                $accountBean->overdraft = $updatedBankAccountData['overdraft'];
+                R::store($accountBean);
+
+                // Pass success message to edit user page
+                $service->flash('The bank account was successfully updated.', FLASH_SUCCESS);
+            } else {
+                displayError('Bank account not found.');
+                exit;
+            }
+        } catch (Exception $e) {
+            displayError($e->getMessage());
+            exit;
+        }
+    }
+
+    // Return to edit bank account page
+    $service->back();
+    $response->send();
+});
+
+//================================================================================
 // Admin Action: Delete user
 //================================================================================
 $this->respond('GET', '/deleteuser/[i:userId]', function ($request, $response, $service) {
@@ -213,6 +367,30 @@ $this->respond('GET', '/deleteuser/[i:userId]', function ($request, $response, $
             $response->send();
         } else {
             displayError('User not found.');
+        }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Delete bank account
+//================================================================================
+$this->respond('GET', '/deletebankaccount/[i:accountId]', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $accountBean = R::findOne('account', 'id = ?', array($request->accountId));
+        if (!is_null($accountBean)) {
+            // Delete record
+            R::trash($accountBean);
+
+            // Show success message and redirect to previous page
+            $service->flash('Bank account ID ' . $accountBean->id . ' deleted successfully.', FLASH_SUCCESS);
+            $service->back();
+            $response->send();
+        } else {
+            displayError('Bank account not found.');
         }
     } catch (Exception $e) {
         displayError($e->getMessage());

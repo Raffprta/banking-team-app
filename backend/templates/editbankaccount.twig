@@ -1,0 +1,111 @@
+{% extends "base.twig" %}
+
+{% block title %}
+    {% if editMode %}
+        Edit Bank Account
+    {% else %}
+        Create Bank Account
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+    {# Split sort code into three if editing bank account (sort code stored un-split in database) #}
+    {% if editMode %}
+        {% set sortCodeSplit = account.sortCode|split('', 2) %}
+    {% endif %}
+
+    <div class="page-header">
+        {% if editMode %}
+            <h1>Edit Bank Account <small>(ID: {{ account.id }}, User: <a href="admin/bankaccounts/{{ user.id }}">{{ user.firstName }} {{ user.surname }}</a>)</small></h1>
+        {% else %}
+            <h1>Create Bank Account <small>for <a href="admin/bankaccounts/{{ user.id }}">{{ user.firstName }} {{ user.surname }}</a></small></h1>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form class="form-horizontal"
+                {% if editMode %}
+                    action="admin/editbankaccount/{{ account.id }}"
+                {% else %}
+                    action="admin/createbankaccount/{{ user.id }}"
+                {% endif %}
+                method="POST">
+                <fieldset>
+                    {# Type #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="accountType">Account type</label>
+                        <div class="col-md-5">
+                            <select id="accountType" name="accountType" class="form-control">
+                                <option value="{{ constant('ACCOUNT_TYPE_CURRENT') }}" {% if account.accountType == constant('ACCOUNT_TYPE_CURRENT') %}selected{% endif %}>Current</option>
+                                <option value="{{ constant('ACCOUNT_TYPE_SAVINGS') }}" {% if account.accountType == constant('ACCOUNT_TYPE_SAVINGS') %}selected{% endif %}>Savings</option>
+                                <option value="{{ constant('ACCOUNT_TYPE_STUDENT') }}" {% if account.accountType == constant('ACCOUNT_TYPE_STUDENT') %}selected{% endif %}>Student</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {# Nickname #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nickname">Nickname (optional)</label>
+                        <div class="col-md-5">
+                            <input id="nickname" name="nickname" type="text" placeholder="e.g. My current account" value="{{ account.nickname }}" class="form-control input-md" required>
+                        </div>
+                    </div>
+
+                    {# Account number #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="accountNumber">Account number</label>
+                        <div class="col-md-3">
+                            <input id="accountNumber" name="accountNumber" type="text" maxlength="8" placeholder="01234567" value="{{ account.accountNumber }}" class="form-control input-md" required>
+                        </div>
+                    </div>
+
+                    {# Sort code #}
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-2 control-label" for="sortCode">Sort code</label>
+                        <div class="col-md-2">
+                            <input id="sortCode1" name="sortCode1" type="text" maxlength="2" placeholder="00" value="{% if editMode %}{{ sortCodeSplit[0] }}{% else %}{{ account.sortCode1 }}{% endif %}" class="form-control input-sm" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input id="sortCode2" name="sortCode2" type="text" maxlength="2" placeholder="00" value="{% if editMode %}{{ sortCodeSplit[1] }}{% else %}{{ account.sortCode2 }}{% endif %}" class="form-control input-sm" required>
+                        </div>
+                        <div class="col-md-2">
+                            <input id="sortCode3" name="sortCode3" type="text" maxlength="2" placeholder="00" value="{% if editMode %}{{ sortCodeSplit[2] }}{% else %}{{ account.sortCode3 }}{% endif %}" class="form-control input-sm" required>
+                        </div>
+                    </div>
+
+                    {# Interest rate #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="interest">Interest rate (%)</label>
+                        <div class="col-md-5">
+                            <input id="interest" name="interest" type="text" placeholder="0.7" value="{{ account.interest }}" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    {# Overdraft #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="overdraft">Overdraft limit (£)</label>
+                        <div class="col-md-5">
+                            <input id="overdraft" name="overdraft" type="text" placeholder="2000.00" value="{{ account.overdraft }}" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    {# Create/save changes button #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="finish"></label>
+                        <div class="col-md-5">
+                            {% if editMode %}
+                            <button id="finish" name="finish" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Save Changes</button>
+                            {% else %}
+                            <button id="finish" name="finish" class="btn btn-primary"><span class="glyphicon glyphicon-piggy-bank"></span> Create Bank Account</button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

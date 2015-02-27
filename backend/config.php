@@ -8,7 +8,7 @@
 //
 //================================================================================
 
-define('BASE_URL', 'http://localhost/');        // Root URL of this app (include https:// and trailing slash)
+define('BASE_URL', 'http://team19.ngrok.com/');        // Root URL of this app (include https:// and trailing slash)
 define('DATABASE_HOST', 'localhost');           // Database location
 define('DATABASE_NAME', 'lloydsapp');           // Database name
 define('DATABASE_USERNAME', 'root');            // Database username

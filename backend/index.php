@@ -10,6 +10,9 @@
 
 // TODO: User logged-in area with account overview and device pairing status
 
+// TODO: Auth code from app??
+
+
 //================================================================================
 // Initialisation
 //================================================================================
@@ -322,6 +325,23 @@ function formatUserData($postData) {
     );
 }
 
+function formatBankAccountData($postData) {
+    // Concatenate the sort code values
+    $sortCode = trim($postData['sortCode1']) . trim($postData['sortCode2']) . trim($postData['sortCode3']);
+
+    return array(
+        'accountType' => intval($postData['accountType']),
+        'nickname' => trim($postData['nickname']),
+        'accountNumber' => trim($postData['accountNumber']),
+        'sortCode1' => trim($postData['sortCode1']),
+        'sortCode2' => trim($postData['sortCode2']),
+        'sortCode3' => trim($postData['sortCode3']),
+        'sortCode' => $sortCode,
+        'interest' => trim($postData['interest']),
+        'overdraft' => trim($postData['overdraft'])
+    );
+}
+
 function validateRegistrationData($formattedRegistrationData, $checkPasswords) {
     $errorMessages = array();
 
@@ -354,6 +374,50 @@ function validateRegistrationData($formattedRegistrationData, $checkPasswords) {
     return $errorMessages;
 }
 
+function validateBankAccountData($formattedBankAccountData, $editMode)
+{
+    $errorMessages = array();
+
+    // Validate account type
+    if ($formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_CURRENT
+        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_SAVINGS
+        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_STUDENT
+    ) {
+        $errorMessages[] = 'The account type was invalid.';
+    }
+
+    // Validate account number
+    if (!is_numeric($formattedBankAccountData['accountNumber'])
+        || strlen($formattedBankAccountData['accountNumber']) !== 8
+    ) {
+        $errorMessages[] = 'Account number must be an 8-digit number.';
+    }
+
+    // Validate sort code
+    if (strlen($formattedBankAccountData['sortCode']) !== 6) {
+        $errorMessages[] = 'Please enter 2-digit numbers in each of the sort code fields.';
+    }
+
+    // If creating a new account, check account number doesn't exist at this branch
+    if (!$editMode) {
+        if (bankAccountNumberExistsForSortCode($formattedBankAccountData['sortCode'], $formattedBankAccountData['accountNumber'])) {
+            $errorMessages[] = 'This account number already exists for the given sort code.';
+        }
+    }
+
+    // Validate interest rate
+    if (!is_numeric($formattedBankAccountData['interest'])) {
+        $errorMessages[] = 'Please enter a decimal number for the interest rate.';
+    }
+
+    // Validate overdraft
+    if (!is_numeric($formattedBankAccountData['overdraft'])) {
+        $errorMessages[] = 'Please enter a decimal number for the overdraft limit.';
+    }
+
+    return $errorMessages;
+}
+
 // Creates a user
 function createUser($registrationData, $admin) {
     // Create RedBean object
@@ -372,21 +436,21 @@ function createUser($registrationData, $admin) {
 }
 
 // Creates a bank account
-function createAccount($user, $accountData) {
+function createBankAccount($user, $accountData) {
     // Create RedBean object
     $account = R::dispense('account');
 
     // Assign fields
-    $account->type = $accountData['type'];
-    $account->accountNumber = ACCOUNT_TYPE_CURRENT; /* $accountData['accountNumber']; */
+    $account->accountType = $accountData['accountType'];
+    $account->nickname = $accountData['nickname'];
+    $account->accountNumber = $accountData['accountNumber'];
     $account->sortCode = $accountData['sortCode'];
-    $account->nickName = $accountData['nickName'];
-    $account->balance = $accountData['balance'];
-    $account->overDraft = 200.0; /* $accountData['overDraft']; */
-    $account->interestRate = 0.0075; /* $accountData['interestRate']; */
+    $account->interest = $accountData['interest'];
+    $account->overdraft = $accountData['overdraft'];
+    $account->balance = 0.0;
 
     // Associate account with user
-    $user->xownAccountList[] = $account;
+    $account->user = $user;
 
     // Save to database
     R::store($account);
@@ -441,16 +505,6 @@ function displayPage($template, $extraVars) {
     echo $twig->render($template, $twigVars);
 }
 
-function userToArray($user) {
-    return array(
-        'id' => $user->id,
-        'email' => $user->email,
-        'firstName' => $user->firstName,
-        'surname' => $user->surname,
-        'accessLevel' => $user->accessLevel,
-    );
-}
-
 function logActivity($eventDescription) {
     try {
         $event = R::dispense('logevent');
@@ -480,6 +534,10 @@ function checkAccessLevel($accessLevel) {
 
 function emailAddressExists($email) {
     return R::findOne('user', 'email LIKE "' . $email . '"') !== null;
+}
+
+function bankAccountNumberExistsForSortCode($sortCode, $accountNumber) {
+    return R::findOne('account', 'sort_code = ? AND account_number = ?', array($sortCode, $accountNumber)) !== null;
 }
 
 // Send a push notification to one or more registered devices using Google Cloud Messaging

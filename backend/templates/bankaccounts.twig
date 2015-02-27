@@ -1,0 +1,71 @@
+{% extends "base.twig" %}
+
+{% block title %}Bank Account Management{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <a href="admin/createbankaccount/{{ user.id }}" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-piggy-bank"></span> Create Account
+        </a>
+        <h1>{{ user.firstName }} {{ user.surname }}'s Bank Accounts</h1>
+    </div>
+
+    {% if accounts %}
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                <th class="col-md-1">ID</th>
+                <th class="col-md-2">Type</th>
+                <th class="col-md-2">Account number</th>
+                <th class="col-md-1">Sort code</th>
+                <th class="col-md-2">Nickname</th>
+                <th class="col-md-1">Balance</th>
+                <th class="col-md-1">Overdraft</th>
+                <th class="col-md-1">Interest Rate</th>
+                <th class="col-md-1">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td><strong>{{ account.id }}</strong></td>
+                    <td>
+                        {% if account.accountType == constant('ACCOUNT_TYPE_CURRENT') %}
+                            Current
+                        {% elseif account.accountType == constant('ACCOUNT_TYPE_SAVINGS') %}
+                            Savings
+                        {% elseif account.accountType == constant('ACCOUNT_TYPE_STUDENT') %}
+                            Student
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td>{{ account.accountNumber }}</td>
+                    <td>
+                        {# Split sort code into three #}
+                        {% set sortCodeSplit = account.sortCode|split('', 2) %}
+                        {{ sortCodeSplit[0] }}-{{ sortCodeSplit[1] }}-{{ sortCodeSplit[2] }}
+                    </td>
+                    <td>{{ account.nickname }}</td>
+                    <td>&pound; {{ account.balance|number_format(2, '.', ',') }}</td>
+                    <td>&pound; {{ account.overdraft|number_format(2, '.', ',') }}</td>
+                    <td>{{ account.interest|number_format(1, '.', ',') }} &percnt;</td>
+                    <td nowrap class="text-center">
+                        <a href="admin/editbankaccount/{{ account.id }}" class="btn btn-xs btn-default">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </a>
+                        <a href="admin/deletebankaccount/{{ account.id }}" class="btn btn-xs btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {# User has no bank accounts #}
+        <div class="alert alert-info" role="alert">
+            <p><span class="glyphicon glyphicon-info-sign"></span> This user currently has no bank accounts.</p>
+        </div>
+    {% endif %}
+{% endblock %}
