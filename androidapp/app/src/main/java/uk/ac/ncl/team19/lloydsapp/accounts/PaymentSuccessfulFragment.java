@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.accounts;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.accounts.AccountsInfoFragment;
 
 /**
  * @author Ivy Tong (XML), Raffaello Perrotta

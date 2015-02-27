@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
 
+import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.features.FeedbackFragment;
+import uk.ac.ncl.team19.lloydsapp.dialogs.HelpMenuOverlayDialog;
+import uk.ac.ncl.team19.lloydsapp.dialogs.LogOffDialog;
+import uk.ac.ncl.team19.lloydsapp.features.MapsFragment;
+import uk.ac.ncl.team19.lloydsapp.drawer.NavigationDrawerFragment;
+import uk.ac.ncl.team19.lloydsapp.features.ProductsFragment;
+import uk.ac.ncl.team19.lloydsapp.features.ProfileFragment;
+import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
+import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 
@@ -149,10 +159,10 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 break;
             case 6:
                 mTitle = getString(R.string.location_page);
-                // Temporary remove adding to stack TODO : Bug in duplication.
+
                 if(map == null || !map.isAdded())
                     map = new MapsFragment();
-                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 7:
                 DialogFragment confirm = new LogOffDialog();

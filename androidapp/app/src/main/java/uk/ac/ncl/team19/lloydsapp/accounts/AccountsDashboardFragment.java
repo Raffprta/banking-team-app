@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.accounts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
  * @Author Yao Tong, Yessengerey Bolatov conversion to Fragment by Raffaello Perrotta

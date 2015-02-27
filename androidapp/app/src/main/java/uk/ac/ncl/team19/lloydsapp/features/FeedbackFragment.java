@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.features;
 
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
 
 /**

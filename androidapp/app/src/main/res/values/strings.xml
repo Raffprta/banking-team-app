@@ -23,7 +23,7 @@
     <string name="action_find_branches_gplaces">Find Branches</string>
     <string name="title_maps">Lloyds Branch Finder</string>
     <string name="your_loc">Your Location</string>
-    <string name="loc_now">Where you are right now.</string>
+    <string name="loc_now">Where you are searching from right now.</string>
     <string name="error_undetermined_loc">Error: Your location could not be determined.</string>
     <string name="error_no_results">"No results found."</string>
     <string name="places_request_url" formatted="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&amp;radius=%d&amp;types=%s&amp;name=%s&amp;key=AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M</string>

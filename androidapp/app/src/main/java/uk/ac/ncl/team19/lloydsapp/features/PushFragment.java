@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.features;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +24,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 import java.util.List;
 
+import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;

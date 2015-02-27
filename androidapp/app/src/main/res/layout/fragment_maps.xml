@@ -13,20 +13,51 @@
         android:layout_height="wrap_content"
         android:text="Find Branches"
         android:id="@+id/branchFinder"
-        android:textSize="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:textSize="12sp"
+        android:background="@color/lloyds_darkgreen"
+        android:textColor="@color/lloyds_white"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:layout_toLeftOf="@+id/atmFinder"
+        android:layout_toStartOf="@+id/atmFinder" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/lloyds_darkgreen"
+        android:textColor="@color/lloyds_white"
         android:text="FIND ATMS"
         android:id="@+id/atmFinder"
-        android:textSize="20dp"
+        android:padding="10dp"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postCode"
+        android:hint="Enter Postcode"
+        android:layout_alignBottom="@+id/branchFinder"
+        android:padding="10dp"
+        android:textSize="12sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:lines="1"
+        android:maxLines="1"
+        android:background="@color/lloyds_darkgreen"
+        android:textColor="@color/lloyds_white"
+        android:textColorHint="@color/lloyds_white"
         android:layout_alignTop="@+id/branchFinder"
-        android:layout_toRightOf="@+id/branchFinder"
-        android:layout_toEndOf="@+id/branchFinder" />
+        android:layout_toLeftOf="@+id/branchFinder"
+        android:layout_toStartOf="@+id/branchFinder" />
 
 </RelativeLayout>

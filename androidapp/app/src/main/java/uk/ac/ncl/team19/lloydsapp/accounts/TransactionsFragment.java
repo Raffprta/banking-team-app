@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.accounts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

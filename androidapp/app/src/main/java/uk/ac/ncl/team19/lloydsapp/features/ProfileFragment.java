@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp;
+package uk.ac.ncl.team19.lloydsapp.features;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -8,39 +8,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+
 /**
- * @author XML by Yessengerey Bolatov, conversion into Fragment by Raffaello Perrotta
+ * @author Yessengerey Bolatov (XML Designs) and Raffaello Perrotta
+ *
+ * Profile page fragment, which contains hotlinks as well as all gamification aspects.
  */
-public class AccountsInfoFragment extends Fragment {
+
+public class ProfileFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View accountsInfoView = inflater.inflate(R.layout.account_information, container, false);
+        View profileView = inflater.inflate(R.layout.profile_page, container, false);
 
-        accountsInfoView.findViewById(R.id.makePayment).setOnClickListener(new View.OnClickListener() {
+        profileView.findViewById(R.id.accountDashBoard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new AccountsDashboardFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+
             }
         });
 
-        accountsInfoView.findViewById(R.id.makeTransfer).setOnClickListener(new View.OnClickListener() {
+        profileView.findViewById(R.id.googlePlaySignIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
                 v.invalidate();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new TransferFundsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 
-        return accountsInfoView;
+        return profileView;
 
     }
 
