@@ -195,9 +195,11 @@ public class MapsFragment extends SupportMapFragment {
                     return;
                 }
 
+                LatLng currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
+
                 // Attempt to convert postcode to Location
-                myLocation.setLatitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).latitude);
-                myLocation.setLongitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).longitude);
+                myLocation.setLatitude(currentLocation.latitude);
+                myLocation.setLongitude(currentLocation.longitude);
 
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
@@ -205,6 +207,10 @@ public class MapsFragment extends SupportMapFragment {
                         .title(getString(R.string.your_loc))
                         .snippet(getString(R.string.loc_now))
                         .position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())));
+
+                // Update map position
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+
                 // Query for branches.
                 QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
                 qg.execute(myLocation, QUERY_BRANCH);
@@ -221,9 +227,11 @@ public class MapsFragment extends SupportMapFragment {
                     return;
                 }
 
+                LatLng currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
+
                 // Attempt to convert postcode to Location
-                myLocation.setLatitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).latitude);
-                myLocation.setLongitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).longitude);
+                myLocation.setLatitude(currentLocation.latitude);
+                myLocation.setLongitude(currentLocation.longitude);
 
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
@@ -231,6 +239,10 @@ public class MapsFragment extends SupportMapFragment {
                         .title(getString(R.string.your_loc))
                         .snippet(getString(R.string.loc_now))
                         .position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())));
+
+                // Update map position
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+
                 // Query for branches
                 QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
                 qg.execute(myLocation, QUERY_ATM);
