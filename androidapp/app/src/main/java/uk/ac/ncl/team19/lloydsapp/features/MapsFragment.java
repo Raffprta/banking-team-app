@@ -1,15 +1,20 @@
 package uk.ac.ncl.team19.lloydsapp.features;
 
 
+import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,6 +76,9 @@ public class MapsFragment extends SupportMapFragment {
     // ATM Finder button.
     Button atmButton;
 
+    // Postcode entry EditText
+    EditText postcodeEntryEditText;
+
 
 
     @Override
@@ -81,6 +89,7 @@ public class MapsFragment extends SupportMapFragment {
         View mapView = inflater.inflate(R.layout.fragment_maps, container, false);
         branchButton =  (Button) mapView.findViewById(R.id.branchFinder);
         atmButton = (Button) mapView.findViewById(R.id.atmFinder);
+        postcodeEntryEditText = (EditText) mapView.findViewById(R.id.postCode);
         return mapView;
     }
 
@@ -95,10 +104,16 @@ public class MapsFragment extends SupportMapFragment {
                 = (SupportMapFragment)myFragmentManager.findFragmentById(R.id.googleMap);
         map = mySupportMapFragment.getMap();
 
+        // Check to see if location services are on
+        if(!isLocationServicesOn(getActivity().getApplicationContext())){
+            Toast.makeText(getActivity().getApplicationContext(), "Your location services are off, please enable them for this feature", Toast.LENGTH_LONG).show();
+        }
+
         // Map will try to determine location
         map.setMyLocationEnabled(true);
 
         Log.i(TAG, "Internet available? " + Utility.deviceHasInternetConnection(getActivity()));
+
 
         map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -114,7 +129,7 @@ public class MapsFragment extends SupportMapFragment {
                 String postcode = Utility.locationToPostcode(getActivity().getApplicationContext(), location);
 
                 if (postcode != null) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Your postcode is roughly: " + postcode, Toast.LENGTH_LONG).show();
+                    postcodeEntryEditText.setText(postcode);
                 }
 
                 // Disable listener
@@ -128,6 +143,30 @@ public class MapsFragment extends SupportMapFragment {
 
             }
         });
+
+    }
+
+    // Check to see if the location services are enabled.
+    public boolean isLocationServicesOn(Context context) {
+        String provider;
+        int locationToggle = 0;
+
+        // Check settings on varsions KitKat and above.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+
+            try {
+                locationToggle = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                return false;
+            }
+
+            return locationToggle != Settings.Secure.LOCATION_MODE_OFF;
+        // Otherwise return via the standard way.
+        }else{
+            provider = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(provider);
+        }
+
 
     }
 
@@ -149,11 +188,16 @@ public class MapsFragment extends SupportMapFragment {
 
             @Override
             public void onClick(View v) {
+
                 // Bail out if location is undetermined
                 if (myLocation == null) {
                     Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                // Attempt to convert postcode to Location
+                myLocation.setLatitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).latitude);
+                myLocation.setLongitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).longitude);
 
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
@@ -177,6 +221,10 @@ public class MapsFragment extends SupportMapFragment {
                     return;
                 }
 
+                // Attempt to convert postcode to Location
+                myLocation.setLatitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).latitude);
+                myLocation.setLongitude(Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString()).longitude);
+
                 // Clear map of previous searches and add your location back to it.
                 map.clear();
                 map.addMarker(new MarkerOptions()
@@ -188,6 +236,7 @@ public class MapsFragment extends SupportMapFragment {
                 qg.execute(myLocation, QUERY_ATM);
             }
         });
+
 
     }
 

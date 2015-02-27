@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -113,4 +115,23 @@ public class Utility {
         java.util.Scanner s = new java.util.Scanner(inputStream).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
     }
+
+    public static LatLng locationFromPostcode(Context ctx, String postCode) {
+
+        final Geocoder geocoder = new Geocoder(ctx);
+        Address address = null;
+
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(postCode, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                address = addresses.get(0);
+            }
+        } catch (IOException e) {
+            // handle exception
+        }
+
+        return new LatLng(address.getLatitude(), address.getLongitude());
+
+    }
+
 }
