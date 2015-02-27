@@ -15,7 +15,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.util.Calendar;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.*;
+import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
 
 public class GcmIntentService extends IntentService {
     private static final String NOTIFICATION_TITLE = "Lloyds Bank";
