@@ -130,7 +130,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Google Play"
+                android:text="Sign into Google Play"
                 android:id="@+id/googlePlaySignIn"
                 android:layout_below="@+id/acountHealth"
                 android:layout_centerHorizontal="true"
@@ -147,9 +147,10 @@
                 android:id="@+id/googlePlayAchievements"
                 android:layout_row="4"
                 android:layout_column="0"
-                android:background="@color/lloyds_orange"
+                android:background="@color/lloyds_lightgreen"
                 android:layout_margin="5dp"
-                android:textColor="@color/lloyds_white" />
+                android:textColor="@color/lloyds_white"
+                android:visibility="gone" />
 
             <Button
                 android:layout_width="match_parent"
@@ -160,7 +161,8 @@
                 android:layout_column="0"
                 android:textColor="@color/lloyds_white"
                 android:layout_margin="5dp"
-                android:background="@color/lloyds_orange" />
+                android:background="@color/lloyds_lightgreen"
+                android:visibility="gone" />
         </GridLayout>
     </ScrollView>
 

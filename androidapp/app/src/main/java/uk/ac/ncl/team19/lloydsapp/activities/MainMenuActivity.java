@@ -96,7 +96,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        // mGoogleApiClient.connect();
     }
 
     @Override
@@ -128,8 +128,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
-
 
         switch(position){
             case 0:
@@ -259,7 +257,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     @Override
     public void onConnectionSuspended(int i) {
         // Attempt to reconnect
-        mGoogleApiClient.connect();
+        // mGoogleApiClient.connect();
     }
 
     /**

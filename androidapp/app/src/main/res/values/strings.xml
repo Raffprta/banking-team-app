@@ -77,6 +77,9 @@
     <string name="gamehelper_license_failed">License check failed.</string>
     <string name="gamehelper_unknown_error">Unknown error.</string>
 
+    <string name="google_play_sign_in">Sign into Google Play</string>
+    <string name="google_play_sign_out">Sign out from Google Play</string>
+
     <!-- Account information fillers -->
     <string name="int_stu_account">International Student Account</string>
     <string name="acc_current">Current Account</string>
