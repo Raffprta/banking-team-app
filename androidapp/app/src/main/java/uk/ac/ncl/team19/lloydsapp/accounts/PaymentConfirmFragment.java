@@ -1,6 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.accounts;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Ivy Tong (XML), Raffaello Perrotta
@@ -25,8 +25,7 @@ public class PaymentConfirmFragment extends Fragment{
         paymentConfirmView.findViewById(R.id.confirmPayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                v.invalidate();
+                GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new PaymentSuccessfulFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
@@ -35,8 +34,7 @@ public class PaymentConfirmFragment extends Fragment{
         paymentConfirmView.findViewById(R.id.cancelPayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                v.invalidate();
+                GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.popBackStack();
             }

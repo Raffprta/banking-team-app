@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrotta
@@ -40,13 +41,11 @@ public class LogOffDialog extends DialogFragment{
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
+                        GraphicsUtils.buttonClickEffectShow(v);
                         break;
                     }
                     case MotionEvent.ACTION_UP: {
-                        v.getBackground().clearColorFilter();
-                        v.invalidate();
+                        GraphicsUtils.buttonClickEffectHide(v);
                         getDialog().dismiss();
                         break;
                     }

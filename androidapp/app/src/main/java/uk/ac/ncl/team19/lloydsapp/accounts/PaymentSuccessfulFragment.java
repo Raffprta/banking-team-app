@@ -1,6 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.accounts;
 
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.accounts.AccountsInfoFragment;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Ivy Tong (XML), Raffaello Perrotta
@@ -27,8 +26,7 @@ public class PaymentSuccessfulFragment extends Fragment{
         paymentSuccessView.findViewById(R.id.returnToAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                v.invalidate();
+                GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }

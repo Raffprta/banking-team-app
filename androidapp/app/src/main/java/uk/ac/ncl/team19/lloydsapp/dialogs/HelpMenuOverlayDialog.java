@@ -2,7 +2,6 @@ package uk.ac.ncl.team19.lloydsapp.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
@@ -14,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrotta
@@ -50,13 +50,11 @@ public class HelpMenuOverlayDialog extends DialogFragment {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
+                        GraphicsUtils.buttonClickEffectShow(v);
                         break;
                     }
                     case MotionEvent.ACTION_UP: {
-                        v.getBackground().clearColorFilter();
-                        v.invalidate();
+                        GraphicsUtils.buttonClickEffectHide(v);
                         getDialog().dismiss();
                         break;
                     }

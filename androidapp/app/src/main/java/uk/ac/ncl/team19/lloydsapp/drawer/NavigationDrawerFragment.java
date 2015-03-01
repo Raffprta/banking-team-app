@@ -101,8 +101,8 @@ public class NavigationDrawerFragment extends Fragment {
         });
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
+                R.layout.custom_drawer,
+                R.id.drawer,
                 new String[]{
                         getString(R.string.profile_page),
                         getString(R.string.accounts_dashboard_page),

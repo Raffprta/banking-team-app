@@ -1,6 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.features;
 
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
 
 /**
@@ -43,8 +43,7 @@ public class FeedbackFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 // UI Effects
-                feedbackSubmitButton.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                feedbackSubmitButton.invalidate();
+                GraphicsUtils.buttonClickEffectShow(v);
                 // Get the rating the user submitted and the feeedback.
                 float rating = feedbackRating.getRating();
                 String feedback = feedbackEditText.getText().toString();
@@ -52,8 +51,7 @@ public class FeedbackFragment extends Fragment{
                 // Check if any data was entered - if there wasn't give an error message.
                 if(rating <= 0.0f || feedback.toString().length() == 0){
                     Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_form), Toast.LENGTH_SHORT).show();
-                    feedbackSubmitButton.getBackground().clearColorFilter();
-                    feedbackSubmitButton.invalidate();
+                    GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
