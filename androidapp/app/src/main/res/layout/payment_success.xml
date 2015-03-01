@@ -39,7 +39,8 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="From:"
                     android:id="@+id/textView21"
-                    android:layout_column="0" />
+                    android:layout_column="0"
+                    android:textColor="@color/lloyds_lightergreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -103,7 +104,8 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="To:"
                     android:id="@+id/textView23"
-                    android:layout_column="0" />
+                    android:layout_column="0"
+                    android:textColor="@color/lloyds_lightergreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -155,23 +157,48 @@
                     android:id="@+id/editText11"
                     android:layout_column="1" />
             </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Amount:"
+                    android:id="@+id/textView27"
+                    android:layout_column="0"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="$100.99"
+                    android:id="@+id/textView28"
+                    android:layout_column="1"
+                    android:layout_marginLeft="10dp" />
+            </TableRow>
         </TableLayout>
     </view>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="right">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text = "Back To Account"
-            android:layout_margin="10dp"
             android:textColor="#ffffffff"
-            android:background="@color/lloyds_darkgreen"
+            android:background="@color/lloyds_acc_info_green_button"
             android:id="@+id/returnToAccount"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
 
 
     </LinearLayout>

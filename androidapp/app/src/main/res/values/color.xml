@@ -12,5 +12,7 @@
     <color name="lloyds_darkgreen_menu_transparent">#800a523c</color>
     <color name="lloyds_acc_info_green_button">#ff0b8b07</color>
     <color name="lloyds_white">#ffffffff</color>
-    <color name="lloyds_orange">#e0f47521</color>
+
+    <color name="lloyds_orange">#fff4690c</color>
+
 </resources>
