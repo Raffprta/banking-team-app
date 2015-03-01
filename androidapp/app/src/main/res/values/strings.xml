@@ -103,6 +103,12 @@
 
     <!-- Help manual Strings -->
 
+    <!-- Drop Down menu strings -->
+    <string-array name="user_accounts">
+        <item>Current Account</item>
+        <item>eSavings Account</item>
+        <item>Mega Account</item>
+    </string-array>
 
 
 

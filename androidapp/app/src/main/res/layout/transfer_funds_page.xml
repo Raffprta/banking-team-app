@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/transferFundsCardView"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp">
@@ -38,7 +38,7 @@
                     android:id="@+id/transferFrom"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
-
+<!--
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,53 +47,13 @@
                     android:id="@+id/transferFromAccNum"
                     android:layout_column="1"
                     android:layout_marginLeft="10dp" />
-
-               <!-- <Spinner
+-->
+                <Spinner
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" /> -->
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/transferFromAccNumInput"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
-                    android:id="@+id/transferFromSortCode"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/transferFromSortCodeInput"
-                    android:layout_column="1" />
+                    android:entries="@array/user_accounts"
+                    android:layout_marginBottom="20dp" />
             </TableRow>
 
             <TableRow
@@ -109,55 +69,12 @@
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
-                    android:id="@+id/transferToAccNum"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/transfers">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/transferToAccNumInput"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
-                    android:id="@+id/transferToSortCode"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/transferToSortCodeInput"
-                    android:layout_column="1" />
+                    android:entries="@array/user_accounts"
+                    android:layout_marginBottom="20dp" />
             </TableRow>
 
             <TableRow
@@ -179,7 +96,43 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/amountToTransfer"
+                    android:layout_column="1"
+                    android:layout_marginBottom="20dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tag:"
+                    android:id="@+id/textView30"
+                    android:layout_column="0" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText13"
                     android:layout_column="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="(The tag will appear in your history)"
+                    android:id="@+id/textView31"
+                    android:layout_column="1"
+                    android:textColor="@color/lloyds_lightgreen" />
             </TableRow>
         </TableLayout>
     </view>

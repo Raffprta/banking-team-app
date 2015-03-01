@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="65dp"
         android:background="@color/lloyds_lightergreen"
-        android:id="@+id/">
+        android:id="@+id/rateExperenceBackground">
 
         <GridLayout
             android:layout_width="wrap_content"
