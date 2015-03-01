@@ -206,7 +206,7 @@ public class MapsFragment extends SupportMapFragment {
             public void onClick(View v) {
 
                 // Bail out if location is undetermined
-                if (myLocation == null) {
+                if (myLocation == null || postcodeEntryEditText.getText().length() == 0) {
                     Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -238,7 +238,7 @@ public class MapsFragment extends SupportMapFragment {
             @Override
             public void onClick(View v) {
                 // Bail out if location is undetermined
-                if (myLocation == null) {
+                if (myLocation == null || postcodeEntryEditText.getText().length() == 0) {
                     Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
                     return;
                 }
