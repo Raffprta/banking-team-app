@@ -3,35 +3,46 @@
 <!-- Custom Drawer Layout - Author Raffaello Perrotta based on Yessengery Bolatov's Designs -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/drawer_bg">
-
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="left"
-        android:layout_margin="5dp"
-        android:padding="15dp"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="right">
-        <ImageView
+        android:background="@drawable/drawer_bg">
+
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/drawerIcon"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_action_about" />
-    </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:gravity="left"
+            android:layout_margin="5dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall" />
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="right">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/drawerIcon"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_action_about" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
 

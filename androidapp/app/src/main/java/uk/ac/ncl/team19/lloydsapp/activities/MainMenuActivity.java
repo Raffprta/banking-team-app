@@ -1,6 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -8,28 +7,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.plus.Plus;
-
+import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
-import uk.ac.ncl.team19.lloydsapp.features.FeedbackFragment;
 import uk.ac.ncl.team19.lloydsapp.dialogs.HelpMenuOverlayDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.LogOffDialog;
-import uk.ac.ncl.team19.lloydsapp.features.MapsFragment;
 import uk.ac.ncl.team19.lloydsapp.drawer.NavigationDrawerFragment;
+import uk.ac.ncl.team19.lloydsapp.features.FeedbackFragment;
+import uk.ac.ncl.team19.lloydsapp.features.MapsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProductsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProfileFragment;
 import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
-import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 
 /**
@@ -38,8 +30,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
  * enabled within this activity as well as the Fragment Management
  */
 
-public class MainMenuActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainMenuActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -51,22 +42,12 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
      */
     private CharSequence mTitle;
 
-    // The API Client
-    private GoogleApiClient mGoogleApiClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set the content.
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        // Builds the APIs we want to access; it *seems* Google+ is necessary
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES).build();
 
         // Build up the drawer menu.
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -84,25 +65,16 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(Gravity.LEFT);
         }
 
-        // Builds the APIs we want to access; it *seems* Google+ is necessary
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(Plus.API).addScope(Plus.SCOPE_PLUS_LOGIN)
-                .addApi(Games.API).addScope(Games.SCOPE_GAMES).build();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        // mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.disconnect();
     }
 
     // Override clicking the back button as the user may not access the login and security page.
@@ -213,70 +185,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Google API related callbacks.
-     */
-
-    private static int RC_SIGN_IN = 9001;
-
-    private boolean mResolvingConnectionFailure = false;
-    private boolean mAutoStartSignInFlow = true;
-    private boolean mSignInClicked = false;
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        if (mResolvingConnectionFailure) {
-            // already resolving
-            return;
-        }
-
-        // if the sign-in button was clicked or if auto sign-in is enabled,
-        // launch the sign-in flow
-        if (mSignInClicked || mAutoStartSignInFlow) {
-            mAutoStartSignInFlow = false;
-            mSignInClicked = false;
-            mResolvingConnectionFailure = true;
-
-            // Attempt to resolve the connection failure using BaseGameUtils.
-            if (!BaseGameUtils.resolveConnectionFailure(this,
-                    mGoogleApiClient, connectionResult,
-                    RC_SIGN_IN, getString(R.string.gamehelper_sign_in_failed))) {
-                mResolvingConnectionFailure = false;
-            }
-        }
-
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i("INFO: ", "Google Play Services Connected");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        // Attempt to reconnect
-        // mGoogleApiClient.connect();
-    }
-
-    /**
-     *
-     * Int the event of a failed sign in.
-     */
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent intent) {
-        if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
-            mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
-                mGoogleApiClient.connect();
-            } else {
-
-                BaseGameUtils.showActivityResultError(this,
-                        requestCode, resultCode, R.string.gamehelper_sign_in_failed);
-            }
-        }
     }
 
 }
