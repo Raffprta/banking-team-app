@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -17,6 +18,7 @@ import com.google.android.gms.plus.Plus;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
@@ -37,7 +39,24 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        // Inflate the default view for the profile page.
         profileView = inflater.inflate(R.layout.profile_page, container, false);
+
+        // Get the Health Bar.
+        final ProgressBar hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
+
+        // Show the percentage points of the current health
+        hpBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putString(getString(R.string.custom_bundle), getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
+                CustomDialog custom = new CustomDialog();
+                custom.setArguments(b);
+                custom.show(getChildFragmentManager(), "Custom Dialog");
+            }
+        });
 
         // This is for when loading from the previously loaded fragment.
         if(mGoogleApiClient != null && mGoogleApiClient.isConnected()){

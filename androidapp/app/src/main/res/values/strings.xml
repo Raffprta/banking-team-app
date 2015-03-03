@@ -103,6 +103,7 @@
 
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>
+    <string name="custom_bundle">CUSTOM</string>
 
     <!-- Help manual Strings -->
 
@@ -112,6 +113,9 @@
         <item>eSavings Account</item>
         <item>Mega Account</item>
     </string-array>
+
+    <!-- Profile Page Strings -->
+    <string name="your_prog">Your account health is </string>
 
 
 
