@@ -225,6 +225,12 @@ public class MapsFragment extends SupportMapFragment {
         else
             currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
+        // Bail on unidentified geocoder error.
+        if(currentLocation == null){
+            Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // Attempt to convert postcode to Location
         myLocation.setLatitude(currentLocation.latitude);
         myLocation.setLongitude(currentLocation.longitude);
