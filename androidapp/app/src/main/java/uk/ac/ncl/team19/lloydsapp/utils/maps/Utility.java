@@ -61,6 +61,8 @@ public class Utility {
             if (results != null && !results.isEmpty()) {
                 // We got a result, return its postcode
                 return results.get(0).getPostalCode();
+            }else{
+                return null;
             }
         } catch (Exception e) {
             Log.e(TAG, "An error occurred while geocoding: " + e.toString());
@@ -125,6 +127,8 @@ public class Utility {
             List<Address> addresses = geocoder.getFromLocationName(postCode, 1);
             if (addresses != null && !addresses.isEmpty()) {
                 address = addresses.get(0);
+            }else{
+                return null;
             }
         } catch (IOException e) {
             // handle exception

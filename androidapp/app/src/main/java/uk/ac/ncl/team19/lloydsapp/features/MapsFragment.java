@@ -80,9 +80,11 @@ public class MapsFragment extends SupportMapFragment {
     // Postcode entry EditText
     EditText postcodeEntryEditText;
 
+    // The view of the map
     private static View mapView;
 
-
+    // A boolean symbolising whether the postcode resolution is successful
+    boolean postcodeResolved = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,22 +132,29 @@ public class MapsFragment extends SupportMapFragment {
 
         Log.i(TAG, "Internet available? " + Utility.deviceHasInternetConnection(getActivity()));
 
-
+        // Set a listener to check for location changes.
         map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
 
-
                 // Store location
                 myLocation = location;
 
+                // Get latitude and longitude of location.
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                // Move the camera to zoom into the location.
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 9));
 
+                // Attempt to get a postcode of the location.
                 String postcode = Utility.locationToPostcode(getActivity().getApplicationContext(), location);
 
+                // If the postcode was resolved, set the text and use the postcode.
                 if (postcode != null) {
                     postcodeEntryEditText.setText(postcode);
+                    postcodeResolved = true;
+                }else{
+                    postcodeResolved = false;
                 }
 
                 // Disable listener
@@ -191,6 +200,46 @@ public class MapsFragment extends SupportMapFragment {
         super.onAttach(activity);
     }
 
+    /**
+     * Helper function common to both branch and ATM finder to assist with setting the correct location to
+     * be queried in the Async. tasks. If no location or postcode is present then an error message is shown to
+     * the user.
+     */
+    public void googlePlacesHelper(){
+        // Check if user has entered any postcodes.
+        if(postcodeEntryEditText.length() > 0)
+            postcodeResolved = true;
+        else
+            postcodeResolved = false;
+
+        // Bail out if location is undetermined
+        if (myLocation == null) {
+            Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        LatLng currentLocation;
+
+        if(postcodeResolved)
+            currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
+        else
+            currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+
+        // Attempt to convert postcode to Location
+        myLocation.setLatitude(currentLocation.latitude);
+        myLocation.setLongitude(currentLocation.longitude);
+
+        // Clear map of previous searches and add your location back to it.
+        map.clear();
+        map.addMarker(new MarkerOptions()
+                .title(getString(R.string.your_loc))
+                .snippet(getString(R.string.loc_now))
+                .position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())));
+
+        // Update map position
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -205,31 +254,13 @@ public class MapsFragment extends SupportMapFragment {
             @Override
             public void onClick(View v) {
 
-                // Bail out if location is undetermined
-                if (myLocation == null || postcodeEntryEditText.getText().length() == 0) {
-                    Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                LatLng currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
-
-                // Attempt to convert postcode to Location
-                myLocation.setLatitude(currentLocation.latitude);
-                myLocation.setLongitude(currentLocation.longitude);
-
-                // Clear map of previous searches and add your location back to it.
-                map.clear();
-                map.addMarker(new MarkerOptions()
-                        .title(getString(R.string.your_loc))
-                        .snippet(getString(R.string.loc_now))
-                        .position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())));
-
-                // Update map position
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+                // Do common validation functions to set location.
+                googlePlacesHelper();
 
                 // Query for branches.
                 QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
                 qg.execute(myLocation, QUERY_BRANCH);
+
             }
         });
 
@@ -237,27 +268,9 @@ public class MapsFragment extends SupportMapFragment {
 
             @Override
             public void onClick(View v) {
-                // Bail out if location is undetermined
-                if (myLocation == null || postcodeEntryEditText.getText().length() == 0) {
-                    Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
-                    return;
-                }
 
-                LatLng currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
-
-                // Attempt to convert postcode to Location
-                myLocation.setLatitude(currentLocation.latitude);
-                myLocation.setLongitude(currentLocation.longitude);
-
-                // Clear map of previous searches and add your location back to it.
-                map.clear();
-                map.addMarker(new MarkerOptions()
-                        .title(getString(R.string.your_loc))
-                        .snippet(getString(R.string.loc_now))
-                        .position(new LatLng(myLocation.getLatitude(), myLocation.getLongitude())));
-
-                // Update map position
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+                // Do common validation functions to set location.
+                googlePlacesHelper();
 
                 // Query for branches
                 QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
