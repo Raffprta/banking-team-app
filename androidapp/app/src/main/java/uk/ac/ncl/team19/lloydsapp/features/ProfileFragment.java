@@ -1,5 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp.features;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +23,7 @@ import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
+import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 /**
  * @author Yessengerey Bolatov (XML Designs) and Raffaello Perrotta
@@ -147,6 +150,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     @Override
     public void onConnected(Bundle bundle) {
+
         // Get the sign in button.
         View v = profileView.findViewById(R.id.googlePlaySignIn);
 
@@ -169,13 +173,62 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     }
 
+    private static int RC_SIGN_IN = 9001;
+
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
+    private boolean mSignInClicked = false;
+
     @Override
     public void onConnectionSuspended(int i) {
+        // Attempt to reconnect
+        mGoogleApiClient.connect();
+    }
 
+    /**
+     *
+     * In the event of a failed sign in.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+
+        if (requestCode == RC_SIGN_IN) {
+            mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == Activity.RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+
+                BaseGameUtils.showActivityResultError(this.getActivity(),
+                        requestCode, resultCode, R.string.gamehelper_sign_in_failed);
+            }
+        }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+        if (mResolvingConnectionFailure) {
+            // already resolving
+            return;
+        }
+
+        // if the sign-in button was clicked or if auto sign-in is enabled,
+        // launch the sign-in flow
+        if (mSignInClicked || mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mSignInClicked = false;
+            mResolvingConnectionFailure = true;
+
+            // Attempt to resolve the connection failure using BaseGameUtils.
+            if (!BaseGameUtils.resolveConnectionFailure(this.getActivity(),
+                    mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, getString(R.string.gamehelper_sign_in_failed))) {
+                mResolvingConnectionFailure = false;
+            }
+        }
+
     }
+
 }

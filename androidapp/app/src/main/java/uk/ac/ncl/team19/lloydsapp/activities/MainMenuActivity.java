@@ -1,5 +1,6 @@
 package uk.ac.ncl.team19.lloydsapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -185,6 +186,15 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent intent) {
+
+        super.onActivityResult(requestCode, resultCode, intent);
+        profile.onActivityResult(requestCode, resultCode, intent);
+
     }
 
 }
