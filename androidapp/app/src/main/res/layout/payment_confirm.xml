@@ -55,6 +55,32 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Account Type"
+                            android:id="@+id/textView36"
+                            android:layout_column="1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="eSavings Account"
+                            android:id="@+id/textView37"
+                            android:layout_column="1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
                             android:id="@+id/textView19"
                             android:layout_column="1"
@@ -120,6 +146,33 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Name"
+                            android:id="@+id/textView32"
+                            android:layout_column="1"
+                            android:layout_marginLeft="10dp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="John Smith"
+                            android:id="@+id/textView34"
+                            android:layout_column="1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
                             android:id="@+id/textView22"
                             android:layout_column="1"
@@ -180,13 +233,15 @@
                             android:layout_column="0"
                             android:textColor="@color/lloyds_darkgreen" />
 
-                        <EditText
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/editText12"
-                            android:layout_column="1" />
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="£100.99"
+                            android:id="@+id/textView35"
+                            android:layout_column="1"
+                            android:layout_marginLeft="10dp" />
+
                     </TableRow>
                 </TableLayout>
             </view>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/background">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:layout_height="match_parent">
 
         <view
             android:layout_width="match_parent"
@@ -35,54 +35,13 @@
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
-                    android:id="@+id/textView19"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
+                    android:entries="@array/user_accounts"
+                    android:layout_marginBottom="20dp" />
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/editText8"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
-                    android:id="@+id/textView20"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/editText9"
-                    android:layout_column="1" />
             </TableRow>
 
             <TableRow
