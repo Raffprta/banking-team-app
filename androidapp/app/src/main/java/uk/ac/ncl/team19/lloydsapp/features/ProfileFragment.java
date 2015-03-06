@@ -2,14 +2,19 @@ package uk.ac.ncl.team19.lloydsapp.features;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -143,6 +148,59 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                 GraphicsUtils.buttonClickEffectHide(v);
             }
         });
+
+        // Get the Status and Bio Edit Text
+        final EditText statusEditText = (EditText)profileView.findViewById(R.id.profile_status_edit_text);
+        final EditText bioEditText = (EditText)profileView.findViewById(R.id.profile_bio_edit_text);
+
+        // The shared preferences key/value pair system.
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        // Set up status  and bio with stored value.
+        if(sp.contains(getString(R.string.sp_status))){
+            statusEditText.setText(sp.getString(getString(R.string.sp_status), null));
+        }
+
+        if(sp.contains(getString(R.string.sp_bio))){
+            bioEditText.setText(sp.getString(getString(R.string.sp_bio), null));
+        }
+
+        // Listeners for when the status is updated
+        statusEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                sp.edit().putString(getString(R.string.sp_status), statusEditText.getText().toString()).apply();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        // Listeners for when the bio is updated
+        bioEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                sp.edit().putString(getString(R.string.sp_bio), bioEditText.getText().toString()).apply();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         return profileView;
 

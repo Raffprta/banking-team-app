@@ -122,7 +122,9 @@
     <string name="your_prog">Your account health is </string>
     <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
 
-
+    <!-- Shared preferences Key Strings -->
+    <string name="sp_status">STATUS</string>
+    <string name="sp_bio">BIO</string>
 
 </resources>
 
