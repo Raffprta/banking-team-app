@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
@@ -50,11 +51,19 @@ public class FeedbackFragment extends Fragment{
 
                 // Check if any data was entered - if there wasn't give an error message.
                 if(rating <= 0.0f || feedback.toString().length() == 0){
-                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_form), Toast.LENGTH_SHORT).show();
+                    // Show error as custom dialog.
+                    Bundle b = new Bundle();
+                    b.putString(getString(R.string.custom_bundle), getString(R.string.error_form));
+                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    CustomDialog custom = new CustomDialog();
+                    custom.setArguments(b);
+                    custom.show(getChildFragmentManager(), "Custom Dialog");
+                    // Hide effects.
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
+                // Show progress bar and execute the async. email task.
                 ProgressDialog.showLoading(FeedbackFragment.this);
                 (new EmailTask()).execute(getString(R.string.email_subject),
                         getString(R.string.rating) + "\n" + rating + "\n\n" +

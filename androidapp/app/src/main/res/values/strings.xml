@@ -25,6 +25,7 @@
     <string name="your_loc">Your Location</string>
     <string name="loc_now">Where you are searching from right now.</string>
     <string name="error_undetermined_loc">Error: Your location could not be determined.</string>
+    <string name="error_loc_svc_disabled">Your location services are disabled; please re-enable them to use this feature.</string>
     <string name="error_no_results">"No results found."</string>
     <string name="places_request_url" formatted="false">https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&amp;radius=%d&amp;types=%s&amp;name=%s&amp;key=AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M</string>
 
@@ -104,6 +105,9 @@
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>
     <string name="custom_bundle">CUSTOM</string>
+    <string name="custom_type_bundle">TYPE</string>
+    <string name="custom_colour_type_red">RED</string>
+
 
     <!-- Help manual Strings -->
 

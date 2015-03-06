@@ -34,7 +34,9 @@ import java.net.URL;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.GooglePlacesResponse;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Place;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
@@ -122,15 +124,17 @@ public class MapsFragment extends SupportMapFragment {
                 = (SupportMapFragment)myFragmentManager.findFragmentById(R.id.googleMap);
         map = mySupportMapFragment.getMap();
 
-        // Check to see if location services are on
+        // Check to see if location services are on - if not, show an information message.
         if(!isLocationServicesOn(getActivity().getApplicationContext())){
-            Toast.makeText(getActivity().getApplicationContext(), "Your location services are off, please enable them for this feature", Toast.LENGTH_LONG).show();
+            Bundle b = new Bundle();
+            b.putString(getString(R.string.custom_bundle), getString(R.string.error_loc_svc_disabled));
+            CustomDialog custom = new CustomDialog();
+            custom.setArguments(b);
+            custom.show(getChildFragmentManager(), "Custom Dialog");
         }
 
         // Map will try to determine location
         map.setMyLocationEnabled(true);
-
-        Log.i(TAG, "Internet available? " + Utility.deviceHasInternetConnection(getActivity()));
 
         // Set a listener to check for location changes.
         map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
@@ -204,8 +208,11 @@ public class MapsFragment extends SupportMapFragment {
      * Helper function common to both branch and ATM finder to assist with setting the correct location to
      * be queried in the Async. tasks. If no location or postcode is present then an error message is shown to
      * the user.
+     *
+     * True is returned if no error conditions were met. False if otherwise.
      */
-    public void googlePlacesHelper(){
+    public boolean googlePlacesHelper(){
+
         // Check if user has entered any postcodes.
         if(postcodeEntryEditText.length() > 0)
             postcodeResolved = true;
@@ -214,8 +221,13 @@ public class MapsFragment extends SupportMapFragment {
 
         // Bail out if location is undetermined
         if (myLocation == null) {
-            Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
-            return;
+            Bundle b = new Bundle();
+            b.putString(getString(R.string.custom_bundle), getString(R.string.error_undetermined_loc));
+            b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+            CustomDialog custom = new CustomDialog();
+            custom.setArguments(b);
+            custom.show(getChildFragmentManager(), "Custom Dialog");
+            return false;
         }
 
         LatLng currentLocation;
@@ -227,8 +239,13 @@ public class MapsFragment extends SupportMapFragment {
 
         // Bail on unidentified geocoder error.
         if(currentLocation == null){
-            Toast.makeText(getActivity(), getString(R.string.error_undetermined_loc), Toast.LENGTH_LONG).show();
-            return;
+            Bundle b = new Bundle();
+            b.putString(getString(R.string.custom_bundle), getString(R.string.error_undetermined_loc));
+            b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+            CustomDialog custom = new CustomDialog();
+            custom.setArguments(b);
+            custom.show(getChildFragmentManager(), "Custom Dialog");
+            return false;
         }
 
         // Attempt to convert postcode to Location
@@ -244,6 +261,7 @@ public class MapsFragment extends SupportMapFragment {
 
         // Update map position
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 9));
+        return true;
     }
 
     @Override
@@ -260,12 +278,16 @@ public class MapsFragment extends SupportMapFragment {
             @Override
             public void onClick(View v) {
 
-                // Do common validation functions to set location.
-                googlePlacesHelper();
+                GraphicsUtils.buttonClickEffectShow(v);
 
-                // Query for branches.
-                QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
-                qg.execute(myLocation, QUERY_BRANCH);
+                // Do common validation functions to set location.
+                if(googlePlacesHelper()){
+                    // Query for branches.
+                    QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
+                    qg.execute(myLocation, QUERY_BRANCH);
+                }
+
+                GraphicsUtils.buttonClickEffectHide(v);
 
             }
         });
@@ -275,12 +297,17 @@ public class MapsFragment extends SupportMapFragment {
             @Override
             public void onClick(View v) {
 
-                // Do common validation functions to set location.
-                googlePlacesHelper();
+                GraphicsUtils.buttonClickEffectShow(v);
 
-                // Query for branches
-                QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
-                qg.execute(myLocation, QUERY_ATM);
+                // Do common validation functions to set location.
+                if(googlePlacesHelper()){
+                    // Query for branches
+                    QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
+                    qg.execute(myLocation, QUERY_ATM);
+                }
+
+                GraphicsUtils.buttonClickEffectHide(v);
+
             }
         });
 
