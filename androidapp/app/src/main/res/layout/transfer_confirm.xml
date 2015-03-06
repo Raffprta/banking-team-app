@@ -7,48 +7,47 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/paymentConfirmScrollView" >
+        android:id="@+id/transferConfirmScrollView" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Confirm payment"
-                android:id="@+id/textView18"
+                android:text="Confirm transfer"
+                android:id="@+id/textView38"
                 android:layout_gravity="center_horizontal|right"
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/lloyds_lightergreen" />
 
             <view
+                class="android.support.v7.widget.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                class="android.support.v7.widget.CardView"
-                android:id="@+id/view"
+                android:id="@+id/view2"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp">
+                android:layout_margin="20dp" >
 
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp">
+                    android:padding="5dp" >
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="From:"
-                            android:id="@+id/textView21"
+                            android:id="@+id/textView39"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_lightergreen" />
 
@@ -57,93 +56,85 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Type"
-                            android:id="@+id/textView36"
+                            android:id="@+id/textView40"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Current Account"
-                            android:id="@+id/textView37"
+                            android:text="eSavings Account"
+                            android:id="@+id/textView41"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
-                            android:id="@+id/textView19"
+                            android:id="@+id/textView42"
                             android:layout_column="1" />
-
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="12345678"
-                            android:id="@+id/textView66"
+                            android:id="@+id/textView72"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Sort code"
-                            android:id="@+id/textView20"
+                            android:id="@+id/textView43"
                             android:layout_column="1" />
-
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:id="@+id/textView67"
+                            android:id="@+id/textView73"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="To:"
-                            android:id="@+id/textView23"
+                            android:id="@+id/textView44"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_lightergreen" />
 
@@ -151,93 +142,86 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Name"
-                            android:id="@+id/textView32"
+                            android:text="Account Type"
+                            android:id="@+id/textView45"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Josh Whale"
-                            android:id="@+id/textView34"
+                            android:text="Current Account"
+                            android:id="@+id/textView46"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
-                            android:id="@+id/textView22"
+                            android:id="@+id/textView47"
                             android:layout_column="1" />
-
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="87654321"
-                            android:id="@+id/textView68"
+                            android:id="@+id/textView74"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Sort code"
-                            android:id="@+id/textView24"
+                            android:id="@+id/textView48"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
-                        <TextView
+                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:id="@+id/textView69"
+                            android:ems="10"
+                            android:id="@+id/editText16"
                             android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="fill_parent" >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="Amount:"
-                            android:id="@+id/textView"
+                            android:id="@+id/textView49"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_darkgreen" />
 
@@ -246,55 +230,52 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="£100.99"
-                            android:id="@+id/textView35"
+                            android:id="@+id/textView50"
                             android:layout_column="1"
                             android:layout_marginLeft="10dp" />
-
                     </TableRow>
                 </TableLayout>
             </view>
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
-
-            <GridLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@color/lloyds_lightergreen_transparent"
-                android:padding="10dp" >
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal" >
 
-                <Button
-                    android:layout_width="match_parent"
+                <GridLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Confirm"
-                    android:background="@color/lloyds_white"
-                    android:textColor="@color/lloyds_acc_info_green_button"
-                    android:id="@+id/confirmPayment"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/lloyds_lightergreen_transparent"
+                    android:padding="10dp" >
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text = "Cancel"
-                    android:background="@color/lloyds_acc_info_green_button"
-                    android:textColor="#ffffffff"
-                    android:id="@+id/cancelPayment"
-                    android:layout_row="1"
-                    android:layout_column="0" />
-            </GridLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Confirm"
+                        android:background="@color/lloyds_white"
+                        android:textColor="@color/lloyds_acc_info_green_button"
+                        android:id="@+id/confirmTransfer"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:layout_marginBottom="10dp" />
 
-        </LinearLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel"
+                        android:background="@color/lloyds_acc_info_green_button"
+                        android:textColor="#ffffffff"
+                        android:id="@+id/cancelTransfer"
+                        android:layout_row="1"
+                        android:layout_column="0" />
+                </GridLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
