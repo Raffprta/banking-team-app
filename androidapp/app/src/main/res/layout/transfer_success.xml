@@ -1,213 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scrollViewTransfer"
     android:background="@drawable/background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Transfer Successful"
-        android:id="@+id/textView51"
-        android:layout_gravity="center_horizontal|right"
-        android:layout_marginTop="60dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/lloyds_lightergreen" />
-
-    <view
-        class="android.support.v7.widget.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/view3"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp" >
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp" >
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="From:"
-                    android:id="@+id/textView51"
-                    android:layout_column="0"
-                    android:textColor="@color/lloyds_lightergreen" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
-                    android:id="@+id/textView59"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
-                    android:id="@+id/textView52"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12345678"
-                    android:ems="10"
-                    android:id="@+id/editText17"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
-                    android:id="@+id/textView53"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00-00-00"
-                    android:ems="10"
-                    android:id="@+id/editText18"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="To:"
-                    android:id="@+id/textView54"
-                    android:layout_column="0"
-                    android:textColor="@color/lloyds_lightergreen" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
-                    android:id="@+id/textView55"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="87654321"
-                    android:ems="10"
-                    android:id="@+id/editText19"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
-                    android:id="@+id/textView56"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00-00-00"
-                    android:ems="10"
-                    android:id="@+id/editText20"
-                    android:layout_column="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Amount:"
-                    android:id="@+id/textView57"
-                    android:layout_column="0"
-                    android:textColor="@color/lloyds_darkgreen" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="$100.99"
-                    android:id="@+id/textView58"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
-            </TableRow>
-        </TableLayout>
-    </view>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="right" >
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Transfer Successful"
+            android:id="@+id/textView51"
+            android:layout_gravity="center_horizontal|right"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/lloyds_lightergreen" />
+
+        <view
+            class="android.support.v7.widget.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Back To Account"
-            android:textColor="#ffffffff"
-            android:background="@color/lloyds_acc_info_green_button"
-            android:id="@+id/button"
-            android:padding="10dp"
-            android:layout_gravity="top"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:id="@+id/view3"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" >
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="From:"
+                        android:id="@+id/textView516"
+                        android:layout_column="0"
+                        android:textColor="@color/lloyds_lightergreen" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Medium Text"
+                        android:id="@+id/textView59"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Account Number"
+                        android:id="@+id/textView52"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12345678"
+                        android:ems="10"
+                        android:id="@+id/editText17"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Sort code"
+                        android:id="@+id/textView53"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00-00-00"
+                        android:ems="10"
+                        android:id="@+id/editText18"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="To:"
+                        android:id="@+id/textView54"
+                        android:layout_column="0"
+                        android:textColor="@color/lloyds_lightergreen" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Account Number"
+                        android:id="@+id/textView55"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="87654321"
+                        android:ems="10"
+                        android:id="@+id/editText19"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Sort code"
+                        android:id="@+id/textView56"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00-00-00"
+                        android:ems="10"
+                        android:id="@+id/editText20"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Amount:"
+                        android:id="@+id/textView57"
+                        android:layout_column="0"
+                        android:textColor="@color/lloyds_darkgreen" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="$100.99"
+                        android:id="@+id/textView58"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+            </TableLayout>
+        </view>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Back To Account"
+                android:textColor="#ffffffff"
+                android:background="@color/lloyds_acc_info_green_button"
+                android:id="@+id/backToAccount"
+                android:padding="10dp"
+                android:layout_gravity="top"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

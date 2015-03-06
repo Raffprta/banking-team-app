@@ -11,30 +11,27 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Yessengerey Bolatov (XML Design), Raffaello Perrotta
- *
- * Fragment for making transfers to other personal accounts.
+ * @Author Raffaello Perrotta, XML by Yessengerey Bolatov
  */
-
-public class TransferFundsFragment extends Fragment {
+public class TransferConfirmFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View transferFundsView = inflater.inflate(R.layout.transfer_funds_page, container, false);
+        View transferConfirmView = inflater.inflate(R.layout.transfer_confirm, container, false);
 
-        transferFundsView.findViewById(R.id.continueTransfer).setOnClickListener(new View.OnClickListener() {
+        transferConfirmView.findViewById(R.id.confirmTransfer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new TransferConfirmFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new TransferSuccessfulFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 
-        transferFundsView.findViewById(R.id.cancelTransfer).setOnClickListener(new View.OnClickListener() {
+        transferConfirmView.findViewById(R.id.cancelTransferInConfirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
@@ -43,7 +40,7 @@ public class TransferFundsFragment extends Fragment {
             }
         });
 
-        return transferFundsView;
+        return transferConfirmView;
 
     }
 
