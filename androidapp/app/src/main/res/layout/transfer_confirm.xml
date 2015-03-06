@@ -57,8 +57,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Type"
                             android:id="@+id/textView40"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
@@ -84,20 +83,19 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
                             android:id="@+id/textView42"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent" >
 
-                        <EditText
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="12345678"
-                            android:ems="10"
-                            android:id="@+id/editText12"
+                            android:id="@+id/textView72"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -111,20 +109,19 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Sort code"
                             android:id="@+id/textView43"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent" >
 
-                        <EditText
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:ems="10"
-                            android:id="@+id/editText14"
+                            android:id="@+id/textView73"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -147,8 +144,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Type"
                             android:id="@+id/textView45"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
@@ -174,20 +170,19 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Account Number"
                             android:id="@+id/textView47"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent" >
 
-                        <EditText
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="87654321"
-                            android:ems="10"
-                            android:id="@+id/editText15"
+                            android:id="@+id/textView74"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -201,8 +196,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="Sort code"
                             android:id="@+id/textView48"
-                            android:layout_column="1"
-                            android:layout_marginLeft="10dp" />
+                            android:layout_column="1" />
                     </TableRow>
 
                     <TableRow
