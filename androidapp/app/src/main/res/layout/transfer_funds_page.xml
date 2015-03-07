@@ -38,16 +38,6 @@
                     android:id="@+id/transferFrom"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
-<!--
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
-                    android:id="@+id/transferFromAccNum"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
--->
                 <Spinner
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
