@@ -35,7 +35,7 @@ public class HealthFragment extends Fragment {
         }else if(hpBar.getProgress() >= 25 && hpBar.getProgress() < 50){
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
         }else{
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dysmal));
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
         }
 
         // Show the percentage points of the current health
