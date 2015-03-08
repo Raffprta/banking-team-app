@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <color android:color="@color/lloyds_lightergreen_moreTransparent"/>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <color android:color="@color/lloyds_lightergreen"/>
+        </clip>
+    </item>
+</layer-list>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@android:id/secondaryProgress">
@@ -6,11 +18,11 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/lloyds_darkgreen" />
+                <solid android:color="@color/lloyds_orange" />
             </shape>
         </clip>
 
-        <color android:color="@color/lloyds_darkgreen" />
+        <color android:color="@color/lloyds_orange" />
     </item>
 
     <item android:id="@android:id/progress">
@@ -18,11 +30,12 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/lloyds_lightergreen" />
+                <solid android:color="@color/lloyds_orange" />
             </shape>
         </clip>
 
-        <color android:color="@color/lloyds_lightergreen" />
+        <color android:color="@color/lloyds_orange" />
     </item>
 
 </layer-list>
+    -->
