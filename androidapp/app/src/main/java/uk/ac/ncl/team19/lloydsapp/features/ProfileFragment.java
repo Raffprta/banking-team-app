@@ -54,6 +54,17 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Get the Health Bar.
         final ProgressBar hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
 
+        // Determine what colour to set.
+        if(hpBar.getProgress() >= 75){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
+        }else if(hpBar.getProgress() >= 50 && hpBar.getProgress() < 75){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
+        }else if(hpBar.getProgress() >= 25 && hpBar.getProgress() < 50){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
+        }else{
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dysmal));
+        }
+
         // Show the percentage points of the current health
         hpBar.setOnClickListener(new View.OnClickListener() {
             @Override

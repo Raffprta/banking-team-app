@@ -7,11 +7,11 @@
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/lloyds_lightergreen" />
+                <solid android:color="@color/lloyds_darkgreen" />
             </shape>
         </clip>
 
-        <color android:color="@color/lloyds_lightergreen" />
+        <color android:color="@color/lloyds_darkgreen" />
     </item>
 
 </layer-list>
