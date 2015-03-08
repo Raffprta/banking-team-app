@@ -3,7 +3,6 @@ package uk.ac.ncl.team19.lloydsapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,6 +18,7 @@ import uk.ac.ncl.team19.lloydsapp.dialogs.HelpMenuOverlayDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.LogOffDialog;
 import uk.ac.ncl.team19.lloydsapp.drawer.NavigationDrawerFragment;
 import uk.ac.ncl.team19.lloydsapp.features.FeedbackFragment;
+import uk.ac.ncl.team19.lloydsapp.features.HealthFragment;
 import uk.ac.ncl.team19.lloydsapp.features.MapsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProductsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProfileFragment;
@@ -96,6 +96,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     private ProductsFragment products = new ProductsFragment();
     private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
     private ProfileFragment profile = new ProfileFragment();
+    private HealthFragment health = new HealthFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -113,7 +114,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 break;
             case 2:
                 mTitle = getString(R.string.account_health_page);
-                fragmentManager.beginTransaction().replace(R.id.container, new Fragment(), mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, health, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 3:
                 mTitle = getString(R.string.notifications_page);
