@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-
-
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <color android:color="@color/lloyds_lightergreen_moreTransparent"/>
+    </item>
     <item android:id="@android:id/progress">
         <clip>
-            <shape>
-                <corners android:radius="5dip" />
-
-                <solid android:color="@color/lloyds_lightergreen" />
-            </shape>
+            <color android:color="@color/lloyds_lightergreen"/>
         </clip>
-
-        <color android:color="@color/lloyds_lightergreen" />
     </item>
-
 </layer-list>
+

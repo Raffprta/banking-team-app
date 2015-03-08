@@ -1,77 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/paymentConfirmScrollView"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/background">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@color/lloyds_lightergreen_transparent">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/lloyds_white" >
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="#ffffcb28" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Your Account&apos;s Health"
-                android:id="@+id/textView75"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp" />
-
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:paddingTop="15dp"
-                android:paddingRight="15dp"
-                android:progress="50"
-                android:progressDrawable="@drawable/hpbar"
-                android:layout_below="@+id/textView75"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:focusableInTouchMode="true" />
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/lloyds_white" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Current Goals"
-                android:id="@+id/textView76"
-                android:layout_below="@+id/progressBar"
-                android:layout_centerHorizontal="true" />
+                <ProgressBar
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:paddingTop="15dp"
+                    android:progress="25"
+                    android:progressDrawable="@drawable/hpbar"
+                    android:layout_below="@+id/textView75"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:indeterminate="false" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Spend:"
-                android:id="@+id/textView77"
-                android:layout_below="@+id/textView76"
-                android:layout_alignLeft="@+id/progressBar"
-                android:layout_alignStart="@+id/progressBar" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Your Account&apos;s Health"
+                    android:id="@+id/textView75"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lloyds_lightergreen" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Current Goals"
+                    android:id="@+id/textView76"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/lloyds_lightgreen"
+                    android:layout_marginBottom="10dp" />
 
-    </GridLayout>
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Spend:"
+                    android:id="@+id/textView77"
+                    android:layout_below="@+id/textView86"
+                    android:layout_alignLeft="@+id/textView86"
+                    android:layout_alignStart="@+id/textView86" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Save:"
+                    android:id="@+id/textView78"
+                    android:layout_below="@+id/spendProgressBar"
+                    android:layout_alignLeft="@+id/spendProgressBar"
+                    android:layout_alignStart="@+id/spendProgressBar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Overdraft:"
+                    android:id="@+id/textView79"
+                    android:layout_below="@+id/saveProgressBar"
+                    android:layout_alignLeft="@+id/textView78"
+                    android:layout_alignStart="@+id/textView78" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Donate:"
+                    android:id="@+id/textView80"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_below="@+id/overdraftProgressBar"
+                    android:layout_alignLeft="@+id/overdraftProgressBar"
+                    android:layout_alignStart="@+id/overdraftProgressBar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£25.00"
+                    android:id="@+id/textView82"
+                    android:layout_alignBottom="@+id/textView77"
+                    android:layout_toRightOf="@+id/textView77"
+                    android:layout_toEndOf="@+id/textView77" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£10.00"
+                    android:id="@+id/textView83"
+                    android:layout_alignBottom="@+id/textView78"
+                    android:layout_toRightOf="@+id/textView78"
+                    android:layout_toEndOf="@+id/textView78" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£--"
+                    android:id="@+id/textView84"
+                    android:layout_alignBottom="@+id/textView79"
+                    android:layout_toRightOf="@+id/textView79"
+                    android:layout_toEndOf="@+id/textView79" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£3.00"
+                    android:id="@+id/textView85"
+                    android:layout_alignBottom="@+id/textView80"
+                    android:layout_toRightOf="@+id/textView80"
+                    android:layout_toEndOf="@+id/textView80"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Set for:"
+                    android:id="@+id/textView86"
+                    android:layout_alignTop="@+id/textView87"
+                    android:layout_alignLeft="@+id/progressBar"
+                    android:layout_alignStart="@+id/progressBar"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="per month"
+                    android:id="@+id/textView87"
+                    android:layout_below="@+id/textView76"
+                    android:layout_toRightOf="@+id/textView86"
+                    android:layout_toEndOf="@+id/textView86" />
+
+                <ProgressBar
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spendProgressBar"
+                    android:layout_below="@+id/textView82"
+                    android:layout_alignLeft="@+id/textView77"
+                    android:layout_alignStart="@+id/textView77"
+                    android:layout_marginBottom="10dp"
+                    android:progress="85"
+                    android:indeterminate="false"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/saveProgressBar"
+                    android:layout_below="@+id/textView78"
+                    android:layout_alignLeft="@+id/textView78"
+                    android:layout_alignStart="@+id/textView78"
+                    android:indeterminate="false" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/overdraftProgressBar"
+                    android:indeterminate="false"
+                    android:layout_below="@+id/textView79"
+                    android:layout_alignLeft="@+id/textView79"
+                    android:layout_alignStart="@+id/textView79" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/donateProgressBar"
+                    android:layout_below="@+id/textView80"
+                    android:layout_alignLeft="@+id/textView80"
+                    android:layout_alignStart="@+id/textView80"
+                    android:indeterminate="false" />
+
+            </RelativeLayout>
+
+        </GridLayout>
+
+    </LinearLayout>
 </ScrollView>
