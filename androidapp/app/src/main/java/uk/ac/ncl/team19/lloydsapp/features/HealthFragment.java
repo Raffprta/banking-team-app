@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 /**
  * @author Raffaello Perrota, XML by Yessengerey Bolatov.
@@ -28,11 +29,12 @@ public class HealthFragment extends Fragment {
         // Get the Health Bar.
         final ProgressBar hpBar = (ProgressBar) healthView.findViewById(R.id.progressBar);
 
-        if(hpBar.getProgress() >= 75){
+        // Determine what colour to set.
+        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
-        }else if(hpBar.getProgress() >= 50 && hpBar.getProgress() < 75){
+        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
-        }else if(hpBar.getProgress() >= 25 && hpBar.getProgress() < 50){
+        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
         }else{
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
