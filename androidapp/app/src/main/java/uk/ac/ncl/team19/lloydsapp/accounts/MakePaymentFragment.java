@@ -30,8 +30,15 @@ public class MakePaymentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
+
+                // Check validation conditions
+
+
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new PaymentConfirmFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+
+
             }
         });
 

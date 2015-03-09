@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -27,20 +26,25 @@ public class SecurityActivity extends FragmentActivity {
                 // UI effects.
                 GraphicsUtils.buttonClickEffectShow(v);
 
-                String secondCharacter = ((EditText)findViewById(R.id.codeOne)).getText().toString();
-                String fourthCharacter = ((EditText)findViewById(R.id.codeTwo)).getText().toString();
-                String sixthCharacter = ((EditText)findViewById(R.id.codeThree)).getText().toString();
+                EditText secondCharacter = ((EditText)findViewById(R.id.codeOne));
+                EditText fourthCharacter = ((EditText)findViewById(R.id.codeTwo));
+                EditText sixthCharacter = ((EditText)findViewById(R.id.codeThree));
 
-                // Check if the user entered a character.
+                // Check if the user entered a character. If not set the error message.
+                if(secondCharacter == null || secondCharacter.getText().length() <= 0){
+                    secondCharacter.setError(getString(R.string.err_empty_sec));
+                    GraphicsUtils.buttonClickEffectHide(v);
+                    return;
+                }
 
-                if(secondCharacter == null || fourthCharacter == null || sixthCharacter == null
-                   || secondCharacter.length() <= 0 || fourthCharacter.length() <= 0 || sixthCharacter.length() <= 0){
-                    Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), getString(R.string.err_empty_sec));
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
-                    CustomDialog custom = new CustomDialog();
-                    custom.setArguments(b);
-                    custom.show(getSupportFragmentManager(), "Custom Dialog");
+                if(fourthCharacter == null || fourthCharacter.getText().length() <= 0){
+                    fourthCharacter.setError(getString(R.string.err_empty_sec));
+                    GraphicsUtils.buttonClickEffectHide(v);
+                    return;
+                }
+
+                if(sixthCharacter == null || sixthCharacter.getText().length() <= 0){
+                    sixthCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }

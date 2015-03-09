@@ -109,7 +109,13 @@
     <string name="custom_colour_type_red">RED</string>
 
     <string name="login_user_bundle">LOGIN</string>
-    <string name="login_pass_bundle">LOGIN</string>
+    <string name="login_pass_bundle">PASS</string>
+
+    <string name="from_account_pay_bundle">FROM_ACC</string>
+    <string name="to_name_pay_bundle">TO_NAME</string>
+    <string name="acc_no_pay_bundle">ACC_NO</string>
+    <string name="sort_code_pay_bundle">SORT_CODE</string>
+    <string name="amount_pay_bundle">AMOUNT</string>
 
 
     <!-- Help manual Strings -->
@@ -130,10 +136,9 @@
     <string name="sp_bio">BIO</string>
 
     <!-- Login / Security error messages -->
-    <string name="err_empty_login">Your username or password could not be resolved. This is likely
-        because you left either field empty. Please enter your login details correctly.</string>
-    <string name="err_empty_sec">Your security details could not be resolved. This is likely
-        because you left one of the character boxes empty. Please enter your security details correctly.</string>
+    <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
+    <string name="err_empty_pass">Your password cannot be empty. Please enter your password correctly.</string>
+    <string name="err_empty_sec">This field cannot be empty. Please enter your indicated character from your security phrase.</string>
 
 </resources>
 

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -26,26 +25,28 @@ public class LoginActivity extends FragmentActivity {
             public void onClick(View v) {
 
                 // Check if the user entered anything.
-                String username = ((EditText)findViewById(R.id.userID)).getText().toString();
-                String password = ((EditText)findViewById(R.id.userPass)).getText().toString();
+                EditText username = ((EditText)findViewById(R.id.userID));
+                EditText password = ((EditText)findViewById(R.id.userPass));
 
-                // Display error if nothing was entered.
-                if(username == null || password == null || username.length() <= 0 || password.length() <= 0){
-                    Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), getString(R.string.err_empty_login));
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
-                    CustomDialog custom = new CustomDialog();
-                    custom.setArguments(b);
-                    custom.show(getSupportFragmentManager(), "Custom Dialog");
+                // Display error if nothing was entered in the username.
+                if(username.getText().toString() == null || username.getText().toString().length() <= 0){
+                    username.setError(getString(R.string.err_empty_login));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
+                // Idem for the password
+                if(password.getText().toString() == null || password.getText().toString().length() <= 0){
+                    password.setError(getString(R.string.err_empty_pass));
+                    GraphicsUtils.buttonClickEffectHide(v);
+                    return;
+                }
+
                 // UI effects.
                 GraphicsUtils.buttonClickEffectShow(v);
                 /// Pass login credentials to the security intent for login.
                 Bundle b = new Bundle();
-                b.putString(getString(R.string.login_user_bundle), username);
-                b.putString(getString(R.string.login_pass_bundle), password);
+                b.putString(getString(R.string.login_user_bundle), username.getText().toString());
+                b.putString(getString(R.string.login_pass_bundle), password.getText().toString());
 
                 Intent securityIntent = new Intent(LoginActivity.this, SecurityActivity.class);
                 // Pass the bundle to the Intent.
