@@ -28,7 +28,7 @@ public class LoginActivity extends FragmentActivity {
                 // Check if the user entered anything.
                 String username = ((EditText)findViewById(R.id.userID)).getText().toString();
                 String password = ((EditText)findViewById(R.id.userPass)).getText().toString();
-                
+
                 // Display error if nothing was entered.
                 if(username == null || password == null || username.length() <= 0 || password.length() <= 0){
                     Bundle b = new Bundle();

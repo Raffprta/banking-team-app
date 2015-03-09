@@ -97,6 +97,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             }
         });
 
+        profileView.findViewById(R.id.accountHealth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphicsUtils.buttonClickEffectShow(v);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(getString(R.string.account_health_page)).commit();
+
+            }
+        });
+
         profileView.findViewById(R.id.googlePlaySignIn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
