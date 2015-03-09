@@ -158,7 +158,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Leaderboard "
+                android:text="Leaderboard"
                 android:id="@+id/googlePlayLeaderboard"
                 android:layout_row="5"
                 android:layout_column="0"
