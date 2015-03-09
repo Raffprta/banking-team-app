@@ -108,6 +108,9 @@
     <string name="custom_type_bundle">TYPE</string>
     <string name="custom_colour_type_red">RED</string>
 
+    <string name="login_user_bundle">LOGIN</string>
+    <string name="login_pass_bundle">LOGIN</string>
+
 
     <!-- Help manual Strings -->
 
@@ -125,6 +128,12 @@
     <!-- Shared preferences Key Strings -->
     <string name="sp_status">STATUS</string>
     <string name="sp_bio">BIO</string>
+
+    <!-- Login / Security error messages -->
+    <string name="err_empty_login">Your username or password could not be resolved. This is likely
+        because you left either field empty. Please enter your login details correctly.</string>
+    <string name="err_empty_sec">Your security details could not be resolved. This is likely
+        because you left one of the character boxes empty. Please enter your security details correctly.</string>
 
 </resources>
 
