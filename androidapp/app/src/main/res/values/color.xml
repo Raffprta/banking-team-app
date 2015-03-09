@@ -16,4 +16,7 @@
 
     <color name="lloyds_orange">#fff4690c</color>
 
+    <!-- Custom colours for goals -->
+    <color name="lloyds_goals_orange">#ffffcb28</color>
+    <color name="lloyds_goals_orange_transparent">#33ffcb28</color>
 </resources>
