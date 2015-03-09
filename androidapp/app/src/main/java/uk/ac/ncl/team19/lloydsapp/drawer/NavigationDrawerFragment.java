@@ -3,6 +3,7 @@ package uk.ac.ncl.team19.lloydsapp.drawer;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -61,6 +63,8 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    private boolean iconsAdded = false;
+
     public NavigationDrawerFragment() {
     }
 
@@ -97,12 +101,14 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.addHeaderView(header);
+
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 R.layout.custom_drawer,
@@ -164,6 +170,12 @@ public class NavigationDrawerFragment extends Fragment {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                if(!iconsAdded){
+                    // Set the icons
+                    setDrawerMenuIcons();
+                    iconsAdded = true;
+                }
+
                 super.onDrawerOpened(drawerView);
                 if (!isAdded()) {
                     return;
@@ -188,6 +200,7 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.openDrawer(mFragmentContainerView);
         }
 
+
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
             @Override
@@ -195,7 +208,9 @@ public class NavigationDrawerFragment extends Fragment {
                 mDrawerToggle.syncState();
             }
         });
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
     }
 
     private void selectItem(int position) {
@@ -290,4 +305,43 @@ public class NavigationDrawerFragment extends Fragment {
          */
         void onNavigationDrawerItemSelected(int position);
     }
+
+    public ListView getDrawerListView(){
+        return mDrawerListView;
+    }
+
+    /**
+     * Set custom icons to drawer menu layouts.
+     */
+    private void setDrawerMenuIcons(){
+
+        /**
+         * Note some of the icons here are attributed to as per the LICENSE file:
+         *
+         * The icons in this ZIP file were downloaded from http://icons4android.com
+         * All icons are licensed under Creative Commons Attribution-Non-Commercial 3.0 Netherlands
+         * (http://creativecommons.org/licenses/by-nc/3.0/nl/deed.en_GB)
+         * Please note that one condition of this license is attribution.
+         * If you use these icons in your project(s), you must add a link to
+         * http://somerandomdude.com/work/iconic/ on your website or playstore site.
+         */
+
+        Drawable[] resourceArray = {
+                getResources().getDrawable(R.drawable.ic_action_money),
+                getResources().getDrawable(R.drawable.ic_action_health),
+                getResources().getDrawable(R.drawable.ic_action_about),
+                getResources().getDrawable(R.drawable.ic_action_shop),
+                getResources().getDrawable(R.drawable.ic_action_good),
+                getResources().getDrawable(R.drawable.ic_action_map),
+                getResources().getDrawable(R.drawable.ic_action_secure)};
+
+        // For each child layout, other than the header layout set the drawable from the array
+        for(int i = 1; i < getDrawerListView().getChildCount(); i++){
+            ImageView icon = (ImageView) getDrawerListView().getChildAt(i).findViewById(R.id.drawerIcon);
+            icon.setImageDrawable(resourceArray[i-1]);
+        }
+
+
+    }
+
 }
