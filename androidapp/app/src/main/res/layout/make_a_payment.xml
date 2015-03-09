@@ -36,7 +36,7 @@
                     android:textColor="@color/lloyds_lightergreen" />
 
                 <Spinner
-                    android:id="@+id/spinner2"
+                    android:id="@+id/accountsSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/user_accounts"
@@ -75,10 +75,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="e.g. John Smith"
                     android:ems="10"
-                    android:id="@+id/editText3"
-                    android:layout_column="1" />
+                    android:id="@+id/toName"
+                    android:layout_column="1"
+                    android:hint="e.g. John Smith" />
             </TableRow>
 
             <TableRow
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/editText10"
+                    android:id="@+id/accountNumberPayment"
                     android:layout_column="1" />
             </TableRow>
 
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/editText11"
+                    android:id="@+id/sortCodePayment"
                     android:layout_column="1" />
             </TableRow>
 
@@ -151,9 +151,9 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/editText4"
+                    android:id="@+id/amountPayment"
                     android:layout_column="1" />
             </TableRow>
 

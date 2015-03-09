@@ -140,5 +140,13 @@
     <string name="err_empty_pass">Your password cannot be empty. Please enter your password correctly.</string>
     <string name="err_empty_sec">This field cannot be empty. Please enter your indicated character from your security phrase.</string>
 
+    <!-- Payment / Transfer error messages -->
+    <string name="err_acc_name_empty">This field cannot be empty. Please enter the payee\'s name.</string>
+    <string name="err_acc_len_not_eight">The account number must be 8 digits long.</string>
+    <string name="err_acc_not_no">The account number must only contain numerical digits.</string>
+    <string name="err_acc_not_six">The sort-code must be six digits long.</string>
+    <string name="err_sc_not_no">The sort-code must only contain numerical digits or dashes.</string>
+    <string name="err_payment_empty">The payment must not be empty. Please enter an amount to pay.</string>
+
 </resources>
 
