@@ -160,6 +160,7 @@ public class NavigationDrawerFragment extends Fragment {
         ) {
             @Override
             public void onDrawerClosed(View drawerView) {
+
                 super.onDrawerClosed(drawerView);
                 if (!isAdded()) {
                     return;
@@ -170,11 +171,6 @@ public class NavigationDrawerFragment extends Fragment {
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if(!iconsAdded){
-                    // Set the icons
-                    setDrawerMenuIcons();
-                    iconsAdded = true;
-                }
 
                 super.onDrawerOpened(drawerView);
                 if (!isAdded()) {
@@ -206,6 +202,11 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void run() {
                 mDrawerToggle.syncState();
+                if(!iconsAdded){
+                    // Set the icons
+                    setDrawerMenuIcons();
+                    iconsAdded = true;
+                }
             }
         });
 

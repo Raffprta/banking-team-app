@@ -39,6 +39,7 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/drawerIcon"
                 android:layout_marginRight="10dp"
+                android:src="@drawable/ic_action_secure"
                  />
         </LinearLayout>
     </LinearLayout>
