@@ -11,10 +11,11 @@
 
 
         <GridLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:background="#ffffcb28" >
+            android:background="@color/lloyds_lightergreen_transparent"
+            android:id="@+id/accountHealthGridLayout">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -27,8 +28,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/progressBar"
-                    android:layout_row="0"
-                    android:layout_column="1"
                     android:paddingTop="15dp"
                     android:progress="25"
                     android:progressDrawable="@drawable/hpbar"
@@ -177,38 +176,68 @@
                     android:layout_alignStart="@+id/textView77"
                     android:layout_marginBottom="10dp"
                     android:progress="85"
+                    android:progressDrawable="@drawable/goalsbar_style"
                     android:indeterminate="false"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp" />
 
                 <ProgressBar
-                    android:layout_width="wrap_content"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/saveProgressBar"
                     android:layout_below="@+id/textView78"
                     android:layout_alignLeft="@+id/textView78"
                     android:layout_alignStart="@+id/textView78"
-                    android:indeterminate="false" />
+                    android:progress="45"
+                    android:progressDrawable="@drawable/goalsbar_style"
+                    android:indeterminate="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp" />
 
                 <ProgressBar
-                    android:layout_width="wrap_content"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/overdraftProgressBar"
                     android:indeterminate="false"
                     android:layout_below="@+id/textView79"
                     android:layout_alignLeft="@+id/textView79"
-                    android:layout_alignStart="@+id/textView79" />
+                    android:layout_alignStart="@+id/textView79"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/goalsbar_style"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp" />
 
                 <ProgressBar
-                    android:layout_width="wrap_content"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/donateProgressBar"
+                    android:progress="65"
+                    android:progressDrawable="@drawable/goalsbar_style"
                     android:layout_below="@+id/textView80"
                     android:layout_alignLeft="@+id/textView80"
                     android:layout_alignStart="@+id/textView80"
-                    android:indeterminate="false" />
+                    android:indeterminate="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp" />
 
             </RelativeLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Goals"
+                android:id="@+id/button"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:background="@color/lloyds_acc_info_green_button"
+                android:textColor="@color/lloyds_white"
+                android:layout_margin="5dp" />
 
         </GridLayout>
 
