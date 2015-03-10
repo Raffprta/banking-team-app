@@ -288,6 +288,17 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        // Get the sign in button.
+        View v = profileView.findViewById(R.id.googlePlaySignIn);
+
+        // Hide button effects
+        GraphicsUtils.buttonClickEffectHide(v);
+
+        // Debug
+        Log.i("Google Play", "Services Connected.");
+
+        // Remove loading bar
+        ProgressDialog.removeLoading(ProfileFragment.this);
 
         if (mResolvingConnectionFailure) {
             // already resolving
@@ -305,6 +316,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             if (!BaseGameUtils.resolveConnectionFailure(this.getActivity(),
                     mGoogleApiClient, connectionResult,
                     RC_SIGN_IN, getString(R.string.gamehelper_sign_in_failed))) {
+
                 mResolvingConnectionFailure = false;
             }
         }
