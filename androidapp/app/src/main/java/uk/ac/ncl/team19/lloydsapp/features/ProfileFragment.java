@@ -294,9 +294,6 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Hide button effects
         GraphicsUtils.buttonClickEffectHide(v);
 
-        // Debug
-        Log.i("Google Play", "Services Connected.");
-
         // Remove loading bar
         ProgressDialog.removeLoading(ProfileFragment.this);
 

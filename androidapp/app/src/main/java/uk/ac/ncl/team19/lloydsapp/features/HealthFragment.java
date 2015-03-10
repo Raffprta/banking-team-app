@@ -2,6 +2,7 @@ package uk.ac.ncl.team19.lloydsapp.features;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrota, XML by Yessengerey Bolatov.
@@ -49,6 +51,24 @@ public class HealthFragment extends Fragment {
                 CustomDialog custom = new CustomDialog();
                 custom.setArguments(b);
                 custom.show(getChildFragmentManager(), "Custom Dialog");
+            }
+        });
+
+        healthView.findViewById(R.id.backToProfileFromHealth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphicsUtils.buttonClickEffectShow(v);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new ProfileFragment()).addToBackStack(getString(R.string.account_health_page)).commit();
+            }
+        });
+
+        healthView.findViewById(R.id.setGoals).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphicsUtils.buttonClickEffectShow(v);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(getString(R.string.account_health_page)).commit();
             }
         });
 
