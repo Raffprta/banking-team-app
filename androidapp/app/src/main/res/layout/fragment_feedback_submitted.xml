@@ -5,20 +5,39 @@
     android:background="@drawable/background"
     android:gravity="center">
 
+    <GridLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="65dp"
+    android:background="@color/lloyds_lightergreen"
+    android:id="@+id/rateExperenceBackground">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/lloyds_white"
+        android:layout_gravity="center"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp">
     <TextView
         android:layout_width="312dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/submit_success"
         android:id="@+id/submittedTextView"
-        android:textSize="50sp"
+        android:textSize="40dp"
         android:textColor="@color/lloyds_lightergreen" />
+
+   </GridLayout>
+</GridLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back_to_profile"
-        android:background="@color/lloyds_darkgreen"
+        android:background="@color/lloyds_acc_info_green_button"
         android:textColor="#ffffffff"
         android:layout_marginTop="20dp"
         android:padding="10dp"
