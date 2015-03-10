@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.features.HealthFragment;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -27,7 +28,7 @@ public class AccountsInfoFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).commit();
             }
         });
 
@@ -37,6 +38,15 @@ public class AccountsInfoFragment extends Fragment {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, new TransferFundsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+            }
+        });
+
+        accountsInfoView.findViewById(R.id.accountHealthButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphicsUtils.buttonClickEffectShow(v);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 

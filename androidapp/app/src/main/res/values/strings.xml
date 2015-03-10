@@ -113,8 +113,8 @@
 
     <string name="from_account_pay_bundle">FROM_ACC</string>
     <string name="to_name_pay_bundle">TO_NAME</string>
-    <string name="acc_no_pay_bundle">ACC_NO</string>
-    <string name="sort_code_pay_bundle">SORT_CODE</string>
+    <string name="acc_no_pay_bundle">ACC_NO_TO</string>
+    <string name="sort_code_pay_bundle">SORT_CODE_TO</string>
     <string name="amount_pay_bundle">AMOUNT</string>
 
 

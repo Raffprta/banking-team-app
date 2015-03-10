@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Current Account"
-                    android:id="@+id/textView65"
+                    android:id="@+id/accountTypeSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="12345678"
-                    android:id="@+id/textView60"
+                    android:id="@+id/accountNumberSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="00-00-00"
-                    android:id="@+id/textView61"
+                    android:id="@+id/sortCodeSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Josh Whale"
-                    android:id="@+id/textView71"
+                    android:id="@+id/nameSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -191,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="87654321"
-                    android:id="@+id/textView62"
+                    android:id="@+id/accountNumberToSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="00-00-00"
-                    android:id="@+id/textView63"
+                    android:id="@+id/sortCodeSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="£100.99"
-                    android:id="@+id/textView28"
+                    android:id="@+id/amountSuccess"
                     android:layout_column="1"
                     android:layout_marginLeft="10dp" />
             </TableRow>

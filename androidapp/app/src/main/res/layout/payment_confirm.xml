@@ -68,7 +68,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="Current Account"
-                            android:id="@+id/textView37"
+                            android:id="@+id/accountTypeConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -97,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="12345678"
-                            android:id="@+id/textView66"
+                            android:id="@+id/accountNoConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -126,7 +126,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:id="@+id/textView67"
+                            android:id="@+id/sortCodeConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -163,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="Josh Whale"
-                            android:id="@+id/textView34"
+                            android:id="@+id/nameToConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="87654321"
-                            android:id="@+id/textView68"
+                            android:id="@+id/accountNoToConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -220,7 +220,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:id="@+id/textView69"
+                            android:id="@+id/sortCodeToConfirm"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -243,7 +243,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="£100.99"
-                            android:id="@+id/textView35"
+                            android:id="@+id/amountConfirm"
                             android:layout_column="1"
                             android:layout_marginLeft="10dp" />
 
