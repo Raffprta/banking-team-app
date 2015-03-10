@@ -6,6 +6,7 @@
     <color name="lloyds_lightergreen">#6ACA25</color>
 
     <color name="lloyds_darkgreen_menu">#0a523c</color>
+
     <!-- Custom colour -->
     <color name="lloyds_acc_info_lightgreen_blue_button">#ff34ae80</color>
     <color name="lloyds_lightergreen_transparent">#806ACA25</color>
@@ -15,7 +16,6 @@
     <color name="lloyds_white">#ffffffff</color>
 
     <color name="lloyds_orange">#fff4690c</color>
-
     <!-- Custom colours for goals -->
     <color name="lloyds_goals_orange">#ffffcb28</color>
     <color name="lloyds_goals_orange_transparent">#33ffcb28</color>
