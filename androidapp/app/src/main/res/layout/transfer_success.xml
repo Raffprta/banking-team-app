@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Medium Text"
-                        android:id="@+id/textView59"
+                        android:id="@+id/transferAccountTypeSuccessFrom"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -74,12 +74,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="12345678"
                         android:ems="10"
-                        android:id="@+id/editText17"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/transferAccountNoFrom"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -101,12 +102,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00-00-00"
                         android:ems="10"
-                        android:id="@+id/editText18"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/transferSortcodeFrom"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -128,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Account Number"
-                        android:id="@+id/textView55"
+                        android:id="@+id/transferAccountTypeSuccessTo"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
                 </TableRow>
@@ -137,12 +139,26 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <EditText
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Account Number"
+                        android:id="@+id/texty"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="87654321"
                         android:ems="10"
-                        android:id="@+id/editText19"
+                        android:id="@+id/transferAccountNoTo"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -164,12 +180,13 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" >
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00-00-00"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:ems="10"
-                        android:id="@+id/editText20"
+                        android:id="@+id/transferSortcodeTo"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -191,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="$100.99"
-                        android:id="@+id/textView58"
+                        android:id="@+id/transferPaymentSuccess"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
                 </TableRow>

@@ -83,6 +83,13 @@ public class MakePaymentFragment extends Fragment {
                     return;
                 }
 
+                // Check if GBP decimal or otherwise is entered
+                if(!amountToPay.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")){
+                    amountToPay.setError(getString(R.string.err_payment_wrong_form));
+                    GraphicsUtils.buttonClickEffectHide(v);
+                    return;
+                }
+
                 // If all validation conditions passed, then set a Bundle of information to pass.
                 Bundle b = new Bundle();
                 b.putDouble(getString(R.string.amount_pay_bundle), Double.parseDouble(amountToPay.getText().toString()));

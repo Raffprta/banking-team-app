@@ -117,6 +117,10 @@
     <string name="sort_code_pay_bundle">SORT_CODE_TO</string>
     <string name="amount_pay_bundle">AMOUNT</string>
 
+    <string name="from_account_transfer_bundle">FROM_ACC_TRANS</string>
+    <string name="to_account_transfer_bundle">TO_ACC_TRANS</string>
+    <string name="amount_transfer_bundle">AMOUNT_TRANS</string>
+
 
     <!-- Help manual Strings -->
 
@@ -153,6 +157,7 @@
     <string name="err_acc_not_six">The sort-code must be six digits long.</string>
     <string name="err_sc_not_no">The sort-code must only contain numerical digits or dashes.</string>
     <string name="err_payment_empty">The payment must not be empty. Please enter an amount to pay.</string>
+    <string name="err_payment_wrong_form">The payment must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
 
 </resources>
 

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
@@ -21,6 +22,19 @@ public class TransferSuccessfulFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         View transferSuccessView = inflater.inflate(R.layout.transfer_success, container, false);
+
+        TextView accountTypeFrom = (TextView)transferSuccessView.findViewById(R.id.transferAccountTypeSuccessFrom);
+        TextView accountNoFrom = (TextView)transferSuccessView.findViewById(R.id.transferAccountNoFrom);
+        TextView accountSortCodeFrom = (TextView)transferSuccessView.findViewById(R.id.transferSortcodeFrom);
+        TextView accountTypeTo = (TextView)transferSuccessView.findViewById(R.id.transferAccountTypeSuccessTo);
+        TextView accountNoTo = (TextView)transferSuccessView.findViewById(R.id.transferAccountNoTo);
+        TextView accountSortCodeTo = (TextView)transferSuccessView.findViewById(R.id.transferSortcodeTo);
+        TextView paymentAmount = (TextView)transferSuccessView.findViewById(R.id.transferPaymentSuccess);
+
+        // Set values taken from bundle, TODO account numbers and sort code are from the API.
+        accountTypeFrom.setText(this.getArguments().getString(getString(R.string.from_account_transfer_bundle)));
+        accountTypeTo.setText(this.getArguments().getString(getString(R.string.to_account_transfer_bundle)));
+        paymentAmount.setText(Double.toString(this.getArguments().getDouble(getString(R.string.amount_transfer_bundle))));
 
         transferSuccessView.findViewById(R.id.backToAccount).setOnClickListener(new View.OnClickListener() {
             @Override
