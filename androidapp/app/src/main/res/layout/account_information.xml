@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollView"
     android:layout_centerHorizontal="true"
-    android:layout_alignParentTop="true" >
+    android:layout_alignParentTop="true"
+    android:background="@drawable/background">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:background="@drawable/background">
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
         <GridLayout
             android:layout_width="wrap_content"
@@ -173,27 +173,6 @@
             <Button
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
-                android:text="@string/account_info_acc_button"
-                android:id="@+id/accountDetailsButton"
-                android:background="@color/lloyds_acc_info_green_button"
-                android:textColor="#ffffffff"
-                android:paddingLeft="10dp"
-                android:paddingTop="0dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="0dp"
-                android:layout_alignTop="@+id/makeTransfer"
-                android:layout_alignLeft="@+id/makeTransaction"
-                android:layout_alignStart="@+id/makeTransaction"
-                android:layout_alignRight="@+id/makeTransaction"
-                android:layout_alignEnd="@+id/makeTransaction"
-                android:layout_row="5"
-                android:layout_column="0"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="12dp" />
-
-            <Button
-                android:layout_width="290dp"
-                android:layout_height="wrap_content"
                 android:text="Account Health"
                 android:id="@+id/accountHealthButton"
                 android:layout_row="4"
@@ -204,7 +183,7 @@
                 android:paddingTop="0dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="0dp"
-                android:background="@color/lloyds_orange"
+                android:background="@color/lloyds_acc_info_green_button"
                 android:textColor="@color/lloyds_white" />
         </GridLayout>
 

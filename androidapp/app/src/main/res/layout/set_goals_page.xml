@@ -5,18 +5,20 @@
     android:background="@drawable/background">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
         <GridLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/lloyds_lightergreen_transparent"
-            android:id="@+id/accountHealthGridLayout">
+            android:id="@+id/accountHealthGridLayout"
+            android:layout_weight="2.81">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/lloyds_white"
                 android:layout_row="0"
@@ -27,22 +29,213 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Set Your Goals"
-                    android:id="@+id/textView81"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:id="@+id/setYourGoalsTextView"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lloyds_lightergreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Spend:"
+                    android:id="@+id/setGoalsSpendTextView"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:textColor="@color/lloyds_darkgreen"
+                    android:layout_below="@+id/setForGoalsTextView"
+                    android:layout_alignLeft="@+id/setGoalsSaveTextView"
+                    android:layout_alignStart="@+id/setGoalsSaveTextView"
+                    android:layout_marginTop="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Save:"
+                    android:id="@+id/setGoalsSaveTextView"
+                    android:layout_below="@+id/setGoalsSpendTextView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText"
+                    android:layout_alignBottom="@+id/setGoalsSpendTextView"
+                    android:layout_toRightOf="@+id/textView35"
+                    android:layout_alignRight="@+id/setYourGoalsTextView"
+                    android:layout_alignEnd="@+id/setYourGoalsTextView"
+                    android:hint="e.g. 5.00"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£"
+                    android:id="@+id/textView35"
+                    android:layout_above="@+id/editText2"
+                    android:layout_toRightOf="@+id/setGoalsOverdraftTextView"
+                    android:layout_toEndOf="@+id/setGoalsOverdraftTextView"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£"
+                    android:id="@+id/poundsSignSave"
+                    android:layout_alignTop="@+id/setGoalsSaveTextView"
+                    android:layout_alignLeft="@+id/textView35"
+                    android:layout_alignStart="@+id/textView35" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText2"
+                    android:layout_below="@+id/editText"
+                    android:layout_toRightOf="@+id/poundsSignSave"
+                    android:layout_alignRight="@+id/editText"
+                    android:layout_alignEnd="@+id/editText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Overdraft:"
+                    android:id="@+id/setGoalsOverdraftTextView"
+                    android:layout_below="@+id/setGoalsSaveTextView"
+                    android:layout_alignLeft="@+id/setGoalsSaveTextView"
+                    android:layout_alignStart="@+id/setGoalsSaveTextView"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="£"
+                    android:id="@+id/textView34"
+                    android:layout_alignTop="@+id/setGoalsOverdraftTextView"
+                    android:layout_alignLeft="@+id/poundsSignSave"
+                    android:layout_alignStart="@+id/poundsSignSave" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText3"
+                    android:layout_alignBottom="@+id/textView34"
+                    android:layout_alignRight="@+id/setYourGoalsTextView"
+                    android:layout_alignEnd="@+id/setYourGoalsTextView"
+                    android:layout_toRightOf="@+id/poundsSignSave"
+                    android:layout_toEndOf="@+id/poundsSignSave" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Donate:"
+                    android:id="@+id/setGoalsDonateTextView"
+                    android:layout_below="@+id/setGoalsOverdraftTextView"
+                    android:layout_alignLeft="@+id/setGoalsOverdraftTextView"
+                    android:layout_alignStart="@+id/setGoalsOverdraftTextView"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    android:id="@+id/setGoalsYesCheckBox"
+                    android:layout_alignTop="@+id/setGoalsDonateTextView"
+                    android:layout_alignLeft="@+id/textView34"
+                    android:layout_alignStart="@+id/textView34"
+                    android:checked="false" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"
+                    android:id="@+id/setGoalsNoCheckBox"
+                    android:checked="true"
+                    android:layout_alignTop="@+id/setGoalsYesCheckBox"
+                    android:layout_alignRight="@+id/setYourGoalsTextView"
+                    android:layout_alignEnd="@+id/setYourGoalsTextView"
+                    android:clickable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Set for:"
+                    android:id="@+id/setForGoalsTextView"
+                    android:layout_below="@+id/setYourGoalsTextView"
+                    android:layout_alignLeft="@+id/setGoalsSpendTextView"
+                    android:layout_alignStart="@+id/setGoalsSpendTextView"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner2"
+                    android:entries="@array/set_for_period_goals"
+                    android:layout_alignTop="@+id/setForGoalsTextView"
+                    android:layout_alignLeft="@+id/textView35"
+                    android:layout_alignStart="@+id/textView35"
+                    android:layout_alignBottom="@+id/setForGoalsTextView"
+                    android:layout_alignRight="@+id/setYourGoalsTextView"
+                    android:layout_alignEnd="@+id/setYourGoalsTextView" />
 
             </RelativeLayout>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button3"
+                android:text="Set Goals"
+                android:id="@+id/setGoalsButton"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_row="1"
-                android:layout_column="0" />
+                android:layout_row="2"
+                android:layout_column="0"
+                android:background="@color/lloyds_white"
+                android:textColor="@color/lloyds_orange"
+                android:layout_margin="5dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:id="@+id/resetGoalsButton"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
+                android:background="@color/lloyds_white"
+                android:textColor="@color/lloyds_acc_info_green_button" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:id="@+id/cancelGoalsButton"
+                android:layout_row="4"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/lloyds_acc_info_green_button"
+                android:layout_margin="5dp"
+                android:textColor="@color/lloyds_white" />
 
         </GridLayout>
 

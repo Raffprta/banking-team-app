@@ -120,7 +120,13 @@
 
     <!-- Help manual Strings -->
 
-    <!-- Drop Down menu strings -->
+    <!-- Drop down menu strings for setting goals page -->
+    <string-array name="set_for_period_goals">
+        <item>Month</item>
+        <item>Week</item>
+    </string-array>
+
+    <!-- Drop Down menu strings list of accounts -->
     <string-array name="user_accounts">
         <item>Current Account</item>
         <item>eSavings Account</item>
