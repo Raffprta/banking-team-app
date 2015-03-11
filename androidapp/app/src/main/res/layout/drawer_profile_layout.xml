@@ -8,28 +8,30 @@
         android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_material_dark"
+        android:background="@color/lloyds_acc_info_green_button"
         android:paddingBottom="20dp">
 
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/profile_icon"
+            android:src="@drawable/ic_launcher"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            android:background="#ffffde40" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/lloyds_lightergreen">
 
             <TextView
                 android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="@string/profile_page"
+                android:text="John"
                 android:textStyle="bold"
                 android:textSize="40sp"
                 android:textColor="@color/lloyds_white"
