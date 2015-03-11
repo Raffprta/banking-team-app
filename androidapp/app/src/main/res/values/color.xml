@@ -17,6 +17,8 @@
     <color name="lloyds_acc_info_green_button_transparent">#330b8b07</color>
     <color name="lloyds_white">#ffffffff</color>
     <color name="lloyds_orange">#fff4690c</color>
+    <color name="lloyds_orange_transparent">#33f4690c</color>
+    <color name="lloyds_holo_dark_red_transparent">#33cc0000</color>
 
     <!-- Custom colours for goals -->
     <color name="lloyds_goals_orange">#ffffcb28</color>

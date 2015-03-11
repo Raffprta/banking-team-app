@@ -70,7 +70,8 @@
                     android:id="@+id/textView77"
                     android:layout_below="@+id/textView86"
                     android:layout_alignLeft="@+id/textView86"
-                    android:layout_alignStart="@+id/textView86" />
+                    android:layout_alignStart="@+id/textView86"
+                    android:textColor="@color/lloyds_lightgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,7 +81,8 @@
                     android:id="@+id/textView78"
                     android:layout_below="@+id/spendProgressBar"
                     android:layout_alignLeft="@+id/spendProgressBar"
-                    android:layout_alignStart="@+id/spendProgressBar" />
+                    android:layout_alignStart="@+id/spendProgressBar"
+                    android:textColor="@color/lloyds_lightgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +92,8 @@
                     android:id="@+id/textView79"
                     android:layout_below="@+id/saveProgressBar"
                     android:layout_alignLeft="@+id/textView78"
-                    android:layout_alignStart="@+id/textView78" />
+                    android:layout_alignStart="@+id/textView78"
+                    android:textColor="@color/lloyds_lightgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,7 +105,8 @@
                     android:layout_column="0"
                     android:layout_below="@+id/overdraftProgressBar"
                     android:layout_alignLeft="@+id/overdraftProgressBar"
-                    android:layout_alignStart="@+id/overdraftProgressBar" />
+                    android:layout_alignStart="@+id/overdraftProgressBar"
+                    android:textColor="@color/lloyds_lightgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -113,7 +117,8 @@
                     android:layout_alignBottom="@+id/textView77"
                     android:layout_toRightOf="@+id/textView77"
                     android:layout_toEndOf="@+id/textView77"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/lloyds_darkgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -124,7 +129,8 @@
                     android:layout_alignBottom="@+id/textView78"
                     android:layout_toRightOf="@+id/textView78"
                     android:layout_toEndOf="@+id/textView78"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/lloyds_darkgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +141,8 @@
                     android:layout_alignBottom="@+id/textView79"
                     android:layout_toRightOf="@+id/textView79"
                     android:layout_toEndOf="@+id/textView79"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/lloyds_darkgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +153,8 @@
                     android:layout_alignBottom="@+id/textView80"
                     android:layout_toRightOf="@+id/textView80"
                     android:layout_toEndOf="@+id/textView80"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/lloyds_darkgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -157,7 +165,8 @@
                     android:layout_alignTop="@+id/textView87"
                     android:layout_alignLeft="@+id/progressBar"
                     android:layout_alignStart="@+id/progressBar"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/lloyds_lightgreen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,7 +177,8 @@
                     android:layout_below="@+id/textView76"
                     android:layout_toRightOf="@+id/textView86"
                     android:layout_toEndOf="@+id/textView86"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/lloyds_darkgreen" />
 
                 <ProgressBar
                     style="@android:style/Widget.ProgressBar.Horizontal"
