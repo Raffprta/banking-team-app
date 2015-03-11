@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-
+    <item android:id="@android:id/background">
+        <color android:color="@color/lloyds_goals_orange_transparent"/>
+    </item>
 
     <item android:id="@android:id/progress">
         <clip>
             <shape>
                 <corners android:radius="5dip" />
 
-                <solid android:color="@color/lloyds_darkgreen" />
+                <solid android:color="@color/lloyds_goals_orange" />
             </shape>
         </clip>
 
-        <color android:color="@color/lloyds_darkgreen" />
+        <color android:color="@color/lloyds_goals_orange" />
     </item>
 
 </layer-list>

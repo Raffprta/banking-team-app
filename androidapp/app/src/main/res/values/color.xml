@@ -3,6 +3,7 @@
     <!-- Taken from Lloyds website -->
     <color name="lloyds_darkgreen">#ff0d573d</color>
     <color name="lloyds_lightgreen">#ff6ca291</color>
+    <color name="lloyds_lightgreen_transparent">#336ca291</color>
     <color name="lloyds_lightergreen">#6ACA25</color>
 
     <color name="lloyds_darkgreen_menu">#0a523c</color>
@@ -13,9 +14,10 @@
     <color name="lloyds_lightergreen_moreTransparent">#336ACA25</color>
     <color name="lloyds_darkgreen_menu_transparent">#800a523c</color>
     <color name="lloyds_acc_info_green_button">#ff0b8b07</color>
+    <color name="lloyds_acc_info_green_button_transparent">#330b8b07</color>
     <color name="lloyds_white">#ffffffff</color>
-
     <color name="lloyds_orange">#fff4690c</color>
+
     <!-- Custom colours for goals -->
     <color name="lloyds_goals_orange">#ffffcb28</color>
     <color name="lloyds_goals_orange_transparent">#33ffcb28</color>
