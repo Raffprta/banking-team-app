@@ -28,7 +28,7 @@ public class AccountsInfoFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 
