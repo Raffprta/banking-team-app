@@ -159,5 +159,10 @@
     <string name="err_payment_empty">The payment must not be empty. Please enter an amount to pay.</string>
     <string name="err_payment_wrong_form">The payment must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
 
+    <!-- Push notification ic_formats-->
+    <string name="ic_offers">[ic_offers]</string>
+    <string name="ic_heartbeat">[ic_heartbeat]</string>
+    <string name="ic_info">[ic_info]</string>
+
 </resources>
 

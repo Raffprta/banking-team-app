@@ -16,12 +16,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
@@ -102,6 +105,35 @@ public class PushFragment extends Fragment {
             // Setup RecyclerView adapter
             mAdapter = new LloydsNotificationAdapter(mListDataSet);
             mRecyclerView.setAdapter(mAdapter);
+
+            // Cache indexes we changed
+            final List<Integer> cache = new ArrayList<Integer>();
+
+            // When the layout changes, set a method to update the icons.
+            mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    //   Set appropriate push icon.
+                    for(int i = 0; i < mRecyclerView.getAdapter().getItemCount(); i++){
+
+                        if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_heartbeat))){
+                            cache.add(i);
+                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_money));
+                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_heartbeat), ""));
+                        }else if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_offers))){
+                            cache.add(i);
+                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_shop));
+                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_offers), ""));
+                        }else if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_info))){
+                            cache.add(i);
+                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_about));
+                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_info), ""));
+                        }
+                    }
+                }
+            });
+
+
 
             // Set up swiping for removing push notification cards.
             SwipeableRecyclerViewTouchListener swipeTouchListener =
