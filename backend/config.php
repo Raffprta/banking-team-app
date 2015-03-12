@@ -42,9 +42,26 @@ define('ACCOUNT_TYPE_CURRENT',          0);     // Current account
 define('ACCOUNT_TYPE_SAVINGS',          1);     // Savings account
 define('ACCOUNT_TYPE_STUDENT',          2);     // Student account
 
-// TODO: Tags for transaction types
+// Tags for transaction types
+define('TAG_FOODDRINK',                 0);     // Food and Drinks
+define('TAG_CLOTHES',                   1);     // Clothes
+define('TAG_WITHDRAWAL',                2);     // Withdrawals
+define('TAG_ENTERTAINMENT',             3);     // Entertainment
+define('TAG_OTHER',                     4);     // Other
+define('TAG_UTILITY',                   5);     // Utilities
+define('TAG_TRANSPORT',                 6);     // Transport
+define('TAG_DONATION',                  7);     // Donation
 
 // Klein flash message types
 define('FLASH_SUCCESS',         'success');     // Success message
 define('FLASH_ERROR',           'error');       // Error message
 define('FLASH_INFO',            'info');        // Information message
+
+// API status codes (for use in JSON status variable)
+define('API_SUCCESS',           'success');     // Successful API call
+define('API_ERROR',             'error');       // Error condition
+
+// Push notification type tags
+define('PUSH_HEARTBEAT',        '[ic_heartbeat]');  // Notifications informing the app a transaction has occurred etc.
+define('PUSH_OFFERS',           '[ic_offers]');     // Notifications about special offers
+define('PUSH_INFO',             '[ic_info]');       // General information notifications
