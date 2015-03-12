@@ -152,27 +152,34 @@
                     android:layout_marginTop="15dp"
                     android:textColor="@color/lloyds_darkgreen" />
 
-                <CheckBox
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes"
-                    android:id="@+id/setGoalsYesCheckBox"
                     android:layout_alignTop="@+id/setGoalsDonateTextView"
                     android:layout_alignLeft="@+id/textView34"
                     android:layout_alignStart="@+id/textView34"
-                    android:checked="false" />
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        android:id="@+id/setGoalsYesCheckBox"
+                        android:layout_alignTop="@+id/setGoalsDonateTextView"
+                        android:layout_alignLeft="@+id/textView34"
+                        android:layout_alignStart="@+id/textView34"
+                        android:checked="false" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No"
-                    android:id="@+id/setGoalsNoCheckBox"
-                    android:checked="false"
-                    android:layout_alignTop="@+id/setGoalsYesCheckBox"
-                    android:layout_alignRight="@+id/setYourGoalsTextView"
-                    android:layout_alignEnd="@+id/setYourGoalsTextView"
-                    android:clickable="false" />
-
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:id="@+id/setGoalsNoCheckBox"
+                        android:checked="false"
+                        android:layout_alignTop="@+id/setGoalsYesCheckBox"
+                        android:layout_alignRight="@+id/setYourGoalsTextView"
+                        android:layout_alignEnd="@+id/setYourGoalsTextView"
+                        android:clickable="false" />
+                </RadioGroup>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
