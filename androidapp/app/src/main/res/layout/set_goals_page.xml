@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:text="No"
                     android:id="@+id/setGoalsNoCheckBox"
-                    android:checked="true"
+                    android:checked="false"
                     android:layout_alignTop="@+id/setGoalsYesCheckBox"
                     android:layout_alignRight="@+id/setYourGoalsTextView"
                     android:layout_alignEnd="@+id/setYourGoalsTextView"
