@@ -9,9 +9,7 @@
 //================================================================================
 
 // TODO: User logged-in area with account overview and device pairing status
-
 // TODO: Auth code from app??
-
 
 //================================================================================
 // Initialisation
@@ -330,7 +328,7 @@ function formatBankAccountData($postData) {
     $sortCode = trim($postData['sortCode1']) . trim($postData['sortCode2']) . trim($postData['sortCode3']);
 
     return array(
-        'accountType' => intval($postData['accountType']),
+        'type' => intval($postData['type']),
         'nickname' => trim($postData['nickname']),
         'accountNumber' => trim($postData['accountNumber']),
         'sortCode1' => trim($postData['sortCode1']),
@@ -441,7 +439,7 @@ function createBankAccount($user, $accountData) {
     $account = R::dispense('account');
 
     // Assign fields
-    $account->accountType = $accountData['accountType'];
+    $account->type = $accountData['type'];
     $account->nickname = $accountData['nickname'];
     $account->accountNumber = $accountData['accountNumber'];
     $account->sortCode = $accountData['sortCode'];
@@ -538,50 +536,4 @@ function emailAddressExists($email) {
 
 function bankAccountNumberExistsForSortCode($sortCode, $accountNumber) {
     return R::findOne('account', 'sort_code = ? AND account_number = ?', array($sortCode, $accountNumber)) !== null;
-}
-
-// Send a push notification to one or more registered devices using Google Cloud Messaging
-function sendGoogleCloudMessage($message, $ids) {
-    // URL to GCM API
-    $url = 'https://android.googleapis.com/gcm/send';
-
-    // POST variables
-    $post = array( 'registration_ids'  => $ids,
-                   'data'              => $message );
-
-    // HTTP request headers
-    $headers = array( 'Authorization: key=' . GOOGLE_SERVER_API_KEY,
-                      'Content-Type: application/json' );
-
-    // Initialize curl
-    $ch = curl_init();
-
-    // Set URL to GCM API URL
-    curl_setopt($ch, CURLOPT_URL, $url);
-
-    // Set request method to POST
-    curl_setopt($ch, CURLOPT_POST, true);
-
-    // Set custom headers
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-    // Get the response back as string instead of printing it
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    // Set post data as JSON
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
-
-    // Send the push!
-    $result = curl_exec($ch);
-
-    // If there was an error, display it
-    if (curl_errno($ch)) {
-        echo 'GCM error: ' . curl_error($ch);
-    }
-
-    // Close curl handle
-    curl_close( $ch );
-
-    // Debug GCM response
-    echo $result;
 }

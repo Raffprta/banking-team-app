@@ -36,9 +36,9 @@
                 <fieldset>
                     {# Type #}
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="accountType">Account type</label>
+                        <label class="col-md-4 control-label" for="type">Account type</label>
                         <div class="col-md-5">
-                            <select id="accountType" name="accountType" class="form-control">
+                            <select id="type" name="type" class="form-control">
                                 <option value="{{ constant('ACCOUNT_TYPE_CURRENT') }}" {% if account.accountType == constant('ACCOUNT_TYPE_CURRENT') %}selected{% endif %}>Current</option>
                                 <option value="{{ constant('ACCOUNT_TYPE_SAVINGS') }}" {% if account.accountType == constant('ACCOUNT_TYPE_SAVINGS') %}selected{% endif %}>Savings</option>
                                 <option value="{{ constant('ACCOUNT_TYPE_STUDENT') }}" {% if account.accountType == constant('ACCOUNT_TYPE_STUDENT') %}selected{% endif %}>Student</option>

@@ -3,7 +3,10 @@
 {% block title %}Send Push Messages{% endblock %}
 
 {% block content %}
+    <form class="form-horizontal" action="admin/pushmessages" method="POST">
     <div class="page-header">
+        <button id="send" name="send" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-send"></span> Send to Selected</button>
+        <input id="message" name="message" type="text" placeholder="Enter message here" class="form-control pull-right inline" required>
         <h1>Send Push Messages</h1>
     </div>
 
@@ -11,19 +14,21 @@
         <table class="table table-condensed">
             <thead>
             <tr>
-                <th class="col-md-1">Name</th>
-                <th class="col-md-1">Surname</th>
+                <th class="col-md-1">Select</th>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-2">Surname</th>
                 <th class="col-md-2">Email</th>
-                <th class="col-md-2">Device ID</th>
+                <th class="col-md-5">Device ID</th>
             </tr>
             </thead>
             <tbody>
             {% for recipient in recipients %}
                 <tr>
+                    <td><input type="checkbox" name="recipients[{{ recipient.id }}]" checked="checked"></td>
                     <td>{{ recipient.firstName }}</td>
                     <td>{{ recipient.surname }}</td>
                     <td>{{ recipient.email }}</td>
-                    <td>{{ recipient.deviceId }}</td>
+                    <td><small>{{ recipient.gcmId }}</small></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -33,4 +38,5 @@
             <p><span class="glyphicon glyphicon-info-sign"></span> No users with paired devices available.</p>
         </div>
     {% endif %}
+    </form>
 {% endblock %}
