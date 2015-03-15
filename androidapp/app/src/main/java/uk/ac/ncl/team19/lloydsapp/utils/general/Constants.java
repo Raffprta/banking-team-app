@@ -12,5 +12,8 @@ public class Constants {
     public final static int ACC_NO_SIZE = 8;
     public final static int SORT_CODE_NO_SIZE = 6;
 
+    public final static int GOLD_LOGIN = 100;
+    public final static int SILVER_LOGIN = 50;
+    public final static int BRONZE_LOGIN = 25;
 
 }

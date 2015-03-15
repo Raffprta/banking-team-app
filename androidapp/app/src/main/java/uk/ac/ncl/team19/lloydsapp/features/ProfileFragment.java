@@ -29,6 +29,7 @@ import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
+import uk.ac.ncl.team19.lloydsapp.utils.notifications.Toaster;
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 /**
@@ -250,6 +251,46 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
         // Remove loading bar
         ProgressDialog.removeLoading(ProfileFragment.this);
+
+        updateAchievements();
+
+
+    }
+
+    /*
+     * Method to update the achievements based from information of the shared preferences.
+     */
+    private void updateAchievements(){
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Toaster toaster = new Toaster(getActivity());
+
+        // TODO wearable notifications are only shown if enabled on the settings.
+
+        // If a login was detected then first timer can be unlocked - the shared preference must not contain an instance of it being unlocked.
+        if(sp.getString(getString(R.string.sp_first_login), null) != null && !sp.getBoolean(getString(R.string.sp_ach_first_login), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_first_timer));
+            toaster.grabToastForWearable(getString(R.string.first_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
+            sp.edit().putBoolean(getString(R.string.sp_ach_first_login), true).apply();
+        }
+
+        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.GOLD_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_gold_login), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_gold_login));
+            toaster.grabToastForWearable(getString(R.string.gold_login_unlock), getString(R.string.wearable_preview), R.drawable.gold_login);
+            sp.edit().putBoolean(getString(R.string.sp_ach_gold_login), true).apply();
+        }
+
+        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.SILVER_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_silver_login), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_silver_login));
+            toaster.grabToastForWearable(getString(R.string.silver_login_unlock), getString(R.string.wearable_preview), R.drawable.silver_login);
+            sp.edit().putBoolean(getString(R.string.sp_ach_silver_login), true).apply();
+        }
+
+        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.BRONZE_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_bronze_login), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_bronze_login));
+            toaster.grabToastForWearable(getString(R.string.bronze_login_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
+            sp.edit().putBoolean(getString(R.string.sp_ach_bronze_login), true).apply();
+        }
 
     }
 

@@ -146,6 +146,12 @@
     <string name="sp_bio">BIO</string>
     <string name="sp_logins">LOGINS</string>
     <string name="sp_first_login">FIRST_LOGIN</string>
+    <string name="sp_ach_branch_explorer">ACH_BRANCH_EXP</string>
+    <string name="sp_ach_first_login">ACH_FIRST_LOGIN</string>
+    <string name="sp_ach_gold_login">ACH_GOLD_LOGIN</string>
+    <string name="sp_ach_silver_login">ACH_SILVER_LOGIN</string>
+    <string name="sp_ach_bronze_login">ACH_BRONZE_LOGIN</string>
+
 
     <!-- Login / Security error messages -->
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
@@ -165,6 +171,15 @@
     <string name="ic_offers">[ic_offers]</string>
     <string name="ic_heartbeat">[ic_heartbeat]</string>
     <string name="ic_info">[ic_info]</string>
+
+    <!-- Achievements unlock strings -->
+    <string name="first_timer_unlock">Congratulations, you have unlocked the first timer achievement - this
+                                    is given to all those who log into the application for the first time.</string>
+    <string name="gold_login_unlock">Congratulations, you have logged in at least a 100 times - now that is dedication!</string>
+    <string name="silver_login_unlock">Congratulations, you have logged in at least 50 times - breathe banking!</string>
+    <string name="bronze_login_unlock">Congratulations, you have logged in at least 25 times - banking is educational!</string>
+
+    <string name="wearable_preview">Congratulations, you have unlocked an achievement!</string>
 
 </resources>
 
