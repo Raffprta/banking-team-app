@@ -6,11 +6,13 @@
 
     <string name="app_id_play">689728249892</string>
 
-    <string name="old_timer_achievement">CgkIpMCHuIkUEAIQAQ</string>
-    <string name="first_timer_achievement">CgkIpMCHuIkUEAIQAw</string>
-    <string name="magic_number_achievement">CgkIpMCHuIkUEAIQBQ</string>
-    <string name="login_master_achievement">CgkIpMCHuIkUEAIQCQ</string>
-    <string name="branch_explorer_achievement">CgkIpMCHuIkUEAIQCg</string>
+    <string name="achievement_old_timer">CgkIpMCHuIkUEAIQAQ</string>
+    <string name="achievement_first_timer">CgkIpMCHuIkUEAIQAw</string>
+    <string name="achievement_magic_number">CgkIpMCHuIkUEAIQBQ</string>
+    <string name="achievement_branch_explorer">CgkIpMCHuIkUEAIQCg</string>
+    <string name="achievement_gold_login">CgkIpMCHuIkUEAIQCw</string>
+    <string name="achievement_silver_login">CgkIpMCHuIkUEAIQDA</string>
+    <string name="achievement_bronze_login">CgkIpMCHuIkUEAIQDQ</string>
 
     <string name="leaderboard_id">CgkIpMCHuIkUEAIQBg</string>
 

@@ -109,25 +109,30 @@ public class PushFragment extends Fragment {
             // Cache indexes we changed
             final List<Integer> cache = new ArrayList<Integer>();
 
+
             // When the layout changes, set a method to update the icons.
             mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    //   Set appropriate push icon.
-                    for(int i = 0; i < mRecyclerView.getAdapter().getItemCount(); i++){
+                    //   Set appropriate push icon using raw layouts. getChildCount returns the amount of layouts on screen
+                    //   at the moment. Not all of the textviews and push-icons can be returned due to the nature of recycler views.
+                    for(int i = 0; i < mRecyclerView.getChildCount(); i++){
 
-                        if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_heartbeat))){
-                            cache.add(i);
-                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_money));
-                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_heartbeat), ""));
-                        }else if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_offers))){
-                            cache.add(i);
-                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_shop));
-                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_offers), ""));
-                        }else if(mListDataSet.get(i).getNotificationMessage().startsWith(getString(R.string.ic_info))){
-                            cache.add(i);
-                            ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon)).setImageDrawable(getResources().getDrawable(R.drawable.ic_action_about));
-                            ((TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text)).setText(mListDataSet.get(i).getNotificationMessage().replace(getString(R.string.ic_info), ""));
+                        TextView pushText = (TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text);
+                        ImageView pushIcon = ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon));
+
+                        if(pushText.getText().toString().startsWith(getString(R.string.ic_heartbeat))){
+                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_money));
+                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_heartbeat), ""));
+
+                        }else if(pushText.getText().toString().startsWith(getString(R.string.ic_offers))){
+                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_shop));
+                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_offers), ""));
+
+                        }else if(pushText.getText().toString().startsWith(getString(R.string.ic_info))){
+                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_about));
+                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_info), ""));
+
                         }
                     }
                 }
