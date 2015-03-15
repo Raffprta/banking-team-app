@@ -67,7 +67,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     error_log(TAG . 'Login request from ' . $_SERVER['REMOTE_ADDR']);
 
     // Make sure a username and password have been supplied
-    $loginData = json_decode(file_get_contents('php://input'), true);
+    $loginData = json_decode($request->body(), true);
 
     if (!$loginData || !isset($loginData['username']) || !isset($loginData['password'])) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Username/password not supplied');
