@@ -85,26 +85,65 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     try {
-        // TODO: Validate these!
-        $message = $_POST['message'];
-        $recipients = $_POST['recipients'];
+        // Validate recipients and message.
+        $errorMessages = array();
 
-        $recipientGcmIds = array();
-        foreach ($recipients as $id=>$value) {
-            // If checked, add their GCM ID to the array
-            if ($value === "on") {
-                $userBean = R::findOne('user', 'id = ?', array($id));
-                $recipientGcmIds[] = $userBean->gcmId;
-            }
+        if (!isset($_POST['recipients'])) {
+            $errorMessages[] = 'Please select one or more recipients for the push message.';
         }
 
-        // Send the messages
-        $result = json_decode(sendGoogleCloudMessage($message, $recipientGcmIds));
-        var_dump($result);
+        if (!isset($_POST['message']) || empty($_POST['message'])) {
+            $errorMessages[] = 'Please enter a message to send.';
+        }
 
-        $service->flash('Your message has been sent to ' . count($recipientGcmIds) . ' users.', FLASH_SUCCESS);
+        if (!isset($_POST['messageType']) || $_POST['messageType'] !== PUSH_INFO && $_POST['messageType'] !== PUSH_OFFERS && $_POST['messageType'] !== PUSH_HEARTBEAT) {
+            $errorMessages[] = 'Invalid message type.';
+        }
 
-        displayPage('pushmessages.twig', array('recipients' => R::find('user', 'gcm_id IS NOT NULL')));
+        // Get all potential recipients from the database
+        $recipientBeans = R::find('user', 'gcm_id IS NOT NULL');
+
+        if (count($errorMessages) === 0) {
+            // Variables from form POST
+            $recipients = $_POST['recipients'];
+            $message = trim($_POST['message']);
+            $messageType = $_POST['messageType'];
+
+            $recipientGcmIds = array();
+
+            // Match checked recipients with database recipients
+            foreach ($recipients as $id => $value) {
+                // If checked, add their GCM ID to the array
+                if ($value === "on") {
+                    foreach ($recipientBeans as $recipientBean) {
+                        if ($recipientBean->id == $id)
+                            $recipientGcmIds[] = $recipientBean->gcmId;
+                    }
+                }
+            }
+
+            // Send the messages
+            $gcmResult = sendGoogleCloudMessage($messageType . $message, $recipientGcmIds);
+            $decodedResult = json_decode($gcmResult);
+
+            $successes = 0;
+            $failures = 0;
+
+            if (is_null($decodedResult)) {
+                $errorMessages[] = 'curl error: ' . $gcmResult;
+            } else {
+                $successes = $decodedResult->success;
+                $failures = $decodedResult->failure;
+            }
+
+            if ($failures) {
+                $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures > 1 ? 'users' : 'users');
+            }
+
+            $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes > 1 ? 'users' : 'user'), FLASH_SUCCESS);
+        }
+
+        displayPage('pushmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }

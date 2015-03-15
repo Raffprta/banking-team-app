@@ -173,13 +173,6 @@ function checkAPIAuthentication($response) {
     return $user;
 }
 
-function checkRegistrationPostData($postData) {
-    return isset($postData['firstName']) &&
-    isset($postData['surname']) &&
-    isset($postData['email']) &&
-    isset($postData['password']);
-}
-
 function generateDeviceTokenHash($loginData) {
     return hash('sha256', $_SERVER['HTTP_USER_AGENT'] . $loginData['password'] . time());
 }
@@ -276,14 +269,12 @@ function sendGoogleCloudMessage($message, $ids) {
     // Send the push!
     $result = curl_exec($ch);
 
-    // If there was an error, display it
-    if (curl_errno($ch)) {
-        echo 'GCM error: ' . curl_error($ch);
-    }
+    // Get any curl errors
+    $error = curl_errno($ch);
 
     // Close curl handle
-    curl_close( $ch );
+    curl_close($ch);
 
-    // Debug GCM response
-    return $result;
+    // If there was an error, return it, otherwise return Google response
+    return $error ? $error : $result;
 }
