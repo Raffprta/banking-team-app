@@ -1,16 +1,22 @@
 package uk.ac.ncl.team19.lloydsapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
@@ -65,6 +71,24 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         if(mNavigationDrawerFragment.isDrawerOpen()){
             ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(Gravity.LEFT);
         }
+
+        // Count the number of times you login. This is incremented in the shared preferences.
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        int currentLogins = sp.getInt(getString(R.string.sp_logins), 0);
+        // Increment the preference.
+        sp.edit().putInt(getString(R.string.sp_logins), currentLogins+1).apply();
+
+        // Store the date of the first login.
+        if(sp.getInt(getString(R.string.sp_logins), 0) == 1){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String dateJoined = sdf.format(new Date());
+            sp.edit().putString(getString(R.string.sp_first_login), dateJoined.toString()).apply();
+        }
+
+        // Debug the shared preferences
+        Log.i("NUMBER OF LOGINS", Integer.toString(sp.getInt(getString(R.string.sp_logins), 0)));
+        Log.i("DATE JOINED:", sp.getString(getString(R.string.sp_first_login), null));
 
     }
 

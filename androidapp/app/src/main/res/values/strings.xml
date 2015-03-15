@@ -144,6 +144,8 @@
     <!-- Shared preferences Key Strings -->
     <string name="sp_status">STATUS</string>
     <string name="sp_bio">BIO</string>
+    <string name="sp_logins">LOGINS</string>
+    <string name="sp_first_login">FIRST_LOGIN</string>
 
     <!-- Login / Security error messages -->
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
