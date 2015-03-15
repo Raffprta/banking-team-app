@@ -35,16 +35,14 @@ $this->respond('GET', '/accountdetails', function ($request, $response, $service
     try {
         $user = checkAPIAuthentication($response);
 
-        $accountBeans = $user->xownAccountList;
-        $accounts = array();
-        foreach ($accountBeans as $accountBean) {
-            $accounts[] = accountToArray($accountBean);
+        if (is_null($user)) {
+            sendJSONError($response, 'Error while finding user.');
+        } else {
+            sendJSONResponse($response, array('accounts' => R::exportAll($user->xownAccountList)));
         }
 
-        sendJSONResponse($response, $accounts, API_SUCCESS);
-
     } catch (Exception $e) {
-        sendInternalError($response, $e->getMessage());
+        sendJSONError($response, $e->getMessage());
     }
 });
 
@@ -56,7 +54,7 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
     try {
         $user = checkAPIAuthentication($response);
     } catch (Exception $e) {
-        sendInternalError($response, $e->getMessage());
+        sendJSONError($response, $e->getMessage());
     }
 });
 
@@ -73,14 +71,14 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
 
     if (!$loginData || !isset($loginData['username']) || !isset($loginData['password'])) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Username/password not supplied');
-        sendBadRequest($response, 'Your device did not supply a username and/or password.');
+        sendJSONError($response, 'Your device did not supply a username and/or password.');
     }
 
     // Attempt login
     $user = R::findOne( 'user', 'email = ?', array($loginData['username']));
     if (is_null($user) || !password_verify($loginData['password'], $user->password)) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect username or password.');
-        sendAccessDenied($response, 'Incorrect username or password.');
+        sendJSONError($response, 'Incorrect username or password.');
     } else {
         // Login successful; create and store device token information
         $deviceToken = R::dispense('devicetoken');
@@ -92,8 +90,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
         R::store($user);
 
         error_log(TAG . 'Access granted to ' . $_SERVER['REMOTE_ADDR'] . ': \'' . $loginData['username'] . '\' got device token ' . $deviceToken->token);
-        $response->body(json_encode(array('deviceToken' => $deviceToken->token)));
-        $response->send();
+        sendJSONResponse($response, array('deviceToken' => $deviceToken->token));
     }
 });
 
@@ -141,7 +138,7 @@ function checkDeviceToken() {
     }
 
     // Try to find associated user
-    $user = R::findOne('user', 'id = ?', array($deviceToken->user_id));
+    $user = R::load('user', $deviceToken->user_id);
 
     // If user associated with the token no longer exists, destroy the token
     if (is_null($user)) {
@@ -161,12 +158,12 @@ function checkAPIAuthentication($response) {
     error_log(TAG . 'Token authentication request from ' . $_SERVER['REMOTE_ADDR']);
 
     if (!checkAPIKey()) {
-        sendAccessDenied($response, 'The API key supplied by your device was invalid.<br><br>Please update your app, or contact support.');
+        sendJSONError($response, 'The API key supplied by your device was invalid.<br><br>Please update your app, or contact support.');
     }
 
     $user = checkDeviceToken();
     if (is_null($user)) {
-        sendAccessDenied($response, 'Your device did not supply a valid authentication token.');
+        sendJSONError($response, 'Your device did not supply a valid authentication token.');
     }
 
     error_log(TAG . 'Successful token authentication from ' . $_SERVER['REMOTE_ADDR']);
@@ -185,10 +182,10 @@ function updateDeviceToken($deviceToken) {
     R::store($deviceToken);
 }
 
-function sendJSONResponse($response, $data, $statusCode) {
+function sendJSONResponse($response, $data) {
     $body = array_merge(
         $data,
-        array('status' => $statusCode)
+        array('status' => API_SUCCESS)
     );
 
     $response->body(json_encode($body));
@@ -196,44 +193,15 @@ function sendJSONResponse($response, $data, $statusCode) {
     exit;
 }
 
-function sendBadRequest($response, $reason) {
-    $response->code(400);
-    $response->body($reason);
-    $response->send();
-    exit;
-}
-
-function sendAccessDenied($response, $reason) {
-    // We don't use real HTTP authentication here, but the 'WWW-Authenticate' response *must* be
-    // sent when using code 401. Some versions of Android will throw an exception if this header
-    // is missing or malformed. For example, 4.1.1 throws an exception if realm="xyz" is missing
-    // double quotes, but other versions are fine with this. Be careful.
-    $response->code(401);
-    $response->header('WWW-Authenticate', 'None realm="Student Wellbeing"');
-    $response->body($reason);
-    $response->send();
-    exit;
-}
-
-function sendInternalError($response, $reason) {
-    $response->code(500);
-    $response->body('Error 500: Internal server error.<br><br>' . $reason);
-    $response->send();
-    exit;
-}
-
-function accountToArray($accountBean) {
-    return array(
-        'id' => $accountBean->id,
-        'type' => $accountBean->type,
-        'nickname' => $accountBean->nickname,
-        'accountNumber' => $accountBean->accountNumber,
-        'sortCode' =>  $accountBean->sortCode,
-        'interest' => $accountBean->interest,
-        'overdraft' => $accountBean->overdraft,
-        'userId' => $accountBean->userId,
-        'balance' => $accountBean->balance
+function sendJSONError($response, $reason) {
+    $body = array(
+        'errorMessage' => $reason,
+        'status' => API_ERROR
     );
+
+    $response->body(json_encode($body));
+    $response->send();
+    exit;
 }
 
 // Send a push notification to one or more registered devices using Google Cloud Messaging
@@ -242,11 +210,13 @@ function sendGoogleCloudMessage($message, $ids) {
     $url = 'https://android.googleapis.com/gcm/send';
 
     // POST variables
-    $post = array('registration_ids'  => $ids,
-        'data' => array('message' => $message));
+    $post = array(
+        'registration_ids'  => $ids,
+        'data' => array('message' => $message)
+    );
 
     // HTTP request headers
-    $headers = array( 'Authorization: key=' . GOOGLE_SERVER_API_KEY, 'Content-Type: application/json' );
+    $headers = array('Authorization: key=' . GOOGLE_SERVER_API_KEY, 'Content-Type: application/json');
 
     // Initialize curl
     $ch = curl_init();

@@ -38,6 +38,9 @@ if (!R::testConnection()) {
 // Enable debug mode
 R::debug(REDBEAN_DEBUG_ENABLED);
 
+// Use camelCase for bean export
+R::useExportCase('camel');
+
 // Update request when app is installed in a subdirectory
 $base = dirname($_SERVER['PHP_SELF']);
 $trimmedBase = ltrim($base, '/');
