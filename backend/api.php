@@ -15,13 +15,15 @@
 //     This should be stored on the client.
 // 3). Present a 'Device-Token' header with the token along with the 'API-Key' header to use further API calls.
 //
-//curl -X GET -H "API-Key: << API KEY >>" -H "Device-Token: 791609afff763d870c7c96dd1e9701c230c279ff6c7c032ee1c210ef6e0d718c"
+// All API calls return a JSON-encoded response with a 'status' field.
+// If the request was successful, 'status' will contain 'success'.
+// Otherwise 'status' will contain 'error', and another field, 'errorMessage' will contain the reason.
 
-// TODO: Retrieve bank accounts/balances etc for a user
+// TODO: Secret word auth
+// TODO: Retrieve transactions for an account
+// TODO: Transfer money
 // TODO: Retrieve game state for a user
 // TODO: Store/update game state for a user
-// TODO: API call for updating Google Cloud Messaging Key
-// TODO: Complete TODO list ;)
 
 // Log file tag
 define('TAG', 'API: ');
@@ -58,10 +60,39 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
     }
 });
 
+//================================================================================
+// API: Update Google Cloud Messaging ID
+//      Input JSON fields: 'gcmId'
+//================================================================================
+$this->respond('POST', '/updategcmid', function ($request, $response, $service) {
+    error_log(TAG . 'GCM ID update request from ' . $_SERVER['REMOTE_ADDR']);
+    try {
+        $user = checkAPIAuthentication($response);
+        $jsonRequest = json_decode($request->body(), true);
+
+        if (is_null($user)) {
+            sendJSONError($response, 'Error while finding user.');
+        }
+
+        if (!$jsonRequest || !isset($jsonRequest['gcmId'])) {
+            sendJSONError($response, 'Your device did not supply the new GCM ID.');
+        }
+
+        // Update the GCM ID
+        $user->gcmId = $jsonRequest['gcmId'];
+        R::store($user);
+
+        // Just send success status by passing an empty array
+        sendJSONResponse($response, array());
+    } catch (Exception $e) {
+        sendJSONError($response, $e->getMessage());
+    }
+});
 
 //================================================================================
-// API: Authenticate (get device token with valid (username/password)
-//      Takes JSON object with username & password fields - returns device token
+// API: Authenticate (get device token with valid username/password/secret chars)
+//      Input JSON fields: 'username', 'password'
+//      Output JSON fields: 'deviceToken'
 //================================================================================
 $this->respond('POST', '/authenticate', function ($request, $response, $service) {
     error_log(TAG . 'Login request from ' . $_SERVER['REMOTE_ADDR']);
@@ -75,7 +106,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     }
 
     // Attempt login
-    $user = R::findOne( 'user', 'email = ?', array($loginData['username']));
+    $user = R::findOne('user', 'email = ?', array($loginData['username']));
     if (is_null($user) || !password_verify($loginData['password'], $user->password)) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect username or password.');
         sendJSONError($response, 'Incorrect username or password.');
