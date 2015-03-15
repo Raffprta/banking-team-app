@@ -16,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -103,41 +101,11 @@ public class PushFragment extends Fragment {
             getNotificationsFromDB();
 
             // Setup RecyclerView adapter
-            mAdapter = new LloydsNotificationAdapter(mListDataSet);
+            mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
             mRecyclerView.setAdapter(mAdapter);
 
             // Cache indexes we changed
             final List<Integer> cache = new ArrayList<Integer>();
-
-
-            // When the layout changes, set a method to update the icons.
-            mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    //   Set appropriate push icon using raw layouts. getChildCount returns the amount of layouts on screen
-                    //   at the moment. Not all of the textviews and push-icons can be returned due to the nature of recycler views.
-                    for(int i = 0; i < mRecyclerView.getChildCount(); i++){
-
-                        TextView pushText = (TextView)mRecyclerView.getChildAt(i).findViewById(R.id.info_text);
-                        ImageView pushIcon = ((ImageView)mRecyclerView.getChildAt(i).findViewById(R.id.pushIcon));
-
-                        if(pushText.getText().toString().startsWith(getString(R.string.ic_heartbeat))){
-                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_money));
-                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_heartbeat), ""));
-
-                        }else if(pushText.getText().toString().startsWith(getString(R.string.ic_offers))){
-                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_shop));
-                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_offers), ""));
-
-                        }else if(pushText.getText().toString().startsWith(getString(R.string.ic_info))){
-                                pushIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_about));
-                                pushText.setText(pushText.getText().toString().replace(getString(R.string.ic_info), ""));
-
-                        }
-                    }
-                }
-            });
-
 
 
             // Set up swiping for removing push notification cards.
@@ -331,7 +299,7 @@ public class PushFragment extends Fragment {
                     // Refresh list of notifications from database
                     getNotificationsFromDB();
 
-                    mAdapter = new LloydsNotificationAdapter(mListDataSet);
+                    mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
