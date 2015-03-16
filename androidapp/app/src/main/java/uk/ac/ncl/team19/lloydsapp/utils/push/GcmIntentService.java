@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
 
 public class GcmIntentService extends IntentService {
     private static final String NOTIFICATION_TITLE = "Lloyds Bank";
@@ -88,8 +87,9 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, PushFragment.class), 0);
+        // Launch the app when the notification is opened
+        Intent launchIntent = this.getPackageManager().getLaunchIntentForPackage(this.getPackageName());
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
