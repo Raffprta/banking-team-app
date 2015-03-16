@@ -262,6 +262,13 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(mGoogleApiClient != null && mGoogleApiClient.isConnected())
+            updateAchievements();
+    }
+
     /*
      * Method to update the achievements based from information of the shared preferences.
      */
