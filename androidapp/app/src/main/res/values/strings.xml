@@ -154,6 +154,8 @@
     <string name="sp_ach_bronze_login">ACH_BRONZE_LOGIN</string>
     <string name="sp_ach_old_timer">ACH_OLD_TIMER</string>
     <string name="sp_last_date_inc">LAST_INC</string>
+    <string name="sp_magic_no">MAGIC_NO</string>
+    <string name="sp_magic_no_mutex">MAGIC_NO_MUTEX</string>
 
 
     <!-- Login / Security error messages -->
@@ -183,6 +185,7 @@
     <string name="bronze_login_unlock">Congratulations, you have logged in at least 25 times - banking is educational!</string>
     <string name="old_timer_unlock">Congratulations, you have been using this application for a month, that\'s outstanding!</string>
     <string name="branch_finder_unlock">Congratulations, you\'ve visited a Lloyds branch!</string>
+    <string name="magic_no_unlock">Congratulations, you\'ve unlocked the magic number! How did you unlock it? It\'s a secret.</string>
 
     <string name="wearable_preview">Congratulations, you have unlocked an achievement!</string>
 

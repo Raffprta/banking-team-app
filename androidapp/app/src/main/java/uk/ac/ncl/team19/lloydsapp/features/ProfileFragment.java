@@ -26,6 +26,7 @@ import com.google.android.gms.plus.Plus;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
@@ -331,6 +332,22 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             toaster.grabToastForWearable(getString(R.string.branch_finder_unlock), getString(R.string.wearable_preview), R.drawable.branch_explorer);
             // Lock the mutex so this achievement can't be unlocked again.
             sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer_mutex), true).apply();
+        }
+
+        // Magic number is in fact a random achievement
+        Random r = new Random();
+        int magic_no_attempt = r.nextInt(Constants.MAGIC_NO_SEEDER);
+
+        // Test to see if the magic number is achieved
+        if(magic_no_attempt == Constants.MAGIC_NO)
+            sp.edit().putBoolean(getString(R.string.sp_magic_no), true).apply();
+
+        // Check to see if the magic number has been encountered (true)
+        if(sp.getBoolean(getString(R.string.sp_magic_no), false) && !sp.getBoolean(getString(R.string.sp_magic_no_mutex), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_magic_number));
+            toaster.grabToastForWearable(getString(R.string.magic_no_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
+            // Lock the mutex so this achievement can't be unlocked again.
+            sp.edit().putBoolean(getString(R.string.sp_magic_no_mutex), true).apply();
         }
 
 
