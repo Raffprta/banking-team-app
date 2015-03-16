@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -202,10 +203,21 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
 
         // If the help menu was clicked.
         if (id == R.id.action_help){
+            // Make a new bundle to pass information.
             Bundle bundle = new Bundle();
-            bundle.putString(getString(R.string.help_bundle), "Some placeholder text for now");
+            // Find currently loaded fragment.
+            Fragment entry = getSupportFragmentManager().findFragmentById(R.id.container);
+            String fragmentAt = entry.getClass().getSimpleName();
+            // Make the help menu
             HelpMenuOverlayDialog help = new HelpMenuOverlayDialog();
-            help.setArguments(bundle);
+
+            // Switch the class you're currently at.
+            switch(fragmentAt){
+                default:
+                    bundle.putString(getString(R.string.help_bundle), "Some placeholder text for now");
+                    help.setArguments(bundle);
+            }
+
             help.show(getSupportFragmentManager(), "Help Menu");
             return true;
         }
