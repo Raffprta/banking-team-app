@@ -22,6 +22,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
@@ -100,8 +101,12 @@ public class PushFragment extends Fragment {
             getNotificationsFromDB();
 
             // Setup RecyclerView adapter
-            mAdapter = new LloydsNotificationAdapter(mListDataSet);
+            mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
             mRecyclerView.setAdapter(mAdapter);
+
+            // Cache indexes we changed
+            final List<Integer> cache = new ArrayList<Integer>();
+
 
             // Set up swiping for removing push notification cards.
             SwipeableRecyclerViewTouchListener swipeTouchListener =
@@ -294,7 +299,7 @@ public class PushFragment extends Fragment {
                     // Refresh list of notifications from database
                     getNotificationsFromDB();
 
-                    mAdapter = new LloydsNotificationAdapter(mListDataSet);
+                    mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }

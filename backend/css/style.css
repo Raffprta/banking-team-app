@@ -87,6 +87,16 @@ article{
     display:inline;
 }
 
+input.inline{
+    width: 250px;
+    margin-right: 10px;
+}
+
+select.inline{
+    width: 120px;
+    margin-right: 10px;
+}
+
 #slider{
     margin-left:3px;
 }

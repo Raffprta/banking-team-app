@@ -2,10 +2,12 @@ package uk.ac.ncl.team19.lloydsapp.features;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -36,6 +38,7 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.GooglePlacesResponse;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Place;
@@ -386,6 +389,9 @@ public class MapsFragment extends SupportMapFragment {
 
     // Async task with multiple parameters.
     private class QueryGooglePlacesTask extends AsyncTask<Object, Void, GooglePlacesResponse> {
+
+        private int type;
+
         @Override
         protected GooglePlacesResponse doInBackground(Object... params) {
 
@@ -394,6 +400,7 @@ public class MapsFragment extends SupportMapFragment {
 
             // Attempt to query Google Places
             try {
+                type = (int)params[1];
                 GooglePlacesResponse response = queryGooglePlaces((Location)params[0], (int)params[1]);
                 // Loading has finished so remove the fragment.
                 ProgressDialog.removeLoading(MapsFragment.this);
@@ -417,6 +424,16 @@ public class MapsFragment extends SupportMapFragment {
 
                 for (Place p: places) {
                     uk.ac.ncl.team19.lloydsapp.utils.maps.Location location = p.getGeometry().getLocation();
+
+                    // If you are mathematically in vicinity, then update the state of the achievement to be unlocked on next sign in
+                    if(Math.abs(p.getGeometry().getLocation().getLatitude() - location.getLatitude()) <= Constants.LLOYDS_VICINITY
+                       && Math.abs(p.getGeometry().getLocation().getLongitude() - location.getLongitude()) <= Constants.LLOYDS_VICINITY
+                       && type == QUERY_BRANCH){
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer), true).apply();
+
+                    }
+
                     double lat = location.getLatitude();
                     double lng = location.getLongitude();
                     if (lat != 0 && lng != 0) {

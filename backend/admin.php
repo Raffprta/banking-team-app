@@ -71,8 +71,85 @@ $this->respond('GET', '/pushmessages', function () {
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     try {
-        $recipients = R::find('user', 'device_id IS NOT NULL');
+        $recipients = R::find('user', 'gcm_id IS NOT NULL');
         displayPage('pushmessages.twig', array('recipients' => $recipients));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Send push messages
+//================================================================================
+$this->respond('POST', '/pushmessages', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        // Validate recipients and message.
+        $errorMessages = array();
+
+        if (!isset($_POST['recipients'])) {
+            $errorMessages[] = 'Please select one or more recipients for the push message.';
+        }
+
+        if (!isset($_POST['message']) || empty($_POST['message'])) {
+            $errorMessages[] = 'Please enter a message to send.';
+        }
+
+        if (!isset($_POST['messageType']) || $_POST['messageType'] !== PUSH_TYPE_INFO && $_POST['messageType'] !== PUSH_TYPE_OFFERS && $_POST['messageType'] !== PUSH_TYPE_HEARTBEAT) {
+            $errorMessages[] = 'Invalid message type.';
+        }
+
+        // Get all potential recipients from the database
+        $recipientBeans = R::find('user', 'gcm_id IS NOT NULL');
+
+        if (count($errorMessages) === 0) {
+            // Variables from form POST
+            $recipients = $_POST['recipients'];
+            $message = trim($_POST['message']);
+            $messageType = $_POST['messageType'];
+
+            $recipientGcmIds = array();
+
+            // Match checked recipients with database recipients
+            foreach ($recipients as $id => $value) {
+                // If checked, add their GCM ID to the array
+                if ($value === "on") {
+                    foreach ($recipientBeans as $recipientBean) {
+                        if ($recipientBean->id == $id)
+                            $recipientGcmIds[] = $recipientBean->gcmId;
+                    }
+                }
+            }
+
+            // Construct JSON message
+            $jsonMessage = json_encode(array(
+                'messageType' => $messageType,
+                'message' => $message
+            ));
+
+            // Send the messages
+            $gcmResult = sendGoogleCloudMessage($jsonMessage, $recipientGcmIds);
+            $decodedResult = json_decode($gcmResult);
+
+            $successes = 0;
+            $failures = 0;
+
+            if (is_null($decodedResult)) {
+                $errorMessages[] = 'curl error: ' . $gcmResult;
+            } else {
+                $successes = $decodedResult->success;
+                $failures = $decodedResult->failure;
+            }
+
+            if ($failures) {
+                $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures == 1 ? 'user' : 'users');
+            } else {
+                $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes == 1 ? 'user' : 'users'), FLASH_SUCCESS);
+            }
+        }
+
+        displayPage('pushmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
@@ -122,7 +199,6 @@ $this->respond('GET', '/editbankaccount/[i:accountId]', function ($request, $res
 
     try {
         $account = R::findOne('account', 'id = ?', array($request->accountId));
-        //$account->user;
 
         if (!is_null($account)) {
             displayPage('editbankaccount.twig', array('editMode' => true, 'account' => $account, 'user' => $account->user));
@@ -382,11 +458,13 @@ $this->respond('GET', '/deletebankaccount/[i:accountId]', function ($request, $r
     try {
         $accountBean = R::findOne('account', 'id = ?', array($request->accountId));
         if (!is_null($accountBean)) {
+            $id = $accountBean->id;
+
             // Delete record
             R::trash($accountBean);
 
             // Show success message and redirect to previous page
-            $service->flash('Bank account ID ' . $accountBean->id . ' deleted successfully.', FLASH_SUCCESS);
+            $service->flash('Bank account ID ' . $id . ' deleted successfully.', FLASH_SUCCESS);
             $service->back();
             $response->send();
         } else {

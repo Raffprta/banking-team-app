@@ -12,10 +12,12 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 import uk.ac.ncl.team19.lloydsapp.R;
-import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
 
 public class GcmIntentService extends IntentService {
     private static final String NOTIFICATION_TITLE = "Lloyds Bank";
@@ -41,42 +43,39 @@ public class GcmIntentService extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
-            /*
-             * Filter messages based on message type. Since it is likely that GCM
-             * will be extended in the future with new message types, just ignore
-             * any message types you're not interested in, or that you don't
-             * recognize.
-             */
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
-            }
+        if (!extras.isEmpty()) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+               try {
+                   // Parse message type and contents from JSON
+                   JSONObject jsonMessage = new JSONObject(extras.getString("message"));
+                   String type = jsonMessage.getString("messageType");
+                   String message = jsonMessage.getString("message");
 
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString());
-            }
+                   long timestamp = Calendar.getInstance().getTimeInMillis();
 
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // Post notification of received message.
-                sendNotification(extras.getString("message"));
-                Log.i(TAG, "Received: " + extras.toString());
+                   // Post notification of received message.
+                   sendNotification(message);
+                   Log.i(TAG, "Received: " + extras.toString());
 
-                // Store notification in database
-                NotificationsDataSource dataSource = new NotificationsDataSource(getApplicationContext());
+                   // Store notification in database
+                   NotificationsDataSource dataSource = new NotificationsDataSource(getApplicationContext());
 
-                // Open database
-                dataSource.open();
+                   // Open database
+                   dataSource.open();
 
-                // Retrieve records
-                dataSource.createNotification( Calendar.getInstance().getTimeInMillis(),
-                                               messageType,
-                                               extras.getString("message"));
+                   // Store message
+                   dataSource.createNotification(timestamp, type, message);
 
-                // Close database (important)
-                dataSource.close();
+                   // Close database (important)
+                   dataSource.close();
 
-                // Do stuff that alters the content of my local SQLite Database
-                sendBroadcast(new Intent(DATA_REFRESH_INTENT));
+                   // Alert the app that a new message is available
+                   sendBroadcast(new Intent(DATA_REFRESH_INTENT));
+
+               } catch (JSONException e) {
+                   Log.e(TAG, "Error parsing GCM message: " + e.getMessage());
+                   e.printStackTrace();
+               }
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -84,20 +83,20 @@ public class GcmIntentService extends IntentService {
     }
 
     // Post a notification (shows up in status bar etc)
-    private void sendNotification(String msg) {
+    private void sendNotification(String message) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, PushFragment.class), 0);
+        // Launch the app when the notification is opened
+        Intent launchIntent = this.getPackageManager().getLaunchIntentForPackage(this.getPackageName());
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_launcher)
                         .setContentTitle(NOTIFICATION_TITLE)
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(msg))
-                        .setContentText(msg)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                        .setContentText(message)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                         .setVibrate(VIBRATE_PATTERN);
 

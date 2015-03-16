@@ -2,6 +2,11 @@ package uk.ac.ncl.team19.lloydsapp.utils.push;
 
 
 public class LloydsNotification {
+    // Notification types
+    public static final String TYPE_HEARTBEAT = "heartbeat";
+    public static final String TYPE_INFO = "info";
+    public static final String TYPE_OFFER = "offer";
+
     private int id;
     private long dateInMillis;
     private String notificationType;

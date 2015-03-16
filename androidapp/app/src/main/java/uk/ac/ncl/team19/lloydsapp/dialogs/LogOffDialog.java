@@ -2,15 +2,19 @@ package uk.ac.ncl.team19.lloydsapp.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.IntentCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.activities.LoginActivity;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -47,6 +51,12 @@ public class LogOffDialog extends DialogFragment{
                     case MotionEvent.ACTION_UP: {
                         GraphicsUtils.buttonClickEffectHide(v);
                         getDialog().dismiss();
+                        // Kill the application and all of its activities
+                        Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                        ComponentName cn = intent.getComponent();
+                        Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
+                        startActivity(mainIntent);
+                        getActivity().finish();
                         break;
                     }
                 }
