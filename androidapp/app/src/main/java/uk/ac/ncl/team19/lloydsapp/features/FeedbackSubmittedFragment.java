@@ -38,4 +38,9 @@ public class FeedbackSubmittedFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.feedback_page);
+    }
+
 }

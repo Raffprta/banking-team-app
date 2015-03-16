@@ -123,4 +123,9 @@ public class MakePaymentFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.make_payment_page);
+    }
+
 }

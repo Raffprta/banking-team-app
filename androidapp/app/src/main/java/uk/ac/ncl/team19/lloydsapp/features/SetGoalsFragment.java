@@ -37,4 +37,9 @@ public class SetGoalsFragment extends Fragment{
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.set_goals_page);
+    }
+
 }

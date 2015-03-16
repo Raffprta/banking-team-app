@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import uk.ac.ncl.team19.lloydsapp.R;
+
 /**
  * @author Yessengerey Bolatov (XML), Raffaello Perrotta
  * TODO : Not yet implemented.
@@ -19,6 +21,11 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         return null;
 
+    }
+
+    @Override
+    public String toString(){
+        return getString(R.string.transactions_page);
     }
 
 }

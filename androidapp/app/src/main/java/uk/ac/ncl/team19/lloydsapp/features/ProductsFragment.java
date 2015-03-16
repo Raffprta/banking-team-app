@@ -82,6 +82,11 @@ public class ProductsFragment extends Fragment{
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.other_products_page);
+    }
+
     private class ProgressTask extends AsyncTask<Fragment, Void, Void>{
 
         private boolean show;

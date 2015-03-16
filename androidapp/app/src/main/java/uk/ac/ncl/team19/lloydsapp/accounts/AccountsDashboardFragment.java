@@ -42,4 +42,9 @@ public class AccountsDashboardFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.accounts_dashboard_page);
+    }
+
 }

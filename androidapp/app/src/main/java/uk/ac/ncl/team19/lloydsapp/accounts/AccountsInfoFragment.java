@@ -54,4 +54,9 @@ public class AccountsInfoFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.account_info_page);
+    }
+
 }

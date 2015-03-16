@@ -65,4 +65,9 @@ public class PaymentConfirmFragment extends Fragment{
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.payment_confirm_page);
+    }
+
 }

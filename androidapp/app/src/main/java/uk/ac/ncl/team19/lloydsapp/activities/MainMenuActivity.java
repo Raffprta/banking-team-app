@@ -111,8 +111,10 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         FragmentManager fragmentManager = getSupportFragmentManager();
         // Check to see if there are fragments on the stack.
         if(fragmentManager.getBackStackEntryCount() > 1){
-            mTitle = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName();
-            fragmentManager.popBackStack();
+            // Pop the back stack and immediately replace it in an atomic action
+            fragmentManager.popBackStackImmediate();
+            // Update the title as per the new fragment
+            getSupportActionBar().setTitle(getSupportFragmentManager().findFragmentById(R.id.container).toString());
         }
     }
 
@@ -127,6 +129,15 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // add back stack listener
+        fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                // Update the title regardless of what is being loaded in.
+                getSupportActionBar().setTitle(getSupportFragmentManager().findFragmentById(R.id.container).toString());
+            }
+        });
 
         switch(position){
             case 0:
@@ -234,4 +245,8 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.profile_page);
+    }
 }

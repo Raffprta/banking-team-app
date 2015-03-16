@@ -60,4 +60,9 @@ public class TransferConfirmFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.confirm_transfer_page);
+    }
+
 }
