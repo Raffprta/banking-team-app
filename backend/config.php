@@ -62,6 +62,6 @@ define('API_SUCCESS',           'success');     // Successful API call
 define('API_ERROR',             'error');       // Error condition
 
 // Push notification type tags
-define('PUSH_HEARTBEAT',        '[ic_heartbeat]');  // Notifications informing the app a transaction has occurred etc.
-define('PUSH_OFFERS',           '[ic_offers]');     // Notifications about special offers
-define('PUSH_INFO',             '[ic_info]');       // General information notifications
+define('PUSH_TYPE_HEARTBEAT',        'heartbeat');  // Notifications informing the app a transaction has occurred etc.
+define('PUSH_TYPE_OFFERS',           'offer');     // Notifications about special offers
+define('PUSH_TYPE_INFO',             'info');       // General information notifications

@@ -1,6 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp.utils.push;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Created by dale on 10/11/14. Modified by Raffaello Perrotta on 15/03/2015
+ * Created by Dale Whinham on 10/11/14. Modified by Raffaello Perrotta on 15/03/2015
  */
 public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotificationAdapter.ViewHolder> {
 
@@ -57,24 +58,29 @@ public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotifi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        LloydsNotification notification = mDataset.get(position);
+        int iconId;
 
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset.get(position).getNotificationMessage());
+        // Set icon according to type
+        switch (notification.getNotificationType()) {
+            case LloydsNotification.TYPE_HEARTBEAT:
+                iconId = R.drawable.ic_action_money;
+                break;
 
-        if(holder.mTextView.getText().toString().startsWith(ctx.getString(R.string.ic_heartbeat))){
-            holder.mImageView.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_action_money));
-            holder.mTextView.setText(holder.mTextView.getText().toString().replace(ctx.getString(R.string.ic_heartbeat), ""));
+            case LloydsNotification.TYPE_OFFER:
+                iconId = R.drawable.ic_action_shop;
+                break;
 
-        }else if(holder.mTextView.getText().toString().startsWith(ctx.getString(R.string.ic_offers))){
-            holder.mImageView.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_action_shop));
-            holder.mTextView.setText(holder.mTextView.getText().toString().replace(ctx.getString(R.string.ic_offers), ""));
-
-        }else if(holder.mTextView.getText().toString().startsWith(ctx.getString(R.string.ic_info))){
-            holder.mImageView.setImageDrawable(ctx.getResources().getDrawable(R.drawable.ic_action_about));
-            holder.mTextView.setText(holder.mTextView.getText().toString().replace(ctx.getString(R.string.ic_info), ""));
-
+            case LloydsNotification.TYPE_INFO:
+            default:
+                iconId = R.drawable.ic_action_about;
         }
+
+        Drawable iconDrawable = ctx.getResources().getDrawable(iconId);
+
+        // Set notification text and icon
+        holder.mTextView.setText(mDataset.get(position).getNotificationMessage());
+        holder.mImageView.setImageDrawable(iconDrawable);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -82,6 +88,4 @@ public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotifi
     public int getItemCount() {
         return mDataset.size();
     }
-
-
 }

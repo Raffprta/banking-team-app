@@ -96,7 +96,7 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
             $errorMessages[] = 'Please enter a message to send.';
         }
 
-        if (!isset($_POST['messageType']) || $_POST['messageType'] !== PUSH_INFO && $_POST['messageType'] !== PUSH_OFFERS && $_POST['messageType'] !== PUSH_HEARTBEAT) {
+        if (!isset($_POST['messageType']) || $_POST['messageType'] !== PUSH_TYPE_INFO && $_POST['messageType'] !== PUSH_TYPE_OFFERS && $_POST['messageType'] !== PUSH_TYPE_HEARTBEAT) {
             $errorMessages[] = 'Invalid message type.';
         }
 
@@ -122,8 +122,14 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
                 }
             }
 
+            // Construct JSON message
+            $jsonMessage = json_encode(array(
+                'messageType' => $messageType,
+                'message' => $message
+            ));
+
             // Send the messages
-            $gcmResult = sendGoogleCloudMessage($messageType . $message, $recipientGcmIds);
+            $gcmResult = sendGoogleCloudMessage($jsonMessage, $recipientGcmIds);
             $decodedResult = json_decode($gcmResult);
 
             $successes = 0;
@@ -137,10 +143,10 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
             }
 
             if ($failures) {
-                $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures > 1 ? 'users' : 'users');
+                $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures == 1 ? 'user' : 'users');
+            } else {
+                $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes == 1 ? 'user' : 'users'), FLASH_SUCCESS);
             }
-
-            $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes > 1 ? 'users' : 'user'), FLASH_SUCCESS);
         }
 
         displayPage('pushmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
