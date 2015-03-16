@@ -1,5 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.utils.general;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Raffaello Perrotta - Class to hold general numeric constants which will be used throughout the application.
  */
@@ -22,5 +26,20 @@ public class Constants {
     public final static int LLOYDS_VICINITY = 20;
     public final static int MAGIC_NO = 666; // 1 in 10,000 chance of getting the magic number
     public final static int MAGIC_NO_SEEDER = 10000;
+
+    // Lookup table for achievement points, maps Id (string) -> Points (int)
+    // Static immutable hashmap is used.
+    public static final Map<String, Integer> ACHIEVEMENTS_POINTS;
+    static {
+        Map<String, Integer> aMap = new HashMap<>();
+        aMap.put("CgkIpMCHuIkUEAIQAQ", 25);
+        aMap.put("CgkIpMCHuIkUEAIQAw", 5);
+        aMap.put("CgkIpMCHuIkUEAIQBQ", 10);
+        aMap.put("CgkIpMCHuIkUEAIQCg", 30);
+        aMap.put("CgkIpMCHuIkUEAIQCw", 30);
+        aMap.put("CgkIpMCHuIkUEAIQDA", 15);
+        aMap.put("CgkIpMCHuIkUEAIQDQ", 10);
+        ACHIEVEMENTS_POINTS = Collections.unmodifiableMap(aMap);
+    }
 
 }

@@ -17,16 +17,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.games.achievement.Achievement;
+import com.google.android.gms.games.achievement.AchievementBuffer;
+import com.google.android.gms.games.achievement.Achievements;
+import com.google.android.gms.games.GamesStatusCodes;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
@@ -47,7 +55,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         GoogleApiClient.OnConnectionFailedListener{
 
     private GoogleApiClient mGoogleApiClient;
-    View profileView;
+    private View profileView;
+    private AchievementBuffer buff = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -357,6 +366,20 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             sp.edit().putBoolean(getString(R.string.sp_magic_no_mutex), true).apply();
         }
 
+        // If there is no achievements buffer.
+        if(buff == null){
+            // Attempt to asynchronously load the data to a buffer.
+            getActivity().runOnUiThread(new Runnable(){
+
+                @Override
+                public void run() {
+                    ProgressDialog.showLoading(ProfileFragment.this);
+                    new AchievementsGrabber().execute();
+                }
+            });
+        }
+
+
 
     }
 
@@ -426,5 +449,55 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         }
 
     }
+
+    /**
+     * An async. task for the purpose of grabbing a buffer of all of the available achievements
+     * such that it will be possible to calculate the scores of the currently achieved achievements to
+     * update the leaderboards with.
+     */
+    private class AchievementsGrabber extends AsyncTask<Void, Void, AchievementBuffer> {
+
+        @Override
+        protected AchievementBuffer doInBackground(Void... params) {
+            // False checks the achievements cache first
+            PendingResult res = Games.Achievements.load(mGoogleApiClient, false);
+            // Call, with 30 seconds of wait time
+            Achievements.LoadAchievementsResult r = (Achievements.LoadAchievementsResult)res.await(30, TimeUnit.SECONDS );
+
+            // If the network is kaput or we have no fall back on cached data.
+            if((r.getStatus().getStatusCode() != GamesStatusCodes.STATUS_OK &&
+                    r.getStatus().getStatusCode() != GamesStatusCodes.STATUS_NETWORK_ERROR_STALE_DATA)){
+                Log.w("Error: ", GamesStatusCodes.getStatusString(r.getStatus().getStatusCode()));
+                return null;
+            }
+            // Return the buffer to the caller
+            AchievementBuffer buffer = r.getAchievements();
+            buff = buffer;
+            return buffer;
+        }
+
+        @Override
+        protected void onPostExecute(AchievementBuffer buff) {
+
+            ProgressDialog.removeLoading(ProfileFragment.this);
+            int points = 0;
+
+            for(Achievement ach : buff){
+                // For all unlocked achievements get their points mapping
+                if(ach.getState() == Achievement.STATE_UNLOCKED){
+                    // Increment the points by the achievement point value
+                    points += Constants.ACHIEVEMENTS_POINTS.get(ach.getAchievementId());
+                }
+            }
+
+            Log.i("POINTS GAINED:", Integer.toString(points));
+            // Submit the score to the Play leaderboard
+            Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_id), points);
+
+        }
+
+
+    }
+
 
 }

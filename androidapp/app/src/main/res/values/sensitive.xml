@@ -6,6 +6,8 @@
 
     <string name="app_id_play">689728249892</string>
 
+    <!-- Achievements unique ids, these need to be updated in the Constants.java map too for points mapping -->
+
     <string name="achievement_old_timer">CgkIpMCHuIkUEAIQAQ</string>
     <string name="achievement_first_timer">CgkIpMCHuIkUEAIQAw</string>
     <string name="achievement_magic_number">CgkIpMCHuIkUEAIQBQ</string>
