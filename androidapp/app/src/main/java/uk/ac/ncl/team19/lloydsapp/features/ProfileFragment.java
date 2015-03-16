@@ -23,6 +23,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.plus.Plus;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
@@ -291,6 +295,36 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             toaster.grabToastForWearable(getString(R.string.bronze_login_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
             sp.edit().putBoolean(getString(R.string.sp_ach_bronze_login), true).apply();
         }
+
+        // Calculate how many days the user has been a member for.
+        String dateThen = sp.getString(getString(R.string.sp_first_login), null);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+        int daysBetween = 0;
+
+        try {
+            daysBetween = (int)(((new Date()).getTime() - sdf.parse(dateThen).getTime()) / (1000 * 60 * 60 * 24));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Debug
+        Log.i("TIME PASSED", Long.toString(daysBetween));
+
+        // If they are not equal we can increment the value
+        if(daysBetween != sp.getInt(getString(R.string.sp_last_date_inc), 0)){
+            // Store the days between value
+            sp.edit().putInt(getString(R.string.sp_last_date_inc), daysBetween).apply();
+            // Increment the achievement appropriately.
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), 1);
+        }
+
+        // Unlock the achievement after a month passes
+        if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(getString(R.string.sp_ach_old_timer), false)){
+            toaster.grabToastForWearable(getString(R.string.old_timer_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
+            sp.edit().putBoolean(getString(R.string.sp_ach_old_timer), true).apply();
+        }
+
 
     }
 

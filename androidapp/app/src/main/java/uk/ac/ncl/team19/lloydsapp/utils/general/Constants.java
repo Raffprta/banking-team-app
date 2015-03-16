@@ -15,5 +15,6 @@ public class Constants {
     public final static int GOLD_LOGIN = 100;
     public final static int SILVER_LOGIN = 50;
     public final static int BRONZE_LOGIN = 25;
+    public final static int OLD_TIMER = 30;
 
 }
