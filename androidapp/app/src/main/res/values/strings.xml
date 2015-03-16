@@ -147,6 +147,7 @@
     <string name="sp_logins">LOGINS</string>
     <string name="sp_first_login">FIRST_LOGIN</string>
     <string name="sp_ach_branch_explorer">ACH_BRANCH_EXP</string>
+    <string name="sp_ach_branch_explorer_mutex">ACH_BRANCH_EXP_MUTEX</string>
     <string name="sp_ach_first_login">ACH_FIRST_LOGIN</string>
     <string name="sp_ach_gold_login">ACH_GOLD_LOGIN</string>
     <string name="sp_ach_silver_login">ACH_SILVER_LOGIN</string>
@@ -181,6 +182,7 @@
     <string name="silver_login_unlock">Congratulations, you have logged in at least 50 times - breathe banking!</string>
     <string name="bronze_login_unlock">Congratulations, you have logged in at least 25 times - banking is educational!</string>
     <string name="old_timer_unlock">Congratulations, you have been using this application for a month, that\'s outstanding!</string>
+    <string name="branch_finder_unlock">Congratulations, you\'ve visited a Lloyds branch!</string>
 
     <string name="wearable_preview">Congratulations, you have unlocked an achievement!</string>
 

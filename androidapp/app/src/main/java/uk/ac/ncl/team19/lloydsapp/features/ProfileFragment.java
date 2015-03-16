@@ -321,8 +321,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
         // Unlock the achievement after a month passes
         if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(getString(R.string.sp_ach_old_timer), false)){
-            toaster.grabToastForWearable(getString(R.string.old_timer_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
+            toaster.grabToastForWearable(getString(R.string.old_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
             sp.edit().putBoolean(getString(R.string.sp_ach_old_timer), true).apply();
+        }
+
+        // Check to see if a branch has been encountered (true)
+        if(sp.getBoolean(getString(R.string.sp_ach_branch_explorer), false) && !sp.getBoolean(getString(R.string.sp_ach_branch_explorer_mutex), false)){
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_branch_explorer));
+            toaster.grabToastForWearable(getString(R.string.branch_finder_unlock), getString(R.string.wearable_preview), R.drawable.branch_explorer);
+            // Lock the mutex so this achievement can't be unlocked again.
+            sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer_mutex), true).apply();
         }
 
 
