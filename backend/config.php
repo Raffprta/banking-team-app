@@ -63,5 +63,5 @@ define('API_ERROR',             'error');       // Error condition
 
 // Push notification type tags
 define('PUSH_TYPE_HEARTBEAT',        'heartbeat');  // Notifications informing the app a transaction has occurred etc.
-define('PUSH_TYPE_OFFERS',           'offer');     // Notifications about special offers
+define('PUSH_TYPE_OFFERS',           'offer');      // Notifications about special offers
 define('PUSH_TYPE_INFO',             'info');       // General information notifications
