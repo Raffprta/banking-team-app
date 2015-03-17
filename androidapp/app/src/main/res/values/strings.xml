@@ -134,6 +134,7 @@
 
 
     <!-- Help manual Strings -->
+    <string name="man_no_class">The help menu could not find a class loader.</string>
 
     <!-- Drop down menu strings for setting goals page -->
     <string-array name="set_for_period_goals">
@@ -199,6 +200,15 @@
     <string name="magic_no_unlock">Congratulations, you\'ve unlocked the magic number! How did you unlock it? It\'s a secret.</string>
 
     <string name="wearable_preview">Congratulations, you have unlocked an achievement!</string>
+
+    <!-- Health page related errors -->
+    <string name="err_health_spend_format">The spend amount must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
+    <string name="err_health_spend_min">The spend amount must be greater than £</string>
+    <string name="err_health_save_format">The save amount must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
+    <string name="err_health_save_min">The save amount must be greater than £</string>
+    <string name="err_health_od_format">The overdraft amount must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
+    <string name="err_health_od_min">The overdraft amount must be greater than £</string>
+    <string name="err_no_selection">You must select whether you wish to donate or not.</string>
 
 </resources>
 
