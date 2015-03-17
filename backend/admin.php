@@ -132,20 +132,20 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
             $gcmResult = sendGoogleCloudMessage($jsonMessage, $recipientGcmIds);
             $decodedResult = json_decode($gcmResult);
 
-            $successes = 0;
-            $failures = 0;
-
+            // Assume a non-JSON return value is some kind of curl error
             if (is_null($decodedResult)) {
                 $errorMessages[] = 'curl error: ' . $gcmResult;
             } else {
                 $successes = $decodedResult->success;
                 $failures = $decodedResult->failure;
-            }
 
-            if ($failures) {
-                $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures == 1 ? 'user' : 'users');
-            } else {
-                $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes == 1 ? 'user' : 'users'), FLASH_SUCCESS);
+                if ($failures) {
+                    $errorMessages[] = sprintf('Couldn\'t send message to %d %s.', $failures, $failures == 1 ? 'user' : 'users');
+                }
+
+                if ($successes) {
+                    $service->flash(sprintf('Your message has been sent to %d %s.', $successes, $successes == 1 ? 'user' : 'users'), FLASH_SUCCESS);
+                }
             }
         }
 
