@@ -1,6 +1,8 @@
 package uk.ac.ncl.team19.lloydsapp.features;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -9,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
@@ -111,6 +116,15 @@ public class SetGoalsFragment extends Fragment{
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
+
+                // Get shared preferences
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                // If the input was correct
+                // Set the date starting from.
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                String dateSet = sdf.format(new Date());
+                sp.edit().putString(getString(R.string.sp_goals_start), dateSet).apply();
 
                 GraphicsUtils.buttonClickEffectHide(v);
 

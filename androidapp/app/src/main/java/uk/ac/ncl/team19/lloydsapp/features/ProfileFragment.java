@@ -327,6 +327,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
         // Debug
         Log.i("TIME PASSED", Long.toString(daysBetween));
+        Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(getString(R.string.sp_last_date_inc),0)));
 
         // If they are not equal we can increment the value
         if(daysBetween != sp.getInt(getString(R.string.sp_last_date_inc), 0)){
