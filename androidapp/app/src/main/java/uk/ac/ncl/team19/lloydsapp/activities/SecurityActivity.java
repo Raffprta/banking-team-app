@@ -18,6 +18,7 @@ import java.util.Map;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
+import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 import static android.content.DialogInterface.*;
@@ -85,7 +86,7 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                 secureChars.put(6, sixthCharacter.getText().charAt(0));
 
                 // Start Login task
-                // TODO: Progress dialog show/hide
+                ProgressDialog.showLoading(SecurityActivity.this);
                 LoginTask lt = new LoginTask();
                 lt.execute();
             }
@@ -114,6 +115,9 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
 
         @Override
         protected void onPostExecute(String response) {
+            // Remove progress bar
+            ProgressDialog.removeLoading(SecurityActivity.this);
+
             if (response == null) {
                 // Make a new error dialog and display it
                 Bundle b = new Bundle();

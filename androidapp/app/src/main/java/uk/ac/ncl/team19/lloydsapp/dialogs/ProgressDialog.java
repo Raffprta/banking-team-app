@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -44,6 +45,20 @@ public class ProgressDialog extends DialogFragment {
     }
 
     /**
+     * Mirror progress bar as above for FragmentActivities
+     * @param activity the activity to display the progress bar to.
+     */
+    public static void showLoading(FragmentActivity activity){
+        if(!shown)
+            activity.getSupportFragmentManager().beginTransaction().add(instance,
+                    TAG).commit();
+        else
+            return;
+
+        shown = true;
+    }
+
+    /**
      * Method to remove the ProgressBar.
      * @param frag The fragment you want to show the ProgressDialog to.
      */
@@ -51,6 +66,21 @@ public class ProgressDialog extends DialogFragment {
 
         if(shown)
             frag.getActivity().getSupportFragmentManager().beginTransaction().remove(instance).commit();
+        else
+            return;
+
+        shown = false;
+
+    }
+
+    /**
+     * As above. Method to remove the ProgressBar though for fragmentactivities.
+     * @param activity The activity you want to show the ProgressDialog to.
+     */
+    public static void removeLoading(FragmentActivity activity){
+
+        if(shown)
+            activity.getSupportFragmentManager().beginTransaction().remove(instance).commit();
         else
             return;
 
