@@ -1,5 +1,6 @@
 package uk.ac.ncl.team19.lloydsapp.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.HashMap;
@@ -15,12 +17,15 @@ import java.util.Map;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
+
+import static android.content.DialogInterface.*;
 
 /**
  * @author Raffaello Perrotta, XML creation by Ivy Tong
  */
-public class SecurityActivity extends FragmentActivity {
+public class SecurityActivity extends FragmentActivity implements OnDismissListener{
     // Login credentials
     private String username = "";
     private String password = "";
@@ -28,6 +33,9 @@ public class SecurityActivity extends FragmentActivity {
 
     // Logging tag
     private static final String TAG = SecurityActivity.class.getName();
+
+    // Login button
+    private Button loginButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -41,7 +49,8 @@ public class SecurityActivity extends FragmentActivity {
         setContentView(R.layout.security_page);
 
         // Set button listener.
-        findViewById(R.id.securityButton).setOnClickListener(new View.OnClickListener() {
+        loginButton = (Button)findViewById(R.id.securityButton);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // UI effects.
@@ -83,6 +92,12 @@ public class SecurityActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        // Go back one activity when the error dialog is dismissed
+        finish();
+    }
+
     private class LoginTask extends AsyncTask<Void, Void, String> {
         private String errorString = null;
 
@@ -100,8 +115,16 @@ public class SecurityActivity extends FragmentActivity {
         @Override
         protected void onPostExecute(String response) {
             if (response == null) {
-                // TODO: Error dialog, go back to login screen, etc.
+                // Make a new error dialog and display it
+                Bundle b = new Bundle();
+                b.putString(getString(R.string.custom_bundle), errorString);
+                b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                CustomDialog custom = new CustomDialog();
+                custom.setArguments(b);
+                custom.show(getSupportFragmentManager(), "Custom Dialog");
                 Log.e(TAG, errorString);
+                // Hide the effects on the button
+                GraphicsUtils.buttonClickEffectHide(loginButton);
             } else {
                 // Store device token in shared preferences
                 Log.i(TAG, "Received device token: " + response);

@@ -1,7 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.dialogs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -71,6 +73,15 @@ public class CustomDialog extends android.support.v4.app.DialogFragment{
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity != null && activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 
 }

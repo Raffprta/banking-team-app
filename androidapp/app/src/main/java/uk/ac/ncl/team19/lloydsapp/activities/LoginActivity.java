@@ -53,6 +53,8 @@ public class LoginActivity extends FragmentActivity {
                 securityIntent.putExtras(b);
                 // Start the activity
                 startActivity(securityIntent);
+                // Hide the effects on the button
+                GraphicsUtils.buttonClickEffectHide(v);
             }
         });
     }
