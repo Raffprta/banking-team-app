@@ -380,9 +380,9 @@ function validateBankAccountData($formattedBankAccountData, $editMode)
     $errorMessages = array();
 
     // Validate account type
-    if ($formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_CURRENT
-        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_SAVINGS
-        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_STUDENT
+    if ($formattedBankAccountData['type'] !== ACCOUNT_TYPE_CURRENT
+        && $formattedBankAccountData['type'] !== ACCOUNT_TYPE_SAVINGS
+        && $formattedBankAccountData['type'] !== ACCOUNT_TYPE_STUDENT
     ) {
         $errorMessages[] = 'The account type was invalid.';
     }
