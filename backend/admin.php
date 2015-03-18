@@ -484,24 +484,43 @@ $this->respond('GET', '/deletebankaccount/[i:accountId]', function ($request, $r
 });
 
 //================================================================================
-// Admin: Event Log
+// Admin: View Activity Log
 //================================================================================
 $this->respond('GET', '/activitylog', function ($request, $response, $service) {
-
-    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);	
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
     // Order the events descending and limit them by 100
     $sql = 'ORDER BY id DESC LIMIT 100';
 
     try {
         // Create an array of beans, of the last 100 events.
-        $eventBean = R::findAll('logevent', $sql);
+        $eventBeans = R::findAll('logevent', $sql);
 
-        if (!is_null($eventBean)) {	
+        if (!is_null($eventBeans)) {
             // Display the page of events
-            displayPage('activitylog.twig', array('events' => $eventBean));
+            displayPage('activitylog.twig', array('events' => $eventBeans));
         } else {
             displayError('Log event not found.');
         }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Clear Activity Log
+//================================================================================
+$this->respond('GET', '/clearactivitylog', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        // Find and delete all events
+        $eventBeans = R::findAll('logevent');
+        R::trashAll($eventBeans);
+
+        // Redirect back to activity log page
+        $service->flash('The activity log was cleared.', FLASH_INFO);
+        $response->redirect('/admin/activitylog');
+        $response->send();
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
