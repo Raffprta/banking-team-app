@@ -476,28 +476,25 @@ $this->respond('GET', '/deletebankaccount/[i:accountId]', function ($request, $r
 });
 
 //================================================================================
-// Admin Action: Log Event
+// Admin: Event Log
 //================================================================================
-
 $this->respond('GET', '/activitylog', function ($request, $response, $service) {
 
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);	
-	// Order the events descending and limit them by 100
-	$sql = 'ORDER BY id DESC LIMIT 100';
-	
-	try {
-		// Create an array of beans, of the last 100 events.
+    // Order the events descending and limit them by 100
+    $sql = 'ORDER BY id DESC LIMIT 100';
+
+    try {
+        // Create an array of beans, of the last 100 events.
         $eventBean = R::findAll('logevent', $sql);
-		
+
         if (!is_null($eventBean)) {	
-			// Display the page of events
-			displayPage('activitylog.twig', array('events' => $eventBean));
+            // Display the page of events
+            displayPage('activitylog.twig', array('events' => $eventBean));
         } else {
             displayError('Log event not found.');
         }
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
-	
 });
-
