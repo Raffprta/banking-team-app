@@ -252,7 +252,15 @@ $this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $res
                 $service->back();
                 $response->send();
 
-                logActivity('Bank account creation succeeded (' . $bankAccountData['accountNumber'] . '/' . $bankAccountData['sortCode'] . ').');
+                logActivity('Bank account creation succeeded ('
+                    . $bankAccountData['accountNumber']
+                    . '/'
+                    . $bankAccountData['sortCode1']
+                    . '-'
+                    . $bankAccountData['sortCode2']
+                    . '-'
+                    . $bankAccountData['sortCode3']
+                    . ').');
             }
         }
     } catch (Exception $e) {
