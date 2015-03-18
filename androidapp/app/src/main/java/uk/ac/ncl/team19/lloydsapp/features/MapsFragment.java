@@ -203,6 +203,11 @@ public class MapsFragment extends SupportMapFragment {
     }
 
     @Override
+    public String toString(){
+        return getString(R.string.location_page);
+    }
+
+    @Override
     public void onAttach(android.app.Activity activity){
         super.onAttach(activity);
     }

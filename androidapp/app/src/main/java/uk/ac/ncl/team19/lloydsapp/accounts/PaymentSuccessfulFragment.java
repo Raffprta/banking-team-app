@@ -53,4 +53,9 @@ public class PaymentSuccessfulFragment extends Fragment{
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.payment_successful_page);
+    }
+
 }

@@ -14,6 +14,11 @@ public class Constants {
     public final static int HEALTH_AVG = 50;
     public final static int HEALTH_POOR = 25;
 
+    // health minimums
+    public final static double MIN_SPEND = 0;
+    public final static double MIN_SAVE = 5;
+    public final static double MIN_OVERDRAFT = 0;
+
     // validation for bank numbers
     public final static int ACC_NO_SIZE = 8;
     public final static int SORT_CODE_NO_SIZE = 6;

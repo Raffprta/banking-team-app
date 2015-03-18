@@ -76,4 +76,9 @@ public class HealthFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.account_health_page);
+    }
+
 }

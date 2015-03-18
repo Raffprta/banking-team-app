@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/editText"
+                    android:id="@+id/spendAmount"
                     android:layout_alignBottom="@+id/setGoalsSpendTextView"
                     android:layout_toRightOf="@+id/textView35"
                     android:layout_alignRight="@+id/setYourGoalsTextView"
@@ -80,7 +80,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="£"
                     android:id="@+id/textView35"
-                    android:layout_above="@+id/editText2"
+                    android:layout_above="@+id/saveAmount"
                     android:layout_toRightOf="@+id/setGoalsOverdraftTextView"
                     android:layout_toEndOf="@+id/setGoalsOverdraftTextView"
                     android:layout_marginLeft="10dp" />
@@ -100,11 +100,12 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/editText2"
-                    android:layout_below="@+id/editText"
+                    android:id="@+id/saveAmount"
+                    android:layout_below="@+id/spendAmount"
                     android:layout_toRightOf="@+id/poundsSignSave"
-                    android:layout_alignRight="@+id/editText"
-                    android:layout_alignEnd="@+id/editText" />
+                    android:layout_alignRight="@+id/spendAmount"
+                    android:layout_alignEnd="@+id/spendAmount"
+                    android:hint="e.g. £40.00" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,12 +134,13 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/editText3"
+                    android:id="@+id/overdraftAmount"
                     android:layout_alignBottom="@+id/textView34"
                     android:layout_alignRight="@+id/setYourGoalsTextView"
                     android:layout_alignEnd="@+id/setYourGoalsTextView"
                     android:layout_toRightOf="@+id/poundsSignSave"
-                    android:layout_toEndOf="@+id/poundsSignSave" />
+                    android:layout_toEndOf="@+id/poundsSignSave"
+                    android:hint="e.g. £0.00" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,6 +160,7 @@
                     android:layout_alignTop="@+id/setGoalsDonateTextView"
                     android:layout_alignLeft="@+id/textView34"
                     android:layout_alignStart="@+id/textView34"
+                    android:id="@+id/setGoalsGroup"
                     android:orientation="horizontal">
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -194,7 +197,7 @@
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spinner2"
+                    android:id="@+id/timeSpinner"
                     android:entries="@array/set_for_period_goals"
                     android:layout_alignTop="@+id/setForGoalsTextView"
                     android:layout_alignLeft="@+id/textView35"

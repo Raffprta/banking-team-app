@@ -289,6 +289,11 @@ public class PushFragment extends Fragment {
         dataSource.close();
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.notifications_page);
+    }
+
     // Broadcast receiver to listen for changes to notification DB
     // casued by push messages being received
     private class DataChangedBroadcastReceiver extends BroadcastReceiver {

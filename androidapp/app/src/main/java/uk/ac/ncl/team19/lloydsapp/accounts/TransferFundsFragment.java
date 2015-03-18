@@ -78,4 +78,9 @@ public class TransferFundsFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.transfer_funds_page);
+    }
+
 }

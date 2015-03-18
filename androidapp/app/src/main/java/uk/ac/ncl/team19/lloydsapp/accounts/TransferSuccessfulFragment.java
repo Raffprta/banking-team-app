@@ -49,4 +49,9 @@ public class TransferSuccessfulFragment extends Fragment {
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.transfer_successful_page);
+    }
+
 }

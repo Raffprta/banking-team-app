@@ -499,5 +499,10 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.profile_page);
+    }
+
 
 }

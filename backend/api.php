@@ -271,11 +271,12 @@ function sendGoogleCloudMessage($message, $ids) {
     $result = curl_exec($ch);
 
     // Get any curl errors
-    $error = curl_errno($ch);
+    $errno = curl_errno($ch);
+    $errmsg = curl_error($ch);
 
     // Close curl handle
     curl_close($ch);
 
     // If there was an error, return it, otherwise return Google response
-    return $error ? $error : $result;
+    return $errno ? $errmsg : $result;
 }
