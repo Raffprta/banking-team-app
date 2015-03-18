@@ -237,7 +237,7 @@ $this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $res
                         'account' => $bankAccountData
                     )
                 );
-                logActivity('Account creation failed: validation errors.');
+                logActivity('Bank account creation failed: validation errors.');
             }
 
             // We're good, notify success and display correct page
@@ -252,12 +252,12 @@ $this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $res
                 $service->back();
                 $response->send();
 
-                logActivity('Account creation succeeded (' . $bankAccountData['email'] . ').');
+                logActivity('Bank account creation succeeded (' . $bankAccountData['accountNumber'] . '/' . $bankAccountData['sortCode'] . ').');
             }
         }
     } catch (Exception $e) {
         displayError($e->getMessage());
-        logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
+        logActivity('Bank account creation failed because an exception was thrown: ' . $e->getMessage());
     }
 });
 
@@ -286,7 +286,7 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
     // Check if user already exists
     if (emailAddressExists($userData['email'])) {
         $errorMessages[] = 'An account already exists for the email address \'' . $userData['email'] . '\'.';
-        logActivity('Account creation failed: account already exists for the email address \'' . $userData['email'] . '\'.');
+        logActivity('User account creation failed: account already exists for the email address \'' . $userData['email'] . '\'.');
     }
 
     // Display any form errors and re-populate registration form
@@ -298,7 +298,7 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
                 'user' => $userData
             )
         );
-        logActivity('Account creation failed: validation errors.');
+        logActivity('User account creation failed: validation errors.');
     }
 
     // We're good, present user with login form and success notice
@@ -314,10 +314,10 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
             $service->back();
             $response->send();
 
-            logActivity('Account creation succeeded (' . $userData['email'] . ').');
+            logActivity('User account creation succeeded (' . $userData['email'] . ').');
         } catch (Exception $e) {
             displayError($e->getMessage());
-            logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
+            logActivity('User account creation failed because an exception was thrown: ' . $e->getMessage());
         }
     }
 });
