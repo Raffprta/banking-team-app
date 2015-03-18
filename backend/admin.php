@@ -492,15 +492,11 @@ $this->respond('GET', '/activitylog', function ($request, $response, $service) {
     $sql = 'ORDER BY id DESC LIMIT 100';
 
     try {
-        // Create an array of beans, of the last 100 events.
+        // Create an array of beans with the last 100 events
         $eventBeans = R::findAll('logevent', $sql);
 
-        if (!is_null($eventBeans)) {
-            // Display the page of events
-            displayPage('activitylog.twig', array('events' => $eventBeans));
-        } else {
-            displayError('Log event not found.');
-        }
+        // Display the page of events
+        displayPage('activitylog.twig', array('events' => $eventBeans));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
