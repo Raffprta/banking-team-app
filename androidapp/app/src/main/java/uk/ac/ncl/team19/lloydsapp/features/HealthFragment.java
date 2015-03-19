@@ -1,12 +1,15 @@
 package uk.ac.ncl.team19.lloydsapp.features;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
@@ -41,6 +44,40 @@ public class HealthFragment extends Fragment {
         }else{
             hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
         }
+
+        // Set the values of the goals.
+        TextView perMonthOrPerWeek = (TextView)healthView.findViewById(R.id.perMonthOrPerWeek);
+        TextView spendAmount = (TextView)healthView.findViewById(R.id.spendTextView);
+        TextView saveAmount = (TextView)healthView.findViewById(R.id.saveTextView);
+        TextView overdraft = (TextView)healthView.findViewById(R.id.overdraftTextView);
+
+        // Donate views
+        TextView donateStartView = (TextView)healthView.findViewById(R.id.donateStartView);
+        TextView donateTextView = (TextView)healthView.findViewById(R.id.donateTextView);
+        ProgressBar donateBar = (ProgressBar)healthView.findViewById(R.id.donateProgressBar);
+
+
+        // Make shared preferences object
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        // If we are not donating, hide all views.
+        if(!sp.getBoolean(getString(R.string.sp_goals_donate), false)){
+            donateStartView.setVisibility(View.GONE);
+            donateTextView.setVisibility(View.GONE);
+            donateBar.setVisibility(View.GONE);
+        }
+
+        // Populate other fields
+        if(sp.getInt(getString(R.string.sp_goals_set_for), 1) == Constants.WEEKLY){
+            perMonthOrPerWeek.setText(getString(R.string.weekly));
+        }else if(sp.getInt(getString(R.string.sp_goals_set_for), 1) == Constants.MONTHLY){
+            perMonthOrPerWeek.setText(getString(R.string.monthly));
+        }
+
+        spendAmount.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_spend), -1)));
+        saveAmount.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_save), -1)));
+        overdraft.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_overdraft), -1)));
+
 
         // Show the percentage points of the current health
         hpBar.setOnClickListener(new View.OnClickListener() {

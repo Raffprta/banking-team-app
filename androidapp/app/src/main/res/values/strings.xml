@@ -178,6 +178,18 @@
     <string name="sp_magic_no">MAGIC_NO</string>
     <string name="sp_magic_no_mutex">MAGIC_NO_MUTEX</string>
 
+    <string name="sp_goals_set">GOALS_SET</string>
+
+    <string name="sp_goals_set_for">GOALS_SET_FOR</string>
+    <string name="sp_goals_start">GOALS_START</string>
+    <string name="sp_goals_spend">GOALS_SPEND</string>
+    <string name="sp_goals_save">GOALS_SAVE</string>
+    <string name="sp_goals_overdraft">GOALS_OVERDRAFT</string>
+    <string name="sp_goals_donate">GOALS_DONATE</string>
+
+    <!-- Health page fillers -->
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
 
     <!-- Login / Security error messages -->
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
