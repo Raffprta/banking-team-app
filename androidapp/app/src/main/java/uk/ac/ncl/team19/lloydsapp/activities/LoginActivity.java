@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -18,6 +19,17 @@ public class LoginActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
+        // Get the previous intent, if any.
+        Intent intent = getIntent();
+        // If the app was auto logged off.
+        if(intent != null && intent.getBooleanExtra(getString(R.string.bundle_autokick), false)){
+            Bundle b = new Bundle();
+            b.putString(getString(R.string.custom_bundle), getString(R.string.err_autokick));
+            CustomDialog custom = new CustomDialog();
+            custom.setArguments(b);
+            custom.show(getSupportFragmentManager(), "Custom Dialog");
+        }
 
         // Set button listener.
         findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
@@ -61,5 +73,6 @@ public class LoginActivity extends FragmentActivity {
     public void onBackPressed() {
         // Prevent going back to the previous page.
     }
+
 
 }

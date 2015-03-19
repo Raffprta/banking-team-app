@@ -51,4 +51,7 @@ public class Constants {
         ACHIEVEMENTS_POINTS = Collections.unmodifiableMap(aMap);
     }
 
+    // Auto-log off in 5 minutes
+    public static final int TIME_MILLIS_LOGOFF = 5 * 1000 * 60;
+
 }
