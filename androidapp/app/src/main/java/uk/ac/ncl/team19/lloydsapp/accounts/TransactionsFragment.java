@@ -19,8 +19,9 @@ public class TransactionsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        return null;
+        final View transactionsView = inflater.inflate(R.layout.transaction_history_page, container, false);
 
+        return transactionsView;
     }
 
     @Override
