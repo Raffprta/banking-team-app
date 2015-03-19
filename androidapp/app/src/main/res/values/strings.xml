@@ -55,6 +55,7 @@
     <string name="logo">App Logo</string>
     <string name="visit_website">If you don\'t want to register your device with Mobile Banking right now you can still use our mobile site.</string>
     <string name="visit_website_link">Visit our website</string>
+    <string name="bundle_autokick">AUTOKICK</string>
 
     <!-- Security Page -->
     <string name="your_security_code">Your Security Code</string>
@@ -195,6 +196,7 @@
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
     <string name="err_empty_pass">Your password cannot be empty. Please enter your password correctly.</string>
     <string name="err_empty_sec">This field cannot be empty. Please enter your indicated character from your security phrase.</string>
+    <string name="err_autokick">You were inactive for five minutes. For security reasons you were logged off automatically.</string>
 
     <!-- Payment / Transfer error messages -->
     <string name="err_acc_name_empty">This field cannot be empty. Please enter the payee\'s name.</string>
@@ -230,6 +232,8 @@
     <string name="err_health_od_format">The overdraft amount must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
     <string name="err_health_od_min">The overdraft amount must be greater than £</string>
     <string name="err_no_selection">You must select whether you wish to donate or not.</string>
+
+
 
 </resources>
 
