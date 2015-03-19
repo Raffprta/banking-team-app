@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
@@ -39,6 +42,32 @@ public class SetGoalsFragment extends Fragment{
         final EditText saveAmount = (EditText)goalsView.findViewById(R.id.saveAmount);
         final EditText overdraftAmount = (EditText)goalsView.findViewById(R.id.overdraftAmount);
         final RadioGroup donateGroup = (RadioGroup)goalsView.findViewById(R.id.setGoalsGroup);
+        final RadioButton yesButton = (RadioButton)goalsView.findViewById(R.id.setGoalsYesCheckBox);
+        final RadioButton noButton = (RadioButton)goalsView.findViewById(R.id.setGoalsNoCheckBox);
+        final Button goalsButton = (Button) goalsView.findViewById(R.id.setGoalsButton);
+
+        // Get shared preferences
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        // If goals are already set then disable all editable views until reset button clicked.
+        if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+            // Fixes android bug on views
+            goalsSpinner.setEnabled(false);
+            goalsSpinner.setClickable(false);
+            goalsSpinner.setFocusable(false);
+            spendAmount.setFocusable(false);
+            saveAmount.setFocusable(false);
+            overdraftAmount.setFocusable(false);
+            yesButton.setEnabled(false);
+            yesButton.setClickable(false);
+            yesButton.setFocusable(false);
+            noButton.setEnabled(false);
+            noButton.setClickable(false);
+            noButton.setFocusable(false);
+            goalsButton.setEnabled(false);
+            goalsButton.setClickable(false);
+            goalsButton.setFocusable(false);
+        }
 
         // On Clicking the cancel button, return to the previous page.
         goalsView.findViewById(R.id.cancelGoalsButton).setOnClickListener(new View.OnClickListener() {
@@ -51,21 +80,21 @@ public class SetGoalsFragment extends Fragment{
         });
 
         // Set the goals
-        goalsView.findViewById(R.id.setGoalsButton).setOnClickListener(new View.OnClickListener() {
+        goalsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Validate spend amount
                 // Check if GBP decimal or otherwise is entered
-                if(!spendAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")){
+                if (!spendAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")) {
                     spendAmount.setError(getString(R.string.err_health_spend_format));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Check to see if the user entered a value that is too low
-                if(Double.parseDouble(spendAmount.getText().toString()) < Constants.MIN_SPEND){
+                if (Double.parseDouble(spendAmount.getText().toString()) < Constants.MIN_SPEND) {
                     spendAmount.setError(getString(R.string.err_health_spend_min) + Double.toString(Constants.MIN_SPEND));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
@@ -73,14 +102,14 @@ public class SetGoalsFragment extends Fragment{
 
                 // Validate save amount
                 // Check if GBP decimal or otherwise is entered
-                if(!saveAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")){
+                if (!saveAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")) {
                     saveAmount.setError(getString(R.string.err_health_save_format));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Check to see if the user entered a value that is too low
-                if(Double.parseDouble(saveAmount.getText().toString()) < Constants.MIN_SAVE){
+                if (Double.parseDouble(saveAmount.getText().toString()) < Constants.MIN_SAVE) {
                     saveAmount.setError(getString(R.string.err_health_save_min) + Double.toString(Constants.MIN_SAVE));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
@@ -88,14 +117,14 @@ public class SetGoalsFragment extends Fragment{
 
                 // Validate overdraft amount
                 // Check if GBP decimal or otherwise is entered
-                if(!overdraftAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")){
+                if (!overdraftAmount.getText().toString().matches("[0-9]+(\\.[0-9][0-9]?)?")) {
                     overdraftAmount.setError(getString(R.string.err_health_od_format));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Check to see if the user entered a value that is too low
-                if(Double.parseDouble(overdraftAmount.getText().toString()) < Constants.MIN_OVERDRAFT){
+                if (Double.parseDouble(overdraftAmount.getText().toString()) < Constants.MIN_OVERDRAFT) {
                     overdraftAmount.setError(getString(R.string.err_health_od_min) + Double.toString(Constants.MIN_OVERDRAFT));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
@@ -105,7 +134,7 @@ public class SetGoalsFragment extends Fragment{
                 int radioButtonID = donateGroup.getCheckedRadioButtonId();
 
                 // If no view is found, then the user did not select anything.
-                if(radioButtonID == -1){
+                if (radioButtonID == -1) {
                     // Use dialog to display the message over setError as setError is graphically unappealing
                     // on radio buttons
                     Bundle b = new Bundle();
@@ -118,8 +147,6 @@ public class SetGoalsFragment extends Fragment{
                     return;
                 }
 
-                // Get shared preferences
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
                 // If the input was correct - set that the goals were indeed set
                 sp.edit().putBoolean(getString(R.string.sp_goals_set), true).apply();
@@ -143,7 +170,7 @@ public class SetGoalsFragment extends Fragment{
                 sp.edit().putFloat(getString(R.string.sp_goals_overdraft), Float.parseFloat(overdraftAmount.getText().toString())).apply();
 
                 // Set whether to donate or not
-                if(radioButtonID == R.id.setGoalsYesCheckBox)
+                if (radioButtonID == R.id.setGoalsYesCheckBox)
                     sp.edit().putBoolean(getString(R.string.sp_goals_donate), true).apply();
                 else
                     sp.edit().putBoolean(getString(R.string.sp_goals_donate), false).apply();
@@ -165,6 +192,23 @@ public class SetGoalsFragment extends Fragment{
 
 
             }
+        });
+
+        // Reset the goals
+        goalsView.findViewById(R.id.resetGoalsButton).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                sp.edit().putBoolean(getString(R.string.sp_goals_set), false).apply();
+
+                // Reload page via fragment transaction
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.detach(SetGoalsFragment.this);
+                fragmentTransaction.attach(SetGoalsFragment.this);
+                fragmentTransaction.commit();
+            }
+
         });
 
         return goalsView;
