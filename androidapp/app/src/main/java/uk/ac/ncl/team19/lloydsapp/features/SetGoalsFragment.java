@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class SetGoalsFragment extends Fragment{
         final View goalsView = inflater.inflate(R.layout.set_goals_page, container, false);
 
         // Get all respective fields
-        Spinner goalsSpinner = (Spinner)goalsView.findViewById(R.id.timeSpinner);
+        final Spinner goalsSpinner = (Spinner)goalsView.findViewById(R.id.timeSpinner);
         final EditText spendAmount = (EditText)goalsView.findViewById(R.id.spendAmount);
         final EditText saveAmount = (EditText)goalsView.findViewById(R.id.saveAmount);
         final EditText overdraftAmount = (EditText)goalsView.findViewById(R.id.overdraftAmount);
@@ -120,13 +121,48 @@ public class SetGoalsFragment extends Fragment{
                 // Get shared preferences
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-                // If the input was correct
+                // If the input was correct - set that the goals were indeed set
+                sp.edit().putBoolean(getString(R.string.sp_goals_set), true).apply();
+
                 // Set the date starting from.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String dateSet = sdf.format(new Date());
                 sp.edit().putString(getString(R.string.sp_goals_start), dateSet).apply();
 
+                // Set whether it is weekly or monthly.
+                int weeklyOrMonthly = goalsSpinner.getSelectedItemPosition() + 1;
+                sp.edit().putInt(getString(R.string.sp_goals_set_for), weeklyOrMonthly).apply();
+
+                // Set spend amount
+                sp.edit().putFloat(getString(R.string.sp_goals_spend), Float.parseFloat(spendAmount.getText().toString())).apply();
+
+                // Set save amount
+                sp.edit().putFloat(getString(R.string.sp_goals_save), Float.parseFloat(saveAmount.getText().toString())).apply();
+
+                // Set overdraft amount
+                sp.edit().putFloat(getString(R.string.sp_goals_overdraft), Float.parseFloat(overdraftAmount.getText().toString())).apply();
+
+                // Set whether to donate or not
+                if(radioButtonID == R.id.setGoalsYesCheckBox)
+                    sp.edit().putBoolean(getString(R.string.sp_goals_donate), true).apply();
+                else
+                    sp.edit().putBoolean(getString(R.string.sp_goals_donate), false).apply();
+
+                // Various debug methods
+                Log.i("Debug Is the goal set?", Boolean.toString(sp.getBoolean(getString(R.string.sp_goals_set), false)));
+                Log.i("Debug date", sp.getString(getString(R.string.sp_goals_start), null));
+                Log.i("Debug weeklyOrMonthly", Integer.toString(sp.getInt(getString(R.string.sp_goals_set_for), -1)));
+                Log.i("Debug save amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_save), -1)));
+                Log.i("Debug spend amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_spend), -1)));
+                Log.i("Debug overdraft amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_overdraft), -1)));
+                Log.i("Debug are we donating?", Boolean.toString(sp.getBoolean(getString(R.string.sp_goals_donate), false)));
+
+                // Make a new fragment transaction to go to the health page.
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(getString(R.string.account_health_page)).commit();
+
                 GraphicsUtils.buttonClickEffectHide(v);
+
 
             }
         });

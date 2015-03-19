@@ -30,6 +30,7 @@ import uk.ac.ncl.team19.lloydsapp.features.MapsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProductsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProfileFragment;
 import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
+import uk.ac.ncl.team19.lloydsapp.features.SetGoalsFragment;
 
 
 /**
@@ -124,6 +125,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
     private ProfileFragment profile = new ProfileFragment();
     private HealthFragment health = new HealthFragment();
+    private SetGoalsFragment goals = new SetGoalsFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -150,7 +152,15 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 break;
             case 2:
                 mTitle = getString(R.string.account_health_page);
-                fragmentManager.beginTransaction().replace(R.id.container, health, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                // Determine whether goals were set or not, load the setting of goals if not.
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                    fragmentManager.beginTransaction().replace(R.id.container, health, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                }else{
+                    fragmentManager.beginTransaction().replace(R.id.container, goals, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
+                }
+
                 break;
             case 3:
                 mTitle = getString(R.string.notifications_page);

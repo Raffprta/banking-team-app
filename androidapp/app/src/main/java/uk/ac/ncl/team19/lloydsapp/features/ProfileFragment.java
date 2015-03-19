@@ -117,7 +117,15 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(getString(R.string.account_health_page)).commit();
+
+                // Determine whether goals were set or not, load the setting of goals if not.
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                    fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
+                }else{
+                    fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(null).commit();
+                }
 
             }
         });

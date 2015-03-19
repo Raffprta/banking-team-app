@@ -19,6 +19,10 @@ public class Constants {
     public final static double MIN_SAVE = 5;
     public final static double MIN_OVERDRAFT = 0;
 
+    // health enum
+    public final static int WEEKLY = 2;
+    public final static int MONTHLY = 1;
+
     // validation for bank numbers
     public final static int ACC_NO_SIZE = 8;
     public final static int SORT_CODE_NO_SIZE = 6;

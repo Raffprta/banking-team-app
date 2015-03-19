@@ -1,6 +1,8 @@
 package uk.ac.ncl.team19.lloydsapp.accounts;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.features.HealthFragment;
+import uk.ac.ncl.team19.lloydsapp.features.SetGoalsFragment;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -46,7 +49,14 @@ public class AccountsInfoFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                // Determine whether goals were set or not, load the setting of goals if not.
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                    fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
+                }else{
+                    fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(null).commit();
+                }
             }
         });
 
