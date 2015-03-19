@@ -21,7 +21,8 @@
             android:layout_marginTop="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/gridLayout3">
+            android:id="@+id/gridLayout3"
+            android:layout_marginBottom="20dp">
 
             <GridLayout
                 android:layout_width="wrap_content"
