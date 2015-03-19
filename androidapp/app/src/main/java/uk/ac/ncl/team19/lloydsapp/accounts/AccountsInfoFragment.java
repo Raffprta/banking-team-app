@@ -23,6 +23,15 @@ public class AccountsInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View accountsInfoView = inflater.inflate(R.layout.account_information, container, false);
 
+        accountsInfoView.findViewById(R.id.makeTransaction).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphicsUtils.buttonClickEffectShow(v);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.container, new TransactionsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+            }
+        });
+
         accountsInfoView.findViewById(R.id.makePayment).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
