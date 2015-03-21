@@ -14,6 +14,11 @@ import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.content.Context;
+import android.widget.Toast;
+import android.view.View.OnClickListener;
+import android.app.Activity;
+
 
 import uk.ac.ncl.team19.lloydsapp.R;
 
@@ -39,13 +44,24 @@ public class TransactionsFragment extends Fragment {
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-        private String[] groups = { "People Names", "Dog Names", "Cat Names", "Fish Names" };
+        public LayoutInflater inflater;
+        public Activity activity;
+        private String[] groups = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
         private String[][] children = {
-                { "Arnold", "Barry", "Chuck", "David" },
-                { "Ace", "Bandit", "Cha-Cha", "Deuce" },
-                { "Fluffy", "Snuggles" },
-                { "Goldy", "Bubbles" }
+                { "-£25.00 Withdrawn at Lloyds ATM", "-£10.00 Payed to www.shoponline.co.uk", "+£100.00 Transfer from John Smith 00-00-00", "-£35 Payed to www.pizza.co.uk" },
+                { "-£5.00 Withdrawn at FastCash ATM", "-£25.00 Payed to Virgin Media", "-£10.00 Payed to Josh Whale 12345678", "+£0.70 Tax return" },
+                { "+$0.80 Tax Return", "-£25.00 Withdrawn at Lloyds ATM" },
+                { "-£30.00 Payed to www.helloworld.com", "-£100.00 Payed to www.bestbubbles.co.uk" },
+                {"--"},
+                {"--"},
+                {"--"},
+                {"--"},
+                {"--"},
+                {"--"},
+                {"--"},
+                {"--"}
+
         };
 
         @Override
@@ -87,6 +103,7 @@ public class TransactionsFragment extends Fragment {
         public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(TransactionsFragment.this.getActivity());
             textView.setText(getGroup(i).toString());
+
             return textView;
         }
 
@@ -94,8 +111,11 @@ public class TransactionsFragment extends Fragment {
         public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(TransactionsFragment.this.getActivity());
             textView.setText(getChild(i, i1).toString());
+
             return textView;
         }
+
+
 
         @Override
         public boolean isChildSelectable(int i, int i1) {
