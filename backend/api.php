@@ -36,13 +36,7 @@ $this->respond('GET', '/accountdetails', function ($request, $response, $service
 
     try {
         $user = checkAPIAuthentication($response);
-
-        if (is_null($user)) {
-            sendJSONError($response, 'Error while finding user.');
-        } else {
-            sendJSONResponse($response, array('accounts' => R::exportAll($user->xownAccountList)));
-        }
-
+        sendJSONResponse($response, array('accounts' => R::exportAll($user->xownAccountList)));
     } catch (Exception $e) {
         sendJSONError($response, $e->getMessage());
     }
