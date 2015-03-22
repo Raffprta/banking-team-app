@@ -70,11 +70,7 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
         $user = checkAPIAuthentication($response);
         $jsonRequest = json_decode($request->body(), true);
 
-        if (is_null($user)) {
-            sendJSONError($response, 'Error while finding user.');
-        }
-
-        if (!$jsonRequest || !isset($jsonRequest['gcmId'])) {
+        if (is_null($jsonRequest) || !isset($jsonRequest['gcmId'])) {
             sendJSONError($response, 'Your device did not supply the new GCM ID.');
         }
 
