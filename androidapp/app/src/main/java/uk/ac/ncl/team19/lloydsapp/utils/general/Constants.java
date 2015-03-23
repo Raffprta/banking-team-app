@@ -54,4 +54,7 @@ public class Constants {
     // Auto-log off in 5 minutes
     public static final int TIME_MILLIS_LOGOFF = 5 * 1000 * 60;
 
+    // Minimum security code length
+    public static final int MINIMUM_SECURITY_CODE_LENGTH = 6;
+
 }

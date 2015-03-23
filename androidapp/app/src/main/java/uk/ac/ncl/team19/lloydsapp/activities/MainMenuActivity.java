@@ -131,7 +131,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     // Fragments are instead kept track of.
     @Override
     public void onBackPressed() {
-        // TODO Fix Minor bug with the titles
         FragmentManager fragmentManager = getSupportFragmentManager();
         // Check to see if there are fragments on the stack.
         if(fragmentManager.getBackStackEntryCount() > 1){

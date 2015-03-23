@@ -47,12 +47,13 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2nd"
-                android:textSize="@dimen/abc_text_size_large_material" />
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:id="@+id/digitOne" />
 
 
             <EditText
             android:layout_width="50dp"
-            android:inputType="text"
+            android:inputType="text|textPassword"
             android:padding="10dp"
             android:maxLength="1"
             android:background="@drawable/security_box"
@@ -75,7 +76,8 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4th"
-                android:textSize="@dimen/abc_text_size_large_material" />
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:id="@+id/digitTwo" />
 
 
             <EditText
@@ -84,7 +86,7 @@
                 android:maxLength="1"
                 android:background="@drawable/security_box"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="text|textPassword"
                 android:imeOptions="actionNext"
                 android:id="@+id/codeTwo"
                 android:layout_marginRight="15dp"
@@ -103,14 +105,15 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6th"
-                android:textSize="@dimen/abc_text_size_large_material" />
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:id="@+id/digitThree" />
 
 
             <EditText
                 android:layout_width="50dp"
                 android:padding="10dp"
                 android:maxLength="1"
-                android:inputType="text"
+                android:inputType="text|textPassword"
                 android:background="@drawable/security_box"
                 android:layout_height="wrap_content"
                 android:id="@+id/codeThree"

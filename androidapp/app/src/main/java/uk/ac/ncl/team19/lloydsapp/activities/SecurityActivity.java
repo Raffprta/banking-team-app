@@ -11,17 +11,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
-import static android.content.DialogInterface.*;
+import static android.content.DialogInterface.OnDismissListener;
 
 /**
  * @author Raffaello Perrotta, XML creation by Ivy Tong
@@ -49,6 +54,36 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
 
         setContentView(R.layout.security_page);
 
+        // Fetch security digits
+        final EditText firstCharacter = ((EditText)findViewById(R.id.codeOne));
+        final EditText secondCharacter = ((EditText)findViewById(R.id.codeTwo));
+        final EditText thirdCharacter = ((EditText)findViewById(R.id.codeThree));
+
+        // Fetch security digit prompts
+        final TextView digitOne = (TextView)findViewById(R.id.digitOne);
+        final TextView digitTwo = (TextView)findViewById(R.id.digitTwo);
+        final TextView digitThree = (TextView)findViewById(R.id.digitThree);
+
+
+        // Set the random integers for the security code
+        List<Integer> randomInts = new ArrayList<>(Constants.MINIMUM_SECURITY_CODE_LENGTH);
+
+        for (int i = 1; i <= Constants.MINIMUM_SECURITY_CODE_LENGTH; i++){
+            randomInts.add(i);
+        }
+
+        // Get three random unique integers.
+        Collections.shuffle(randomInts);
+        final List<Integer> uniqueRandomInts = randomInts.subList(0, 3);
+
+        // Sort list
+        Collections.sort(uniqueRandomInts);
+
+        // Set random digits
+        digitOne.setText(Integer.toString(uniqueRandomInts.get(0)));
+        digitTwo.setText(Integer.toString(uniqueRandomInts.get(1)));
+        digitThree.setText(Integer.toString(uniqueRandomInts.get(2)));
+
         // Set button listener.
         loginButton = (Button)findViewById(R.id.securityButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -57,33 +92,29 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                 // UI effects.
                 GraphicsUtils.buttonClickEffectShow(v);
 
-                EditText secondCharacter = ((EditText)findViewById(R.id.codeOne));
-                EditText fourthCharacter = ((EditText)findViewById(R.id.codeTwo));
-                EditText sixthCharacter = ((EditText)findViewById(R.id.codeThree));
-
                 // Check if the user entered a character. If not set the error message.
+                if(firstCharacter == null || firstCharacter.getText().length() <= 0){
+                    firstCharacter.setError(getString(R.string.err_empty_sec));
+                    GraphicsUtils.buttonClickEffectHide(v);
+                    return;
+                }
+
                 if(secondCharacter == null || secondCharacter.getText().length() <= 0){
                     secondCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
-                if(fourthCharacter == null || fourthCharacter.getText().length() <= 0){
-                    fourthCharacter.setError(getString(R.string.err_empty_sec));
-                    GraphicsUtils.buttonClickEffectHide(v);
-                    return;
-                }
-
-                if(sixthCharacter == null || sixthCharacter.getText().length() <= 0){
-                    sixthCharacter.setError(getString(R.string.err_empty_sec));
+                if(thirdCharacter == null || thirdCharacter.getText().length() <= 0){
+                    thirdCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Assemble secure chars map
-                secureChars.put(2, secondCharacter.getText().charAt(0));
-                secureChars.put(4, fourthCharacter.getText().charAt(0));
-                secureChars.put(6, sixthCharacter.getText().charAt(0));
+                secureChars.put(uniqueRandomInts.get(0), firstCharacter.getText().charAt(0));
+                secureChars.put(uniqueRandomInts.get(1), secondCharacter.getText().charAt(0));
+                secureChars.put(uniqueRandomInts.get(2), thirdCharacter.getText().charAt(0));
 
                 // Start Login task
                 ProgressDialog.showLoading(SecurityActivity.this);
