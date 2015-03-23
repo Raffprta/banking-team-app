@@ -57,6 +57,18 @@
     <string name="second">2nd</string>
     <string name="third">3rd</string>
 
+    <!-- Transaction/Transfer Page -->
+    <string name="name">Name</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="account_number">Account Number</string>
+    <string name="sort_code">Sort Code</string>
+    <string name="amount">Amount:</string>
+    <string name="transac_continue">Continue</string>
+    <string name="transac_cancel">Cancel</string>
+    <string name="tag">Tag:</string>
+    <string name="tag_appear">(The tag will appear in your history)</string>
+
     <!-- For dialogs -->
     <string name="logoff">Are you sure?</string>
     <string name="yes">Yes</string>

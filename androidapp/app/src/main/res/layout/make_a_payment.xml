@@ -7,7 +7,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <view
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="From:"
+                    android:text="@string/from"
                     android:id="@+id/textView21"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="To:"
+                    android:text="@string/to"
                     android:id="@+id/textView23"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
@@ -61,10 +61,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Name"
                     android:id="@+id/textView33"
                     android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/name" />
             </TableRow>
 
             <TableRow
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
+                    android:text="@string/account_number"
                     android:id="@+id/textView22"
                     android:layout_column="1"
                     android:layout_marginLeft="10dp" />
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
+                    android:text="@string/sort_code"
                     android:id="@+id/textView24"
                     android:layout_column="1"
                     android:layout_marginLeft="10dp" />
@@ -133,6 +133,9 @@
                     android:ems="10"
                     android:id="@+id/sortCodePayment"
                     android:layout_column="1" />
+
+
+
             </TableRow>
 
             <TableRow
@@ -143,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Amount:"
+                    android:text="@string/amount"
                     android:id="@+id/textView26"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_darkgreen" />
@@ -174,7 +177,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Continue"
+                android:text="@string/transac_continue"
                 android:id="@+id/continuePayment"
                 android:layout_row="0"
                 android:layout_column="3"
@@ -185,7 +188,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/transac_cancel"
                 android:id="@+id/cancelPayment"
                 android:layout_row="1"
                 android:layout_column="3"
