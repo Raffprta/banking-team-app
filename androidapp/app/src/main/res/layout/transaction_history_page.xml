@@ -19,7 +19,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/lloyds_white"
                 android:layout_margin="5dp">
 
@@ -27,29 +27,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Transaction History"
+                    android:text="Your Transaction History"
                     android:id="@+id/textView28"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:textColor="@color/lloyds_lightergreen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Year"
+                    android:id="@+id/textView41"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/lloyds_lightgreen" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/yearTransactionsSpinner"
+                    android:entries="@array/transactions_years"
                     android:layout_gravity="center_horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Year:"
-                    android:id="@+id/textView37" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Month:"
-                    android:id="@+id/textView41" />
 
                 <ExpandableListView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="250dp"
                     android:id="@+id/expandableListView"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:fastScrollAlwaysVisible="true"
+                    android:childDivider="@color/lloyds_lightergreen_transparent"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp" />
 
             </LinearLayout>
         </GridLayout>
