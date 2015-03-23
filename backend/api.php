@@ -91,7 +91,7 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
 
 //================================================================================
 // API: Authenticate (get device token with valid username/password/secret chars)
-//      Input JSON fields: 'username', 'password'
+//      Input JSON fields: 'username', 'password', 'security'
 //      Output JSON fields: 'deviceToken'
 //================================================================================
 $this->respond('POST', '/authenticate', function ($request, $response, $service) {
@@ -104,12 +104,48 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Username/password not supplied');
         sendJSONError($response, 'Your device did not supply a username and/or password.');
     }
+	
+	// Ensure a security code was also provided.
+	if (!$loginData || !isset($loginData['secureChars'])) {
+        error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Security code not supplied');
+        sendJSONError($response, 'Your device did not supply a security code.');
+    }
 
     // Attempt login
     $user = R::findOne('user', 'email = ?', array($loginData['username']));
+	
+	// Check username/password
     if (is_null($user) || !password_verify($loginData['password'], $user->password)) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect username or password.');
         sendJSONError($response, 'Incorrect username or password.');
+		return;
+    }
+	
+	// Get array within security field of the original JSON body
+    $securityData = $loginData['secureChars'];
+	
+	// Boolean to represent whether a security code was successfully validated
+	$validated = false;
+	
+	// Get the set security code
+	$securityCode = $user->security;
+
+	// For every security digit, validate them
+	foreach($securityData as $secureIndex => $secureChars){
+        // Check if the characters are the same
+    	if($securityCode[$secureIndex-1] ===  $secureChars){
+		    $validated = true;
+		    continue;
+		} else {
+		    // If at any point the validation fails, then exit the loop and mark the validation as failed.
+		    $validated = false;
+			break;
+		}
+	}
+	
+	if (!$validated) {
+        error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect security code digits.');
+        sendJSONError($response, 'Incorrect security code digits.');
     } else {
         // Login successful; create and store device token information
         $deviceToken = R::dispense('devicetoken');

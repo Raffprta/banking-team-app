@@ -289,7 +289,7 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     $userData = formatUserData($_POST);
-    $errorMessages = validateRegistrationData($userData, true);
+    $errorMessages = validateRegistrationData($userData, true, true);
 
     // Check if user already exists
     if (emailAddressExists($userData['email'])) {
@@ -338,10 +338,11 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
 
     $updatedUserData = formatUserData($_POST);
 
-    // Only validate passwords if both form fields were empty
+    // Only validate passwords or security prompts if both form fields were empty
     $hasNewPassword = empty($updatedUserData['password']) && empty($updatedUserData['passwordVerify']) ? false : true;
+    $hasNewSecurity = empty($updatedUserData['security']) && empty($updatedUserData['securityVerify']) ? false : true;
 
-    $errorMessages = validateRegistrationData($updatedUserData, $hasNewPassword);
+    $errorMessages = validateRegistrationData($updatedUserData, $hasNewPassword, $hasNewSecurity);
 
     // Check the new email address isn't already in use
     if (R::findOne('user', 'id != ? and email = ?', array($request->userId, $updatedUserData['email'])) !== null) {
@@ -367,6 +368,11 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
                 if ($hasNewPassword === true) {
                     $userBean->password = password_hash($updatedUserData['password'], PASSWORD_DEFAULT);
                 }
+				
+				if ($hasNewSecurity === true) {
+                    $userBean->security = password_hash($updatedUserData['security'], PASSWORD_DEFAULT);
+                }
+				
                 R::store($userBean);
 
                 // Pass success message to edit user page

@@ -15,6 +15,7 @@ define('DATABASE_USERNAME', 'root');            // Database username
 define('DATABASE_PASSWORD', '');                // Database password
 
 define('MINIMUM_PASSWORD_LENGTH', 6);           // Minimum password length
+define('MINIMUM_SECURITY_LENGTH', 6);           // Minimum security prompt length
 define('WEB_SESSION_EXPIRY_TIME', 3600);        // Time in seconds before a website user is automatically logged-out (60 * 60 = 1 hour)
 define('DEVICE_TOKEN_EXPIRY_TIME', 2592000);    // Time in seconds before a device token expires (60 * 60 * 24 * 30 = 30 days)
 
