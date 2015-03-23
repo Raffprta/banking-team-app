@@ -342,7 +342,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             // Store the days between value
             sp.edit().putInt(getString(R.string.sp_last_date_inc), daysBetween).apply();
             // Increment the achievement appropriately.
-            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), 1);
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), daysBetween-sp.getInt(getString(R.string.sp_last_date_inc),0));
         }
 
         // Unlock the achievement after a month passes

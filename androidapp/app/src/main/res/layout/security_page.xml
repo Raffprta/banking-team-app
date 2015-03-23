@@ -51,6 +51,7 @@
                 android:id="@+id/digitOne" />
 
 
+
             <EditText
             android:layout_width="50dp"
             android:inputType="text|textPassword"

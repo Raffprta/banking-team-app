@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollViewTransfer"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/transfer_failed"
+            android:layout_gravity="center_horizontal|right"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/lloyds_lightergreen" />
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="65dp"
+            android:background="@color/lloyds_lightergreen">
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/lloyds_white"
+                android:layout_gravity="center"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="312dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transfer_failed_info"
+                    android:textSize="40dp"
+                    android:textColor="@color/lloyds_lightergreen" />
+
+            </GridLayout>
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/lloyds_lightergreen_transparent"
+            android:padding="10dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/make_transfer"
+                android:layout_row="0"
+                android:layout_column="3"
+                android:background="#ffffffff"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/lloyds_acc_info_green_button" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/back_to_account"
+                android:layout_row="1"
+                android:layout_column="3"
+                android:background="@color/lloyds_acc_info_green_button"
+                android:textColor="#ffffffff" />
+        </GridLayout>
+    </LinearLayout>
+
+
+</ScrollView>
