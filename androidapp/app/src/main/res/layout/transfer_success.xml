@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Transfer Successful"
+            android:text="@string/transfer_successful"
             android:id="@+id/textView51"
             android:layout_gravity="center_horizontal|right"
             android:layout_marginTop="60dp"
@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="From:"
+                        android:text="@string/from"
                         android:id="@+id/textView516"
                         android:layout_column="0"
                         android:textColor="@color/lloyds_lightergreen" />
@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Medium Text"
+                        android:text="@string/account_type"
                         android:id="@+id/transferAccountTypeSuccessFrom"
                         android:layout_column="1" />
                 </TableRow>
@@ -63,8 +63,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Current Account"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp"
+                         />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:id="@+id/">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Account Number"
+                        android:text="@string/account_number"
                         android:id="@+id/textView52"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
@@ -79,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:text="12345678"
                         android:ems="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/transferAccountNoFrom"
                         android:layout_column="1" />
                 </TableRow>
@@ -92,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Sort code"
+                        android:text="@string/sort_code"
                         android:id="@+id/textView53"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
@@ -107,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:text="00-00-00"
                         android:ems="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/transferSortcodeFrom"
                         android:layout_column="1" />
                 </TableRow>
@@ -120,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="To:"
+                        android:text="@string/to"
                         android:id="@+id/textView54"
                         android:layout_column="0"
                         android:textColor="@color/lloyds_lightergreen" />
@@ -129,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Account Number"
+                        android:text="@string/account_type"
                         android:id="@+id/transferAccountTypeSuccessTo"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
@@ -142,8 +158,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Current Account"
+                        android:layout_column="1"
+                        android:layout_marginLeft="10dp"
+                        />
+                </TableRow>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Account Number"
+                        android:text="@string/account_number"
                         android:id="@+id/texty"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
@@ -157,6 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="87654321"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:ems="10"
                         android:id="@+id/transferAccountNoTo"
                         android:layout_column="1" />
@@ -170,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Sort code"
+                        android:text="@string/sort_code"
                         android:id="@+id/textView56"
                         android:layout_column="1"
                         android:layout_marginLeft="10dp" />
@@ -184,7 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00-00-00"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:ems="10"
                         android:id="@+id/transferSortcodeTo"
                         android:layout_column="1" />
@@ -198,7 +228,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Amount:"
+                        android:text="@string/amount"
                         android:id="@+id/textView57"
                         android:layout_column="0"
                         android:textColor="@color/lloyds_darkgreen" />
@@ -224,7 +254,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Back To Account"
+                android:text="@string/back_to_account"
                 android:textColor="#ffffffff"
                 android:background="@color/lloyds_acc_info_green_button"
                 android:id="@+id/backToAccount"

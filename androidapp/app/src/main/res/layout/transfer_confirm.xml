@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Confirm transfer"
+                android:text="@string/confirm_transfer"
                 android:id="@+id/textView38"
                 android:layout_gravity="center_horizontal|right"
                 android:layout_marginTop="60dp"
@@ -46,7 +46,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="From:"
+                            android:text="@string/from"
                             android:id="@+id/textView39"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_lightergreen" />
@@ -55,7 +55,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Account Type"
+                            android:text="@string/account_type"
                             android:id="@+id/textView40"
                             android:layout_column="1" />
                     </TableRow>
@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Account Number"
+                            android:text="@string/account_number"
                             android:id="@+id/textView42"
                             android:layout_column="1" />
                     </TableRow>
@@ -107,7 +107,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Sort code"
+                            android:text="@string/sort_code"
                             android:id="@+id/textView43"
                             android:layout_column="1" />
                     </TableRow>
@@ -133,7 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="To:"
+                            android:text="@string/to"
                             android:id="@+id/textView44"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_lightergreen" />
@@ -142,7 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Account Type"
+                            android:text="@string/account_type"
                             android:id="@+id/textView45"
                             android:layout_column="1" />
                     </TableRow>
@@ -168,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Account Number"
+                            android:text="@string/account_number"
                             android:id="@+id/textView47"
                             android:layout_column="1" />
                     </TableRow>
@@ -194,7 +194,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Sort code"
+                            android:text="@string/sort_code"
                             android:id="@+id/textView48"
                             android:layout_column="1" />
                     </TableRow>
@@ -221,7 +221,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Amount:"
+                            android:text="@string/amount"
                             android:id="@+id/textView49"
                             android:layout_column="0"
                             android:textColor="@color/lloyds_darkgreen" />
@@ -258,7 +258,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Confirm"
+                        android:text="@string/tran_confirm"
                         android:background="@color/lloyds_white"
                         android:textColor="@color/lloyds_acc_info_green_button"
                         android:id="@+id/confirmTransfer"
@@ -269,7 +269,7 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cancel"
+                        android:text="@string/tran_cancel"
                         android:background="@color/lloyds_acc_info_green_button"
                         android:textColor="#ffffffff"
                         android:id="@+id/cancelTransferInConfirm"
