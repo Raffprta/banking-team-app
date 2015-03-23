@@ -368,11 +368,11 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
                 if ($hasNewPassword === true) {
                     $userBean->password = password_hash($updatedUserData['password'], PASSWORD_DEFAULT);
                 }
-				
-				if ($hasNewSecurity === true) {
-                    $userBean->security = password_hash($updatedUserData['security'], PASSWORD_DEFAULT);
+                
+                if ($hasNewSecurity === true) {
+                    $userBean->security = $updatedUserData['security'];
                 }
-				
+                
                 R::store($userBean);
 
                 // Pass success message to edit user page

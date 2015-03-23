@@ -70,12 +70,12 @@
                             <input id="passwordVerify" name="passwordVerify" type="password" placeholder="" class="form-control input-md">
                         </div>
                     </div>
-					
-					{# Security prompt input #}
+                    
+                    {# Security prompt input #}
                     <div class="form-group">
-					    {% if editMode %}
+                        {% if editMode %}
                             <label class="col-md-4 control-label" for="security">Security Prompt (leave blank to keep current)</label>
-					    {% else %}
+                        {% else %}
                             <label class="col-md-4 control-label" for="password">Security Prompt</label>
                         {% endif %}
                         <div class="col-md-5">

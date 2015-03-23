@@ -74,7 +74,7 @@ if (is_null($admin)) {
         'surname' => '',
         'email' => 'admin@lloyds.com',
         'password' => 'admin',
-		'security' => 'lloyds'
+        'security' => 'lloyds'
     );
 
     createUser($registrationdata, true);
@@ -97,12 +97,12 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
     // Login details from form
     $username = strtolower(trim($_POST['username']));
     $password = $_POST['password'];
-	$secDigOne = $_POST['secDigOne'];
-	$secDigTwo = $_POST['secDigTwo'];
-	$secDigThree = $_POST['secDigThree'];
-	$digitOne = $_POST['digitOne'];
-	$digitTwo = $_POST['digitTwo'];
-	$digitThree = $_POST['digitThree'];
+    $secDigOne = $_POST['secDigOne'];
+    $secDigTwo = $_POST['secDigTwo'];
+    $secDigThree = $_POST['secDigThree'];
+    $digitOne = $_POST['digitOne'];
+    $digitTwo = $_POST['digitTwo'];
+    $digitThree = $_POST['digitThree'];
 
     $errorMessages = array();
 
@@ -117,10 +117,10 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
     if (empty($password)) {
         $errorMessages[] = 'The password was empty.';
     }
-	
-	if(empty($secDigOne) || empty($secDigTwo) || empty($secDigThree)){
-	    $errorMessages[] = 'One of the security characters was empty.';
-	}
+    
+    if(empty($secDigOne) || empty($secDigTwo) || empty($secDigThree)){
+        $errorMessages[] = 'One of the security characters was empty.';
+    }
 
     if (count($errorMessages) > 0) {
         displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree);
@@ -136,26 +136,26 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
         logActivity('Login attempt failed: incorrect username and/or password.');
         exit;
     } 
-	
-	// Boolean to represent whether a security code was successfully validated
-	$validated = false;
-	
-	// Get the set security code
-	$securityCode = $user->security;
     
-	// If all digits are correct, validate as true.
-	if($securityCode[$digitOne-1] === $secDigOne
-	   && $securityCode[$digitTwo-1] === $secDigTwo
-	   && $securityCode[$digitThree-1] === $secDigThree){
-	   $validated = true;
-	}
-	
-	if (!$validated) {
-	    $errorMessages[] = 'The security digits were entered incorrectly.';
+    // Boolean to represent whether a security code was successfully validated
+    $validated = false;
+    
+    // Get the set security code
+    $securityCode = $user->security;
+    
+    // If all digits are correct, validate as true.
+    if($securityCode[$digitOne-1] === $secDigOne
+       && $securityCode[$digitTwo-1] === $secDigTwo
+       && $securityCode[$digitThree-1] === $secDigThree){
+       $validated = true;
+    }
+    
+    if (!$validated) {
+        $errorMessages[] = 'The security digits were entered incorrectly.';
         displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree);
         logActivity('Login attempt failed: The security digits were entered incorrectly.');
         exit;
-	} else {
+    } else {
         // Login successful; store session information
         refreshSessionData($user);
 
@@ -224,15 +224,15 @@ $klein->respond('GET', '/login', function ($request, $response, $service) {
         $response->header('Location', BASE_URL);
         $response->send();
     } else {
-	    // Generate three random numbers in the range acceptable and sort them.
+        // Generate three random numbers in the range acceptable and sort them.
         $randomNumbers = uniqueRandomNumbersWithinRange(1, MINIMUM_SECURITY_LENGTH, 3);
-		sort($randomNumbers);
+        sort($randomNumbers);
         // Display login form
         displayPage('login.twig', array(
                 'digitOne' => $randomNumbers[0],
                 'digitTwo' => $randomNumbers[1],
                 'digitThree' => $randomNumbers[2]
-			));
+            ));
     }
 });
 
@@ -348,8 +348,8 @@ function destroySession() {
 
 function displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree) {
     displayPage('login.twig', array('username' => $username, 'password' => $password, 'errorMessages' => $errorMessages,
-	                                'secDigOne' => $secDigOne, 'secDigTwo' => $secDigTwo, 'secDigThree' => $secDigThree,
-									'digitOne' => $digitOne, 'digitTwo' => $digitTwo, 'digitThree' => $digitThree));
+                                    'secDigOne' => $secDigOne, 'secDigTwo' => $secDigTwo, 'secDigThree' => $secDigThree,
+                                    'digitOne' => $digitOne, 'digitTwo' => $digitTwo, 'digitThree' => $digitThree));
 }
 
 function displayError($error) {
@@ -363,7 +363,7 @@ function formatUserData($postData) {
         'email' => strtolower(trim($postData['email'])),
         'password' => $postData['password'],
         'passwordVerify' => $postData['passwordVerify'],
-		'security' => $postData['security'],
+        'security' => $postData['security'],
         'securityVerify' => $postData['securityVerify']
     );
 }
@@ -412,19 +412,19 @@ function validateRegistrationData($formattedRegistrationData, $checkPasswords, $
         if ($formattedRegistrationData['password'] !== $formattedRegistrationData['passwordVerify']) {
             $errorMessages[] = 'The passwords you entered do not match.';
         }
-		
+        
     }
-	
-	if($checkSecurity === true){
-	    if (strlen($formattedRegistrationData['security']) < MINIMUM_SECURITY_LENGTH) {
+    
+    if($checkSecurity === true){
+        if (strlen($formattedRegistrationData['security']) < MINIMUM_SECURITY_LENGTH) {
             $errorMessages[] = 'Please ensure the security prompt contains a minimum of ' . MINIMUM_SECURITY_LENGTH . ' characters.';
         }
 
         if ($formattedRegistrationData['security'] !== $formattedRegistrationData['securityVerify']) {
             $errorMessages[] = 'The security prompts you entered do not match.';
         }
-	}
-	
+    }
+    
 
     return $errorMessages;
 }
@@ -484,7 +484,7 @@ function createUser($registrationData, $admin) {
     $user->surname = $registrationData['surname'];
     $user->accessLevel = $admin ? ACCESS_LEVEL_ADMINISTRATOR : ACCESS_LEVEL_USER;
     $user->password = password_hash($registrationData['password'], PASSWORD_DEFAULT);
-	$user->security = $registrationData['security'];
+    $user->security = $registrationData['security'];
     $user->deviceId = null;
 
     // Save to database
