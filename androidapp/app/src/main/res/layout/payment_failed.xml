@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/paymentSuccessScrollView"
     android:background="@drawable/background">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,8 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="65dp"
-            android:background="@color/lloyds_lightergreen"
-            android:id="@+id/rateExperenceBackground">
+            android:background="@color/lloyds_lightergreen">
 
             <GridLayout
                 android:layout_width="wrap_content"
@@ -41,7 +39,6 @@
                     android:layout_width="312dp"
                     android:layout_height="wrap_content"
                     android:text="@string/payment_failed_info"
-                    android:id="@+id/submittedTextView"
                     android:textSize="40dp"
                     android:textColor="@color/lloyds_lightergreen" />
 
@@ -63,7 +60,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/make_payment"
-                android:id="@+id/continueTransfer"
                 android:layout_row="0"
                 android:layout_column="3"
                 android:background="#ffffffff"
@@ -74,7 +70,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/back_to_account"
-                android:id="@+id/cancelTransfer"
                 android:layout_row="1"
                 android:layout_column="3"
                 android:background="@color/lloyds_acc_info_green_button"
