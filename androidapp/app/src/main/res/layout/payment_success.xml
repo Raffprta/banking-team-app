@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="00-00-00"
-                    android:id="@+id/sortCodeFromSuccess"
+                    android:id="@+id/sortCodeSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -254,6 +254,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

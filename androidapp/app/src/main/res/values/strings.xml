@@ -59,12 +59,13 @@
 
     <!-- Transaction/Transfer , Confirm and Success page -->
     <string name="make_payment">Make Payment</string>
+    <string name="make_transfer">Make Transfer</string>
     <string name="confirm_payment">Confirm Payment</string>
     <string name="confirm_transfer">Confirm Transfer</string>
     <string name="payment_successful">Payment Successful</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="transfer_successful">Transfer Successful</string>
-    <string name="transfer_failed">Transfer failed</string>
+    <string name="transfer_failed">Transfer Failed</string>
 
     <string name="account_type">Account Type</string>
     <string name="name">Name</string>
@@ -78,6 +79,7 @@
     <string name="tran_cancel">Cancel</string>
     <string name="tran_confirm">Confirm</string>
     <string name="back_to_account">Back To Account</string>
+
 
 
     <string name="tag">Tag:</string>

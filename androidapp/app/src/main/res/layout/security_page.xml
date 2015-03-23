@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="2nd"
                 android:textSize="@dimen/abc_text_size_large_material"
-                android:id="@+id/" />
+                 />
 
 
             <EditText
