@@ -20,8 +20,6 @@
 // Otherwise 'status' will contain 'error', and another field, 'errorMessage' will contain the reason.
 
 // TODO: Secret word auth
-// TODO: Retrieve transactions for an account
-// TODO: Transfer money
 // TODO: Retrieve game state for a user
 // TODO: Store/update game state for a user
 
@@ -43,12 +41,112 @@ $this->respond('GET', '/accountdetails', function ($request, $response, $service
 });
 
 //================================================================================
+// API: Get transactions
+//================================================================================
+$this->respond('GET', '/transactions', function ($request, $response, $service) {
+    error_log(TAG . 'Transactions request from ' . $_SERVER['REMOTE_ADDR']);
+    try {
+        $user = checkAPIAuthentication($response);
+
+        // Make sure the account ID is valid and the user owns the account we're interested in
+        $account = isset($_GET['accId']) ? R::load('account', $_GET['accId']) : null;
+        if (is_null($account) || $account->userId !== $user->id) {
+            sendJSONError($response, 'The account ID of the account to show transactions to/from was invalid.');
+        }
+
+        $transactions = null;
+
+        // If a time period is specified, use it
+        if (isset($_GET['periodFrom']) && isset($_GET['periodTo'])) {
+            $transactions = R::find('transaction', '(from_account_id = ? OR to_account_id = ?) AND time >= ? AND time <= ?',
+                array(
+                    $_GET['accId'],
+                    $_GET['accId'],
+                    $_GET['periodFrom'],
+                    $_GET['periodTo']
+                )
+            );
+        }
+
+        // Otherwise just return all of them
+        else {
+            $transactions = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
+                array(
+                    $_GET['accId'],
+                    $_GET['accId']
+                )
+            );
+        }
+
+        sendJSONResponse($response, array('transactions' => R::exportAll($transactions)));
+    } catch (Exception $e) {
+        sendJSONError($response, $e->getMessage());
+    }
+});
+
+//================================================================================
 // API: Transfer money
 //================================================================================
 $this->respond('POST', '/transfer', function ($request, $response, $service) {
     error_log(TAG . 'Transfer money request from ' . $_SERVER['REMOTE_ADDR']);
     try {
         $user = checkAPIAuthentication($response);
+        $jsonRequest = json_decode($request->body(), true);
+
+        // Validation
+        if (is_null($jsonRequest)) {
+            sendJSONError($response, 'Malformed request.');
+        }
+
+        if (!isset($jsonRequest['fromAccId'])) {
+            sendJSONError($response, 'Your device did not send the account ID of the account to transfer from.');
+        }
+
+        if (!isset($jsonRequest['toAccNo'])) {
+            sendJSONError($response, 'Your device did not send the account number of the account to transfer to.');
+        }
+
+        if (!isset($jsonRequest['toSortCode'])) {
+            sendJSONError($response, 'Your device did not send the sort code of the account to transfer to.');
+        }
+
+        if (!isset($jsonRequest['amount'])) {
+            sendJSONError($response, 'Your device did not send the amount of money to transfer.');
+        }
+
+        // Verification
+        $fromAccount = R::load('account', $jsonRequest['fromAccId']);
+        if (is_null($fromAccount) || $fromAccount->userId !== $user->id) {
+            sendJSONError($response, 'The ID of the account to transfer from was invalid.');
+        }
+
+        $toAccount = R::findOne('account', 'sort_code = ? AND account_number = ?', array($jsonRequest['toSortCode'], $jsonRequest['toAccNo']));
+        if (is_null($toAccount)) {
+            sendJSONError($response, 'The account or sort code of the account to transfer to was invalid.');
+        }
+
+        $amount = intval($jsonRequest['amount']);
+        if ($amount < 1) {
+            sendJSONError($response, 'The amount to transfer was invalid.');
+        }
+
+        if (($fromAccount->balance + $fromAccount->overdraft) < $amount) {
+            sendJSONError($response, 'There are insufficient funds available to complete this transaction.');
+        }
+
+        $reference = isset($jsonRequest['reference']) ? $jsonRequest['reference'] : "";
+        $tag = isset($jsonRequest['tag']) ? $jsonRequest['tag'] : TAG_UNTAGGED;
+
+        // Good to go...
+        $fromAccount->balance -= $amount;
+        $toAccount->balance += $amount;
+        createTransaction($fromAccount, $toAccount, $amount, $reference, $tag);
+
+        // Save all beans
+        R::store($fromAccount);
+        R::store($toAccount);
+
+        sendJSONResponse($response, array());
     } catch (Exception $e) {
         sendJSONError($response, $e->getMessage());
     }
@@ -179,7 +277,7 @@ function checkAPIAuthentication($response) {
     error_log(TAG . 'Token authentication request from ' . $_SERVER['REMOTE_ADDR']);
 
     if (!checkAPIKey()) {
-        sendJSONError($response, 'The API key supplied by your device was invalid.<br><br>Please update your app, or contact support.');
+        sendJSONError($response, 'The API key supplied by your device was invalid. Please update your app, or contact support.');
     }
 
     $user = checkDeviceToken();

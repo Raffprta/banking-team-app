@@ -88,7 +88,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="overdraft">Overdraft limit (£)</label>
                         <div class="col-md-5">
-                            <input id="overdraft" name="overdraft" type="text" placeholder="2000.00" value="{{ account.overdraft }}" class="form-control input-md">
+                            <input id="overdraft" name="overdraft" type="text" placeholder="2000.00" value="{{ account.overdraft / 100 }}" class="form-control input-md">
                         </div>
                     </div>
 

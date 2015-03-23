@@ -47,8 +47,8 @@
                         {{ sortCodeSplit[0] }}-{{ sortCodeSplit[1] }}-{{ sortCodeSplit[2] }}
                     </td>
                     <td>{{ account.nickname }}</td>
-                    <td>&pound; {{ account.balance|number_format(2, '.', ',') }}</td>
-                    <td>&pound; {{ account.overdraft|number_format(2, '.', ',') }}</td>
+                    <td>&pound; {{ (account.balance / 100)|number_format(2, '.', ',') }}</td>
+                    <td>&pound; {{ (account.overdraft / 100)|number_format(2, '.', ',') }}</td>
                     <td>{{ account.interest|number_format(1, '.', ',') }} &percnt;</td>
                     <td nowrap class="text-center">
                         <a href="admin/editbankaccount/{{ account.id }}" class="btn btn-xs btn-default">

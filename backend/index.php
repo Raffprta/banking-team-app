@@ -447,8 +447,8 @@ function createBankAccount($user, $accountData) {
     $account->accountNumber = $accountData['accountNumber'];
     $account->sortCode = $accountData['sortCode'];
     $account->interest = $accountData['interest'];
-    $account->overdraft = $accountData['overdraft'];
-    $account->balance = 0.0;
+    $account->overdraft = $accountData['overdraft'] * 100;
+    $account->balance = 0;
 
     // Associate account with user
     $account->user = $user;
@@ -463,6 +463,7 @@ function createTransaction($fromAccount, $toAccount, $amount, $reference, $tag) 
     $transaction = R::dispense('transaction');
 
     // Assign fields
+    $transaction->time = time();
     $transaction->fromAccount = $fromAccount;
     $transaction->toAccount = $toAccount;
     $transaction->amount = $amount;

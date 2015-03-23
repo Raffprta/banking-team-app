@@ -413,7 +413,7 @@ $this->respond('POST', '/editbankaccount/[i:accountId]', function ($request, $re
                 $accountBean->accountNumber = $updatedBankAccountData['accountNumber'];
                 $accountBean->sortCode = $updatedBankAccountData['sortCode'];
                 $accountBean->interest = $updatedBankAccountData['interest'];
-                $accountBean->overdraft = $updatedBankAccountData['overdraft'];
+                $accountBean->overdraft = $updatedBankAccountData['overdraft'] * 100;
                 R::store($accountBean);
 
                 // Pass success message to edit user page
