@@ -158,6 +158,15 @@
         <item>Mega Account</item>
     </string-array>
 
+    <!-- Drop down menu strings for Years in Transaction history -->
+    <string-array name="transactions_years">
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+    </string-array>
+
+
     <!-- Profile Page Strings -->
     <string name="your_prog">Your account health is </string>
     <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
