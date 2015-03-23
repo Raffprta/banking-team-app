@@ -57,7 +57,7 @@
     <string name="second">2nd</string>
     <string name="third">3rd</string>
 
-    <!-- Transaction/Transfer , Confirm and Success page -->
+    <!-- Transaction/Transfer,Confirm and Success/Failed page -->
     <string name="make_payment">Make Payment</string>
     <string name="make_transfer">Make Transfer</string>
     <string name="confirm_payment">Confirm Payment</string>
@@ -151,6 +151,28 @@
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
 
 
+    <!--Health and Set Goals Page -->
+    <string name="health_page_title">Your Account's Health</string>
+    <string name="current_goals">Current Goals</string>
+    <string name="set_for">Set For:</string>
+    <string name="per_month">Per Month</string>
+    <string name="spend">Spend:</string>
+    <string name="save">Save:</string>
+    <string name="overdraft">Overdraft:</string>
+    <string name="donate">Donate:</string>
+    <string name="set_goals">Set Goals</string>
+    <string name="set_your_goals">Set Your Goals</string>
+    <string name="reset">Reset</string>
+    <string name="gbp">£</string>
+
+    <!-- Profile Page Strings -->
+    <string name="your_prog">Your account health is </string>
+    <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
+
+    <string name="status">Status:</string>
+    <string name="bio">Bios:</string>
+    <string name="sign_into_google_play">Sign into Google Play</string>
+
 
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>
@@ -197,9 +219,6 @@
     </string-array>
 
 
-    <!-- Profile Page Strings -->
-    <string name="your_prog">Your account health is </string>
-    <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
 
     <!-- Shared preferences Key Strings -->
     <string name="sp_status">STATUS</string>
