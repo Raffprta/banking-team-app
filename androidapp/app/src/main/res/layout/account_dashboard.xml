@@ -18,7 +18,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|right"
-                android:text="Your Accounts"
+                android:text="@string/acc_page_title"
                 android:layout_marginTop="60dp"
                 android:textColor="@color/lloyds_lightergreen"
                 android:textSize="@dimen/abc_text_size_headline_material"

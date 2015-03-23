@@ -57,23 +57,34 @@
     <string name="second">2nd</string>
     <string name="third">3rd</string>
 
-    <!-- Transaction/Transfer Page -->
+    <!-- Transaction/Transfer , Confirm and Success page -->
+    <string name="make_payment">Make Payment</string>
+    <string name="confirm_payment">Confirm Payment</string>
+
+    <string name="account_type">Account Type</string>
     <string name="name">Name</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
     <string name="account_number">Account Number</string>
     <string name="sort_code">Sort Code</string>
     <string name="amount">Amount:</string>
-    <string name="transac_continue">Continue</string>
-    <string name="transac_cancel">Cancel</string>
+
+    <string name="tran_continue">Continue</string>
+    <string name="tran_cancel">Cancel</string>
+    <string name="tran_confirm">Confirm</string>
+
+
     <string name="tag">Tag:</string>
     <string name="tag_appear">(The tag will appear in your history)</string>
+
+
 
     <!-- For dialogs -->
     <string name="logoff">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
+    <string name="dismiss">Dismiss</string>
 
     <!-- Menu -->
     <string name="action_help">Help</string>
@@ -106,6 +117,7 @@
     <string name="google_play_sign_out">Sign out from Google Play</string>
 
     <!-- Account information fillers -->
+    <string name="acc_page_title">Your Accounts</string>
     <string name="int_stu_account">International Student Account</string>
     <string name="acc_current">Current Account</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
@@ -125,6 +137,8 @@
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
+    <string name="account_info_health_button">Account Health</string>
+
 
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>

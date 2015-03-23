@@ -24,7 +24,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="5dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:id="@+id/">
 
             <ImageView
                 android:layout_width="wrap_content"
