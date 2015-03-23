@@ -152,7 +152,7 @@
 
 
     <!--Health and Set Goals Page -->
-    <string name="health_page_title">Your Account's Health</string>
+    <string name="health_page_title">Your Account\'s Health</string>
     <string name="current_goals">Current Goals</string>
     <string name="set_for">Set For:</string>
     <string name="per_month">Per Month</string>
