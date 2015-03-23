@@ -80,8 +80,8 @@
     <string name="tran_confirm">Confirm</string>
     <string name="back_to_account">Back To Account</string>
 
-
-
+    <string name="transfer_failed_info">Sorry, your transfer has failed. Please check all the account details and try again. </string>
+    <string name="payment_failed_info">Sorry, your payment has failed. Please check all the account details and try again. </string>
     <string name="tag">Tag:</string>
     <string name="tag_appear">(The tag will appear in your history)</string>
 
