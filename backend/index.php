@@ -485,6 +485,8 @@ function createUser($registrationData, $admin) {
     $user->accessLevel = $admin ? ACCESS_LEVEL_ADMINISTRATOR : ACCESS_LEVEL_USER;
     $user->password = password_hash($registrationData['password'], PASSWORD_DEFAULT);
     $user->security = $registrationData['security'];
+	$user->email_notifications = true;
+	$user->push_notifications = true;
     $user->deviceId = null;
 
     // Save to database

@@ -177,6 +177,32 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
     }
 });
 
+//===============================================================================================================
+// API: Update User Settings
+//      Input JSON fields: 'email_notifications', 'push_notifications' value of 1 for true, value of 0 for false
+//===============================================================================================================
+$this->respond('POST', '/updatesettings', function ($request, $response, $service) {
+    error_log(TAG . 'Settings update request from ' . $_SERVER['REMOTE_ADDR']);
+    try {
+        $user = checkAPIAuthentication($response);
+        $jsonRequest = json_decode($request->body(), true);
+
+        if (is_null($jsonRequest) || !isset($jsonRequest['email_notifications']) || !isset($jsonRequest['push_notifications'])) {
+            sendJSONError($response, 'Your device did not supply the email and push settings.');
+        }
+
+        // Update the settings
+        $user->email_notifications = $jsonRequest['email_notifications'];
+        $user->push_notifications = $jsonRequest['push_notifications'];
+        R::store($user);
+
+        // Just send success status by passing an empty array
+        sendJSONResponse($response, array());
+    } catch (Exception $e) {
+        sendJSONError($response, $e->getMessage());
+    }
+});
+
 //================================================================================
 // API: Authenticate (get device token with valid username/password/secret chars)
 //      Input JSON fields: 'username', 'password', 'security'
