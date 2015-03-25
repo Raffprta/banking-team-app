@@ -154,7 +154,7 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
 
 //================================================================================
 // API: Update Google Cloud Messaging ID
-//      Input JSON fields: 'gcmId'
+//      Input JSON fields: 'gcm_id'
 //================================================================================
 $this->respond('POST', '/updategcmid', function ($request, $response, $service) {
     error_log(TAG . 'GCM ID update request from ' . $_SERVER['REMOTE_ADDR']);
@@ -162,12 +162,12 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
         $user = checkAPIAuthentication($response);
         $jsonRequest = json_decode($request->body(), true);
 
-        if (is_null($jsonRequest) || !isset($jsonRequest['gcmId'])) {
+        if (is_null($jsonRequest) || !isset($jsonRequest['gcm_id'])) {
             sendJSONError($response, 'Your device did not supply the new GCM ID.');
         }
 
         // Update the GCM ID
-        $user->gcmId = $jsonRequest['gcmId'];
+        $user->gcm_id = $jsonRequest['gcm_id'];
         R::store($user);
 
         // Just send success status by passing an empty array

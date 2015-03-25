@@ -8,6 +8,7 @@
     <string name="api_base_url">http://team19.ngrok.com/api</string>
     <string name="api_auth">authenticate</string>
     <string name="api_settings">updatesettings</string>
+    <string name="api_gcmid">updategcmid</string>
     <string name="api_bank_account_details">bankaccountdetails</string>
 
     <string name="api_error_connection">Couldn\'t connect to server</string>
@@ -260,6 +261,7 @@
     <string name="sp_notif_push">NOTIF_PUSH</string>
     <string name="sp_notif_wearable">NOTIF_WEARABLE</string>
 
+    <string name="sp_gcmid">GCMID</string>
 
 
     <!-- Health page fillers -->

@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
+import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;
@@ -68,6 +71,9 @@ public class PushFragment extends Fragment {
     // Logging tag for debugging
     private static final String TAG = "MainActivity";
 
+    // Shared preferences
+    SharedPreferences sp;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +82,9 @@ public class PushFragment extends Fragment {
         View pushView = inflater.inflate(R.layout.push_layout, container, false);
         // Store context
         context = getActivity().getApplicationContext();
+
+        // Get s.p.
+        sp = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Bail out if Google Play services are unavailable
         if (hasGooglePlayServices()) {
@@ -220,6 +229,7 @@ public class PushFragment extends Fragment {
         if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
         } else {
+
             Log.i(TAG, "Registration ID found: " + registrationId);
         }
 
@@ -242,17 +252,10 @@ public class PushFragment extends Fragment {
                     regId = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regId;
 
-                    // You should send the registration ID to your server over HTTP,
-                    // so it can use GCM/HTTP or CCS to send messages to your app.
-                    // The request to your server should be authenticated if your app
-                    // is using accounts.
-                    //sendRegistrationIdToBackend();
+                    ProgressDialog.showLoading(PushFragment.this);
+                    UpdateGCMTask ugt = new UpdateGCMTask();
+                    ugt.execute();
 
-                    // For this demo: we don't need to send it because the device
-                    // will send upstream messages to a server that echo back the
-                    // message using the 'from' address in the message.
-
-                    // Persist the regID - no need to register again.
                     storeRegistrationId(context, regId);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
@@ -307,6 +310,42 @@ public class PushFragment extends Fragment {
                     mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
                     mRecyclerView.setAdapter(mAdapter);
                 }
+            }
+        }
+    }
+
+    private class UpdateGCMTask extends AsyncTask<Void, Void, Boolean> {
+
+        private String errorString = null;
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            APIConnector ac = new APIConnector(getActivity().getApplicationContext());
+            try {
+                return ac.updateGcmId(regId, sp.getString(getString(R.string.sp_device_token), null));
+            } catch (Exception e) {
+                errorString = e.getMessage();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean response) {
+            // Remove progress bar
+            ProgressDialog.removeLoading(PushFragment.this);
+
+            if (response == null || response.booleanValue() == false) {
+                // Make a new error dialog and display it
+                Bundle b = new Bundle();
+                b.putString(getString(R.string.custom_bundle), errorString);
+                b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                CustomDialog custom = new CustomDialog();
+                custom.setArguments(b);
+                custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");
+
+            } else {
+                // Store device token in shared preferences
+                Log.i("GCMID UPDATE SUCCESS", response.toString());
             }
         }
     }

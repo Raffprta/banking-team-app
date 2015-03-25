@@ -29,6 +29,7 @@ public class APIConnector {
     private static final String JSON_FIELD_SECURE_CHARACTERS = "secureChars";
     private static final String JSON_FIELD_EMAIL_NOTIFICATIONS = "email_notifications";
     private static final String JSON_FIELD_PUSH_NOTIFICATIONS = "push_notifications";
+    private static final String JSON_FIELD_GCM_ID = "gcm_id";
 
     // Need a context for retrieving string resources
     private Context ctx;
@@ -150,6 +151,64 @@ public class APIConnector {
         }
     }
 
+    public boolean updateGcmId(String gcmId, String token) throws Exception {
+        // Get the JSON data representation to be passed to the API
+        JSONObject jo = getSettingsJSONObject(gcmId);
+
+        // Make a new connection.
+        URL url = new URL(ctx.getString(R.string.api_base_url) + '/' + ctx.getString(R.string.api_gcmid));
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        // Set params
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+
+        conn.setDoInput(true);
+        conn.setDoOutput(true);
+
+        // Authentication headers
+        conn.addRequestProperty("API-Key", ctx.getString(R.string.api_key));
+        conn.addRequestProperty("Device-Token", token);
+
+        // Write JSON-encoded login parameters to output stream
+        byte[] outputBytes = jo.toString().getBytes("UTF-8");
+        OutputStream os = conn.getOutputStream();
+        os.write(outputBytes);
+        os.close();
+
+        // Open the connection
+        conn.connect();
+
+        // Get the response from the server
+        InputStream inputStream;
+        int responseCode = conn.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            inputStream = conn.getInputStream();
+        } else {
+            inputStream = conn.getErrorStream();
+        }
+
+        Scanner scanner = new Scanner(inputStream);
+        StringBuilder stringBuilder = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            stringBuilder.append(scanner.nextLine());
+        }
+
+        // Success
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            JSONObject jsonResponse = new JSONObject(stringBuilder.toString());
+
+            if (jsonResponse.getString(JSON_FIELD_STATUS).equals(STATUS_ERROR)) {
+                throw new Exception(jsonResponse.getString(JSON_FIELD_ERROR_MESSAGE));
+            }
+
+            // Return true as the method succeeded.
+            return true;
+        } else {
+            throw new Exception(ctx.getString(R.string.api_error_connection) + ": " + stringBuilder.toString());
+        }
+    }
+
     private static JSONObject getLoginJSONObject(String username, String password, Map<Integer, Character> secureChars) throws JSONException {
         JSONObject jo = new JSONObject();
 
@@ -175,6 +234,18 @@ public class APIConnector {
         try {
             jo.put(JSON_FIELD_EMAIL_NOTIFICATIONS, Integer.toString(emailNotificationRepresentation));
             jo.put(JSON_FIELD_PUSH_NOTIFICATIONS, Integer.toString(pushNotificationRepresentation));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jo;
+    }
+
+    private static JSONObject getSettingsJSONObject(String gcmId){
+        JSONObject jo = new JSONObject();
+
+        try {
+            jo.put(JSON_FIELD_GCM_ID, gcmId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
