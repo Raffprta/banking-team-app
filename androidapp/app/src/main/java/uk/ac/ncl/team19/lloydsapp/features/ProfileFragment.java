@@ -337,12 +337,14 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         Log.i("TIME PASSED", Long.toString(daysBetween));
         Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(getString(R.string.sp_last_date_inc),0)));
 
+        int daysNow = sp.getInt(getString(R.string.sp_last_date_inc), 0);
+
         // If they are not equal we can increment the value
-        if(daysBetween != sp.getInt(getString(R.string.sp_last_date_inc), 0)){
+        if(daysBetween != daysNow){
             // Store the days between value
             sp.edit().putInt(getString(R.string.sp_last_date_inc), daysBetween).apply();
             // Increment the achievement appropriately.
-            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), daysBetween-sp.getInt(getString(R.string.sp_last_date_inc),0));
+            Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), daysBetween-daysNow);
         }
 
         // Unlock the achievement after a month passes
