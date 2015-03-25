@@ -255,6 +255,12 @@
     <string name="sp_goals_overdraft">GOALS_OVERDRAFT</string>
     <string name="sp_goals_donate">GOALS_DONATE</string>
 
+    <string name="sp_notif_email">NOTIF_EMAIL</string>
+    <string name="sp_notif_push">NOTIF_PUSH</string>
+    <string name="sp_notif_wearable">NOTIF_WEARABLE</string>
+
+
+
     <!-- Health page fillers -->
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
@@ -300,6 +306,14 @@
     <string name="err_health_od_min">The overdraft amount must be greater than £</string>
     <string name="err_no_selection">You must select whether you wish to donate or not.</string>
 
+    <!-- Settings -->
+    <string name="category_notif">Notification Settings</string>
+    <string name="notif_email">Receive Email Notifications</string>
+    <string name="notif_email_summary">Un-check this value if you wish to not receive email notifications from the Lloyds Bank.</string>
+    <string name="notif_push">Receive Push Notifications</string>
+    <string name="notif_push_summary">Un-check this value if you wish to not receive push notifications from the Lloyds Bank directly to your phone.</string>
+    <string name="notif_wearable">Receive Wearable Notifications</string>
+    <string name="notif_wearable_summary">Un-check this value if you wish to not receive notifications to your wearable device from the Lloyds bank if you have one configured.</string>
 
 
 </resources>

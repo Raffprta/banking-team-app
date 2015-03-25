@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,13 @@ public class Toaster{
      * @param imageResource the image resource displayed in the circular watch notification slot, i.e. from R.drawable
      */
     public void grabToastForWearable(String text, String previewText, int imageResource){
+        // Get the shared preference value of whether notifications are on or off.
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(a);
+        if(!sp.getBoolean(a.getString(R.string.sp_notif_wearable), false)){
+            // If they are disabled, do not send a message.
+            return;
+        }
+
         // Increment the id of the notification
         this.id++;
 

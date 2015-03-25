@@ -2,12 +2,25 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
         <PreferenceCategory
-            android:title="gingers">
+            android:title="@string/category_notif">
 
             <CheckBoxPreference
-                android:key="checkbox_preference"
-                android:title="gingers"
-                android:summary="gingers" />
+                android:key="@string/sp_notif_email"
+                android:title="@string/notif_email"
+                android:summary="@string/notif_email_summary"
+                android:defaultValue="true" />
+
+            <CheckBoxPreference
+                android:key="@string/sp_notif_push"
+                android:title="@string/notif_push"
+                android:summary="@string/notif_push_summary"
+                android:defaultValue="true" />
+
+            <CheckBoxPreference
+                android:key="@string/sp_notif_wearable"
+                android:title="@string/notif_wearable"
+                android:summary="@string/notif_wearable_summary"
+                android:defaultValue="true" />
 
         </PreferenceCategory>
 

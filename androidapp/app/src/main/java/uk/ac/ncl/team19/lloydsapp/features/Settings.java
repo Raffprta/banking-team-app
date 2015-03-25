@@ -21,4 +21,9 @@ public class Settings extends PreferenceFragment {
         addPreferencesFromResource(R.xml.prefs);
     }
 
+    @Override
+    public String toString(){
+        return getString(R.string.settings);
+    }
+
 }
