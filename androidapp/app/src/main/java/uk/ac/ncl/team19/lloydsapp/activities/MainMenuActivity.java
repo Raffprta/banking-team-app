@@ -1,6 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.activities;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.IntentCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +16,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +32,7 @@ import uk.ac.ncl.team19.lloydsapp.features.ProductsFragment;
 import uk.ac.ncl.team19.lloydsapp.features.ProfileFragment;
 import uk.ac.ncl.team19.lloydsapp.features.PushFragment;
 import uk.ac.ncl.team19.lloydsapp.features.SetGoalsFragment;
+import uk.ac.ncl.team19.lloydsapp.features.Settings;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 
@@ -240,7 +238,8 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Settings Menu will be linked here.", Toast.LENGTH_SHORT).show();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, new Settings()).addToBackStack(getString(R.string.settings)).commit();
             return true;
         }
 
