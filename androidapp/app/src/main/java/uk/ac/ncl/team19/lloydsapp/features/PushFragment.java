@@ -25,9 +25,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
-import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
+import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
@@ -69,7 +72,7 @@ public class PushFragment extends Fragment {
     String regId;
 
     // Logging tag for debugging
-    private static final String TAG = "MainActivity";
+    private final String TAG = getClass().getName();
 
     // Shared preferences
     SharedPreferences sp;
@@ -229,7 +232,6 @@ public class PushFragment extends Fragment {
         if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
         } else {
-
             Log.i(TAG, "Registration ID found: " + registrationId);
         }
 
@@ -253,8 +255,37 @@ public class PushFragment extends Fragment {
                     msg = "Device registered, registration ID=" + regId;
 
                     ProgressDialog.showLoading(PushFragment.this);
-                    UpdateGCMTask ugt = new UpdateGCMTask();
-                    ugt.execute();
+
+                    APIConnector ac = new APIConnector(context);
+                    ac.updateGcmId(regId, new Callback<APIResponse>() {
+                        @Override
+                        public void success(APIResponse apiResponse, Response response) {
+                            // Remove progress bar
+                            ProgressDialog.removeLoading(PushFragment.this);
+
+                            switch (apiResponse.getStatus()) {
+                                case SUCCESS:
+                                    Log.i(TAG, "GCM ID update successful.");
+                                    break;
+
+                                case ERROR:
+                                    fail(apiResponse.getErrorMessage());
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            fail(error.getMessage());
+                        }
+
+                        private void fail(String errorMessage) {
+                            // Remove progress bar
+                            ProgressDialog.removeLoading(PushFragment.this);
+
+                            Log.e(TAG, "GCM ID update failed: " + errorMessage);
+                        }
+                    });
 
                     storeRegistrationId(context, regId);
                 } catch (IOException ex) {
@@ -310,42 +341,6 @@ public class PushFragment extends Fragment {
                     mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
                     mRecyclerView.setAdapter(mAdapter);
                 }
-            }
-        }
-    }
-
-    private class UpdateGCMTask extends AsyncTask<Void, Void, Boolean> {
-
-        private String errorString = null;
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            APIConnector ac = new APIConnector(getActivity().getApplicationContext());
-            try {
-                return ac.updateGcmId(regId, sp.getString(getString(R.string.sp_device_token), null));
-            } catch (Exception e) {
-                errorString = e.getMessage();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean response) {
-            // Remove progress bar
-            ProgressDialog.removeLoading(PushFragment.this);
-
-            if (response == null || response.booleanValue() == false) {
-                // Make a new error dialog and display it
-                Bundle b = new Bundle();
-                b.putString(getString(R.string.custom_bundle), errorString);
-                b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
-                CustomDialog custom = new CustomDialog();
-                custom.setArguments(b);
-                custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");
-
-            } else {
-                // Store device token in shared preferences
-                Log.i("GCMID UPDATE SUCCESS", response.toString());
             }
         }
     }

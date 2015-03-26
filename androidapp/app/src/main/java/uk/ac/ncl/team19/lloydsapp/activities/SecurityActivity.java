@@ -3,7 +3,6 @@ package uk.ac.ncl.team19.lloydsapp.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -15,12 +14,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.api.request.SecureChar;
+import uk.ac.ncl.team19.lloydsapp.api.response.AuthResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
@@ -35,7 +37,7 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
     // Login credentials
     private String username = "";
     private String password = "";
-    private Map<Integer, Character> secureChars = new HashMap<>();
+    private List<SecureChar> secureChars = new ArrayList<>();
 
     // Logging tag
     private static final String TAG = SecurityActivity.class.getName();
@@ -112,14 +114,60 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                 }
 
                 // Assemble secure chars map
-                secureChars.put(uniqueRandomInts.get(0), firstCharacter.getText().charAt(0));
-                secureChars.put(uniqueRandomInts.get(1), secondCharacter.getText().charAt(0));
-                secureChars.put(uniqueRandomInts.get(2), thirdCharacter.getText().charAt(0));
+                secureChars.add(new SecureChar(uniqueRandomInts.get(0), firstCharacter.getText().charAt(0)));
+                secureChars.add(new SecureChar(uniqueRandomInts.get(1), secondCharacter.getText().charAt(0)));
+                secureChars.add(new SecureChar(uniqueRandomInts.get(2), thirdCharacter.getText().charAt(0)));
 
                 // Start Login task
                 ProgressDialog.showLoading(SecurityActivity.this);
-                LoginTask lt = new LoginTask();
-                lt.execute();
+                APIConnector ac = new APIConnector(SecurityActivity.this);
+                ac.authenticate(username, password, secureChars, new Callback<AuthResponse>() {
+                    @Override
+                    public void success(AuthResponse ar, Response response) {
+                        // Dismiss progress dialog
+                        ProgressDialog.removeLoading(SecurityActivity.this);
+
+                        switch (ar.getStatus()) {
+                            case SUCCESS:
+                                // Store device token in shared preferences
+                                Log.i(TAG, "Received device token: " + ar.getDeviceToken());
+                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SecurityActivity.this);
+                                sp.edit().putString(getString(R.string.sp_device_token), ar.getDeviceToken()).apply();
+
+                                // Launch MainMenu activity
+                                Intent securityIntent = new Intent(SecurityActivity.this, MainMenuActivity.class);
+                                startActivity(securityIntent);
+                                break;
+
+                            case ERROR:
+                                fail(ar.getErrorMessage());
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        // Dismiss progress dialog
+                        ProgressDialog.removeLoading(SecurityActivity.this);
+                        fail(error.getMessage());
+                    }
+
+                    private void fail(String errorMessage) {
+                        showErrorDialog(errorMessage);
+
+                        // Hide the effects on the button
+                        GraphicsUtils.buttonClickEffectHide(loginButton);
+                    }
+
+                    private void showErrorDialog(String errorString) {
+                        Bundle b = new Bundle();
+                        b.putString(getString(R.string.custom_bundle), errorString);
+                        b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                        CustomDialog custom = new CustomDialog();
+                        custom.setArguments(b);
+                        custom.show(getSupportFragmentManager(), "Custom Dialog");
+                    }
+                });
             }
         });
     }
@@ -130,52 +178,8 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
         finish();
     }
 
-    private class LoginTask extends AsyncTask<Void, Void, String> {
-        private String errorString = null;
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIConnector ac = new APIConnector(getApplicationContext());
-            try {
-                return ac.authenticate(username, password, secureChars);
-            } catch (Exception e) {
-                errorString = e.getMessage();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String response) {
-            // Remove progress bar
-            ProgressDialog.removeLoading(SecurityActivity.this);
-
-            if (response == null) {
-                // Make a new error dialog and display it
-                Bundle b = new Bundle();
-                b.putString(getString(R.string.custom_bundle), errorString);
-                b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
-                CustomDialog custom = new CustomDialog();
-                custom.setArguments(b);
-                custom.show(getSupportFragmentManager(), "Custom Dialog");
-                Log.e(TAG, errorString);
-                // Hide the effects on the button
-                GraphicsUtils.buttonClickEffectHide(loginButton);
-            } else {
-                // Store device token in shared preferences
-                Log.i(TAG, "Received device token: " + response);
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SecurityActivity.this);
-                sp.edit().putString(getString(R.string.sp_device_token), response).apply();
-
-                // Launch MainMenu activity
-                Intent securityIntent = new Intent(SecurityActivity.this, MainMenuActivity.class);
-                startActivity(securityIntent);
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         // Prevent going back to the login page.
     }
-
 }

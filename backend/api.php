@@ -162,12 +162,12 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
         $user = checkAPIAuthentication($response);
         $jsonRequest = json_decode($request->body(), true);
 
-        if (is_null($jsonRequest) || !isset($jsonRequest['gcm_id'])) {
+        if (is_null($jsonRequest) || !isset($jsonRequest['gcmId'])) {
             sendJSONError($response, 'Your device did not supply the new GCM ID.');
         }
 
         // Update the GCM ID
-        $user->gcm_id = $jsonRequest['gcm_id'];
+        $user->gcm_id = $jsonRequest['gcmId'];
         R::store($user);
 
         // Just send success status by passing an empty array
@@ -187,13 +187,13 @@ $this->respond('POST', '/updatesettings', function ($request, $response, $servic
         $user = checkAPIAuthentication($response);
         $jsonRequest = json_decode($request->body(), true);
 
-        if (is_null($jsonRequest) || !isset($jsonRequest['email_notifications']) || !isset($jsonRequest['push_notifications'])) {
+        if (is_null($jsonRequest) || !isset($jsonRequest['emailNotifications']) || !isset($jsonRequest['pushNotifications'])) {
             sendJSONError($response, 'Your device did not supply the email and push settings.');
         }
 
         // Update the settings
-        $user->email_notifications = $jsonRequest['email_notifications'];
-        $user->push_notifications = $jsonRequest['push_notifications'];
+        $user->emailNotifications = $jsonRequest['emailNotifications'];
+        $user->pushNotifications = $jsonRequest['pushNotifications'];
         R::store($user);
 
         // Just send success status by passing an empty array
@@ -220,7 +220,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     }
     
     // Ensure a security code was also provided.
-    if (!$loginData || !isset($loginData['secureChars'])) {
+    if (!isset($loginData['secureChars'])) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Security code not supplied');
         sendJSONError($response, 'Your device did not supply a security code.');
     }
@@ -236,7 +236,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     }
     
     // Get array within security field of the original JSON body
-    $securityData = $loginData['secureChars'];
+    $secureChars = $loginData['secureChars'];
     
     // Boolean to represent whether a security code was successfully validated
     $validated = false;
@@ -245,9 +245,11 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     $securityCode = $user->security;
 
     // For every security digit, validate them
-    foreach($securityData as $secureIndex => $secureChars){
+    foreach($secureChars as $secureChar) {
+        $index = intval($secureChar['index']) - 1;
+
         // Check if the characters are the same
-        if($securityCode[$secureIndex-1] ===  $secureChars){
+        if($securityCode[$index] ===  $secureChar['character']){
             $validated = true;
             continue;
         } else {
