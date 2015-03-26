@@ -71,7 +71,7 @@ $this->respond('GET', '/pushmessages', function () {
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     try {
-        $recipients = R::find('user', 'gcm_id IS NOT NULL');
+        $recipients = R::find('user', 'gcm_id IS NOT NULL AND push_notifications = 1');
         displayPage('pushmessages.twig', array('recipients' => $recipients));
     } catch (Exception $e) {
         displayError($e->getMessage());
@@ -150,6 +150,89 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
         }
 
         displayPage('pushmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Send email messages page
+//================================================================================
+$this->respond('GET', '/emailmessages', function () {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $recipients = R::find('user', 'email_notifications = 1');
+        displayPage('emailmessages.twig', array('recipients' => $recipients));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Send email messages
+//================================================================================
+$this->respond('POST', '/emailmessages', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        // Validate recipients and message.
+        $errorMessages = array();
+
+        if (!isset($_POST['recipients'])) {
+            $errorMessages[] = 'Please select one or more recipients for the email message.';
+        }
+		
+		if (!isset($_POST['title']) || empty($_POST['title'])) {
+            $errorMessages[] = 'Please enter a title to the email.';
+        }
+
+        if (!isset($_POST['message']) || empty($_POST['message'])) {
+            $errorMessages[] = 'Please enter a message to send.';
+        }
+
+        // Get all potential recipients from the database
+        $recipientBeans = R::find('user', 'email_notifications = 1');
+
+        if (count($errorMessages) === 0) {
+            // Variables from form POST
+            $recipients = $_POST['recipients'];
+            $title = trim($_POST['title']);
+            $message = trim($_POST['message']);
+
+            $recipientEmails = array();
+
+            // Match checked recipients with database recipients
+            foreach ($recipients as $id => $value) {
+
+                // If checked, add their email to the array
+                if ($value === "on") {
+                    foreach ($recipientBeans as $recipientBean) {
+                        if ($recipientBean->id == $id)
+                            $recipientEmails[] = $recipientBean->email;
+                    }
+                }
+            }
+			
+			$failedEmails = 0;
+			
+			// Send the emails
+			foreach($recipientEmails as $emailAddress){
+			    $sent = mail($emailAddress, $title, $message);
+				if(!$sent){
+				    $failedEmails++;
+				}
+			}
+			
+			if($failedEmails != 0){
+			     $errorMessages[] = $failedEmails . ' emails were not sent successfully.';
+			}else{
+			     $service->flash(sprintf('Your set of emails was successfully sent!'), FLASH_SUCCESS);
+			}
+            
+        }
+
+        displayPage('emailmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
