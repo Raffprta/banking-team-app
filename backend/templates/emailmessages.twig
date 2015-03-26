@@ -5,10 +5,10 @@
 {% block content %}
     <form class="form-horizontal" action="admin/emailmessages" method="POST">
     <div class="page-header">
-	    <h1>Send Email Messages</h1>
-		<input id="title" ROWS="15" name="title" type="text" placeholder="Enter title here" class="form-control inline" required> </textarea>
+        <h1>Send Email Messages</h1>
+        <input id="title" ROWS="15" name="title" type="text" placeholder="Enter title here" class="form-control inline" required> </textarea>
         <textarea id="message" ROWS="15" name="message" type="text" placeholder="Enter your email message here" style="margin-top:15px" class="form-control inline" required></textarea>
-		<button id="send" name="send" class="btn btn-primary col-md-offset-5" style="margin-top:15px"><span class="glyphicon glyphicon-send"></span> Send to Selected</button>
+        <button id="send" name="send" class="btn btn-primary col-md-offset-5" style="margin-top:15px"><span class="glyphicon glyphicon-send"></span> Send to Selected</button>
     </div>
 
     {% if recipients %}

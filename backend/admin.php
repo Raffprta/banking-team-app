@@ -182,8 +182,8 @@ $this->respond('POST', '/emailmessages', function ($request, $response, $service
         if (!isset($_POST['recipients'])) {
             $errorMessages[] = 'Please select one or more recipients for the email message.';
         }
-		
-		if (!isset($_POST['title']) || empty($_POST['title'])) {
+        
+        if (!isset($_POST['title']) || empty($_POST['title'])) {
             $errorMessages[] = 'Please enter a title to the email.';
         }
 
@@ -213,22 +213,22 @@ $this->respond('POST', '/emailmessages', function ($request, $response, $service
                     }
                 }
             }
-			
-			$failedEmails = 0;
-			
-			// Send the emails
-			foreach($recipientEmails as $emailAddress){
-			    $sent = mail($emailAddress, $title, $message);
-				if(!$sent){
-				    $failedEmails++;
-				}
-			}
-			
-			if($failedEmails != 0){
-			     $errorMessages[] = $failedEmails . ' emails were not sent successfully.';
-			}else{
-			     $service->flash(sprintf('Your set of emails was successfully sent!'), FLASH_SUCCESS);
-			}
+            
+            $failedEmails = 0;
+            
+            // Send the emails
+            foreach($recipientEmails as $emailAddress){
+                $sent = mail($emailAddress, $title, $message);
+                if(!$sent){
+                    $failedEmails++;
+                }
+            }
+            
+            if($failedEmails != 0){
+                 $errorMessages[] = $failedEmails . ' emails were not sent successfully.';
+            }else{
+                 $service->flash(sprintf('Your set of emails was successfully sent!'), FLASH_SUCCESS);
+            }
             
         }
 
