@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +68,58 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
         final TextView digitTwo = (TextView)findViewById(R.id.digitTwo);
         final TextView digitThree = (TextView)findViewById(R.id.digitThree);
 
+        // Automatically move to next text box when character is entered
+        firstCharacter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int len = s.toString().length();
+                if (len == 1) {
+                    secondCharacter.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        secondCharacter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int len = s.toString().length();
+                if (len == 1) {
+                    thirdCharacter.requestFocus();
+                } else if (len == 0) {
+                    firstCharacter.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        thirdCharacter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int len = s.toString().length();
+                if (len == 0) {
+                    secondCharacter.requestFocus();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         // Set the random integers for the security code
         List<Integer> randomInts = new ArrayList<>(Constants.MINIMUM_SECURITY_CODE_LENGTH);
