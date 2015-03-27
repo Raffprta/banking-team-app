@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp.api.request;
+package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 /**
  * Created by Dale Whinham on 25/03/15.

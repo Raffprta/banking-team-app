@@ -4,21 +4,27 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
 import uk.ac.ncl.team19.lloydsapp.api.request.AuthRequest;
-import uk.ac.ncl.team19.lloydsapp.api.request.SecureChar;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateGcmIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateSettingsRequest;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
+import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AuthResponse;
+import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
 
 /**
  * Created by Dale Whinham on 17/03/15. Modified by Raffaello Perrotta.
@@ -43,6 +49,21 @@ public class APIConnector {
                 @Header("Device-Token") String deviceToken,
                 @Body UpdateGcmIdRequest updateGcmIdRequest,
                 Callback<APIResponse> cb
+        );
+
+        @GET("/accountdetails")
+        void getAccountDetails(
+                @Header("Device-Token") String deviceToken,
+                Callback<AccountDetailsResponse> cb
+        );
+
+        @GET("/transactions/{id}")
+        void getTransactions(
+                @Header("Device-Token") String deviceToken,
+                @Path("id") long accId,
+                @Query("periodFrom") long periodFrom,
+                @Query("periodTo") long periodTo,
+                Callback<TransactionsResponse> cb
         );
     }
 
@@ -87,5 +108,13 @@ public class APIConnector {
     public void updateGcmId(String gcmId, Callback<APIResponse> callback) {
         UpdateGcmIdRequest updateGcmIdRequest = new UpdateGcmIdRequest(gcmId);
         service.updateGcmId(deviceToken, updateGcmIdRequest, callback);
+    }
+
+    public void getAccountDetails(Callback<AccountDetailsResponse> callback) {
+        service.getAccountDetails(deviceToken, callback);
+    }
+
+    public void getTransactions(long accountId, Date periodFrom, Date periodTo, Callback<TransactionsResponse> callback) {
+        service.getTransactions(deviceToken, accountId, periodFrom.getTime(), periodTo.getTime(), callback);
     }
 }

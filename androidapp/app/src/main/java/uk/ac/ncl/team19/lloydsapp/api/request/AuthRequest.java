@@ -2,6 +2,8 @@ package uk.ac.ncl.team19.lloydsapp.api.request;
 
 import java.util.List;
 
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
+
 /**
  * Created by Dale Whinham on 25/03/15.
  */
