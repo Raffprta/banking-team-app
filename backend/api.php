@@ -19,12 +19,33 @@
 // If the request was successful, 'status' will contain 'success'.
 // Otherwise 'status' will contain 'error', and another field, 'errorMessage' will contain the reason.
 
-// TODO: Secret word auth
 // TODO: Retrieve game state for a user
 // TODO: Store/update game state for a user
 
 // Log file tag
 define('TAG', 'API: ');
+
+//================================================================================
+// Initialisation
+//================================================================================
+$this->respond(function($request, $response, $service) {
+    // Replace error handlers so that we always return JSON in this namespace
+    set_error_handler("apiErrorHandler");
+    set_exception_handler("apiExceptionHandler");
+
+    $this->onHTTPError(function ($code, $router) {
+        if ($code === 404) {
+            sendJSONError('The URL \'' . $router->request()->uri() . '\' does not exist.');
+        } else {
+            $error = 'Internal server error. Code: ' . $code;
+            error_log(TAG . $error);
+            sendJSONError($error);
+        }
+    });
+
+    // Init database
+    initRedBean();
+});
 
 //================================================================================
 // API: Get bank accounts
@@ -34,24 +55,24 @@ $this->respond('GET', '/accountdetails', function ($request, $response, $service
 
     try {
         $user = checkAPIAuthentication($response);
-        sendJSONResponse($response, array('accounts' => R::exportAll($user->xownAccountList)));
+        sendJSONResponse(array('accounts' => R::exportAll($user->xownAccountList)));
     } catch (Exception $e) {
-        sendJSONError($response, $e->getMessage());
+        sendJSONError($e->getMessage());
     }
 });
 
 //================================================================================
 // API: Get transactions
 //================================================================================
-$this->respond('GET', '/transactions', function ($request, $response, $service) {
+$this->respond('GET', '/transactions/[i:accId]', function ($request, $response, $service) {
     error_log(TAG . 'Transactions request from ' . $_SERVER['REMOTE_ADDR']);
     try {
         $user = checkAPIAuthentication($response);
 
         // Make sure the account ID is valid and the user owns the account we're interested in
-        $account = isset($_GET['accId']) ? R::load('account', $_GET['accId']) : null;
+        $account = R::load('account', $request->$accId);
         if (is_null($account) || $account->userId !== $user->id) {
-            sendJSONError($response, 'The account ID of the account to show transactions to/from was invalid.');
+            sendJSONError('The account ID of the account to show transactions to/from was invalid.');
         }
 
         $transactions = null;
@@ -78,9 +99,9 @@ $this->respond('GET', '/transactions', function ($request, $response, $service) 
             );
         }
 
-        sendJSONResponse($response, array('transactions' => R::exportAll($transactions)));
+        sendJSONResponse(array('transactions' => R::exportAll($transactions)));
     } catch (Exception $e) {
-        sendJSONError($response, $e->getMessage());
+        sendJSONError($e->getMessage());
     }
 });
 
@@ -95,43 +116,43 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
 
         // Validation
         if (is_null($jsonRequest)) {
-            sendJSONError($response, 'Malformed request.');
+            sendJSONError('Malformed request.');
         }
 
         if (!isset($jsonRequest['fromAccId'])) {
-            sendJSONError($response, 'Your device did not send the account ID of the account to transfer from.');
+            sendJSONError('Your device did not send the account ID of the account to transfer from.');
         }
 
         if (!isset($jsonRequest['toAccNo'])) {
-            sendJSONError($response, 'Your device did not send the account number of the account to transfer to.');
+            sendJSONError('Your device did not send the account number of the account to transfer to.');
         }
 
         if (!isset($jsonRequest['toSortCode'])) {
-            sendJSONError($response, 'Your device did not send the sort code of the account to transfer to.');
+            sendJSONError('Your device did not send the sort code of the account to transfer to.');
         }
 
         if (!isset($jsonRequest['amount'])) {
-            sendJSONError($response, 'Your device did not send the amount of money to transfer.');
+            sendJSONError('Your device did not send the amount of money to transfer.');
         }
 
         // Verification
         $fromAccount = R::load('account', $jsonRequest['fromAccId']);
         if (is_null($fromAccount) || $fromAccount->userId !== $user->id) {
-            sendJSONError($response, 'The ID of the account to transfer from was invalid.');
+            sendJSONError('The ID of the account to transfer from was invalid.');
         }
 
         $toAccount = R::findOne('account', 'sort_code = ? AND account_number = ?', array($jsonRequest['toSortCode'], $jsonRequest['toAccNo']));
         if (is_null($toAccount)) {
-            sendJSONError($response, 'The account or sort code of the account to transfer to was invalid.');
+            sendJSONError('The account or sort code of the account to transfer to was invalid.');
         }
 
         $amount = intval($jsonRequest['amount']);
         if ($amount < 1) {
-            sendJSONError($response, 'The amount to transfer was invalid.');
+            sendJSONError('The amount to transfer was invalid.');
         }
 
         if (($fromAccount->balance + $fromAccount->overdraft) < $amount) {
-            sendJSONError($response, 'There are insufficient funds available to complete this transaction.');
+            sendJSONError('There are insufficient funds available to complete this transaction.');
         }
 
         $reference = isset($jsonRequest['reference']) ? $jsonRequest['reference'] : "";
@@ -146,9 +167,9 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
         R::store($fromAccount);
         R::store($toAccount);
 
-        sendJSONResponse($response, array());
+        sendJSONResponse(array());
     } catch (Exception $e) {
-        sendJSONError($response, $e->getMessage());
+        sendJSONError($e->getMessage());
     }
 });
 
@@ -163,7 +184,7 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
         $jsonRequest = json_decode($request->body(), true);
 
         if (is_null($jsonRequest) || !isset($jsonRequest['gcmId'])) {
-            sendJSONError($response, 'Your device did not supply the new GCM ID.');
+            sendJSONError('Your device did not supply the new GCM ID.');
         }
 
         // Update the GCM ID
@@ -171,9 +192,9 @@ $this->respond('POST', '/updategcmid', function ($request, $response, $service) 
         R::store($user);
 
         // Just send success status by passing an empty array
-        sendJSONResponse($response, array());
+        sendJSONResponse(array());
     } catch (Exception $e) {
-        sendJSONError($response, $e->getMessage());
+        sendJSONError($e->getMessage());
     }
 });
 
@@ -188,7 +209,7 @@ $this->respond('POST', '/updatesettings', function ($request, $response, $servic
         $jsonRequest = json_decode($request->body(), true);
 
         if (is_null($jsonRequest) || !isset($jsonRequest['emailNotifications']) || !isset($jsonRequest['pushNotifications'])) {
-            sendJSONError($response, 'Your device did not supply the email and push settings.');
+            sendJSONError('Your device did not supply the email and push settings.');
         }
 
         // Update the settings
@@ -197,9 +218,9 @@ $this->respond('POST', '/updatesettings', function ($request, $response, $servic
         R::store($user);
 
         // Just send success status by passing an empty array
-        sendJSONResponse($response, array());
+        sendJSONResponse(array());
     } catch (Exception $e) {
-        sendJSONError($response, $e->getMessage());
+        sendJSONError($e->getMessage());
     }
 });
 
@@ -216,13 +237,13 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
 
     if (!$loginData || !isset($loginData['username']) || !isset($loginData['password'])) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Username/password not supplied');
-        sendJSONError($response, 'Your device did not supply a username and/or password.');
+        sendJSONError('Your device did not supply a username and/or password.');
     }
     
     // Ensure a security code was also provided.
     if (!isset($loginData['secureChars'])) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Security code not supplied');
-        sendJSONError($response, 'Your device did not supply a security code.');
+        sendJSONError('Your device did not supply a security code.');
     }
 
     // Attempt login
@@ -231,7 +252,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     // Check username/password
     if (is_null($user) || !password_verify($loginData['password'], $user->password)) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect username or password.');
-        sendJSONError($response, 'Incorrect username or password.');
+        sendJSONError('Incorrect username or password.');
         return;
     }
     
@@ -261,7 +282,7 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
     
     if (!$validated) {
         error_log(TAG . 'Access denied to ' . $_SERVER['REMOTE_ADDR'] . ': Incorrect security code digits.');
-        sendJSONError($response, 'Incorrect security code digits.');
+        sendJSONError('Incorrect security code digits.');
     } else {
         // Login successful; create and store device token information
         $deviceToken = R::dispense('devicetoken');
@@ -273,10 +294,28 @@ $this->respond('POST', '/authenticate', function ($request, $response, $service)
         R::store($user);
 
         error_log(TAG . 'Access granted to ' . $_SERVER['REMOTE_ADDR'] . ': \'' . $loginData['username'] . '\' got device token ' . $deviceToken->token);
-        sendJSONResponse($response, array('deviceToken' => $deviceToken->token));
+        sendJSONResponse(array('deviceToken' => $deviceToken->token));
     }
 });
 
+//================================================================================
+// Error handlers
+//================================================================================
+function apiErrorHandler($errno, $errstr, $file, $line) {
+    $error = 'Internal server error. Code ' . $errno . ': ' . $errstr;
+    error_log($error);
+    sendJSONError($error);
+}
+
+function apiExceptionHandler($exception) {
+    $error = 'Internal server error. ' . $exception->getMessage();
+    error_log($error);
+    sendJSONError($error);
+}
+
+//================================================================================
+// Utility functions
+//================================================================================
 function checkAPIKey() {
     global $apiKeys;
 
@@ -341,12 +380,12 @@ function checkAPIAuthentication($response) {
     error_log(TAG . 'Token authentication request from ' . $_SERVER['REMOTE_ADDR']);
 
     if (!checkAPIKey()) {
-        sendJSONError($response, 'The API key supplied by your device was invalid. Please update your app, or contact support.');
+        sendJSONError('The API key supplied by your device was invalid. Please update your app, or contact support.');
     }
 
     $user = checkDeviceToken();
     if (is_null($user)) {
-        sendJSONError($response, 'Your device did not supply a valid authentication token.');
+        sendJSONError('Your device did not supply a valid authentication token.');
     }
 
     error_log(TAG . 'Successful token authentication from ' . $_SERVER['REMOTE_ADDR']);
@@ -358,32 +397,28 @@ function generateDeviceTokenHash($loginData) {
 }
 
 function updateDeviceToken($deviceToken) {
-    global $apiKeys;
-    //$deviceToken->userAgentAndUDIDHash = generateUserAgentAndUDIDHash();
     $deviceToken->lastActivity = time();
     $deviceToken->lastIPAddress = $_SERVER['REMOTE_ADDR'];
     R::store($deviceToken);
 }
 
-function sendJSONResponse($response, $data) {
+function sendJSONResponse($data) {
     $body = array_merge(
         $data,
         array('status' => API_SUCCESS)
     );
 
-    $response->body(json_encode($body));
-    $response->send();
+    echo json_encode($body);
     exit;
 }
 
-function sendJSONError($response, $reason) {
+function sendJSONError($reason) {
     $body = array(
         'errorMessage' => $reason,
         'status' => API_ERROR
     );
 
-    $response->body(json_encode($body));
-    $response->send();
+    echo json_encode($body);
     exit;
 }
 

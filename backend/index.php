@@ -9,7 +9,6 @@
 //================================================================================
 
 // TODO: User logged-in area with account overview and device pairing status
-// TODO: Auth code from app??
 
 //================================================================================
 // Initialisation
@@ -29,17 +28,9 @@ require_once __DIR__.'/config.php';
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/rb.php';
 
-// Init RedBean
-R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, REDBEAN_FREEZE_ENABLED);
-if (!R::testConnection()) {
-    die('Error: Couldn\'t connect to database. Please check configuration.');
-}
-
-// Enable debug mode
-R::debug(REDBEAN_DEBUG_ENABLED);
-
-// Use camelCase for bean export
-R::useExportCase('camel');
+// Init error handlers
+set_error_handler("webErrorHandler");
+set_exception_handler("webExceptionHandler");
 
 // Update request when app is installed in a subdirectory
 $base = dirname($_SERVER['PHP_SELF']);
@@ -66,22 +57,6 @@ $twig->addFunction(new Twig_SimpleFunction('userIdToName', function ($userId) {
     return is_null($user) ? null : $user->firstName . ' ' . $user->surname;
 }));
 
-// Init admin account if one doesn't exist
-$admin = R::findOne('user', 'id = ?', array(1));
-if (is_null($admin)) {
-    $registrationdata = array(
-        'firstName' => 'Administrator',
-        'surname' => '',
-        'email' => 'admin@lloyds.com',
-        'password' => 'admin',
-        'security' => 'lloyds'
-    );
-
-    createUser($registrationdata, true);
-
-    die('An administrator account has been created.');
-}
-
 //================================================================================
 // Separate routes for admin and API namespaces
 //================================================================================
@@ -94,6 +69,8 @@ foreach(array('admin', 'api') as $controller) {
 // Public Action: Login
 //================================================================================
 $klein->respond('POST', '/login', function ($request, $response, $service) {
+    initRedBean();
+
     // Login details from form
     $username = strtolower(trim($_POST['username']));
     $password = $_POST['password'];
@@ -170,8 +147,10 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
 // Public Action: Register account
 //================================================================================
 $klein->respond('POST', '/register', function ($request, $response, $service) use ($twig) {
+    initRedBean();
+
     $registrationData = formatUserData($_POST);
-    $errorMessages = validateRegistrationData($registrationData, true);
+    $errorMessages = validateRegistrationData($registrationData, true, true);
 
     // Check if user already exists
     if (emailAddressExists($registrationData['email'])) {
@@ -281,7 +260,9 @@ $klein->respond('GET', '/logout', function ($request, $response, $service) {
 //================================================================================
 // Public: Default page
 //================================================================================
-$klein->respond('GET', '/', function () use ($twig) {
+$klein->respond('GET', '/', function() use ($twig) {
+    initRedBean();
+
     if (userIsLoggedIn()) {
         displayPage('logged_in_index.twig', null);
     } else {
@@ -293,8 +274,54 @@ $klein->respond('GET', '/', function () use ($twig) {
 $klein->dispatch();
 
 //================================================================================
+// Error handlers
+//================================================================================
+function webErrorHandler($errno, $errstr, $file, $line) {
+    $error = 'Internal server error. Code ' . $errno . ': ' . $errstr;
+    error_log($error);
+    displayError($error);
+    exit;
+}
+
+function webExceptionHandler($exception) {
+    $error = 'Internal server error. ' . $exception->getMessage();
+    error_log($error);
+    displayError($error);
+}
+
+//================================================================================
 // Utility functions
 //================================================================================
+function initRedBean() {
+    // Init RedBean
+    R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, REDBEAN_FREEZE_ENABLED);
+    if (!R::testConnection()) {
+        throw new Exception('Couldn\'t connect to database. Please check backend configuration.');
+    }
+
+    // Enable debug mode
+    R::debug(REDBEAN_DEBUG_ENABLED);
+
+    // Use camelCase for bean export
+    R::useExportCase('camel');
+
+    // Create default admin account if one doesn't exist
+    $admin = R::load('user', 1);
+    if (is_null($admin)) {
+        $registrationdata = array(
+            'firstName' => 'Administrator',
+            'surname' => '',
+            'email' => 'admin@lloyds.com',
+            'password' => 'admin',
+            'security' => 'lloyds'
+        );
+
+        createUser($registrationdata, true);
+
+        die('An administrator account has been created.');
+    }
+}
+
 function userIsLoggedIn() {
     $user = null;
     if (isset($_SESSION['userId'])) {

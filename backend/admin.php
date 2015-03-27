@@ -11,6 +11,13 @@
 // TODO: Transaction simulation methods
 
 //================================================================================
+// Initialisation
+//================================================================================
+$this->respond(function() {
+    initRedBean();
+});
+
+//================================================================================
 // Admin: PHPInfo
 //================================================================================
 $this->respond('GET', '/phpinfo', function () {
@@ -215,19 +222,22 @@ $this->respond('POST', '/emailmessages', function ($request, $response, $service
             }
             
             $failedEmails = 0;
+            $successfulEmails = 0;
             
             // Send the emails
-            foreach($recipientEmails as $emailAddress){
+            foreach($recipientEmails as $emailAddress) {
                 $sent = mail($emailAddress, $title, $message);
-                if(!$sent){
+                if (!$sent) {
                     $failedEmails++;
+                } else {
+                    $successfulEmails++;
                 }
             }
             
-            if($failedEmails != 0){
-                 $errorMessages[] = $failedEmails . ' emails were not sent successfully.';
-            }else{
-                 $service->flash(sprintf('Your set of emails was successfully sent!'), FLASH_SUCCESS);
+            if ($failedEmails != 0) {
+                 $errorMessages[] = sprintf('%d %s not sent successfully.', $failedEmails, $failedEmails == 1 ? 'email was' : 'emails were');
+            } else {
+                 $service->flash(sprintf('%d %s successfully sent!', $successfulEmails, $successfulEmails == 1 ? 'email was' : 'emails were'), FLASH_SUCCESS);
             }
             
         }
