@@ -41,20 +41,6 @@ public class AccountsDashboardFragment extends Fragment {
 
         final ViewGroup accountsList = (ViewGroup) accountsDashboardView.findViewById(R.id.accountsList);
 
-        //inflater.inflate(R.layout.account, accountsList);
-        //inflater.inflate(R.layout.account, accountsList);
-
-        // TODO : Are we only having two accounts, if not then this needs to be more programmatic
-
-//
-//        accountsDashboardView.findViewById(R.id.savingsAccounts).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
-//            }
-//        });
-
         // Get the account details from the backend
         APIConnector ac = new APIConnector(getActivity());
         ac.getAccountDetails(new Callback<AccountDetailsResponse>() {
