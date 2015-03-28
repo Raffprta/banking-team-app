@@ -6,13 +6,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2" >
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -23,156 +22,40 @@
                 android:textColor="@color/lloyds_lightergreen"
                 android:textSize="@dimen/abc_text_size_headline_material"
                 android:layout_marginRight="20dp"
-                android:id="@+id/textView17" />
+                android:id="@+id/textViewTitle" />
 
-            <GridLayout
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="20dp"
+                android:id="@+id/accountsList">
+            </LinearLayout>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#85858585"
-                android:paddingRight="4dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="1dp"
-                android:paddingTop="1dp"
-                android:layout_marginBottom="23dp"
-                android:layout_above="@+id/savingsAccounts"
-                android:layout_alignLeft="@+id/savingsAccounts"
-                android:layout_alignStart="@+id/savingsAccounts"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/account_info_no_accounts"
+                android:id="@+id/noBankAccounts"
+                android:layout_gravity="center"
+                android:textColor="@color/lloyds_darkgreen"
+                android:gravity="center"
+                android:paddingTop="50dp"
+                android:visibility="gone" />
 
-                android:id="@+id/gridgrid"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp">
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffffff"
-                    android:id="@+id/currentAccounts"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="100dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/acc_current"
-                        android:id="@+id/textView6"
-                        android:layout_row="0"
-                        android:layout_column="0"
-                        android:textColor="@color/lloyds_lightergreen" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/acc_sort_code_number_filler"
-                        android:id="@+id/textView7"
-                        android:layout_column="0"
-                        android:layout_row="1" />
-
-                    <Space
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_column="0"
-                        android:layout_row="2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/acc_funds_filler"
-                        android:id="@+id/textView8"
-                        android:layout_row="3"
-                        android:layout_column="0"
-                        android:textColor="#ff3f3f3f" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/acc_avail_funds_filler"
-                        android:id="@+id/textView9"
-                        android:layout_row="4"
-                        android:layout_column="0"
-                        android:textColor="@color/lloyds_lightgreen" />
-                </GridLayout>
-            </GridLayout>
-
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#85858585"
-                android:paddingRight="4dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="1dp"
-                android:paddingTop="1dp"
-                android:id="@+id/savingsAccounts"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal">
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffffff"
-                    android:id="@+id/gridLayout"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingRight="100dp"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/acc_saving_filler"
-                        android:id="@+id/textView10"
-                        android:layout_row="0"
-                        android:layout_column="0"
-                        android:textColor="@color/lloyds_lightergreen" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/acc_sort_code_number_filler"
-                        android:id="@+id/textView_savings_sort_code"
-                        android:layout_column="0"
-                        android:layout_row="1" />
-
-                    <Space
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_column="0"
-                        android:layout_row="2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/acc_funds_filler"
-                        android:id="@+id/textView12"
-                        android:layout_row="3"
-                        android:layout_column="0" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/acc_avail_funds_filler"
-                        android:id="@+id/textView13"
-                        android:layout_row="4"
-                        android:layout_column="0"
-                        android:textColor="@color/lloyds_lightgreen" />
-
-                </GridLayout>
-            </GridLayout>
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

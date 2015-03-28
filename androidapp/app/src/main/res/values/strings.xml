@@ -135,21 +135,24 @@
     <string name="google_play_sign_in">Sign into Google Play</string>
     <string name="google_play_sign_out">Sign out from Google Play</string>
 
-    <!-- Account information fillers -->
+    <!-- Account information -->
+    <string name="acc_current">Current Account</string>
+    <string name="acc_savings">Savings Account</string>
+    <string name="acc_student">Student Account</string>
+
     <string name="acc_page_title">Your Accounts</string>
     <string name="int_stu_account">International Student Account</string>
-    <string name="acc_current">Current Account</string>
+
+    <string name="acc_number_filler">12345678</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
     <string name="acc_funds_filler">£999.99</string>
-    <string name="acc_avail_funds_filler">Available funds: £899.99</string>
-    <string name="acc_saving_filler">Savings Account</string>
 
     <string name="acc_filler_john_smith">John Smith</string>
-    <string name="acco_number_info">Account Number: 12345678</string>
-    <string name="account_info_number">12345678</string>
-    <string name="account_info_balance">Balance: £999.99</string>
+    <string name="account_number_info">Account Number: 12345678</string>
+
+    <string name="account_info_balance">Balance:</string>
     <string name="account_info_sort_code">00-00-00</string>
-    <string name="account_info_avail_funds">Available funds: £899.99</string>
+    <string name="account_info_avail_funds">Available funds:</string>
 
     <string name="account_info_profile_button">Profile details</string>
     <string name="account_info_acc_button">Account details</string>
@@ -158,6 +161,8 @@
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
     <string name="account_info_health_button">Account Health</string>
+
+    <string name="account_info_no_accounts">You currently don\'t have any bank accounts.\n\nPlease visit your local Lloyds branch to set up a bank account.</string>
 
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
 

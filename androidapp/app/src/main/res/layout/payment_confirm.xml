@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/account_info_number"
+                            android:text="@string/acc_number_filler"
                             android:id="@+id/accountNoConfirm"
                             android:layout_column="1" />
                     </TableRow>

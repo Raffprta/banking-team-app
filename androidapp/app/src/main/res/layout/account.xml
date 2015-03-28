@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:background="#85858585"
+android:paddingRight="4dp"
+android:paddingBottom="4dp"
+android:paddingLeft="1dp"
+android:paddingTop="1dp"
+android:layout_gravity="center_horizontal"
+android:layout_marginBottom="20dp">
+
+<GridLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingRight="100dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/acc_current"
+        android:id="@+id/accountType"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:textColor="@color/lloyds_lightergreen" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/acc_sort_code_number_filler"
+        android:id="@+id/accountNumberAndSortCode"
+        android:layout_column="0"
+        android:layout_row="1" />
+
+    <Space
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_column="0"
+        android:layout_row="2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/acc_funds_filler"
+        android:id="@+id/balance"
+        android:layout_row="3"
+        android:layout_column="0"
+        android:textColor="#ff3f3f3f" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/account_info_avail_funds"
+        android:id="@+id/availableFunds"
+        android:layout_row="4"
+        android:layout_column="0"
+        android:textColor="@color/lloyds_lightgreen" />
+</GridLayout>
+</GridLayout>
