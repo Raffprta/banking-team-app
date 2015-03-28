@@ -115,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
+                    android:maxLength="8"
                     android:id="@+id/accountNumberPayment"
                     android:layout_column="1" />
             </TableRow>
@@ -144,6 +145,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
+                    android:maxLength="6"
                     android:id="@+id/sortCodePayment"
                     android:layout_column="1" />
 
