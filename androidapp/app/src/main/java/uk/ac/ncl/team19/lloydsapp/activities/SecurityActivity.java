@@ -74,15 +74,15 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 int len = s.toString().length();
                 if (len == 1) {
                     secondCharacter.requestFocus();
                 }
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
         });
 
         secondCharacter.addTextChangedListener(new TextWatcher() {
@@ -92,7 +92,10 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 int len = s.toString().length();
                 if (len == 1) {
                     thirdCharacter.requestFocus();
@@ -100,9 +103,6 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                     firstCharacter.requestFocus();
                 }
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
         });
 
         thirdCharacter.addTextChangedListener(new TextWatcher() {
@@ -110,15 +110,14 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 int len = s.toString().length();
                 if (len == 0) {
                     secondCharacter.requestFocus();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
+                }}
         });
 
         // Set the random integers for the security code
