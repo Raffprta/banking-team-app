@@ -113,13 +113,13 @@
                     android:id="@+id/textView30"
                     android:layout_column="0" />
 
-                <EditText
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/tag"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:id="@+id/editText13"
-                    android:layout_column="1" />
+                    android:entries="@array/tags"
+                    android:layout_marginBottom="10dp" />
+
             </TableRow>
 
             <TableRow
