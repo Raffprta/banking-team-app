@@ -223,18 +223,21 @@
     <string-array name="user_accounts">
         <item>Current Account</item>
         <item>eSavings Account</item>
-        <item>Mega Account</item>
+        <item>Student Account</item>
     </string-array>
 
 
     <!-- Drop Down menu strings list of tags -->
     <string-array name="tags">
-        <item>Food</item>
+        <item>Food &amp; Drink</item>
         <item>Clothes</item>
         <item>Cash</item>
-        <item>Transport</item>
-        <item>Leisure</item>
+        <item>Entertainment</item>
         <item>Other</item>
+        <item>Utility</item>
+        <item>Transport</item>
+        <item>Donation</item>
+
     </string-array>
     <!-- Drop down menu strings for Years in Transaction history -->
     <string-array name="transactions_years">

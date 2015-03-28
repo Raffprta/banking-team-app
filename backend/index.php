@@ -249,6 +249,7 @@ $klein->onHttpError(function ($code, $router) use ($twig) {
 // Private Action: Logout
 //================================================================================
 $klein->respond('GET', '/logout', function ($request, $response, $service) {
+    initRedBean();
     checkAuthentication();
     logActivity($_SESSION['email'] . ' logged out.');
     destroySession();
@@ -265,6 +266,17 @@ $klein->respond('GET', '/', function() use ($twig) {
 
     if (userIsLoggedIn()) {
         displayPage('logged_in_index.twig', null);
+    } else {
+        displayPage('index.twig', null);
+    }
+});
+
+//================================================================================
+// Public: Leaderboards page
+//================================================================================
+$klein->respond('GET', '/leaderboards', function ($request, $response, $service) {
+    if (isset($_SESSION['userId'])) {
+        displayPage('leaderboards.twig', null);
     } else {
         displayPage('index.twig', null);
     }
