@@ -2,32 +2,41 @@
 
 {% block head %}
     {{ parent() }}
-    <meta name="google-signin-clientid" content="689728249892-nf1h79k31gab4jhain56g411ae9e7aes.apps.googleusercontent.com" />
+    <script src="js/play.js"></script>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+    <meta name="google-signin-clientid" content="689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com" />
     <meta name="google-signin-cookiepolicy" content="single_host_origin" />
-    <meta name="google-signin-callback" content="signinCallback" />
+    <meta name="google-signin-callback" content="auth" />
     <meta name="google-signin-scope" content="https://www.googleapis.com/auth/games" />
-	<script src="https://apis.google.com/js/client.js"></script>
-	<script src="https://apis.google.com/js/client:platform.js" async defer></script>
-	<script src="js/play.js"></script>
 {% endblock %}
 
 {% block content %}
     <div class="page-header">
     <h1 style="display:inline">View the Leaderboard</h1>
-	<span id="signinButton" class="pull-right">
-	  <span
-		class="g-signin"
-		data-callback="signinCallback"
-		data-clientid="689728249892-nf1h79k31gab4jhain56g411ae9e7aes.apps.googleusercontent.com"
-		data-cookiepolicy="single_host_origin"
-		data-requestvisibleactions="http://schema.org/AddAction"
-		data-scope="https://www.googleapis.com/auth/plus.login"
-		>
-	  </span>
-	</span>
-	<p>Note: this page requires third party cookies to be enabled on your browser</p>
+    
+    <br><br>
+    <p>Note: this page requires third party cookies to be enabled on your browser.
+       No private information relating to any bank details or account information is requested or shared, this is purely for leaderboard purposes
+       which relate to in-app achievements. The user has an option whether to sign in within the app and
+       use Google Play services. The below will show the current all time leaderboard list.
+       </p>
     </div>
+    
+    <table class="table table-condensed" id="leaderboardTable">
+		<thead>
+		<tr>
+		  <th class="col-md-2">Rank</th>
+		  <th class="col-md-3">Forename</th>
+		  <th class="col-md-3">Surname</th>
+		  <th class="col-md-3">Google Plus Profile</th>
+		  <th class="col-md-2">Score</th>
+		</tr>
+		</thead>   
+    </table>
 	
+	<h4 id="loading">Leaderboard currently loading, please wait...</h4>
+    
 {% endblock %}
 
 

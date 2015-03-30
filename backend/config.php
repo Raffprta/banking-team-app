@@ -12,7 +12,7 @@ define('BASE_URL', 'http://team19.ngrok.com/');        // Root URL of this app (
 define('DATABASE_HOST', 'localhost');           // Database location
 define('DATABASE_NAME', 'lloydsapp');           // Database name
 define('DATABASE_USERNAME', 'root');            // Database username
-define('DATABASE_PASSWORD', '');                // Database password
+define('DATABASE_PASSWORD', 'Coronary616');                // Database password
 
 define('MINIMUM_PASSWORD_LENGTH', 6);           // Minimum password length
 define('MINIMUM_SECURITY_LENGTH', 6);           // Minimum security prompt length
