@@ -3,6 +3,7 @@ package uk.ac.ncl.team19.lloydsapp.features;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -17,18 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.os.AsyncTask;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.plus.Plus;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.games.achievement.Achievements;
-import com.google.android.gms.games.GamesStatusCodes;
-
+import com.google.android.gms.plus.Plus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,8 +35,13 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
@@ -57,6 +61,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
     private GoogleApiClient mGoogleApiClient;
     private View profileView;
     private AchievementBuffer buff = null;
+    private final String TAG = "PLAY UPDATE";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -271,9 +276,51 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Debug
         Log.i("Google Play", "Services Connected.");
 
-        // Remove loading bar
-        ProgressDialog.removeLoading(ProfileFragment.this);
+        // Register the current player.
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String registeredPlayer = sp.getString(getString(R.string.sp_playid), null);
 
+        if(registeredPlayer == null || registeredPlayer != playerId){
+            sp.edit().putString(getString(R.string.sp_playid), playerId).apply();
+            // Update on the server side
+            APIConnector ac = new APIConnector(getActivity());
+            ac.updatePlayId(playerId, new Callback<APIResponse>() {
+                @Override
+                public void success(APIResponse apiResponse, Response response) {
+                    switch (apiResponse.getStatus()) {
+                        case SUCCESS:
+                            Log.i(TAG, "Player ID update successful.");
+                            break;
+
+                        case ERROR:
+                            Log.e(TAG, "Player ID update failed: " + apiResponse.getErrorMessage());
+                            showErrorDialog(apiResponse.getErrorMessage());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    showErrorDialog(error.getMessage());
+                }
+
+                private void showErrorDialog(String errorMessage) {
+                    // Make a new error dialog and display it
+                    Bundle b = new Bundle();
+                    b.putString(getString(R.string.custom_bundle), errorMessage);
+                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    CustomDialog custom = new CustomDialog();
+                    custom.setArguments(b);
+                    custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");
+                }
+
+            });
+
+        }
+
+        // Remove loading bar whatever the case.
+        ProgressDialog.removeLoading(ProfileFragment.this);
+        // Update the achievement progress.
         updateAchievements();
 
 

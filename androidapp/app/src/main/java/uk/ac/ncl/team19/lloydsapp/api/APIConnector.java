@@ -20,6 +20,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
 import uk.ac.ncl.team19.lloydsapp.api.request.AuthRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateGcmIdRequest;
+import uk.ac.ncl.team19.lloydsapp.api.request.UpdatePlayIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateSettingsRequest;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
@@ -48,6 +49,13 @@ public class APIConnector {
         void updateGcmId(
                 @Header("Device-Token") String deviceToken,
                 @Body UpdateGcmIdRequest updateGcmIdRequest,
+                Callback<APIResponse> cb
+        );
+
+        @POST("/updateplayid")
+        void updatePlayId(
+                @Header("Device-Token") String deviceToken,
+                @Body UpdatePlayIdRequest updatePlayIdRequest,
                 Callback<APIResponse> cb
         );
 
@@ -108,6 +116,11 @@ public class APIConnector {
     public void updateGcmId(String gcmId, Callback<APIResponse> callback) {
         UpdateGcmIdRequest updateGcmIdRequest = new UpdateGcmIdRequest(gcmId);
         service.updateGcmId(deviceToken, updateGcmIdRequest, callback);
+    }
+
+    public void updatePlayId(String playId, Callback<APIResponse> callback) {
+        UpdatePlayIdRequest updatePlayIdRequest = new UpdatePlayIdRequest(playId);
+        service.updatePlayId(deviceToken, updatePlayIdRequest, callback);
     }
 
     public void getAccountDetails(Callback<AccountDetailsResponse> callback) {
