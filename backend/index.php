@@ -286,8 +286,12 @@ $klein->respond('GET', '/leaderboards', function ($request, $response, $service)
 // Public: Achievements page
 //================================================================================
 $klein->respond('GET', '/achievements', function ($request, $response, $service) {
+    initRedBean();
+
     if (isset($_SESSION['userId'])) {
-        displayPage('achievements.twig', null);
+	    $user = R::findOne('user', "id=?", array($_SESSION['userId']));
+		
+        displayPage('achievements.twig', array('playerId' => str_replace("@", "", $user->player_id)));
     } else {
         displayPage('index.twig', null);
     }

@@ -281,8 +281,6 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String registeredPlayer = sp.getString(getString(R.string.sp_playid), null);
 
-        Log.i(playerId, registeredPlayer);
-
         if(registeredPlayer == null || !registeredPlayer.equals(playerId)){
             sp.edit().putString(getString(R.string.sp_playid), playerId).apply();
             // Update on the server side

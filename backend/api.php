@@ -231,16 +231,16 @@ $this->respond('POST', '/updatesettings', function ($request, $response, $servic
 $this->respond('POST', '/updateplayid', function ($request, $response, $service) {
     error_log(TAG . 'Google Player ID update request from ' . $_SERVER['REMOTE_ADDR']);
     try {
-        $user = checkAPIAuthentication($response);
+        $userPlay = checkAPIAuthentication($response);
         $jsonRequest = json_decode($request->body(), true);
 
         if (is_null($jsonRequest) || !isset($jsonRequest['playId'])) {
             sendJSONError('Your device did not supply the player id.');
         }
 
-        // Update the settings
-        $user->playerId = $jsonRequest['playId'];
-        R::store($user);
+        // Update the player id
+		$userPlay->playerId = "@" . $jsonRequest['playId'];
+        R::store($userPlay);
 
         // Just send success status by passing an empty array
         sendJSONResponse(array());
