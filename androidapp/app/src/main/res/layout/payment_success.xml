@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Payment Successful"
+        android:text="@string/payment_successful"
         android:id="@+id/textView18"
         android:layout_gravity="center_horizontal|right"
         android:layout_marginTop="60dp"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="From:"
+                    android:text="@string/from"
                     android:id="@+id/textView21"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Type"
+                    android:text="@string/account_type"
                     android:id="@+id/textView64"
                     android:layout_column="1" />
             </TableRow>
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
+                    android:text="@string/account_number"
                     android:id="@+id/textView19"
                     android:layout_column="1" />
 
@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
+                    android:text="@string/sort_code"
                     android:id="@+id/textView20"
                     android:layout_column="1" />
 
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="To:"
+                    android:text="@string/to"
                     android:id="@+id/textView23"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen" />
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:id="@+id/textView70"
                     android:layout_column="1" />
             </TableRow>
@@ -175,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Account Number"
+                    android:text="@string/account_number"
                     android:id="@+id/textView22"
                     android:layout_column="1" />
 
@@ -204,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Sort code"
+                    android:text="@string/sort_code"
                     android:id="@+id/textView24"
                     android:layout_column="1" />
             </TableRow>
@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="00-00-00"
-                    android:id="@+id/sortCodeSuccess"
+                    android:id="@+id/sortCodeToSuccess"
                     android:layout_column="1" />
             </TableRow>
 
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Amount:"
+                    android:text="@string/amount"
                     android:id="@+id/textView27"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_darkgreen" />
@@ -254,10 +254,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "Back To Account"
+            android:text = "@string/back_to_account"
             android:textColor="#ffffffff"
             android:background="@color/lloyds_acc_info_green_button"
             android:id="@+id/returnToAccount"

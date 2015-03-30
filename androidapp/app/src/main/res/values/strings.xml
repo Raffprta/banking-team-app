@@ -57,11 +57,42 @@
     <string name="second">2nd</string>
     <string name="third">3rd</string>
 
+    <!-- Transaction/Transfer,Confirm and Success/Failed page -->
+    <string name="make_payment">Make Payment</string>
+    <string name="make_transfer">Make Transfer</string>
+    <string name="confirm_payment">Confirm Payment</string>
+    <string name="confirm_transfer">Confirm Transfer</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="transfer_successful">Transfer Successful</string>
+    <string name="transfer_failed">Transfer Failed</string>
+
+    <string name="account_type">Account Type</string>
+    <string name="name">Name</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="account_number">Account Number</string>
+    <string name="sort_code">Sort Code</string>
+    <string name="amount">Amount:</string>
+
+    <string name="tran_continue">Continue</string>
+    <string name="tran_cancel">Cancel</string>
+    <string name="tran_confirm">Confirm</string>
+    <string name="back_to_account">Back To Account</string>
+
+    <string name="transfer_failed_info">Sorry, your transfer has failed. Please check all the account details and try again. </string>
+    <string name="payment_failed_info">Sorry, your payment has failed. Please check all the account details and try again. </string>
+    <string name="tag">Tag:</string>
+    <string name="tag_appear">(The tag will appear in your history)</string>
+
+
+
     <!-- For dialogs -->
     <string name="logoff">Are you sure?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
+    <string name="dismiss">Dismiss</string>
 
     <!-- Menu -->
     <string name="action_help">Help</string>
@@ -94,25 +125,54 @@
     <string name="google_play_sign_out">Sign out from Google Play</string>
 
     <!-- Account information fillers -->
+    <string name="acc_page_title">Your Accounts</string>
     <string name="int_stu_account">International Student Account</string>
     <string name="acc_current">Current Account</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
     <string name="acc_funds_filler">£999.99</string>
     <string name="acc_avail_funds_filler">Available funds: £899.99</string>
     <string name="acc_saving_filler">Savings Account</string>
+
     <string name="acc_filler_john_smith">John Smith</string>
     <string name="acco_number_info">Account Number: 12345678</string>
     <string name="account_info_number">12345678</string>
     <string name="account_info_balance">Balance: £999.99</string>
     <string name="account_info_sort_code">00-00-00</string>
     <string name="account_info_avail_funds">Available funds: £899.99</string>
+
     <string name="account_info_profile_button">Profile details</string>
     <string name="account_info_acc_button">Account details</string>
     <string name="account_info_transfer_button">Transfer funds</string>
     <string name="account_info_transac_button">Transactions</string>
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
+    <string name="account_info_health_button">Account Health</string>
+
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
+
+
+    <!--Health and Set Goals Page -->
+    <string name="health_page_title">Your Account\'s Health</string>
+    <string name="current_goals">Current Goals</string>
+    <string name="set_for">Set For:</string>
+    <string name="per_month">Per Month</string>
+    <string name="spend">Spend:</string>
+    <string name="save">Save:</string>
+    <string name="overdraft">Overdraft:</string>
+    <string name="donate">Donate:</string>
+    <string name="set_goals">Set Goals</string>
+    <string name="set_your_goals">Set Your Goals</string>
+    <string name="reset">Reset</string>
+    <string name="gbp">£</string>
+
+    <!-- Profile Page Strings -->
+    <string name="your_prog">Your account health is </string>
+    <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
+
+    <string name="status">Status:</string>
+    <string name="bio">Bios:</string>
+    <string name="sign_into_google_play">Sign into Google Play</string>
+
 
     <!-- Bundle Key pair -->
     <string name="help_bundle">HELP</string>
@@ -150,6 +210,16 @@
         <item>Mega Account</item>
     </string-array>
 
+
+    <!-- Drop Down menu strings list of tags -->
+    <string-array name="tags">
+        <item>Food</item>
+        <item>Clothes</item>
+        <item>Cash</item>
+        <item>Transport</item>
+        <item>Leisure</item>
+        <item>Other</item>
+    </string-array>
     <!-- Drop down menu strings for Years in Transaction history -->
     <string-array name="transactions_years">
         <item>2015</item>
@@ -159,9 +229,6 @@
     </string-array>
 
 
-    <!-- Profile Page Strings -->
-    <string name="your_prog">Your account health is </string>
-    <string name="profile_snippet">Access your Lloyds Banking Application Profile</string>
 
     <!-- Shared preferences Key Strings -->
     <string name="sp_status">STATUS</string>

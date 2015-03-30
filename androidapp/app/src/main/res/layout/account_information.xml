@@ -177,7 +177,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Account Health"
+                android:text="@string/account_info_health_button"
                 android:id="@+id/accountHealthButton"
                 android:layout_row="4"
                 android:layout_column="0"

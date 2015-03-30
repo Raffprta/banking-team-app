@@ -31,6 +31,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.1.+'
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:cardview-v7:21.+'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile files('src/main/lib/activation.jar')
     compile files('src/main/lib/additionnal.jar')
     compile files('src/main/lib/mail.jar')

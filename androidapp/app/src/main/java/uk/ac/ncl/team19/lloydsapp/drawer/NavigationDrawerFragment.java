@@ -1,6 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp.drawer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -23,7 +24,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 
@@ -33,6 +38,55 @@ import uk.ac.ncl.team19.lloydsapp.R;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
+    /**
+     * A class to associate navigation items with icons
+     */
+    public class NavigationListItem {
+        public String name;
+        public Drawable icon;
+        public NavigationListItem(int nameStringID, int iconDrawableID) {
+            this.name = getString(nameStringID);
+            this.icon = getResources().getDrawable(iconDrawableID);
+        }
+    }
+
+    /**
+     * Custom ListView adaptor for navigation drawer items
+     */
+    public static class NavigationListAdapter extends ArrayAdapter<NavigationListItem> {
+        private static class ViewHolder {
+            TextView itemName;
+            ImageView itemIcon;
+        }
+
+        public NavigationListAdapter(Context ctx, List<NavigationListItem> items) {
+            super(ctx, R.layout.custom_drawer, items);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // Data item for this list position
+            NavigationListItem item = getItem(position);
+
+            // Reuse existing view, otherwise inflate a new one
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                viewHolder = new ViewHolder();
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                convertView = inflater.inflate(R.layout.custom_drawer, parent, false);
+                viewHolder.itemName = (TextView) convertView.findViewById(R.id.itemName);
+                viewHolder.itemIcon = (ImageView) convertView.findViewById(R.id.itemIcon);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            viewHolder.itemName.setText(item.name);
+            viewHolder.itemIcon.setImageDrawable(item.icon);
+            return convertView;
+        }
+    }
 
     /**
      * Remember the position of the selected item.
@@ -62,11 +116,6 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-
-    private boolean iconsAdded = false;
-
-    public NavigationDrawerFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,8 +147,7 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Add a group via a Linearlayout to inflate our views to.
         LinearLayout header = (LinearLayout) inflater.inflate(R.layout.drawer_profile_layout, null);
-        mDrawerListView = (ListView) inflater.inflate(
-                R.layout.fragment_navigation_drawer, container, false);
+        mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.addHeaderView(header);
 
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,21 +157,9 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                R.layout.custom_drawer,
-                R.id.drawer,
-                new String[]{
-                        getString(R.string.accounts_dashboard_page),
-                        getString(R.string.account_health_page),
-                        getString(R.string.notifications_page),
-                        getString(R.string.other_products_page),
-                        getString(R.string.feedback_page),
-                        getString(R.string.location_page),
-                        getString(R.string.log_off_dialog),
-                }));
-
+        mDrawerListView.setAdapter(new NavigationListAdapter(getActionBar().getThemedContext(), getNavigationListItems()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -196,22 +232,15 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.openDrawer(mFragmentContainerView);
         }
 
-
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
             @Override
             public void run() {
                 mDrawerToggle.syncState();
-                if(!iconsAdded){
-                    // Set the icons
-                    setDrawerMenuIcons();
-                    iconsAdded = true;
-                }
             }
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
     }
 
     private void selectItem(int position) {
@@ -307,42 +336,29 @@ public class NavigationDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    public ListView getDrawerListView(){
-        return mDrawerListView;
-    }
+     /**
+     * Note some of the icons here are attributed to as per the LICENSE file:
+     *
+     * The icons in this ZIP file were downloaded from http://icons4android.com
+     * All icons are licensed under Creative Commons Attribution-Non-Commercial 3.0 Netherlands
+     * (http://creativecommons.org/licenses/by-nc/3.0/nl/deed.en_GB)
+     * Please note that one condition of this license is attribution.
+     * If you use these icons in your project(s), you must add a link to
+     * http://somerandomdude.com/work/iconic/ on your website or playstore site.
+     */
 
     /**
-     * Set custom icons to drawer menu layouts.
+     * Returns list of navigation list items with names and icons
      */
-    private void setDrawerMenuIcons(){
-
-        /**
-         * Note some of the icons here are attributed to as per the LICENSE file:
-         *
-         * The icons in this ZIP file were downloaded from http://icons4android.com
-         * All icons are licensed under Creative Commons Attribution-Non-Commercial 3.0 Netherlands
-         * (http://creativecommons.org/licenses/by-nc/3.0/nl/deed.en_GB)
-         * Please note that one condition of this license is attribution.
-         * If you use these icons in your project(s), you must add a link to
-         * http://somerandomdude.com/work/iconic/ on your website or playstore site.
-         */
-
-        Drawable[] resourceArray = {
-                getResources().getDrawable(R.drawable.ic_action_money),
-                getResources().getDrawable(R.drawable.ic_action_health),
-                getResources().getDrawable(R.drawable.ic_action_about),
-                getResources().getDrawable(R.drawable.ic_action_shop),
-                getResources().getDrawable(R.drawable.ic_action_good),
-                getResources().getDrawable(R.drawable.ic_action_map),
-                getResources().getDrawable(R.drawable.ic_action_secure)};
-
-        // For each child layout, other than the header layout set the drawable from the array
-        for(int i = 1; i < getDrawerListView().getChildCount(); i++){
-            ImageView icon = (ImageView) getDrawerListView().getChildAt(i).findViewById(R.id.drawerIcon);
-            icon.setImageDrawable(resourceArray[i-1]);
-        }
-
-
+    private List<NavigationListItem> getNavigationListItems() {
+        ArrayList<NavigationListItem> items = new ArrayList<>();
+        items.add(new NavigationListItem(R.string.accounts_dashboard_page, R.drawable.ic_action_money));
+        items.add(new NavigationListItem(R.string.account_health_page, R.drawable.ic_action_health));
+        items.add(new NavigationListItem(R.string.notifications_page, R.drawable.ic_action_about));
+        items.add(new NavigationListItem(R.string.other_products_page, R.drawable.ic_action_shop));
+        items.add(new NavigationListItem(R.string.feedback_page, R.drawable.ic_action_good));
+        items.add(new NavigationListItem(R.string.location_page, R.drawable.ic_action_map));
+        items.add(new NavigationListItem(R.string.log_off_dialog, R.drawable.ic_action_secure));
+        return items;
     }
-
 }
