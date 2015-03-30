@@ -44,8 +44,6 @@ public class TransactionsFragment extends Fragment {
 
     public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-        public LayoutInflater inflater;
-        public Activity activity;
         private String[] groups = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
         private String[][] children = {
