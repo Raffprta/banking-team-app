@@ -282,6 +282,17 @@ $klein->respond('GET', '/leaderboards', function ($request, $response, $service)
     }
 });
 
+//================================================================================
+// Public: Achievements page
+//================================================================================
+$klein->respond('GET', '/achievements', function ($request, $response, $service) {
+    if (isset($_SESSION['userId'])) {
+        displayPage('achievements.twig', null);
+    } else {
+        displayPage('index.twig', null);
+    }
+});
+
 // URL routing handlers are now installed; try to dispatch the request
 $klein->dispatch();
 

@@ -1,10 +1,16 @@
 leaderboard = [];
 
 // Function that is called immediately to sign in and authenticate a user to Google Play via OAUTH.
-function auth(){
+function authLeaderboard(){
     gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
                      scope: 'https://www.googleapis.com/auth/games https://www.googleapis.com/auth/appstate',
                      immediate: true}, requestLeaderboard);
+}
+
+function authAchievements(){
+    gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
+                     scope: 'https://www.googleapis.com/auth/games https://www.googleapis.com/auth/appstate',
+                     immediate: true}, requestAchievements);
 }
 
 // Function that returns JSON data representing the leaderboard.
