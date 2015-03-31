@@ -21,9 +21,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/lloyds_white"
                 android:layout_margin="5dp"
-                android:paddingBottom="40dp"
+                android:paddingBottom="25dp"
                 android:layout_row="0"
-                android:layout_column="0">
+                android:layout_column="0"
+                android:id="@+id/">
 
                 <ProgressBar
                     style="@android:style/Widget.ProgressBar.Horizontal"
@@ -59,7 +60,7 @@
                     android:id="@+id/textView16"
                     android:textColor="@color/lloyds_lightgreen"
                     android:paddingBottom="5dp"
-                    android:layout_below="@+id/gridLayout2"
+                    android:layout_below="@+id/gridDividerProfile1"
                     android:layout_alignLeft="@+id/imageView22"
                     android:layout_alignStart="@+id/imageView22" />
 
@@ -105,7 +106,8 @@
                     android:layout_below="@+id/profile_status_edit_text"
                     android:layout_alignLeft="@+id/profile_status_edit_text"
                     android:layout_alignStart="@+id/profile_status_edit_text"
-                    android:imeOptions="actionDone"/>
+                    android:imeOptions="actionDone"
+                    android:layout_marginBottom="20dp" />
 
                 <GridLayout
                     android:layout_width="fill_parent"
@@ -114,9 +116,28 @@
                     android:layout_below="@+id/imageView22"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:id="@+id/gridLayout2"
+                    android:id="@+id/gridDividerProfile1"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"></GridLayout>
+
+                <GridLayout
+                    android:layout_width="200dp"
+                    android:layout_height="3dp"
+                    android:background="@color/lloyds_lightgreen"
+                    android:layout_below="@+id/profile_bio_edit_text"
+                    android:layout_alignRight="@+id/profile_status_edit_text"
+                    android:layout_alignEnd="@+id/profile_status_edit_text"
+                    android:id="@+id/gridDividerProfile2"
+                    android:layout_marginBottom="15dp"></GridLayout>
+
+                <GridLayout
+                    android:layout_width="280dp"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/gridDividerProfile2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#ffc0bfbf"
+                    android:id="@+id/gridDividerProfile3"></GridLayout>
             </RelativeLayout>
 
             <Button
