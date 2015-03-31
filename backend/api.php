@@ -224,6 +224,31 @@ $this->respond('POST', '/updatesettings', function ($request, $response, $servic
     }
 });
 
+//===============================================================================================================
+// API: Update User's Linked Google Play Account
+//      Input JSON fields: 'playId' which is the player id.
+//===============================================================================================================
+$this->respond('POST', '/updateplayid', function ($request, $response, $service) {
+    error_log(TAG . 'Google Player ID update request from ' . $_SERVER['REMOTE_ADDR']);
+    try {
+        $userPlay = checkAPIAuthentication($response);
+        $jsonRequest = json_decode($request->body(), true);
+
+        if (is_null($jsonRequest) || !isset($jsonRequest['playId'])) {
+            sendJSONError('Your device did not supply the player id.');
+        }
+
+        // Update the player id
+		$userPlay->playerId = "@" . $jsonRequest['playId'];
+        R::store($userPlay);
+
+        // Just send success status by passing an empty array
+        sendJSONResponse(array());
+    } catch (Exception $e) {
+        sendJSONError($e->getMessage());
+    }
+});
+
 //================================================================================
 // API: Authenticate (get device token with valid username/password/secret chars)
 //      Input JSON fields: 'username', 'password', 'security'
