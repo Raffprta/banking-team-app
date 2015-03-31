@@ -8,6 +8,8 @@ import java.util.Date;
  * Created by Dale Whinham on 27/03/15.
  */
 public class Transaction {
+    private static final String STERLING_FORMATTING_STRING = "£%.2f";
+
     public enum Tag {
         @SerializedName("0")
         UNTAGGED,
@@ -31,8 +33,8 @@ public class Transaction {
 
     private long id;
     private long time;
-    private long fromAccount;
-    private long toAccount;
+    private long fromAccountId;
+    private long toAccountId;
     private long amount;
     private String reference;
     private Tag tag;
@@ -42,19 +44,23 @@ public class Transaction {
     }
 
     public Date getDate() {
-        return new Date(time);
+        return new Date(time * 1000);
     }
 
     public long getFromAccountId() {
-        return fromAccount;
+        return fromAccountId;
     }
 
     public long getToAccountId() {
-        return toAccount;
+        return toAccountId;
     }
 
     public long getAmount() {
         return amount;
+    }
+
+    public String getFormattedAmount() {
+        return String.format(STERLING_FORMATTING_STRING, amount / 100.0);
     }
 
     public String getReference() {

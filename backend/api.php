@@ -70,7 +70,7 @@ $this->respond('GET', '/transactions/[i:accId]', function ($request, $response, 
         $user = checkAPIAuthentication($response);
 
         // Make sure the account ID is valid and the user owns the account we're interested in
-        $account = R::load('account', $request->$accId);
+        $account = R::load('account', $request->accId);
         if (is_null($account) || $account->userId !== $user->id) {
             sendJSONError('The account ID of the account to show transactions to/from was invalid.');
         }
@@ -81,8 +81,8 @@ $this->respond('GET', '/transactions/[i:accId]', function ($request, $response, 
         if (isset($_GET['periodFrom']) && isset($_GET['periodTo'])) {
             $transactions = R::find('transaction', '(from_account_id = ? OR to_account_id = ?) AND time >= ? AND time <= ?',
                 array(
-                    $_GET['accId'],
-                    $_GET['accId'],
+                    $request->accId,
+                    $request->accId,
                     $_GET['periodFrom'],
                     $_GET['periodTo']
                 )
@@ -93,8 +93,8 @@ $this->respond('GET', '/transactions/[i:accId]', function ($request, $response, 
         else {
             $transactions = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
                 array(
-                    $_GET['accId'],
-                    $_GET['accId']
+                    $request->accId,
+                    $request->accId
                 )
             );
         }

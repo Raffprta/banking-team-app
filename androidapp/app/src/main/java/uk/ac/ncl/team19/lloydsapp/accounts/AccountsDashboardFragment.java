@@ -46,12 +46,12 @@ public class AccountsDashboardFragment extends Fragment {
         ac.getAccountDetails(new Callback<AccountDetailsResponse>() {
             @Override
             public void success(AccountDetailsResponse accountDetailsResponse, Response response) {
+                // Hide progress wheel
+                progressBar.setVisibility(View.GONE);
+
                 if (accountDetailsResponse.getStatus() == APIResponse.Status.SUCCESS) {
                     // Store accounts
                     accounts = accountDetailsResponse.getAccounts();
-
-                    // Hide progress wheel
-                    progressBar.setVisibility(View.GONE);
 
                     // Show message if no bank accounts returned
                     if (accounts.size() == 0) {
@@ -102,6 +102,8 @@ public class AccountsDashboardFragment extends Fragment {
                         // Add view to container
                         accountsList.addView(accountView);
                     }
+                } else {
+                    // TODO: Error dialog with response->errorMessage
                 }
             }
 
@@ -109,6 +111,8 @@ public class AccountsDashboardFragment extends Fragment {
             public void failure(RetrofitError error) {
                 // Remove progress wheel
                 accountsList.removeView(progressBar);
+
+                // TODO: Error dialog
             }
         });
 

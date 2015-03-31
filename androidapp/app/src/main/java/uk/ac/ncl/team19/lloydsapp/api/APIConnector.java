@@ -68,9 +68,9 @@ public class APIConnector {
         @GET("/transactions/{id}")
         void getTransactions(
                 @Header("Device-Token") String deviceToken,
-                @Path("id") long accId,
-                @Query("periodFrom") long periodFrom,
-                @Query("periodTo") long periodTo,
+                @Path("id") Long accId,
+                @Query("periodFrom") Long periodFrom,
+                @Query("periodTo") Long periodTo,
                 Callback<TransactionsResponse> cb
         );
     }
@@ -128,6 +128,6 @@ public class APIConnector {
     }
 
     public void getTransactions(long accountId, Date periodFrom, Date periodTo, Callback<TransactionsResponse> callback) {
-        service.getTransactions(deviceToken, accountId, periodFrom.getTime(), periodTo.getTime(), callback);
+        service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime() : null, periodTo != null ? periodTo.getTime() : null, callback);
     }
 }

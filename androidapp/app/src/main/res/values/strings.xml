@@ -165,6 +165,11 @@
 
     <string name="account_info_no_accounts">You currently don\'t have any bank accounts.\n\nPlease visit your local Lloyds branch to set up a bank account.</string>
 
+    <!-- Transaction History -->
+    <string name="transaction_history_title">Your Transaction History</string>
+    <string name="transaction_history_year">Year</string>
+    <string name="transaction_history_no_transactions">There are currently no transactions to show.</string>
+
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
 
 
@@ -227,7 +232,6 @@
         <item>Student Account</item>
     </string-array>
 
-
     <!-- Drop Down menu strings list of tags -->
     <string-array name="tags">
         <item>Food &amp; Drink</item>
@@ -238,8 +242,8 @@
         <item>Utility</item>
         <item>Transport</item>
         <item>Donation</item>
-
     </string-array>
+
     <!-- Drop down menu strings for Years in Transaction history -->
     <string-array name="transactions_years">
         <item>2015</item>
@@ -247,8 +251,6 @@
         <item>2013</item>
         <item>2012</item>
     </string-array>
-
-
 
     <!-- Shared preferences Key Strings -->
     <string name="sp_device_token">DEVICE_TOKEN</string>

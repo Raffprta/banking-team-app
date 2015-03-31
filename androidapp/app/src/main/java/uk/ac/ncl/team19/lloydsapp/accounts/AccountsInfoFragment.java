@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.features.HealthFragment;
@@ -23,6 +25,9 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 public class AccountsInfoFragment extends Fragment {
 
     private BankAccount account;
+    private List<BankAccount> accounts;
+
+    private Bundle args;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +45,9 @@ public class AccountsInfoFragment extends Fragment {
         TextView availableFunds = (TextView) accountsInfoView.findViewById(R.id.availableFunds);
 
         // Populate text views with account info
-        account = (BankAccount) getArguments().getSerializable("ACCOUNT");
+        args = getArguments();
+        account = (BankAccount) args.getSerializable("ACCOUNT");
+
         if (account != null) {
             String balanceString = String.format("%s %s", getString(R.string.account_info_balance), account.getFormattedBalance());
             String availableFundsString = String.format("%s %s", getString(R.string.account_info_avail_funds), account.getFormattedAvailableFunds());
@@ -54,12 +61,14 @@ public class AccountsInfoFragment extends Fragment {
             availableFunds.setText(availableFundsString);
         }
 
-        accountsInfoView.findViewById(R.id.makeTransaction).setOnClickListener(new View.OnClickListener() {
+        accountsInfoView.findViewById(R.id.viewTransactions).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new TransactionsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+                TransactionsFragment transactionsFragment = new TransactionsFragment();
+                transactionsFragment.setArguments(args);
+                fragmentManager.beginTransaction().replace(R.id.container, transactionsFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 

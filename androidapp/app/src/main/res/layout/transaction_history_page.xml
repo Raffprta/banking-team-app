@@ -6,7 +6,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <GridLayout
             android:layout_width="fill_parent"
@@ -27,8 +27,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Your Transaction History"
-                    android:id="@+id/textView28"
+                    android:text="@string/transaction_history_title"
+                    android:id="@+id/title"
                     android:layout_gravity="center_horizontal"
                     android:padding="5dp"
                     android:textColor="@color/lloyds_lightergreen" />
@@ -37,15 +37,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Year"
-                    android:id="@+id/textView41"
+                    android:text="@string/transaction_history_year"
+                    android:id="@+id/year"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/lloyds_lightgreen" />
 
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/yearTransactionsSpinner"
+                    android:id="@+id/yearSpinner"
                     android:entries="@array/transactions_years"
                     android:layout_gravity="center_horizontal" />
 
@@ -59,6 +59,28 @@
                     android:childDivider="@color/lloyds_lightergreen_transparent"
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp" />
+
+                <!-- These are shown programmatically -->
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/progressBar"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/transaction_history_no_transactions"
+                    android:id="@+id/noTransactions"
+                    android:layout_gravity="center"
+                    android:textColor="@color/lloyds_darkgreen"
+                    android:gravity="center"
+                    android:paddingTop="50dp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </GridLayout>

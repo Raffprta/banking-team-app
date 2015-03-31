@@ -5,30 +5,47 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.ExpandableListActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.content.Context;
-import android.widget.Toast;
-import android.view.View.OnClickListener;
-import android.app.Activity;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
+import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
+import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
 
 
 /**
  * @author Yessengerey Bolatov (XML), Raffaello Perrotta
- * TODO : Not yet implemented.
+ * @author Dale Whinham - Spinner/List adapters, backend integration
  */
 public class TransactionsFragment extends Fragment {
 
+    BankAccount account;
+    List<Transaction> transactions;
+
+    Spinner yearSpinner;
+    ExpandableListView elv;
+    ProgressBar progressBar;
+    TextView noTransactions;
+
+    TransactionYearSpinnerAdapter spinnerAdapter;
+    TransactionListAdapter listAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,52 +53,145 @@ public class TransactionsFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         final View transactionsView = inflater.inflate(R.layout.transaction_history_page, container, false);
-        ExpandableListView elv = (ExpandableListView) transactionsView.findViewById(R.id.expandableListView);
-        elv.setAdapter(new ExpandableListAdapter());
+
+        // Get references to views
+        yearSpinner = (Spinner) transactionsView.findViewById(R.id.yearSpinner);
+        elv = (ExpandableListView) transactionsView.findViewById(R.id.expandableListView);
+        progressBar = (ProgressBar) transactionsView.findViewById(R.id.progressBar);
+        noTransactions = (TextView) transactionsView.findViewById(R.id.noTransactions);
+
+        // Hide spinner/elv, show progress
+        yearSpinner.setVisibility(View.GONE);
+        elv.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Unbundle account
+        account = (BankAccount) getArguments().getSerializable("ACCOUNT");
+
+        // Retrieve transactions
+        APIConnector ac = new APIConnector(getActivity());
+        ac.getTransactions(account.getId(), null, null, new Callback<TransactionsResponse>() {
+            @Override
+            public void success(TransactionsResponse transactionsResponse, Response response) {
+                // Hide progress
+                progressBar.setVisibility(View.GONE);
+
+                if (transactionsResponse.getStatus() == APIResponse.Status.SUCCESS) {
+                    // Store transactions
+                    transactions = transactionsResponse.getTransactions();
+
+                    // Show notification if there are no transactions to show
+                    if (transactions == null || transactions.size() == 0) {
+                        noTransactions.setVisibility(View.VISIBLE);
+                        return;
+                    }
+
+                    // Show spinner/elv, hide progress
+                    yearSpinner.setVisibility(View.VISIBLE);
+                    elv.setVisibility(View.VISIBLE);
+
+                    // Setup adapters
+                    spinnerAdapter = new TransactionYearSpinnerAdapter(transactions);
+                    listAdapter = new TransactionListAdapter(transactions, spinnerAdapter.getItem(0));
+
+                    yearSpinner.setAdapter(spinnerAdapter);
+                    elv.setAdapter(listAdapter);
+
+                    yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            listAdapter = new TransactionListAdapter(transactions, (String) yearSpinner.getSelectedItem());
+                            elv.setAdapter(listAdapter);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+                        }
+                    });
+                } else {
+                    // TODO: Error dialog with response->errorMessage
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                // Hide progress
+                progressBar.setVisibility(View.GONE);
+
+                // TODO: Error dialog
+            }
+        });
 
         return transactionsView;
     }
 
-    public class ExpandableListAdapter extends BaseExpandableListAdapter {
+    public class TransactionYearSpinnerAdapter extends ArrayAdapter<String> {
+        public TransactionYearSpinnerAdapter(List<Transaction> transactions) {
+            super(getActivity(), android.R.layout.simple_spinner_item);
 
-        public LayoutInflater inflater;
-        public Activity activity;
-        private String[] groups = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            SimpleDateFormat df = new SimpleDateFormat("yyyy");
 
-        private String[][] children = {
-                { "-£25.00 Withdrawn at Lloyds ATM", "-£10.00 Payed to www.shoponline.co.uk", "+£100.00 Transfer from John Smith 00-00-00", "-£35 Payed to www.pizza.co.uk" },
-                { "-£5.00 Withdrawn at FastCash ATM", "-£25.00 Payed to Virgin Media", "-£10.00 Payed to Josh Whale 12345678", "+£0.70 Tax return" },
-                { "+$0.80 Tax Return", "-£25.00 Withdrawn at Lloyds ATM" },
-                { "-£30.00 Payed to www.helloworld.com", "-£100.00 Payed to www.bestbubbles.co.uk" },
-                {"--"},
-                {"--"},
-                {"--"},
-                {"--"},
-                {"--"},
-                {"--"},
-                {"--"},
-                {"--"}
+            // Get all the unique years from the transactions
+            List<String> years = new ArrayList<>();
+            for (Transaction t: transactions) {
+                String yearString = df.format(t.getDate());
+                if (!years.contains(yearString)) {
+                    years.add(yearString);
+                }
+            }
 
-        };
+            // Add them to the adapter
+            Collections.sort(years);
+            addAll(years);
+        }
+    }
+
+    public class TransactionListAdapter extends BaseExpandableListAdapter {
+        // LinkedHashMap retains order
+        private LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
+
+        public TransactionListAdapter(List<Transaction> transactions, String forYear) {
+            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+            SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
+
+            // Filter out transactions for this year
+            for (Transaction t: transactions) {
+                String yearString = yearFormatter.format(t.getDate());
+                if (yearString.equals(forYear)) {
+                    // Add transaction to map
+                    String monthString = monthFormatter.format(t.getDate());
+                    if (transactionMap.containsKey(monthString)) {
+                        transactionMap.get(monthString).add(t);
+                    } else {
+                        List<Transaction> tl = new ArrayList<>();
+                        tl.add(t);
+                        transactionMap.put(monthString, tl);
+                    }
+                }
+            }
+
+        }
 
         @Override
         public int getGroupCount() {
-            return groups.length;
+            return transactionMap.keySet().size();
         }
 
         @Override
         public int getChildrenCount(int i) {
-            return children[i].length;
+            String key = (String) transactionMap.keySet().toArray()[i];
+            return transactionMap.get(key).size();
         }
 
         @Override
         public Object getGroup(int i) {
-            return groups[i];
+            return transactionMap.keySet().toArray()[i];
         }
 
         @Override
-        public Object getChild(int i, int i1) {
-            return children[i][i1];
+        public Object getChild(int i, int j) {
+            String key = (String) transactionMap.keySet().toArray()[i];
+            return transactionMap.get(key).get(j);
         }
 
         @Override
@@ -90,8 +200,8 @@ public class TransactionsFragment extends Fragment {
         }
 
         @Override
-        public long getChildId(int i, int i1) {
-            return i1;
+        public long getChildId(int i, int j) {
+            return j;
         }
 
         @Override
@@ -108,9 +218,16 @@ public class TransactionsFragment extends Fragment {
         }
 
         @Override
-        public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+        public View getChildView(int i, int j, boolean b, View view, ViewGroup viewGroup) {
             TextView textView = new TextView(TransactionsFragment.this.getActivity());
-            textView.setText(getChild(i, i1).toString());
+            Transaction t = (Transaction) getChild(i, j);
+            // If the from account ID matches the ID of the account we're inspecting, it's a withdrawal
+            boolean isWithdrawal = t.getFromAccountId() == account.getId();
+
+            String dateString = new SimpleDateFormat("E d @ k:m").format(t.getDate());
+
+            String transactionString = String.format("%s - £%s%.2f %s", dateString, isWithdrawal ? "-" : "", t.getAmount() / 100.0, t.getReference());
+            textView.setText(transactionString);
 
             return textView;
         }
