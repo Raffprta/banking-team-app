@@ -2,18 +2,43 @@ leaderboard = [];
 achievements = [];
 achievementsState = [];
 player_id = "";
+auth = false;
+
+function signinCallbackLeaderboard(authResult) {
+  if (authResult['status']['signed_in']) {
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+	auth = true;
+	authLeaderboard();
+  } else {
+    console.log('Sign-in state: ' + authResult['error']);
+  }
+}
+
+function signinCallbackAchievements(authResult) {
+  if (authResult['status']['signed_in']) {
+    document.getElementById('signinButton').setAttribute('style', 'display: none');
+	auth = true;
+	authAchievements();
+  } else {
+    console.log('Sign-in state: ' + authResult['error']);
+  }
+}
 
 // Function that is called immediately to sign in and authenticate a user to Google Play via OAUTH.
 function authLeaderboard(){
-    gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
+    if(auth){
+      gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
                      scope: 'https://www.googleapis.com/auth/games https://www.googleapis.com/auth/appstate',
                      immediate: true}, requestLeaderboard);
+	}
 }
 
 function authAchievements(){
-    gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
+    if(auth){
+      gapi.auth.authorize({client_id: "689728249892-r4l3ip9nrblqkun6aql2bsbrsjr21ksj.apps.googleusercontent.com",
                      scope: 'https://www.googleapis.com/auth/games https://www.googleapis.com/auth/appstate',
                      immediate: true}, requestAchievements);
+    }
 }
 
 // Function that returns JSON data representing the leaderboard.
