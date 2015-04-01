@@ -35,8 +35,11 @@ public class TransactionsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         final View transactionsView = inflater.inflate(R.layout.transaction_history_page, container, false);
+
         ExpandableListView elv = (ExpandableListView) transactionsView.findViewById(R.id.expandableListView);
+
         elv.setAdapter(new ExpandableListAdapter());
 
         return transactionsView;
