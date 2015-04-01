@@ -14,6 +14,7 @@ function signinCallbackLeaderboard(authResult) {
   }
 }
 
+
 function signinCallbackAchievements(authResult) {
   if (authResult['status']['signed_in']) {
     document.getElementById('signinButton').setAttribute('style', 'display: none');
