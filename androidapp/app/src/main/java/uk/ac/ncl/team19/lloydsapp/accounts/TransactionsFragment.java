@@ -47,9 +47,6 @@ public class TransactionsFragment extends Fragment {
     TransactionYearSpinnerAdapter spinnerAdapter;
     TransactionListAdapter listAdapter;
 
-    private static final SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
-    private static final SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -132,10 +129,12 @@ public class TransactionsFragment extends Fragment {
         public TransactionYearSpinnerAdapter(List<Transaction> transactions) {
             super(getActivity(), android.R.layout.simple_spinner_item);
 
+            SimpleDateFormat df = new SimpleDateFormat("yyyy");
+
             // Get all the unique years from the transactions
             List<String> years = new ArrayList<>();
             for (Transaction t: transactions) {
-                String yearString = yearFormatter.format(t.getDate());
+                String yearString = df.format(t.getDate());
                 if (!years.contains(yearString)) {
                     years.add(yearString);
                 }
@@ -152,6 +151,9 @@ public class TransactionsFragment extends Fragment {
         private LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
 
         public TransactionListAdapter(List<Transaction> transactions, String forYear) {
+            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+            SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
+
             // Filter out transactions for this year
             for (Transaction t: transactions) {
                 String yearString = yearFormatter.format(t.getDate());

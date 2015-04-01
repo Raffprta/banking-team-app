@@ -58,10 +58,10 @@
                     android:text="@string/acc_filler_john_smith"
                     android:id="@+id/textView16"
                     android:textColor="@color/lloyds_lightgreen"
-                    android:layout_below="@+id/imageView22"
+                    android:paddingBottom="5dp"
+                    android:layout_below="@+id/gridLayout2"
                     android:layout_alignLeft="@+id/imageView22"
-                    android:layout_alignStart="@+id/imageView22"
-                    android:paddingBottom="5dp" />
+                    android:layout_alignStart="@+id/imageView22" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -106,6 +106,17 @@
                     android:layout_alignLeft="@+id/profile_status_edit_text"
                     android:layout_alignStart="@+id/profile_status_edit_text"
                     android:imeOptions="actionDone"/>
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/lloyds_lightergreen_transparent"
+                    android:layout_below="@+id/imageView22"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/gridLayout2"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"></GridLayout>
             </RelativeLayout>
 
             <Button
