@@ -19,6 +19,7 @@ import retrofit.http.Query;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
 import uk.ac.ncl.team19.lloydsapp.api.request.AuthRequest;
+import uk.ac.ncl.team19.lloydsapp.api.request.TransferMoneyRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateGcmIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdatePlayIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateSettingsRequest;
@@ -72,6 +73,13 @@ public class APIConnector {
                 @Query("periodFrom") Long periodFrom,
                 @Query("periodTo") Long periodTo,
                 Callback<TransactionsResponse> cb
+        );
+
+        @POST("/transfermoney")
+        void transferMoney(
+                @Header("Device-Token") String deviceToken,
+                @Body TransferMoneyRequest transferMoneyRequest,
+                Callback<APIResponse> cb
         );
     }
 
@@ -129,5 +137,10 @@ public class APIConnector {
 
     public void getTransactions(long accountId, Date periodFrom, Date periodTo, Callback<TransactionsResponse> callback) {
         service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime() : null, periodTo != null ? periodTo.getTime() : null, callback);
+    }
+
+    public void transferMoney(long fromAccId, String toAccNo, String toSortCode, int amount, Callback<APIResponse> callback) {
+        TransferMoneyRequest transferMoneyRequest = new TransferMoneyRequest(fromAccId, toAccNo, toSortCode, amount);
+        service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }
 }
