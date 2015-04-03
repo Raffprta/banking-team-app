@@ -92,7 +92,7 @@ public class MakePaymentFragment extends Fragment {
 
                 // If all validation conditions passed, then set a Bundle of information to pass.
                 Bundle b = new Bundle();
-                b.putDouble(getString(R.string.amount_pay_bundle), Double.parseDouble(amountToPay.getText().toString()));
+                b.putInt(getString(R.string.amount_pay_bundle), (int) (Double.parseDouble(amountToPay.getText().toString()) * 100));
                 b.putString(getString(R.string.to_name_pay_bundle), toAccountPersonName.getText().toString());
                 b.putString(getString(R.string.sort_code_pay_bundle), sortCode.getText().toString());
                 b.putString(getString(R.string.acc_no_pay_bundle), accountNumber.getText().toString());
