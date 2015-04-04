@@ -10,6 +10,7 @@ import java.util.Map;
 public class Constants {
 
     // health thresholds
+    public final static int HEALTH_PERFECT = 100;
     public final static int HEALTH_GOOD = 75;
     public final static int HEALTH_AVG = 50;
     public final static int HEALTH_POOR = 25;

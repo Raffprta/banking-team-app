@@ -266,7 +266,7 @@ public class HealthFragment extends Fragment {
         int spend = 0;
         int moneyIn = 0;
         int save = 0;
-        int overdraft = 100;
+        int overdraft = 0;
         int donationAmount = 0;
         boolean donation = false;
 
@@ -295,16 +295,23 @@ public class HealthFragment extends Fragment {
             }
         }
 
+        // Calculate overdraft that the user currently has eaten into.
+        for(BankAccount acc : accounts){
+            // If the account balance is less than zero then the user has used overdraft in this account.
+            if(acc.getBalance() < 0)
+                overdraft += Math.abs(acc.getBalance());
+        }
+
         // Calculate save amount.
         save = moneyIn - spend;
 
         // Populate healthbars.
-        int percentage = Math.min((int) (save / sp.getFloat(Constants.SP_GOALS_SAVE, -1)) * 100, 100);
+        int percentage = Math.min((int) (save / sp.getFloat(Constants.SP_GOALS_SAVE, -1)) * 100, Constants.HEALTH_PERFECT);
         saveBar.setProgress(percentage);
 
         // If the user is under or on his max. spending allowance you automatically get 100.
         if(spend <= sp.getFloat(Constants.SP_GOALS_SAVE, -1)){
-            percentage = 100;
+            percentage = Constants.HEALTH_PERFECT;
         }else{
             // The algorithm looks at the ratio of the amount out : your target and will multiply that ratio by
             // ten. For example if you budgeted £100 to spend and you spent £400 the ratio is 4. This is multiplied by
@@ -318,13 +325,29 @@ public class HealthFragment extends Fragment {
 
         // If a donation was made it does not matter how much the donation was, the user has completed this goal.
         if(donation)
-            donateBar.setProgress(100);
+            donateBar.setProgress(Constants.HEALTH_PERFECT);
 
         // Set the amount the user has donated
         donateTextView.setText(CurrencyMangler.integerToSterlingString((long)donationAmount));
 
-        // TODO OVERDRAFT -- THIS ATM IS A PLACEHOLDER.
-        overdraftBar.setProgress(overdraft);
+        int goalsOverdraft = (int)sp.getFloat(Constants.SP_GOALS_OVERDRAFT, -1);
+        /**
+         * The algorithm for the overdraft is as follows. If no overdraft was used then the health bar
+         * is set to perfect (100).
+         * If some overdraft was used BUT it was planned when you set the goals (i.e.) it is less than or equal to the
+         * amount you set then the health is set to "good" (75%)
+         * If you exceed the overdraft then the health is set as as ratio * 10 by how much you exceeded it offset from
+         * 75%. If this goes below 0 then the maximum value is taken.
+         * If the value of the goals for the overdraft is zero, then the calculation is adjusted to prevent division by zero.
+         */
+        if(overdraft == 0)
+            overdraftBar.setProgress(Constants.HEALTH_PERFECT);
+        else if(overdraft <= goalsOverdraft)
+            overdraftBar.setProgress(Constants.HEALTH_GOOD);
+        else if(overdraft > goalsOverdraft && goalsOverdraft != 0)
+            overdraftBar.setProgress(Math.max(Constants.HEALTH_GOOD - ((overdraft / goalsOverdraft) * 10), 0));
+        else
+            overdraftBar.setProgress(Math.max(Constants.HEALTH_GOOD - overdraft, 0));
 
         // Program final health bar.
         int noBars = 3;
