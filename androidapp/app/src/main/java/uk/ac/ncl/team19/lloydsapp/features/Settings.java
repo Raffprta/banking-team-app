@@ -36,7 +36,6 @@ public class Settings extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs);
 
-
         // Register a listener for when a setting is modified by the user.
         sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sp.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {

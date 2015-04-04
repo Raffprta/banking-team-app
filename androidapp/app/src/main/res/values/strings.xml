@@ -115,7 +115,7 @@
     <string name="rating_feedback">Provide feedback about the application:</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="submit_success">Your feedback was successfully submitted.</string>
-    <string name="team_email">csc2-team19@ncl.ac.uk</string>
+    <string name="team_email">team.19.service@gmail.com</string>
     <string name="error_form">Please ensure you have given a rating or some feedback.</string>
     <string name="error_email">A network error when attempting to send the email occurred.</string>
     <string name="email_subject">Feedback Form</string>
@@ -224,39 +224,10 @@
         <item>Donation</item>
     </string-array>
 
-    <!-- Shared preferences Key Strings -->
-    <string name="sp_device_token">DEVICE_TOKEN</string>
-    <string name="sp_status">STATUS</string>
-    <string name="sp_bio">BIO</string>
-    <string name="sp_logins">LOGINS</string>
-    <string name="sp_first_login">FIRST_LOGIN</string>
-    <string name="sp_ach_branch_explorer">ACH_BRANCH_EXP</string>
-    <string name="sp_ach_branch_explorer_mutex">ACH_BRANCH_EXP_MUTEX</string>
-    <string name="sp_ach_first_login">ACH_FIRST_LOGIN</string>
-    <string name="sp_ach_gold_login">ACH_GOLD_LOGIN</string>
-    <string name="sp_ach_silver_login">ACH_SILVER_LOGIN</string>
-    <string name="sp_ach_bronze_login">ACH_BRONZE_LOGIN</string>
-    <string name="sp_ach_old_timer">ACH_OLD_TIMER</string>
-    <string name="sp_last_date_inc">LAST_INC</string>
-    <string name="sp_magic_no">MAGIC_NO</string>
-    <string name="sp_magic_no_mutex">MAGIC_NO_MUTEX</string>
-
-    <string name="sp_goals_set">GOALS_SET</string>
-
-    <string name="sp_goals_set_for">GOALS_SET_FOR</string>
-    <string name="sp_goals_start">GOALS_START</string>
-    <string name="sp_goals_spend">GOALS_SPEND</string>
-    <string name="sp_goals_save">GOALS_SAVE</string>
-    <string name="sp_goals_overdraft">GOALS_OVERDRAFT</string>
-    <string name="sp_goals_donate">GOALS_DONATE</string>
-
+    <!-- Shared preferences Key Strings mapped to Settings XML -->
     <string name="sp_notif_email">NOTIF_EMAIL</string>
     <string name="sp_notif_push">NOTIF_PUSH</string>
     <string name="sp_notif_wearable">NOTIF_WEARABLE</string>
-
-    <string name="sp_gcmid">GCMID</string>
-    <string name="sp_playid">PLAYID</string>
-
 
     <!-- Health page fillers -->
     <string name="weekly">Weekly</string>

@@ -50,11 +50,6 @@ import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
  * the Google Places API to query for branch information within a specific
  * radius. This information is displayed via a Google maps wrapper.
  *
- * TODO Items:
- *  - Progress Bar needs to be its own separate view.
- *  - Better UI for getting bank locations and entering custom location. The buttons are just to
- *  - demonstrate what code you would use in the UI components to update the map fragment.
- *  - use Raff's Toaster class for errors.
  *
  */
 
@@ -435,7 +430,7 @@ public class MapsFragment extends SupportMapFragment {
                        && Math.abs(p.getGeometry().getLocation().getLongitude() - location.getLongitude()) <= Constants.LLOYDS_VICINITY
                        && type == QUERY_BRANCH){
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer), true).apply();
+                        sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER, true).apply();
 
                     }
 

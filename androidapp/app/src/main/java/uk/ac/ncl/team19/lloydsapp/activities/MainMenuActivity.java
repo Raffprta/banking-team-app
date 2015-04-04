@@ -96,20 +96,20 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         // Count the number of times you login. This is incremented in the shared preferences.
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
-        int currentLogins = sp.getInt(getString(R.string.sp_logins), 0);
+        int currentLogins = sp.getInt(Constants.SP_LOGINS, 0);
         // Increment the preference.
-        sp.edit().putInt(getString(R.string.sp_logins), currentLogins+1).apply();
+        sp.edit().putInt(Constants.SP_LOGINS, currentLogins+1).apply();
 
         // Store the date of the first login.
-        if(sp.getInt(getString(R.string.sp_logins), 0) == 1){
+        if(sp.getInt(Constants.SP_LOGINS, 0) == 1){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String dateJoined = sdf.format(new Date());
-            sp.edit().putString(getString(R.string.sp_first_login), dateJoined.toString()).apply();
+            sp.edit().putString(Constants.SP_FIRST_LOGIN, dateJoined.toString()).apply();
         }
 
         // Debug the shared preferences
-        Log.i("NUMBER OF LOGINS", Integer.toString(sp.getInt(getString(R.string.sp_logins), 0)));
-        Log.i("DATE JOINED:", sp.getString(getString(R.string.sp_first_login), null));
+        Log.i("NUMBER OF LOGINS", Integer.toString(sp.getInt(Constants.SP_LOGINS, 0)));
+        Log.i("DATE JOINED:", sp.getString(Constants.SP_FIRST_LOGIN, null));
 
         // Start the auto-log off timer
         countDownTimer.start();
@@ -175,7 +175,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 // Determine whether goals were set or not, load the setting of goals if not.
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
-                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
                     fragmentManager.beginTransaction().replace(R.id.container, health, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 }else{
                     fragmentManager.beginTransaction().replace(R.id.container, goals, mTitle.toString()).addToBackStack(mTitle.toString()).commit();

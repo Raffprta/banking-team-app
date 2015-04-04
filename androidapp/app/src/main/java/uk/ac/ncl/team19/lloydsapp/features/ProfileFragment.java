@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -127,7 +128,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                 // Determine whether goals were set or not, load the setting of goals if not.
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
                     fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
                 }else{
                     fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(null).commit();
@@ -207,13 +208,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // The shared preferences key/value pair system.
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        // Set the username
+        ((TextView)profileView.findViewById(R.id.usernameProfile)).setText(sp.getString(Constants.SP_USERNAME, null));
+
         // Set up status  and bio with stored value.
-        if(sp.contains(getString(R.string.sp_status))){
-            statusEditText.setText(sp.getString(getString(R.string.sp_status), null));
+        if(sp.contains(Constants.SP_STATUS)){
+            statusEditText.setText(sp.getString(Constants.SP_STATUS, null));
         }
 
-        if(sp.contains(getString(R.string.sp_bio))){
-            bioEditText.setText(sp.getString(getString(R.string.sp_bio), null));
+        if(sp.contains(Constants.SP_BIO)){
+            bioEditText.setText(sp.getString(Constants.SP_BIO, null));
         }
 
         // Listeners for when the status is updated
@@ -225,7 +229,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sp.edit().putString(getString(R.string.sp_status), statusEditText.getText().toString()).apply();
+                sp.edit().putString(Constants.SP_STATUS, statusEditText.getText().toString()).apply();
             }
 
             @Override
@@ -243,7 +247,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sp.edit().putString(getString(R.string.sp_bio), bioEditText.getText().toString()).apply();
+                sp.edit().putString(Constants.SP_BIO, bioEditText.getText().toString()).apply();
             }
 
             @Override
@@ -280,10 +284,10 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Register the current player.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
-        String registeredPlayer = sp.getString(getString(R.string.sp_playid), null);
+        String registeredPlayer = sp.getString(Constants.SP_PLAYID, null);
 
         if(registeredPlayer == null || !registeredPlayer.equals(playerId)){
-            sp.edit().putString(getString(R.string.sp_playid), playerId).apply();
+            sp.edit().putString(Constants.SP_PLAYID, playerId).apply();
             // Update on the server side
             APIConnector ac = new APIConnector(getActivity());
             ac.updatePlayId(playerId, new Callback<APIResponse>() {
@@ -345,32 +349,32 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // TODO wearable notifications are only shown if enabled on the settings.
 
         // If a login was detected then first timer can be unlocked - the shared preference must not contain an instance of it being unlocked.
-        if(sp.getString(getString(R.string.sp_first_login), null) != null && !sp.getBoolean(getString(R.string.sp_ach_first_login), false)){
+        if(sp.getString(Constants.SP_FIRST_LOGIN, null) != null && !sp.getBoolean(Constants.SP_ACH_FIRST_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_first_timer));
             toaster.grabToastForWearable(getString(R.string.first_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
-            sp.edit().putBoolean(getString(R.string.sp_ach_first_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_FIRST_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.GOLD_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_gold_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.GOLD_LOGIN && !sp.getBoolean(Constants.SP_ACH_GOLD_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_gold_login));
             toaster.grabToastForWearable(getString(R.string.gold_login_unlock), getString(R.string.wearable_preview), R.drawable.gold_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_gold_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_GOLD_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.SILVER_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_silver_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.SILVER_LOGIN && !sp.getBoolean(Constants.SP_ACH_SILVER_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_silver_login));
             toaster.grabToastForWearable(getString(R.string.silver_login_unlock), getString(R.string.wearable_preview), R.drawable.silver_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_silver_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_SILVER_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.BRONZE_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_bronze_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.BRONZE_LOGIN && !sp.getBoolean(Constants.SP_ACH_BRONZE_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_bronze_login));
             toaster.grabToastForWearable(getString(R.string.bronze_login_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_bronze_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_BRONZE_LOGIN, true).apply();
         }
 
         // Calculate how many days the user has been a member for.
-        String dateThen = sp.getString(getString(R.string.sp_first_login), null);
+        String dateThen = sp.getString(Constants.SP_FIRST_LOGIN, null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
         int daysBetween = 0;
@@ -383,46 +387,46 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
         // Debug
         Log.i("TIME PASSED", Long.toString(daysBetween));
-        Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(getString(R.string.sp_last_date_inc),0)));
+        Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(Constants.SP_LAST_DATE_INC,0)));
 
-        int daysNow = sp.getInt(getString(R.string.sp_last_date_inc), 0);
+        int daysNow = sp.getInt(Constants.SP_LAST_DATE_INC, 0);
 
         // If they are not equal we can increment the value
         if(daysBetween != daysNow){
             // Store the days between value
-            sp.edit().putInt(getString(R.string.sp_last_date_inc), daysBetween).apply();
+            sp.edit().putInt(Constants.SP_LAST_DATE_INC, daysBetween).apply();
             // Increment the achievement appropriately.
             Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), daysBetween-daysNow);
         }
 
         // Unlock the achievement after a month passes
-        if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(getString(R.string.sp_ach_old_timer), false)){
+        if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(Constants.SP_ACH_OLD_TIMER, false)){
             toaster.grabToastForWearable(getString(R.string.old_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
-            sp.edit().putBoolean(getString(R.string.sp_ach_old_timer), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_OLD_TIMER, true).apply();
         }
 
         // Check to see if a branch has been encountered (true)
-        if(sp.getBoolean(getString(R.string.sp_ach_branch_explorer), false) && !sp.getBoolean(getString(R.string.sp_ach_branch_explorer_mutex), false)){
+        if(sp.getBoolean(Constants.SP_ACH_BRANCH_EXPLORER, false) && !sp.getBoolean(Constants.SP_ACH_BRANCH_EXPLORER_MUTEX, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_branch_explorer));
             toaster.grabToastForWearable(getString(R.string.branch_finder_unlock), getString(R.string.wearable_preview), R.drawable.branch_explorer);
             // Lock the mutex so this achievement can't be unlocked again.
-            sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer_mutex), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER_MUTEX, true).apply();
         }
 
         // Magic number is in fact a random achievement
         Random r = new Random();
-        int magic_no_attempt = r.nextInt(Constants.MAGIC_NO_SEEDER);
+        int magicNoAttempt = r.nextInt(Constants.MAGIC_NO_SEEDER);
 
         // Test to see if the magic number is achieved
-        if(magic_no_attempt == Constants.MAGIC_NO)
-            sp.edit().putBoolean(getString(R.string.sp_magic_no), true).apply();
+        if(magicNoAttempt == Constants.MAGIC_NO)
+            sp.edit().putBoolean(Constants.SP_MAGIC_NO, true).apply();
 
         // Check to see if the magic number has been encountered (true)
-        if(sp.getBoolean(getString(R.string.sp_magic_no), false) && !sp.getBoolean(getString(R.string.sp_magic_no_mutex), false)){
+        if(sp.getBoolean(Constants.SP_MAGIC_NO, false) && !sp.getBoolean(Constants.SP_MAGIC_NO_MUTEX, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_magic_number));
             toaster.grabToastForWearable(getString(R.string.magic_no_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
             // Lock the mutex so this achievement can't be unlocked again.
-            sp.edit().putBoolean(getString(R.string.sp_magic_no_mutex), true).apply();
+            sp.edit().putBoolean(Constants.SP_MAGIC_NO_MUTEX, true).apply();
         }
 
         // If there is no achievements buffer.

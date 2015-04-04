@@ -62,22 +62,22 @@ public class HealthFragment extends Fragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // If we are not donating, hide all views.
-        if(!sp.getBoolean(getString(R.string.sp_goals_donate), false)){
+        if(!sp.getBoolean(Constants.SP_GOALS_DONATE, false)){
             donateStartView.setVisibility(View.GONE);
             donateTextView.setVisibility(View.GONE);
             donateBar.setVisibility(View.GONE);
         }
 
         // Populate other fields
-        if(sp.getInt(getString(R.string.sp_goals_set_for), 1) == Constants.WEEKLY){
+        if(sp.getInt(Constants.SP_GOALS_SET_FOR, 1) == Constants.WEEKLY){
             perMonthOrPerWeek.setText(getString(R.string.weekly));
-        }else if(sp.getInt(getString(R.string.sp_goals_set_for), 1) == Constants.MONTHLY){
+        }else if(sp.getInt(Constants.SP_GOALS_SET_FOR, 1) == Constants.MONTHLY){
             perMonthOrPerWeek.setText(getString(R.string.monthly));
         }
 
-        spendAmount.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_spend), -1)));
-        saveAmount.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_save), -1)));
-        overdraft.setText(Float.toString(sp.getFloat(getString(R.string.sp_goals_overdraft), -1)));
+        spendAmount.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_SPEND, -1)));
+        saveAmount.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_SAVE, -1)));
+        overdraft.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_OVERDRAFT, -1)));
 
 
         // Show the percentage points of the current health

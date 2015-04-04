@@ -27,6 +27,7 @@ import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AuthResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 /**
  * Created by Dale Whinham on 17/03/15. Modified by Raffaello Perrotta.
@@ -92,7 +93,7 @@ public class APIConnector {
         final String apiKey = ctx.getString(R.string.api_key);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
-        deviceToken = sp.getString(ctx.getString(R.string.sp_device_token), null);
+        deviceToken = sp.getString(Constants.SP_DEVICE_TOKEN, null);
 
         // This request interceptor adds the API key to every request
         RequestInterceptor interceptor = new RequestInterceptor()

@@ -115,7 +115,7 @@ public class AccountsInfoFragment extends Fragment {
                 // Determine whether goals were set or not, load the setting of goals if not.
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
                     fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
                 }else{
                     fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(null).commit();

@@ -185,7 +185,7 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                             // Store device token in shared preferences
                             Log.i(TAG, "Received device token: " + authResponse.getDeviceToken());
                             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SecurityActivity.this);
-                            sp.edit().putString(getString(R.string.sp_device_token), authResponse.getDeviceToken()).apply();
+                            sp.edit().putString(Constants.SP_DEVICE_TOKEN, authResponse.getDeviceToken()).apply();
 
                             // Additionally, store the username for further user.
                             sp.edit().putString(Constants.SP_USERNAME, username).apply();
