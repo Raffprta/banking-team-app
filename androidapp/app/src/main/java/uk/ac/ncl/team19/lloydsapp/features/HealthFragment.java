@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,9 @@ public class HealthFragment extends Fragment {
                 if (accountDetailsResponse.getStatus() == APIResponse.Status.SUCCESS) {
                     // Store accounts
                     accounts = accountDetailsResponse.getAccounts();
+
+                    // Debug
+                    Log.i("Number of Accounts", Integer.toString(accounts.size()));
 
                     // Show message if no bank accounts returned
                     if (accounts.size() == 0) {

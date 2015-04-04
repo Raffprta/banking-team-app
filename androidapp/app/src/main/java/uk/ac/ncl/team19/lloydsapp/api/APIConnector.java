@@ -137,7 +137,7 @@ public class APIConnector {
     }
 
     public void getTransactions(long accountId, Date periodFrom, Date periodTo, Callback<TransactionsResponse> callback) {
-        service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime() : null, periodTo != null ? periodTo.getTime() : null, callback);
+        service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime()/1000 : null, periodTo != null ? periodTo.getTime()/1000 : null, callback);
     }
 
     public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Callback<APIResponse> callback) {
