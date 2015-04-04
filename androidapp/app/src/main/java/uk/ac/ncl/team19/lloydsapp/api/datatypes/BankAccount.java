@@ -91,4 +91,9 @@ public class BankAccount implements Serializable {
     public String getFormattedAvailableFunds() {
         return String.format(STERLING_FORMATTING_STRING, (balance + overdraft) / 100.0);
     }
+
+    @Override
+    public String toString() {
+        return nickname == null ? accountNumber + " / " + getFormattedSortCode() : nickname;
+    }
 }

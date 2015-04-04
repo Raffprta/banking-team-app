@@ -57,4 +57,20 @@ public class Constants {
     // Minimum security code length
     public static final int MINIMUM_SECURITY_CODE_LENGTH = 6;
 
+    // Bundle keys for inter-fragment data transfer
+    public static final String BUNDLE_KEY_HELP = "help";
+    public static final String BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE = "message";
+    public static final String BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR = "isError";
+
+    public static final String BUNDLE_KEY_USERNAME = "username";
+    public static final String BUNDLE_KEY_PASSWORD = "password";
+
+    public static final String BUNDLE_KEY_CURRENT_ACCOUNT = "currentAccount";
+    public static final String BUNDLE_KEY_ACCOUNT_LIST = "accountList";
+
+    public static final String BUNDLE_KEY_FROM_ACC = "fromAcc";
+    public static final String BUNDLE_KEY_TO_REF = "toRef";
+    public static final String BUNDLE_KEY_TO_ACC_NO = "toAccNo";
+    public static final String BUNDLE_KEY_TO_SORT_CODE = "toSortCode";
+    public static final String BUNDLE_KEY_AMOUNT = "amount";
 }

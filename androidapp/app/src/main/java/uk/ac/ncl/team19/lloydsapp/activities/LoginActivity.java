@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -25,7 +26,7 @@ public class LoginActivity extends FragmentActivity {
         // If the app was auto logged off.
         if(intent != null && intent.getBooleanExtra(getString(R.string.bundle_autokick), false)){
             Bundle b = new Bundle();
-            b.putString(getString(R.string.custom_bundle), getString(R.string.err_autokick));
+            b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.err_autokick));
             CustomDialog custom = new CustomDialog();
             custom.setArguments(b);
             custom.show(getSupportFragmentManager(), "Custom Dialog");
@@ -57,8 +58,8 @@ public class LoginActivity extends FragmentActivity {
                 GraphicsUtils.buttonClickEffectShow(v);
                 /// Pass login credentials to the security intent for login.
                 Bundle b = new Bundle();
-                b.putString(getString(R.string.login_user_bundle), username.getText().toString());
-                b.putString(getString(R.string.login_pass_bundle), password.getText().toString());
+                b.putString(Constants.BUNDLE_KEY_USERNAME, username.getText().toString());
+                b.putString(Constants.BUNDLE_KEY_PASSWORD, password.getText().toString());
 
                 Intent securityIntent = new Intent(LoginActivity.this, SecurityActivity.class);
                 // Pass the bundle to the Intent.

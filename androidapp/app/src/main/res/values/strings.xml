@@ -79,12 +79,15 @@
     <string name="transfer_successful">Transfer Successful</string>
     <string name="transfer_failed">Transfer Failed</string>
 
-    <string name="account_type">Account Type</string>
-    <string name="name">Name</string>
+    <string name="account">Account</string>
+    <string name="reference">Reference:</string>
+    <string name="reference_opt">Reference: (optional)</string>
+    <string name="reference_hint">e.g. \'Groceries\'</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
-    <string name="account_number">Account Number</string>
-    <string name="sort_code">Sort Code</string>
+    <string name="account_type">Account Type:</string>
+    <string name="account_number">Account Number:</string>
+    <string name="sort_code">Sort Code:</string>
     <string name="amount">Amount:</string>
 
     <string name="tran_continue">Continue</string>
@@ -96,8 +99,6 @@
     <string name="payment_failed_info">Sorry, your payment has failed. Please check all the account details and try again. </string>
     <string name="tag">Tag:</string>
     <string name="tag_appear">(The tag will appear in your history)</string>
-
-
 
     <!-- For dialogs -->
     <string name="logoff">Are you sure?</string>
@@ -195,27 +196,6 @@
     <string name="bio">Bios:</string>
     <string name="sign_into_google_play">Sign into Google Play</string>
 
-
-    <!-- Bundle Key pair -->
-    <string name="help_bundle">HELP</string>
-    <string name="custom_bundle">CUSTOM</string>
-    <string name="custom_type_bundle">TYPE</string>
-    <string name="custom_colour_type_red">RED</string>
-
-    <string name="login_user_bundle">LOGIN</string>
-    <string name="login_pass_bundle">PASS</string>
-
-    <string name="from_account_pay_bundle">FROM_ACC</string>
-    <string name="to_name_pay_bundle">TO_NAME</string>
-    <string name="acc_no_pay_bundle">ACC_NO_TO</string>
-    <string name="sort_code_pay_bundle">SORT_CODE_TO</string>
-    <string name="amount_pay_bundle">AMOUNT</string>
-
-    <string name="from_account_transfer_bundle">FROM_ACC_TRANS</string>
-    <string name="to_account_transfer_bundle">TO_ACC_TRANS</string>
-    <string name="amount_transfer_bundle">AMOUNT_TRANS</string>
-
-
     <!-- Help manual Strings -->
     <string name="man_no_class">The help menu could not find a class loader.</string>
 
@@ -242,14 +222,6 @@
         <item>Utility</item>
         <item>Transport</item>
         <item>Donation</item>
-    </string-array>
-
-    <!-- Drop down menu strings for Years in Transaction history -->
-    <string-array name="transactions_years">
-        <item>2015</item>
-        <item>2014</item>
-        <item>2013</item>
-        <item>2012</item>
     </string-array>
 
     <!-- Shared preferences Key Strings -->
@@ -340,6 +312,10 @@
     <string name="notif_wearable">Receive Wearable Notifications</string>
     <string name="notif_wearable_summary">Un-check this value if you wish to not receive notifications to your wearable device from the Lloyds bank if you have one configured.</string>
 
-
+    <!-- Strings for the error handler -->
+    <string name="error_network">A network error occurred. Please check your device\'s Internet connectivity and try again.\n\nTechnical info:\n</string>
+    <string name="error_conversion">A (de)serialisation error occurred. Please contact support.\n\nTechnical info:\n</string>
+    <string name="error_http">Lloyds Bank is currently experiencing technical difficulties. Please try again shortly. If the problem still occurs, please contact support.\n\nTechnical info:\n</string>
+    <string name="error_unexpected">An unexpected error occurred. Please contact support.\n\nTechnical info:\n</string>
 </resources>
 

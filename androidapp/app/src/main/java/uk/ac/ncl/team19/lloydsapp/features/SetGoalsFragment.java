@@ -26,6 +26,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrota, XML designs by Yessengerey Bolatov
+ * @author Dale Whinham - simplify Bundle key access
  */
 public class SetGoalsFragment extends Fragment{
 
@@ -138,8 +139,8 @@ public class SetGoalsFragment extends Fragment{
                     // Use dialog to display the message over setError as setError is graphically unappealing
                     // on radio buttons
                     Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), getString(R.string.err_no_selection));
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.err_no_selection));
+                    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
                     CustomDialog custom = new CustomDialog();
                     custom.setArguments(b);
                     custom.show(getChildFragmentManager(), "Custom Dialog");

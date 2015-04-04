@@ -28,6 +28,9 @@ import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
+import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 
 
 /**
@@ -36,7 +39,7 @@ import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
  */
 public class TransactionsFragment extends Fragment {
 
-    BankAccount account;
+    BankAccount currentAccount;
     List<Transaction> transactions;
 
     Spinner yearSpinner;
@@ -66,11 +69,11 @@ public class TransactionsFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         // Unbundle account
-        account = (BankAccount) getArguments().getSerializable("ACCOUNT");
+        currentAccount = (BankAccount) getArguments().getSerializable(Constants.BUNDLE_KEY_CURRENT_ACCOUNT);
 
         // Retrieve transactions
         APIConnector ac = new APIConnector(getActivity());
-        ac.getTransactions(account.getId(), null, null, new Callback<TransactionsResponse>() {
+        ac.getTransactions(currentAccount.getId(), null, null, new Callback<TransactionsResponse>() {
             @Override
             public void success(TransactionsResponse transactionsResponse, Response response) {
                 // Hide progress
@@ -109,7 +112,7 @@ public class TransactionsFragment extends Fragment {
                         }
                     });
                 } else {
-                    // TODO: Error dialog with response->errorMessage
+                    ErrorHandler.fail(getFragmentManager(), transactionsResponse.getErrorMessage());
                 }
             }
 
@@ -118,7 +121,8 @@ public class TransactionsFragment extends Fragment {
                 // Hide progress
                 progressBar.setVisibility(View.GONE);
 
-                // TODO: Error dialog
+                // Handle error
+                ErrorHandler.fail(getActivity(), getFragmentManager(), error);
             }
         });
 
@@ -222,17 +226,17 @@ public class TransactionsFragment extends Fragment {
             TextView textView = new TextView(TransactionsFragment.this.getActivity());
             Transaction t = (Transaction) getChild(i, j);
             // If the from account ID matches the ID of the account we're inspecting, it's a withdrawal
-            boolean isWithdrawal = t.getFromAccountId() == account.getId();
+            boolean isWithdrawal = t.getFromAccountId() == currentAccount.getId();
+
+            // TODO: MAKE RED ARROW STUFF HAPPEN HERE BOOM
 
             String dateString = new SimpleDateFormat("E d @ k:m").format(t.getDate());
 
-            String transactionString = String.format("%s - £%s%.2f %s", dateString, isWithdrawal ? "-" : "", t.getAmount() / 100.0, t.getReference());
+            String transactionString = String.format("%s - %s%s %s", dateString, isWithdrawal ? "-" : "", CurrencyMangler.integerToSterlingString(t.getAmount()), t.getReference());
             textView.setText(transactionString);
 
             return textView;
         }
-
-
 
         @Override
         public boolean isChildSelectable(int i, int i1) {

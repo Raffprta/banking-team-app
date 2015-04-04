@@ -19,7 +19,7 @@ import retrofit.http.Query;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
 import uk.ac.ncl.team19.lloydsapp.api.request.AuthRequest;
-import uk.ac.ncl.team19.lloydsapp.api.request.TransferMoneyRequest;
+import uk.ac.ncl.team19.lloydsapp.api.request.TransferRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateGcmIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdatePlayIdRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateSettingsRequest;
@@ -75,10 +75,10 @@ public class APIConnector {
                 Callback<TransactionsResponse> cb
         );
 
-        @POST("/transfermoney")
+        @POST("/transfer")
         void transferMoney(
                 @Header("Device-Token") String deviceToken,
-                @Body TransferMoneyRequest transferMoneyRequest,
+                @Body TransferRequest transferMoneyRequest,
                 Callback<APIResponse> cb
         );
     }
@@ -139,8 +139,8 @@ public class APIConnector {
         service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime() : null, periodTo != null ? periodTo.getTime() : null, callback);
     }
 
-    public void transferMoney(long fromAccId, String toAccNo, String toSortCode, int amount, Callback<APIResponse> callback) {
-        TransferMoneyRequest transferMoneyRequest = new TransferMoneyRequest(fromAccId, toAccNo, toSortCode, amount);
+    public void transfer(long fromAccId, String toAccNo, String toSortCode, int amount, String reference, Callback<APIResponse> callback) {
+        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference);
         service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }
 }

@@ -51,6 +51,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 /**
  * @author Yessengerey Bolatov (XML Designs) and Raffaello Perrotta
+ * @author Dale Whinham - simplify Bundle key access
  *
  * Profile page fragment, which contains hotlinks as well as all gamification aspects.
  */
@@ -91,7 +92,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString(getString(R.string.custom_bundle), getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
+                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
                 CustomDialog custom = new CustomDialog();
                 custom.setArguments(b);
                 custom.show(getChildFragmentManager(), "Custom Dialog");
@@ -307,8 +308,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                 private void showErrorDialog(String errorMessage) {
                     // Make a new error dialog and display it
                     Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), errorMessage);
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, errorMessage);
+                    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
                     CustomDialog custom = new CustomDialog();
                     custom.setArguments(b);
                     custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");

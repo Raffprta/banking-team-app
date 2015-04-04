@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,23 +13,27 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrotta - a custom dialog to be used to send text to the
  * application.
+ * @author Dale Whinham - simplify show() and bundle key usage
  *
  * Use within a fragment:
  *
  *  Bundle b = new Bundle();
-    b.putString(getString(R.string.custom_bundle), "The message for this dialog");
-    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, "The message for this dialog");
+    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true));
     CustomDialog custom = new CustomDialog();
     custom.setArguments(b);
-    custom.show(getChildFragmentManager(), "Custom Dialog");
+    custom.show(getChildFragmentManager());
  */
 public class CustomDialog extends android.support.v4.app.DialogFragment{
-
+    public void show(FragmentManager manager) {
+        show(manager, "Custom Dialog");
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,12 +46,12 @@ public class CustomDialog extends android.support.v4.app.DialogFragment{
         builder.setView(v);
 
         // Set the text of the information box
-        String text = this.getArguments().getString(getString(R.string.custom_bundle));
+        String text = this.getArguments().getString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE);
         ((TextView)v.findViewById(R.id.customText)).setText(text);
 
         // If specified, set the colour as red if it's an error message, otherwise the default is green.
-        String type = this.getArguments().getString(getString(R.string.custom_type_bundle));
-        if(type != null)
+        Boolean isError = this.getArguments().getBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, false);
+        if(isError)
             v.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
 
 

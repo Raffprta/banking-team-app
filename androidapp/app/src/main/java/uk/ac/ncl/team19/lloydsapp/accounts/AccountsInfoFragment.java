@@ -16,6 +16,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.features.HealthFragment;
 import uk.ac.ncl.team19.lloydsapp.features.SetGoalsFragment;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -24,7 +25,10 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
  */
 public class AccountsInfoFragment extends Fragment {
 
-    private BankAccount account;
+    // The account we're looking at
+    private BankAccount currentAccount;
+
+    // A list of all accounts to pass to transfer fragments
     private List<BankAccount> accounts;
 
     private Bundle args;
@@ -44,19 +48,21 @@ public class AccountsInfoFragment extends Fragment {
         TextView balance = (TextView) accountsInfoView.findViewById(R.id.balance);
         TextView availableFunds = (TextView) accountsInfoView.findViewById(R.id.availableFunds);
 
-        // Populate text views with account info
+        // Get arguments from bundle
         args = getArguments();
-        account = (BankAccount) args.getSerializable("ACCOUNT");
+        currentAccount = (BankAccount) args.getSerializable(Constants.BUNDLE_KEY_CURRENT_ACCOUNT);
+        accounts = (List<BankAccount>) args.getSerializable(Constants.BUNDLE_KEY_ACCOUNT_LIST);
 
-        if (account != null) {
-            String balanceString = String.format("%s %s", getString(R.string.account_info_balance), account.getFormattedBalance());
-            String availableFundsString = String.format("%s %s", getString(R.string.account_info_avail_funds), account.getFormattedAvailableFunds());
+        // Populate text views with account info
+        if (currentAccount != null) {
+            String balanceString = String.format("%s %s", getString(R.string.account_info_balance), currentAccount.getFormattedBalance());
+            String availableFundsString = String.format("%s %s", getString(R.string.account_info_avail_funds), currentAccount.getFormattedAvailableFunds());
 
-            accountType.setText(account.getAccountTypeString(getActivity()));
+            accountType.setText(currentAccount.getAccountTypeString(getActivity()));
             // FIXME: Need to get user details on login
             userName.setText("FIXME");
-            accountNumber.setText(account.getAccountNumber());
-            sortCode.setText(account.getFormattedSortCode());
+            accountNumber.setText(currentAccount.getAccountNumber());
+            sortCode.setText(currentAccount.getFormattedSortCode());
             balance.setText(balanceString);
             availableFunds.setText(availableFundsString);
         }
@@ -77,7 +83,12 @@ public class AccountsInfoFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new MakePaymentFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+
+                // Pass arguments from this fragment to the next
+                MakePaymentFragment makePaymentFragment = new MakePaymentFragment();
+                makePaymentFragment.setArguments(getArguments());
+
+                fragmentManager.beginTransaction().replace(R.id.container, makePaymentFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 
@@ -86,7 +97,12 @@ public class AccountsInfoFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new TransferFundsFragment()).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+
+                // Pass arguments from this fragment to the next
+                TransferFundsFragment transferFundsFragment = new TransferFundsFragment();
+                transferFundsFragment.setArguments(getArguments());
+
+                fragmentManager.beginTransaction().replace(R.id.container, transferFundsFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
         });
 

@@ -143,7 +143,7 @@ $this->respond('POST', '/transfer', function ($request, $response, $service) {
 
         $toAccount = R::findOne('account', 'sort_code = ? AND account_number = ?', array($jsonRequest['toSortCode'], $jsonRequest['toAccNo']));
         if (is_null($toAccount)) {
-            sendJSONError('The account or sort code of the account to transfer to was invalid.');
+            sendJSONError('The account number or sort code of the account to transfer to was invalid.');
         }
 
         $amount = intval($jsonRequest['amount']);

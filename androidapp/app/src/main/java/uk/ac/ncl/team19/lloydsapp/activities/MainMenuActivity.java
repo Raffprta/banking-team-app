@@ -256,7 +256,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             // Switch the class you're currently at.
             switch(fragmentAt){
                 default:
-                    bundle.putString(getString(R.string.help_bundle), getString(R.string.man_no_class));
+                    bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_no_class));
                     help.setArguments(bundle);
             }
 

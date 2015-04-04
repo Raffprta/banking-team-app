@@ -9,12 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Ivy Tong (XML), Raffaello Perrotta
  */
-public class PaymentSuccessfulFragment extends Fragment{
+public class PaymentSuccessfulFragment extends Fragment {
+
+    private Bundle args;
+    private BankAccount fromAccount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -23,22 +29,25 @@ public class PaymentSuccessfulFragment extends Fragment{
         super.onCreate(savedInstanceState);
         View paymentSuccessView = inflater.inflate(R.layout.payment_success, container, false);
 
-        TextView accountType = (TextView)paymentSuccessView.findViewById(R.id.accountTypeSuccess);
-        TextView accountNoFrom = (TextView)paymentSuccessView.findViewById(R.id.accountNumberSuccess);
-        TextView accountSortCodeFrom = (TextView)paymentSuccessView.findViewById(R.id.sortCodeSuccess);
-        TextView accountName = (TextView)paymentSuccessView.findViewById(R.id.nameSuccess);
-        TextView accountNoTo = (TextView)paymentSuccessView.findViewById(R.id.accountNumberToSuccess);
-        TextView accountSortCodeTo = (TextView)paymentSuccessView.findViewById(R.id.sortCodeSuccess);
-        TextView paymentAmount = (TextView)paymentSuccessView.findViewById(R.id.amountSuccess);
+        TextView fromAccType = (TextView) paymentSuccessView.findViewById(R.id.fromAccType);
+        TextView fromAccNo = (TextView) paymentSuccessView.findViewById(R.id.fromAccNo);
+        TextView fromSortCode = (TextView) paymentSuccessView.findViewById(R.id.fromSortCode);
+        TextView toRef = (TextView) paymentSuccessView.findViewById(R.id.toRef);
+        TextView toAccNo = (TextView) paymentSuccessView.findViewById(R.id.toAccNo);
+        TextView toSortCode = (TextView) paymentSuccessView.findViewById(R.id.toSortCode);
+        TextView amount = (TextView) paymentSuccessView.findViewById(R.id.amount);
 
         // Set the values from the bundle, i.e. what the user entered in the previous fragment.
-        // TODO: accountNoFrom and accountSortCodeFrom are taken from API.
-        accountType.setText(this.getArguments().getString(getString(R.string.from_account_pay_bundle)));
-        accountName.setText(this.getArguments().getString(getString(R.string.to_name_pay_bundle)));
-        accountNoTo.setText(this.getArguments().getString(getString(R.string.acc_no_pay_bundle)));
-        accountSortCodeTo.setText(this.getArguments().getString(getString(R.string.sort_code_pay_bundle)));
-        paymentAmount.setText(Double.toString(this.getArguments().getDouble(getString(R.string.amount_pay_bundle))));
+        args = getArguments();
+        fromAccount = (BankAccount) args.getSerializable(Constants.BUNDLE_KEY_FROM_ACC);
+        fromAccType.setText(fromAccount.getAccountTypeString(getActivity()));
+        fromAccNo.setText(fromAccount.getAccountNumber());
+        fromSortCode.setText(fromAccount.getFormattedSortCode());
 
+        toRef.setText(args.getString(Constants.BUNDLE_KEY_TO_REF));
+        toAccNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
+        toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
+        amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
 
         paymentSuccessView.findViewById(R.id.returnToAccount).setOnClickListener(new View.OnClickListener() {
             @Override

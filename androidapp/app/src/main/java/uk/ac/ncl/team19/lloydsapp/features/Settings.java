@@ -13,6 +13,7 @@ import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.PreferenceFragment;
 
 /**
@@ -73,8 +74,8 @@ public class Settings extends PreferenceFragment {
                             private void showErrorDialog(String errorMessage) {
                                 // Make a new error dialog and display it
                                 Bundle b = new Bundle();
-                                b.putString(getString(R.string.custom_bundle), errorMessage);
-                                b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, errorMessage);
+                                b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
                                 CustomDialog custom = new CustomDialog();
                                 custom.setArguments(b);
                                 custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");

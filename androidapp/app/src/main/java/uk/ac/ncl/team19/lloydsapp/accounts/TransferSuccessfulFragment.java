@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -32,9 +33,12 @@ public class TransferSuccessfulFragment extends Fragment {
         TextView paymentAmount = (TextView)transferSuccessView.findViewById(R.id.transferPaymentSuccess);
 
         // Set values taken from bundle, TODO account numbers and sort code are from the API.
-        accountTypeFrom.setText(this.getArguments().getString(getString(R.string.from_account_transfer_bundle)));
-        accountTypeTo.setText(this.getArguments().getString(getString(R.string.to_account_transfer_bundle)));
-        paymentAmount.setText(Double.toString(this.getArguments().getDouble(getString(R.string.amount_transfer_bundle))));
+        Bundle args = getArguments();
+
+
+        //accountTypeFrom.setText(args.getString(Constants.BUNDLE_KEY_FROM_ACC_ID));
+        //accountTypeTo.setText(args.getString(Constants.BUN));
+        paymentAmount.setText(Double.toString(args.getDouble(Constants.BUNDLE_KEY_AMOUNT)));
 
         transferSuccessView.findViewById(R.id.backToAccount).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,6 +18,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrota, XML by Yessengerey Bolatov.
+ * @author Dale Whinham - simplify Bundle key access
  *
  * A class which will hold all information pertaining to the account health status and allow the user
  * a way of interacting with and chosing what goals to set per month.
@@ -84,7 +85,7 @@ public class HealthFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString(getString(R.string.custom_bundle), getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
+                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
                 CustomDialog custom = new CustomDialog();
                 custom.setArguments(b);
                 custom.show(getChildFragmentManager(), "Custom Dialog");

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit.Callback;
@@ -19,6 +20,8 @@ import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
+import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 /**
  * @Author Yao Tong, Yessengerey Bolatov conversion to Fragment by Raffaello Perrotta
@@ -27,8 +30,8 @@ public class AccountsDashboardFragment extends Fragment {
 
     private static final String TAG = AccountsDashboardFragment.class.getName();
 
-    private ProgressBar progressBar = null;
-    List<BankAccount> accounts = null;
+    private ProgressBar progressBar;
+    List<BankAccount> accounts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,9 +76,10 @@ public class AccountsDashboardFragment extends Fragment {
                                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 AccountsInfoFragment infoFragment = new AccountsInfoFragment();
 
-                                // Bundle up the account object so we can pass it to the AccountsInfoFragment
+                                // Bundle up the account objects so we can pass them to the AccountsInfoFragment
                                 Bundle args = new Bundle();
-                                args.putSerializable("ACCOUNT", a);
+                                args.putSerializable(Constants.BUNDLE_KEY_ACCOUNT_LIST, (Serializable) accounts);
+                                args.putSerializable(Constants.BUNDLE_KEY_CURRENT_ACCOUNT, a);
                                 infoFragment.setArguments(args);
 
                                 fragmentManager.beginTransaction().replace(R.id.container, infoFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
@@ -103,7 +107,7 @@ public class AccountsDashboardFragment extends Fragment {
                         accountsList.addView(accountView);
                     }
                 } else {
-                    // TODO: Error dialog with response->errorMessage
+                    ErrorHandler.fail(getFragmentManager(), accountDetailsResponse.getErrorMessage());
                 }
             }
 
@@ -112,7 +116,8 @@ public class AccountsDashboardFragment extends Fragment {
                 // Remove progress wheel
                 accountsList.removeView(progressBar);
 
-                // TODO: Error dialog
+                // Handle error
+                ErrorHandler.fail(getActivity(), getFragmentManager(), error);
             }
         });
 

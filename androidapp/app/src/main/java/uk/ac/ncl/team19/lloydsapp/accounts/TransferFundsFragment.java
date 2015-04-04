@@ -53,9 +53,9 @@ public class TransferFundsFragment extends Fragment {
                 // with our data.
 
                 Bundle b = new Bundle();
-                b.putInt(getString(R.string.amount_transfer_bundle), (int) (Double.parseDouble(amountToPay.getText().toString()) * 100));
-                b.putString(getString(R.string.from_account_transfer_bundle), accountToTransferFrom.getSelectedItem().toString());
-                b.putString(getString(R.string.to_account_transfer_bundle), accountToTransferTo.getSelectedItem().toString());
+//                b.putInt(getString(R.string.amount_transfer_bundle), (int) (Double.parseDouble(amountToPay.getText().toString()) * 100));
+//                b.putString(getString(R.string.from_account_transfer_bundle), accountToTransferFrom.getSelectedItem().toString());
+//                b.putString(getString(R.string.to_account_transfer_bundle), accountToTransferTo.getSelectedItem().toString());
                 TransferConfirmFragment transferConfirmFragment = new TransferConfirmFragment();
                 transferConfirmFragment.setArguments(b);
 

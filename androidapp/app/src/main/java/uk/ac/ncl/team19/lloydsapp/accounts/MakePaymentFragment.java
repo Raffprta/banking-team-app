@@ -6,20 +6,29 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.List;
+
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Yessengerey Bolatov (XML Design), Raffaello Perrotta
+ * @author Dale Whinham - backend integration
  *
  * Fragment for making payments to other accounts.
  */
 
 public class MakePaymentFragment extends Fragment {
+
+    private Bundle args;
+    private List<BankAccount> accounts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,11 +39,17 @@ public class MakePaymentFragment extends Fragment {
 
         // Get all views containing information.
         final Spinner fromAccount = (Spinner)paymentView.findViewById(R.id.accountsSpinner);
-        final EditText toAccountPersonName = (EditText)paymentView.findViewById(R.id.toName);
+        final EditText transactionReference = (EditText)paymentView.findViewById(R.id.reference);
         final EditText accountNumber = (EditText)paymentView.findViewById(R.id.accountNumberPayment);
         final EditText sortCode = (EditText)paymentView.findViewById(R.id.sortCodePayment);
         final EditText amountToPay = (EditText)paymentView.findViewById(R.id.amountPayment);
 
+        // Unbundle accounts
+        args = getArguments();
+        accounts = (List<BankAccount>) args.getSerializable(Constants.BUNDLE_KEY_ACCOUNT_LIST);
+
+        // Populate Spinner with bank accounts
+        fromAccount.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accounts));
 
         paymentView.findViewById(R.id.continuePayment).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +57,8 @@ public class MakePaymentFragment extends Fragment {
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Check validation conditions.
-                if(toAccountPersonName.getText().toString() == null || toAccountPersonName.getText().toString().length() <= 0){
-                    toAccountPersonName.setError(getString(R.string.err_acc_name_empty));
+                if(transactionReference.getText().toString() == null || transactionReference.getText().toString().length() <= 0){
+                    transactionReference.setError(getString(R.string.err_acc_name_empty));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
@@ -90,21 +105,18 @@ public class MakePaymentFragment extends Fragment {
                     return;
                 }
 
-                // If all validation conditions passed, then set a Bundle of information to pass.
-                Bundle b = new Bundle();
-                b.putInt(getString(R.string.amount_pay_bundle), (int) (Double.parseDouble(amountToPay.getText().toString()) * 100));
-                b.putString(getString(R.string.to_name_pay_bundle), toAccountPersonName.getText().toString());
-                b.putString(getString(R.string.sort_code_pay_bundle), sortCode.getText().toString());
-                b.putString(getString(R.string.acc_no_pay_bundle), accountNumber.getText().toString());
-                b.putString(getString(R.string.from_account_pay_bundle), fromAccount.getSelectedItem().toString());
+                // If all validation conditions passed, then add information to bundle and pass to the next fragment
+                args.putSerializable(Constants.BUNDLE_KEY_FROM_ACC, (BankAccount) fromAccount.getSelectedItem());
+                args.putString(Constants.BUNDLE_KEY_TO_REF, transactionReference.getText().toString());
+                args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, sortCode.getText().toString());
+                args.putString(Constants.BUNDLE_KEY_TO_ACC_NO, accountNumber.getText().toString());
+                args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
 
                 PaymentConfirmFragment paymentConfirmation = new PaymentConfirmFragment();
-                paymentConfirmation.setArguments(b);
+                paymentConfirmation.setArguments(args);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.container, paymentConfirmation).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
-
-
             }
         });
 
@@ -116,8 +128,6 @@ public class MakePaymentFragment extends Fragment {
                 fragmentManager.popBackStack();
             }
         });
-
-
 
         return paymentView;
 

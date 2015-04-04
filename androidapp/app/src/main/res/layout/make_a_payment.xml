@@ -75,7 +75,7 @@
                     android:id="@+id/textView33"
                     android:layout_column="1"
                     android:layout_marginLeft="10dp"
-                    android:text="@string/name" />
+                    android:text="@string/reference_opt" />
             </TableRow>
 
             <TableRow
@@ -85,11 +85,11 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/toName"
+                    android:id="@+id/reference"
                     android:layout_column="1"
-                    android:hint="e.g. John Smith" />
+                    android:hint="@string/reference_hint"
+                    android:inputType="textShortMessage" />
             </TableRow>
 
             <TableRow

@@ -45,7 +45,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.maps.Place;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
 
 /**
- * @Author Dale Whinham, with conversion to Fragment from Raffaello Perrotta
+ * @author Dale Whinham, with conversion to Fragment from Raffaello Perrotta
  * The purpose of this class is to provide an fragment that uses
  * the Google Places API to query for branch information within a specific
  * radius. This information is displayed via a Google maps wrapper.
@@ -130,7 +130,7 @@ public class MapsFragment extends SupportMapFragment {
         // Check to see if location services are on - if not, show an information message.
         if(!isLocationServicesOn(getActivity().getApplicationContext())){
             Bundle b = new Bundle();
-            b.putString(getString(R.string.custom_bundle), getString(R.string.error_loc_svc_disabled));
+            b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_loc_svc_disabled));
             CustomDialog custom = new CustomDialog();
             custom.setArguments(b);
             custom.show(getChildFragmentManager(), "Custom Dialog");
@@ -230,8 +230,8 @@ public class MapsFragment extends SupportMapFragment {
         // Bail out if location is undetermined
         if (myLocation == null) {
             Bundle b = new Bundle();
-            b.putString(getString(R.string.custom_bundle), getString(R.string.error_undetermined_loc));
-            b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+            b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_undetermined_loc));
+            b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
             CustomDialog custom = new CustomDialog();
             custom.setArguments(b);
             custom.show(getChildFragmentManager(), "Custom Dialog");
@@ -248,8 +248,8 @@ public class MapsFragment extends SupportMapFragment {
         // Bail on unidentified geocoder error.
         if(currentLocation == null){
             Bundle b = new Bundle();
-            b.putString(getString(R.string.custom_bundle), getString(R.string.error_undetermined_loc));
-            b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+            b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_undetermined_loc));
+            b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
             CustomDialog custom = new CustomDialog();
             custom.setArguments(b);
             custom.show(getChildFragmentManager(), "Custom Dialog");

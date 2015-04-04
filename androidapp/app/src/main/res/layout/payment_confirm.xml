@@ -9,7 +9,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/account_type"
+                            android:text="@string/account"
                             android:id="@+id/textView36"
                             android:layout_column="1" />
                     </TableRow>
@@ -67,8 +67,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/acc_current"
-                            android:id="@+id/accountTypeConfirm"
+                            android:id="@+id/fromAccount"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -96,8 +95,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/acc_number_filler"
-                            android:id="@+id/accountNoConfirm"
+                            android:id="@+id/fromAccNo"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -125,8 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/account_info_sort_code"
-                            android:id="@+id/sortCodeConfirm"
+                            android:id="@+id/fromSortCode"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -148,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/name"
+                            android:text="@string/reference"
                             android:id="@+id/textView32"
                             android:layout_column="1" />
                     </TableRow>
@@ -162,8 +159,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="Josh Whale"
-                            android:id="@+id/nameToConfirm"
+                            android:id="@+id/toRef"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -191,8 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="87654321"
-                            android:id="@+id/accountNoToConfirm"
+                            android:id="@+id/toAccNo"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -221,8 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="@string/account_info_sort_code"
-                            android:id="@+id/sortCodeToConfirm"
+                            android:id="@+id/toSortCode"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -244,8 +238,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="£100.99"
-                            android:id="@+id/amountConfirm"
+                            android:id="@+id/amount"
                             android:layout_column="1"
                             android:layout_marginLeft="10dp" />
 
