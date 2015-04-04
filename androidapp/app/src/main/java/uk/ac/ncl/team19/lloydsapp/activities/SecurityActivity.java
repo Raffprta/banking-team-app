@@ -187,6 +187,8 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(SecurityActivity.this);
                             sp.edit().putString(getString(R.string.sp_device_token), authResponse.getDeviceToken()).apply();
 
+                            // Additionally, store the username for futher user.
+                            sp.edit().putString(Constants.SP_USERNAME, username).apply();
                             // Launch MainMenu activity
                             Intent securityIntent = new Intent(SecurityActivity.this, MainMenuActivity.class);
                             startActivity(securityIntent);

@@ -59,8 +59,9 @@ public class AccountsInfoFragment extends Fragment {
             String availableFundsString = String.format("%s %s", getString(R.string.account_info_avail_funds), currentAccount.getFormattedAvailableFunds());
 
             accountType.setText(currentAccount.getAccountTypeString(getActivity()));
-            // FIXME: Need to get user details on login
-            userName.setText("FIXME");
+            // Set information.
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            userName.setText(sp.getString(Constants.SP_USERNAME, null));
             accountNumber.setText(currentAccount.getAccountNumber());
             sortCode.setText(currentAccount.getFormattedSortCode());
             balance.setText(balanceString);
