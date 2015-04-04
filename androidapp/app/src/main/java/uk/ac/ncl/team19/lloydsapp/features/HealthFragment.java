@@ -270,10 +270,16 @@ public class HealthFragment extends Fragment {
         int donationAmount = 0;
         boolean donation = false;
 
+        // List with the user's bank ids.
+        List<Long> accountIds = new ArrayList<>();
+
+        for(BankAccount acc : accounts)
+        accountIds.add(acc.getId());
+
         for(List<Transaction> transaction : transactions){
             for(Transaction item : transaction){
                 // Determine if the amount is ingoing or outgoing.
-                if(item.getId() == item.getFromAccountId()){
+                if(accountIds.contains(item.getToAccountId())){
                     // This is a payment to the user.
                     moneyIn += item.getAmount()/100;
                 }else{
