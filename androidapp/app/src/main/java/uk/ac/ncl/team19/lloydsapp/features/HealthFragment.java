@@ -32,6 +32,7 @@ import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -48,6 +49,16 @@ public class HealthFragment extends Fragment {
     private GridLayout loadedView;
     private TextView errorOnHealth;
     private List<List<Transaction>> allTransactions;
+    private TextView spendAmount;
+    private TextView saveAmount;
+    private TextView overdraft;
+    private ProgressBar hpBar;
+    private ProgressBar donateBar;
+    private ProgressBar spendBar;
+    private ProgressBar saveBar;
+    private ProgressBar overdraftBar;
+    private SharedPreferences sp;
+    private TextView donateTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +67,6 @@ public class HealthFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View healthView = inflater.inflate(R.layout.account_health_page, container, false);
 
-        final ProgressBar progressBar = (ProgressBar) healthView.findViewById(R.id.progressBar);
         progressBarAPI = (ProgressBar) healthView.findViewById(R.id.progressBarAPI);
         errorOnHealth = (TextView) healthView.findViewById(R.id.errorOnHealth);
         loadedView = (GridLayout) healthView.findViewById(R.id.accountHealthGridLayout);
@@ -64,7 +74,7 @@ public class HealthFragment extends Fragment {
 
 
         // Make shared preferences object
-        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // Make a call to the API.
         final APIConnector ac = new APIConnector(getActivity());
@@ -123,30 +133,22 @@ public class HealthFragment extends Fragment {
 
         });
 
-        // Get the Health Bar.
-        final ProgressBar hpBar = (ProgressBar) healthView.findViewById(R.id.progressBar);
-
-        // Determine what colour to set.
-        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
-        }else{
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
-        }
+        // Get the Health Bars.
+        hpBar = (ProgressBar) healthView.findViewById(R.id.progressBar);
+        spendBar = (ProgressBar) healthView.findViewById(R.id.spendProgressBar);
+        saveBar = (ProgressBar) healthView.findViewById(R.id.saveProgressBar);
+        overdraftBar = (ProgressBar) healthView.findViewById(R.id.overdraftProgressBar);
 
         // Set the values of the goals.
         TextView perMonthOrPerWeek = (TextView)healthView.findViewById(R.id.perMonthOrPerWeek);
-        TextView spendAmount = (TextView)healthView.findViewById(R.id.spendTextView);
-        TextView saveAmount = (TextView)healthView.findViewById(R.id.saveTextView);
-        TextView overdraft = (TextView)healthView.findViewById(R.id.overdraftTextView);
+        spendAmount = (TextView)healthView.findViewById(R.id.spendTextView);
+        saveAmount = (TextView)healthView.findViewById(R.id.saveTextView);
+        overdraft = (TextView)healthView.findViewById(R.id.overdraftTextView);
 
         // Donate views
         TextView donateStartView = (TextView)healthView.findViewById(R.id.donateStartView);
-        TextView donateTextView = (TextView)healthView.findViewById(R.id.donateTextView);
-        ProgressBar donateBar = (ProgressBar)healthView.findViewById(R.id.donateProgressBar);
+        donateTextView = (TextView)healthView.findViewById(R.id.donateTextView);
+        donateBar = (ProgressBar)healthView.findViewById(R.id.donateProgressBar);
 
 
 
@@ -233,7 +235,7 @@ public class HealthFragment extends Fragment {
                         loadedView.setVisibility(View.VISIBLE);
 
                         // Finally, it's time to work out your bank's health!
-                        workOutHealth();
+                        workOutHealth(allTransactions);
 
                     }else{
                         progressBarAPI.setVisibility(View.GONE);
@@ -254,8 +256,109 @@ public class HealthFragment extends Fragment {
         }
     }
 
-    private void workOutHealth(){
+    /**
+     * Helper method to work out the health of the bank user.
+     * @param transactions This parameter is expected to not have any empty sets or nulls within it.
+     *                     This is done in the APIConnector implementation in this page.
+     */
+    private void workOutHealth(List<List<Transaction>> transactions){
 
+        int spend = 0;
+        int moneyIn = 0;
+        int save = 0;
+        int overdraft = 100;
+        int donationAmount = 0;
+        boolean donation = false;
+
+        for(List<Transaction> transaction : transactions){
+            for(Transaction item : transaction){
+                // Determine if the amount is ingoing or outgoing.
+                if(item.getId() == item.getFromAccountId()){
+                    // This is a payment to the user.
+                    moneyIn += item.getAmount()/100;
+                }else{
+                    spend += item.getAmount()/100;
+                }
+
+                // Check if a donation was made and record the amount.
+                if(item.getTag() == Transaction.Tag.DONATION){
+                    donation = true;
+                    donationAmount += item.getAmount()/100;
+                }
+
+            }
+        }
+
+        // Calculate save amount.
+        save = moneyIn - spend;
+
+        // Populate healthbars.
+        int percentage = Math.min((int) (save / sp.getFloat(Constants.SP_GOALS_SAVE, -1)) * 100, 100);
+        saveBar.setProgress(percentage);
+
+        // If the user is under or on his max. spending allowance you automatically get 100.
+        if(spend <= sp.getFloat(Constants.SP_GOALS_SAVE, -1)){
+            percentage = 100;
+        }else{
+            // The algorithm looks at the ratio of the amount out : your target and will multiply that ratio by
+            // ten. For example if you budgeted £100 to spend and you spent £400 the ratio is 4. This is multiplied by
+            // ten to become 40. This amount is then taken from 100. To leave 60%. If the ratio is > 10 then the value will
+            // be 0.
+
+            percentage = Math.min(spend / (int) sp.getFloat(Constants.SP_GOALS_SPEND, -1) * 10, 100);
+        }
+
+        spendBar.setProgress(percentage);
+
+        // If a donation was made it does not matter how much the donation was, the user has completed this goal.
+        if(donation)
+            donateBar.setProgress(100);
+
+        // Set the amount the user has donated
+        donateTextView.setText(CurrencyMangler.integerToSterlingString((long)donationAmount));
+
+        // TODO OVERDRAFT -- THIS ATM IS A PLACEHOLDER.
+        overdraftBar.setProgress(overdraft);
+
+        // Program final health bar.
+        int noBars = 3;
+        int finalAverage = (spendBar.getProgress() + saveBar.getProgress() + overdraftBar.getProgress());
+        if(sp.getBoolean(Constants.SP_GOALS_DONATE, false)){
+            finalAverage += donateBar.getProgress();
+            noBars++;
+        }
+
+        finalAverage /= noBars;
+
+        hpBar.setProgress(finalAverage);
+
+        // Store the value in the shared preferences
+        sp.edit().putInt(Constants.SP_ACCOUNTS_HP, finalAverage).apply();
+
+        // Colour the bars
+        colourBar(spendBar);
+        colourBar(saveBar);
+        colourBar(overdraftBar);
+        colourBar(donateBar);
+        colourBar(hpBar);
+
+    }
+
+    /**
+     * Helper method to colour the progress bars in.
+     * @param bar the bar to colour
+     */
+    private void colourBar(ProgressBar bar){
+        // Determine what colour to set.
+        if(bar.getProgress() >= Constants.HEALTH_GOOD){
+            bar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
+        }else if(bar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
+            bar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
+        }else if(bar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
+            bar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
+        }else{
+            bar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
+        }
     }
 
     @Override

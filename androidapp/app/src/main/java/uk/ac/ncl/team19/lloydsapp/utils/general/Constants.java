@@ -101,6 +101,6 @@ public class Constants {
 
     public static final String SP_DEVICE_TOKEN = "DEVICE_TOKEN";
 
-
+    public static final String SP_ACCOUNTS_HP = "HP";
 
 }

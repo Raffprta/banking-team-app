@@ -65,6 +65,9 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
     private AchievementBuffer buff = null;
     private final String TAG = "PLAY UPDATE";
 
+    private SharedPreferences sp;
+    private ProgressBar hpBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,19 +77,11 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Inflate the default view for the profile page.
         profileView = inflater.inflate(R.layout.profile_page, container, false);
 
-        // Get the Health Bar.
-        final ProgressBar hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        // Determine what colour to set.
-        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
-        }else{
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
-        }
+        // Get the Health Bar.
+        hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
+
 
         // Show the percentage points of the current health
         hpBar.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +121,6 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 // Determine whether goals were set or not, load the setting of goals if not.
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
                 if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
                     fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
@@ -346,8 +340,6 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Toaster toaster = new Toaster(getActivity());
 
-        // TODO wearable notifications are only shown if enabled on the settings.
-
         // If a login was detected then first timer can be unlocked - the shared preference must not contain an instance of it being unlocked.
         if(sp.getString(Constants.SP_FIRST_LOGIN, null) != null && !sp.getBoolean(Constants.SP_ACH_FIRST_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_first_timer));
@@ -560,6 +552,24 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         }
 
 
+    }
+
+    @Override
+    public void onViewStateRestored (Bundle savedInstanceState){
+        super.onViewStateRestored(savedInstanceState);
+        // Set its value, if it has been calculated - at default this is 100.
+        hpBar.setProgress(sp.getInt(Constants.SP_ACCOUNTS_HP, 100));
+
+        // Determine what colour to set.
+        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
+        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
+        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
+        }else{
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
+        }
     }
 
     @Override

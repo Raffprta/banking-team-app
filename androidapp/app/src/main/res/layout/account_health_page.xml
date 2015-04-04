@@ -252,7 +252,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/donateProgressBar"
-                    android:progress="65"
+                    android:progress="0"
                     android:progressDrawable="@drawable/goals_donate_progress_bar"
                     android:layout_below="@+id/donateStartView"
                     android:layout_alignLeft="@+id/donateStartView"
