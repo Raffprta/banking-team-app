@@ -8,7 +8,28 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- This is shown programmatically -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/progressBarAPI"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+             />
 
+        <!-- This is shown programmatically -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/errorOnHealth"
+            android:layout_gravity="center"
+            android:textColor="@color/lloyds_darkgreen"
+            android:gravity="center"
+            android:paddingTop="50dp"
+            android:visibility="gone" />
 
         <GridLayout
             android:layout_width="fill_parent"
@@ -22,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/lloyds_white" >
+
 
                 <ProgressBar
                     style="@android:style/Widget.ProgressBar.Horizontal"
