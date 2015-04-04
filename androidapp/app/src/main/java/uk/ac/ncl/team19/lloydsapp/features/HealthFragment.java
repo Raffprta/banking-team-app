@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
@@ -45,6 +47,7 @@ public class HealthFragment extends Fragment {
     private ProgressBar progressBarAPI;
     private GridLayout loadedView;
     private TextView errorOnHealth;
+    private List<List<Transaction>> allTransactions;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +76,7 @@ public class HealthFragment extends Fragment {
             public void success(AccountDetailsResponse accountDetailsResponse, Response response) {
 
                 // Remove progress bar
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBarAPI.setVisibility(View.INVISIBLE);
 
                 if (accountDetailsResponse.getStatus() == APIResponse.Status.SUCCESS) {
                     // Store accounts
@@ -85,11 +88,12 @@ public class HealthFragment extends Fragment {
                     // Show message if no bank accounts returned
                     if (accounts.size() == 0) {
                         errorOnHealth.setText(R.string.account_info_no_accounts);
+                        errorOnHealth.setVisibility(View.VISIBLE);
                         return;
                     }
 
                     // Reinstate progress bar
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressBarAPI.setVisibility(View.VISIBLE);
 
                     // If there were bank accounts, now attempt to get transactions from them.
                     String from = sp.getString(Constants.SP_GOALS_START, null);
@@ -208,17 +212,32 @@ public class HealthFragment extends Fragment {
      */
     private void getTransactionsList(APIConnector ac, List<BankAccount> accounts, Date from, Date to){
 
+        allTransactions = new ArrayList<>();
+
         for(BankAccount account : accounts){
             ac.getTransactions(account.getId(), from, to, new Callback<TransactionsResponse>() {
 
                 @Override
                 public void success(TransactionsResponse transactionsResponse, Response response) {
                     if (transactionsResponse.getStatus() == APIResponse.Status.SUCCESS) {
-                        // On Success
+                        // Start populating our list of transactions
+                        List<Transaction> transaction = transactionsResponse.getTransactions();
+
+                        // Store the transactions
+                        if(transaction != null && transaction.size() > 0){
+                            allTransactions.add(transaction);
+                        }
+
+                        // On Success re-enable the views.
                         progressBarAPI.setVisibility(View.GONE);
                         loadedView.setVisibility(View.VISIBLE);
+
+                        // Finally, it's time to work out your bank's health!
+                        workOutHealth();
+                        
                     }else{
                         progressBarAPI.setVisibility(View.GONE);
+                        ErrorHandler.fail(getFragmentManager(), transactionsResponse.getErrorMessage());
                     }
 
                 }
@@ -233,7 +252,6 @@ public class HealthFragment extends Fragment {
             });
 
         }
-
     }
 
     @Override
