@@ -54,7 +54,7 @@ public class PaymentSuccessfulFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.container, new AccountsInfoFragment()).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, new AccountsDashboardFragment()).commit();
             }
         });
 

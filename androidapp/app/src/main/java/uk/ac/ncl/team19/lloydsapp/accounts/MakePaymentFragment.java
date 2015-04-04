@@ -56,13 +56,6 @@ public class MakePaymentFragment extends Fragment {
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
 
-                // Check validation conditions.
-                if(transactionReference.getText().toString() == null || transactionReference.getText().toString().length() <= 0){
-                    transactionReference.setError(getString(R.string.err_acc_name_empty));
-                    GraphicsUtils.buttonClickEffectHide(v);
-                    return;
-                }
-
                 // Not a number entered as account number.
                 if(!accountNumber.getText().toString().matches("\\d+")){
                     accountNumber.setError(getString(R.string.err_acc_not_no));

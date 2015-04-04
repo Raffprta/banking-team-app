@@ -73,7 +73,7 @@ public class PaymentConfirmFragment extends Fragment{
                         fromAccount.getId(),
                         args.getString(Constants.BUNDLE_KEY_TO_ACC_NO),
                         args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE),
-                        args.getInt(Constants.BUNDLE_KEY_AMOUNT),
+                        args.getLong(Constants.BUNDLE_KEY_AMOUNT),
                         args.getString(Constants.BUNDLE_KEY_TO_REF),
                         new Callback<APIResponse>() {
                             @Override

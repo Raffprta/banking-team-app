@@ -139,7 +139,7 @@ public class APIConnector {
         service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime() : null, periodTo != null ? periodTo.getTime() : null, callback);
     }
 
-    public void transfer(long fromAccId, String toAccNo, String toSortCode, int amount, String reference, Callback<APIResponse> callback) {
+    public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Callback<APIResponse> callback) {
         TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference);
         service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }

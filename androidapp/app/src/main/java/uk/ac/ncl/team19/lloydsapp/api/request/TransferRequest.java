@@ -7,10 +7,10 @@ public class TransferRequest {
     private long fromAccId;
     private String toAccNo;
     private String toSortCode;
-    private int amount;
+    private long amount;
     private String reference;
 
-    public TransferRequest(long fromAccId, String toAccNo, String toSortCode, int amount, String reference) {
+    public TransferRequest(long fromAccId, String toAccNo, String toSortCode, long amount, String reference) {
         this.fromAccId = fromAccId;
         this.toAccNo = toAccNo;
         this.toSortCode = toSortCode;
