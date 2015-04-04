@@ -234,7 +234,7 @@ public class HealthFragment extends Fragment {
 
                         // Finally, it's time to work out your bank's health!
                         workOutHealth();
-                        
+
                     }else{
                         progressBarAPI.setVisibility(View.GONE);
                         ErrorHandler.fail(getFragmentManager(), transactionsResponse.getErrorMessage());
@@ -252,6 +252,10 @@ public class HealthFragment extends Fragment {
             });
 
         }
+    }
+
+    private void workOutHealth(){
+
     }
 
     @Override
