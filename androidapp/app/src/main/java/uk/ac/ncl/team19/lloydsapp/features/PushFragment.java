@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,6 +33,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;
@@ -255,11 +257,15 @@ public class PushFragment extends Fragment {
                     msg = "Device registered, registration ID=" + regId;
 
                     ProgressDialog.showLoading(PushFragment.this);
+                    final FragmentManager fragmentManager = getFragmentManager();
 
                     APIConnector ac = new APIConnector(context);
                     ac.updateGcmId(regId, new Callback<APIResponse>() {
                         @Override
                         public void success(APIResponse apiResponse, Response response) {
+                            // Fail silently if not on the same class.
+                            if(!FragmentChecker.checkFragment(fragmentManager, PushFragment.this))
+                                return;
                             // Remove progress bar
                             ProgressDialog.removeLoading(PushFragment.this);
 

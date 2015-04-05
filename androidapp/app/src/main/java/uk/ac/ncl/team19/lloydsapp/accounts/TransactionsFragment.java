@@ -2,6 +2,7 @@ package uk.ac.ncl.team19.lloydsapp.accounts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import uk.ac.ncl.team19.lloydsapp.api.response.TransactionsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 
 
 /**
@@ -71,11 +73,19 @@ public class TransactionsFragment extends Fragment {
         // Unbundle account
         currentAccount = (BankAccount) getArguments().getSerializable(Constants.BUNDLE_KEY_CURRENT_ACCOUNT);
 
+        // Get the fragment manager
+        final FragmentManager fragmentManager = getFragmentManager();
+
         // Retrieve transactions
         APIConnector ac = new APIConnector(getActivity());
         ac.getTransactions(currentAccount.getId(), null, null, new Callback<TransactionsResponse>() {
             @Override
             public void success(TransactionsResponse transactionsResponse, Response response) {
+
+                // Fail silently if not on the same class.
+                if(!FragmentChecker.checkFragment(fragmentManager, TransactionsFragment.this))
+                    return;
+
                 // Hide progress
                 progressBar.setVisibility(View.GONE);
 

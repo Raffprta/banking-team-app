@@ -33,10 +33,12 @@ import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrotta, XML by Yessengerey Bolatov.
+ * @author Raffaello Perrotta (backend integration, algorithms and client side programming)
+ * @author Yessengerey Bolatov (all XML).
  * @author Dale Whinham - simplify Bundle key access
  *
  * A class which will hold all information pertaining to the account health status and allow the user
@@ -76,6 +78,9 @@ public class HealthFragment extends Fragment {
         // Make shared preferences object
         sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        // Get a Fragment Manager.
+        final FragmentManager fragmentManager = HealthFragment.this.getFragmentManager();
+
         // Make a call to the API.
         final APIConnector ac = new APIConnector(getActivity());
 
@@ -84,6 +89,10 @@ public class HealthFragment extends Fragment {
 
             @Override
             public void success(AccountDetailsResponse accountDetailsResponse, Response response) {
+
+                // Fail silently if not on the same class.
+                if(!FragmentChecker.checkFragment(fragmentManager, HealthFragment.this))
+                    return;
 
                 // Remove progress bar
                 progressBarAPI.setVisibility(View.INVISIBLE);
@@ -215,12 +224,19 @@ public class HealthFragment extends Fragment {
     private void getTransactionsList(APIConnector ac, List<BankAccount> accounts, Date from, Date to){
 
         allTransactions = new ArrayList<>();
+        // Get a Fragment Manager.
+        final FragmentManager fragmentManager = HealthFragment.this.getFragmentManager();
 
         for(BankAccount account : accounts){
             ac.getTransactions(account.getId(), from, to, new Callback<TransactionsResponse>() {
 
                 @Override
                 public void success(TransactionsResponse transactionsResponse, Response response) {
+
+                    // Fail silently if not on the same class.
+                    if(!FragmentChecker.checkFragment(fragmentManager, HealthFragment.this))
+                        return;
+
                     if (transactionsResponse.getStatus() == APIResponse.Status.SUCCESS) {
                         // Start populating our list of transactions
                         List<Transaction> transaction = transactionsResponse.getTransactions();

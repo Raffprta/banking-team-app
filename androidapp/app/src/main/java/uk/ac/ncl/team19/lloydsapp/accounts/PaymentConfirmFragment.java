@@ -20,6 +20,7 @@ import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
@@ -58,6 +59,9 @@ public class PaymentConfirmFragment extends Fragment{
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
 
+        // Get the fragment manager
+        final FragmentManager fragmentManager = getFragmentManager();
+
         // On Clicking the Confirm button
         confirmPaymentButton = (Button) paymentConfirmView.findViewById(R.id.confirmPayment);
         confirmPaymentButton.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +82,11 @@ public class PaymentConfirmFragment extends Fragment{
                         new Callback<APIResponse>() {
                             @Override
                             public void success(APIResponse apiResponse, Response response) {
+
+                                // Fail silently if not on the same class.
+                                if(!FragmentChecker.checkFragment(fragmentManager, PaymentConfirmFragment.this))
+                                    return;
+
                                 GraphicsUtils.buttonClickEffectHide(confirmPaymentButton);
 
                                 // Hide Progress dialog

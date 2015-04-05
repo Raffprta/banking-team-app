@@ -3,6 +3,7 @@ package uk.ac.ncl.team19.lloydsapp.features;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import retrofit.Callback;
@@ -14,6 +15,7 @@ import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.PreferenceFragment;
 
 /**
@@ -36,6 +38,8 @@ public class Settings extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.prefs);
 
+        final FragmentManager fragmentManager = getFragmentManager();
+
         // Register a listener for when a setting is modified by the user.
         sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sp.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -49,6 +53,9 @@ public class Settings extends PreferenceFragment {
                         new Callback<APIResponse>() {
                             @Override
                             public void success(APIResponse apiResponse, Response response) {
+                                // Fail silently if not on the same class.
+                                if(!FragmentChecker.checkFragment(fragmentManager, Settings.this))
+                                    return;
                                 // Remove progress bar
                                 ProgressDialog.removeLoading(Settings.this);
 

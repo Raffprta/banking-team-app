@@ -22,9 +22,11 @@ import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.response.AccountDetailsResponse;
 import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 
 /**
  * @Author Yao Tong, Yessengerey Bolatov conversion to Fragment by Raffaello Perrotta
+ * Backend Integration by Dale Whinham, fragment related error handling by Raffaello Perrotta
  */
 public class AccountsDashboardFragment extends Fragment {
 
@@ -43,12 +45,18 @@ public class AccountsDashboardFragment extends Fragment {
         progressBar = (ProgressBar) accountsDashboardView.findViewById(R.id.progressBar);
 
         final ViewGroup accountsList = (ViewGroup) accountsDashboardView.findViewById(R.id.accountsList);
+        final FragmentManager fragmentManager = AccountsDashboardFragment.this.getFragmentManager();
 
         // Get the account details from the backend
         APIConnector ac = new APIConnector(getActivity());
         ac.getAccountDetails(new Callback<AccountDetailsResponse>() {
             @Override
             public void success(AccountDetailsResponse accountDetailsResponse, Response response) {
+
+                // Fail silently if not on the same class.
+                if(!FragmentChecker.checkFragment(fragmentManager, AccountsDashboardFragment.this))
+                    return;
+
                 // Hide progress wheel
                 progressBar.setVisibility(View.GONE);
 

@@ -41,11 +41,13 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.PaymentConfirmFragment;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.notifications.Toaster;
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
@@ -280,6 +282,9 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
         String registeredPlayer = sp.getString(Constants.SP_PLAYID, null);
 
+        // Get the fragment manager
+        final FragmentManager fragmentManager = getFragmentManager();
+
         if(registeredPlayer == null || !registeredPlayer.equals(playerId)){
             sp.edit().putString(Constants.SP_PLAYID, playerId).apply();
             // Update on the server side
@@ -287,6 +292,11 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
             ac.updatePlayId(playerId, new Callback<APIResponse>() {
                 @Override
                 public void success(APIResponse apiResponse, Response response) {
+
+                    // Fail silently if not on the same class.
+                    if(!FragmentChecker.checkFragment(fragmentManager, ProfileFragment.this))
+                        return;
+
                     switch (apiResponse.getStatus()) {
                         case SUCCESS:
                             Log.i(TAG, "Player ID update successful.");
