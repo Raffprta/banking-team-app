@@ -245,6 +245,8 @@ public class HealthFragment extends Fragment {
 
     }
 
+    private int spinLock;
+
     /**
      * Helper method to get a list of transactions from each account.
      * @param ac The APIConnector
@@ -255,6 +257,10 @@ public class HealthFragment extends Fragment {
     private void getTransactionsList(APIConnector ac, List<BankAccount> accounts, Date from, Date to){
 
         allTransactions = new ArrayList<>();
+
+        // Lock to determine when to calculate bank accounts
+        spinLock = accounts.size();
+
         // Get a Fragment Manager.
         final FragmentManager fragmentManager = HealthFragment.this.getFragmentManager();
 
@@ -277,12 +283,16 @@ public class HealthFragment extends Fragment {
                             allTransactions.add(transaction);
                         }
 
-                        // On Success re-enable the views.
-                        progressBarAPI.setVisibility(View.GONE);
-                        loadedView.setVisibility(View.VISIBLE);
+                        // Decrement lock.
+                        spinLock--;
 
-                        // Finally, it's time to work out your bank's health!
-                        workOutHealth(allTransactions);
+                        // Calculate the health only once, when the lock is ready (i.e. all accounts processed).
+                        if(spinLock == 0){
+                            workOutHealth(allTransactions);
+                            // On health calculation success re-enable the views.
+                            progressBarAPI.setVisibility(View.GONE);
+                            loadedView.setVisibility(View.VISIBLE);
+                        }
 
                     }else{
                         progressBarAPI.setVisibility(View.GONE);
@@ -358,16 +368,20 @@ public class HealthFragment extends Fragment {
         int percentage = Math.min((int) (calculation * 100), Constants.HEALTH_PERFECT);
         saveBar.setProgress(percentage);
 
+        // Helpful Debug methods
+        Log.i("Debug: Save ", Integer.toString(save));
+        Log.i("Debug: Spend ",  Integer.toString(spend));
+
         // If the user is under or on his max. spending allowance you automatically get 100.
-        if(spend <= sp.getFloat(Constants.SP_GOALS_SAVE, -1)){
+        if(spend <= sp.getFloat(Constants.SP_GOALS_SPEND, -1)){
             percentage = Constants.HEALTH_PERFECT;
         }else{
             // The algorithm looks at the ratio of the amount out : your target and will multiply that ratio by
             // ten. For example if you budgeted £100 to spend and you spent £400 the ratio is 4. This is multiplied by
             // ten to become 40. This amount is then taken from 100. To leave 60%. If the ratio is > 10 then the value will
             // be 0.
-
-            percentage = Math.min(spend / (int) sp.getFloat(Constants.SP_GOALS_SPEND, -1) * 10, 100);
+            calculation = (spend / sp.getFloat(Constants.SP_GOALS_SPEND, -1) * 10);
+            percentage = Math.min(spend / (int)calculation, 100);
         }
 
         spendBar.setProgress(percentage);
