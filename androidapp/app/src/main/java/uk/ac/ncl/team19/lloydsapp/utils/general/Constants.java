@@ -75,6 +75,8 @@ public class Constants {
     public static final String BUNDLE_KEY_TO_SORT_CODE = "toSortCode";
     public static final String BUNDLE_KEY_AMOUNT = "amount";
 
+    public static final String BUNDLE_KEY_GOALS_EXPIRY = "expiry";
+
     // Shared preferenes keys.
     public static final String SP_USERNAME = "spUsername";
     public static final String SP_STATUS = "STATUS";

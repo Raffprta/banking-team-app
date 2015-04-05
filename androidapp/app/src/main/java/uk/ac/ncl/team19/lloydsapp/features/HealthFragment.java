@@ -69,14 +69,45 @@ public class HealthFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View healthView = inflater.inflate(R.layout.account_health_page, container, false);
 
+        // Make shared preferences object
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        // Calculate how many days the user has set the goals for.
+        String dateThen = sp.getString(Constants.SP_GOALS_START, null);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+        int daysBetween = 0;
+
+        try {
+            daysBetween = (int)(((new Date()).getTime() - sdf.parse(dateThen).getTime()) / (1000 * 60 * 60 * 24));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int daysPeriod = 7;
+
+        // If the period is set per week, return 7 otherwise it's a monthly period hence return 30.
+        daysPeriod = sp.getInt(Constants.SP_GOALS_SET_FOR, -1) == Constants.WEEKLY ? 7 : 30;
+
+        Log.i("Debugging Goals:", "Have been set for " + Integer.toString(daysPeriod) + " days.");
+        Log.i("Debugging Goals:", "Currently they have been going for " + Integer.toString(daysBetween) + " days");
+
+        // If the number of days the goals have been active for exceed what the user wants them for, i.e. 30 = month
+        // 7 = week.
+        if(daysBetween >=  daysPeriod){
+            Bundle b = new Bundle();
+            b.putBoolean(Constants.BUNDLE_KEY_GOALS_EXPIRY, true);
+            SetGoalsFragment setGoals = new SetGoalsFragment();
+            setGoals.setArguments(b);
+            // Immediately transition to the set goals fragment to reset the goals.
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, setGoals).addToBackStack(getString(R.string.account_health_page)).commit();
+        }
+
         progressBarAPI = (ProgressBar) healthView.findViewById(R.id.progressBarAPI);
         errorOnHealth = (TextView) healthView.findViewById(R.id.errorOnHealth);
         loadedView = (GridLayout) healthView.findViewById(R.id.accountHealthGridLayout);
         loadedView.setVisibility(View.INVISIBLE);
-
-
-        // Make shared preferences object
-        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // Get a Fragment Manager.
         final FragmentManager fragmentManager = HealthFragment.this.getFragmentManager();

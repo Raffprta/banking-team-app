@@ -37,6 +37,19 @@ public class SetGoalsFragment extends Fragment{
         super.onCreate(savedInstanceState);
         final View goalsView = inflater.inflate(R.layout.set_goals_page, container, false);
 
+        Bundle bundle = getArguments();
+
+        // If this page was loaded due to goals expiry, then check the bundle.
+        if(bundle != null){
+            if(bundle.getBoolean(Constants.BUNDLE_KEY_GOALS_EXPIRY)){
+                Bundle b = new Bundle();
+                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.goals_expired));
+                CustomDialog custom = new CustomDialog();
+                custom.setArguments(b);
+                custom.show(getChildFragmentManager());
+            }
+        }
+
         // Get all respective fields
         final Spinner goalsSpinner = (Spinner)goalsView.findViewById(R.id.timeSpinner);
         final EditText spendAmount = (EditText)goalsView.findViewById(R.id.spendAmount);

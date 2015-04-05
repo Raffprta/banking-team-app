@@ -232,6 +232,7 @@
     <!-- Health page fillers -->
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
+    <string name="goals_expired">Your goals for this period have expired, you can now set new goals for the next period!</string>
 
     <!-- Login / Security error messages -->
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
