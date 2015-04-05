@@ -321,7 +321,7 @@ public class HealthFragment extends Fragment {
         List<Long> accountIds = new ArrayList<>();
 
         for(BankAccount acc : accounts)
-        accountIds.add(acc.getId());
+            accountIds.add(acc.getId());
 
         for(List<Transaction> transaction : transactions){
             for(Transaction item : transaction){
@@ -352,8 +352,10 @@ public class HealthFragment extends Fragment {
         // Calculate save amount.
         save = moneyIn - spend;
 
+        double calculation = save / sp.getFloat(Constants.SP_GOALS_SAVE, -1);
+
         // Populate healthbars.
-        int percentage = Math.min((int) (save / sp.getFloat(Constants.SP_GOALS_SAVE, -1)) * 100, Constants.HEALTH_PERFECT);
+        int percentage = Math.min((int) (calculation * 100), Constants.HEALTH_PERFECT);
         saveBar.setProgress(percentage);
 
         // If the user is under or on his max. spending allowance you automatically get 100.
