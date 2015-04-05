@@ -23,10 +23,9 @@ public class FragmentChecker {
         // Immediately check if you are actually on the right fragment.
         // Find currently loaded fragment.
         Fragment entry = fm.findFragmentById(R.id.container);
-        String fragmentAt = entry.getClass().getSimpleName();
 
-        // If you are not on the right fragment return false.
-        return cl.getClass().getSimpleName().equals(fragmentAt);
+        // If you are not on the right fragment return false. This is based on references.
+        return cl == entry;
 
     }
 
