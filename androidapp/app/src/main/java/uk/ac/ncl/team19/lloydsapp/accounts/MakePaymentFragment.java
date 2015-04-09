@@ -100,10 +100,10 @@ public class MakePaymentFragment extends Fragment {
 
                 // If all validation conditions passed, then add information to bundle and pass to the next fragment
                 args.putSerializable(Constants.BUNDLE_KEY_FROM_ACC, (BankAccount) fromAccount.getSelectedItem());
-                args.putString(Constants.BUNDLE_KEY_TO_REF, transactionReference.getText().toString());
-                args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, sortCode.getText().toString());
                 args.putString(Constants.BUNDLE_KEY_TO_ACC_NO, accountNumber.getText().toString());
+                args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, sortCode.getText().toString());
                 args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
+                args.putString(Constants.BUNDLE_KEY_REF, transactionReference.getText().toString());
 
                 PaymentConfirmFragment paymentConfirmation = new PaymentConfirmFragment();
                 paymentConfirmation.setArguments(args);

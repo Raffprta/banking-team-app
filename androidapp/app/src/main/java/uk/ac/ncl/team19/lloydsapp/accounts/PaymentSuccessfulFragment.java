@@ -44,7 +44,7 @@ public class PaymentSuccessfulFragment extends Fragment {
         fromAccNo.setText(fromAccount.getAccountNumber());
         fromSortCode.setText(fromAccount.getFormattedSortCode());
 
-        toRef.setText(args.getString(Constants.BUNDLE_KEY_TO_REF));
+        toRef.setText(args.getString(Constants.BUNDLE_KEY_REF));
         toAccNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));

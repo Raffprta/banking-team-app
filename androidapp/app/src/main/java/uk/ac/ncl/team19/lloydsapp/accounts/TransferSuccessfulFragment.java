@@ -9,36 +9,46 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @Author Raffaello Perrotta, XML by Yessengerey Bolatov
+ * @author Raffaello Perrotta, XML by Yessengerey Bolatov
+ * @author Dale Whinham - backend integration
  */
 public class TransferSuccessfulFragment extends Fragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    private Bundle args;
+    private BankAccount fromAccount;
+    private BankAccount toAccount;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View transferSuccessView = inflater.inflate(R.layout.transfer_success, container, false);
 
-        TextView accountTypeFrom = (TextView)transferSuccessView.findViewById(R.id.transferAccountTypeSuccessFrom);
-        TextView accountNoFrom = (TextView)transferSuccessView.findViewById(R.id.transferAccountNoFrom);
-        TextView accountSortCodeFrom = (TextView)transferSuccessView.findViewById(R.id.transferSortcodeFrom);
-        TextView accountTypeTo = (TextView)transferSuccessView.findViewById(R.id.transferAccountTypeSuccessTo);
-        TextView accountNoTo = (TextView)transferSuccessView.findViewById(R.id.transferAccountNoTo);
-        TextView accountSortCodeTo = (TextView)transferSuccessView.findViewById(R.id.transferSortcodeTo);
-        TextView paymentAmount = (TextView)transferSuccessView.findViewById(R.id.transferPaymentSuccess);
+        TextView fromAccountName = (TextView) transferSuccessView.findViewById(R.id.fromAccount);
+        TextView fromAccountNo = (TextView) transferSuccessView.findViewById(R.id.fromAccNo);
+        TextView fromSortCode = (TextView) transferSuccessView.findViewById(R.id.fromSortCode);
+        TextView toAccountName = (TextView) transferSuccessView.findViewById(R.id.toAccount);
+        TextView toAccountNo = (TextView) transferSuccessView.findViewById(R.id.toAccNo);
+        TextView toSortCode = (TextView) transferSuccessView.findViewById(R.id.toSortCode);
+        TextView amount = (TextView) transferSuccessView.findViewById(R.id.amount);
 
-        // Set values taken from bundle, TODO account numbers and sort code are from the API.
-        Bundle args = getArguments();
+        // Set values taken from bundle, i.e. what the user entered in the previous fragment.
+        args = getArguments();
+        fromAccount = (BankAccount) args.getSerializable(Constants.BUNDLE_KEY_FROM_ACC);
+        toAccount = (BankAccount) args.getSerializable(Constants.BUNDLE_KEY_TO_ACC);
 
-
-        //accountTypeFrom.setText(args.getString(Constants.BUNDLE_KEY_FROM_ACC_ID));
-        //accountTypeTo.setText(args.getString(Constants.BUN));
-        paymentAmount.setText(Double.toString(args.getDouble(Constants.BUNDLE_KEY_AMOUNT)));
+        fromAccountName.setText(fromAccount.toString());
+        fromAccountNo.setText(fromAccount.getAccountNumber());
+        fromSortCode.setText(fromAccount.getFormattedSortCode());
+        toAccountName.setText(toAccount.toString());
+        toAccountNo.setText(toAccount.getAccountNumber());
+        toSortCode.setText(toAccount.getFormattedSortCode());
+        amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
 
         transferSuccessView.findViewById(R.id.backToAccount).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +60,6 @@ public class TransferSuccessfulFragment extends Fragment {
         });
 
         return transferSuccessView;
-
     }
 
     @Override

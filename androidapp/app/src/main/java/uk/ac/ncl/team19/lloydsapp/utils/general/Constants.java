@@ -70,10 +70,12 @@ public class Constants {
     public static final String BUNDLE_KEY_ACCOUNT_LIST = "accountList";
 
     public static final String BUNDLE_KEY_FROM_ACC = "fromAcc";
-    public static final String BUNDLE_KEY_TO_REF = "toRef";
+    public static final String BUNDLE_KEY_TO_ACC = "toAcc";
     public static final String BUNDLE_KEY_TO_ACC_NO = "toAccNo";
     public static final String BUNDLE_KEY_TO_SORT_CODE = "toSortCode";
     public static final String BUNDLE_KEY_AMOUNT = "amount";
+    public static final String BUNDLE_KEY_REF = "toRef";
+    public static final String BUNDLE_KEY_TAG = "tag";
 
     public static final String BUNDLE_KEY_GOALS_EXPIRY = "expiry";
 

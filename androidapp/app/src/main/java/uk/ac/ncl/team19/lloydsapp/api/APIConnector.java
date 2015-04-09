@@ -144,4 +144,9 @@ public class APIConnector {
         TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference);
         service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }
+
+    public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, long tag, Callback<APIResponse> callback) {
+        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, tag);
+        service.transferMoney(deviceToken, transferMoneyRequest, callback);
+    }
 }

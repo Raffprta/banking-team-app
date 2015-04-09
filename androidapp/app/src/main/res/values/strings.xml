@@ -205,15 +205,9 @@
         <item>Week</item>
     </string-array>
 
-    <!-- Drop Down menu strings list of accounts -->
-    <string-array name="user_accounts">
-        <item>Current Account</item>
-        <item>eSavings Account</item>
-        <item>Student Account</item>
-    </string-array>
-
     <!-- Drop Down menu strings list of tags -->
     <string-array name="tags">
+        <item>&lt; Untagged &gt;</item>
         <item>Food &amp; Drink</item>
         <item>Clothes</item>
         <item>Cash</item>
@@ -248,6 +242,7 @@
     <string name="err_sc_not_no">The sort-code must only contain numerical digits or dashes.</string>
     <string name="err_payment_empty">The payment must not be empty. Please enter an amount to pay.</string>
     <string name="err_payment_wrong_form">The payment must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
+    <string name="err_no_other_accounts">You must hold at least one other bank account with Lloyds in order to use the Transfer feature.</string>
 
     <!-- Push notification ic_formats-->
     <string name="ic_offers">[ic_offers]</string>

@@ -87,7 +87,7 @@ public class AccountsInfoFragment extends Fragment {
 
                 // Pass arguments from this fragment to the next
                 MakePaymentFragment makePaymentFragment = new MakePaymentFragment();
-                makePaymentFragment.setArguments(getArguments());
+                makePaymentFragment.setArguments(args);
 
                 fragmentManager.beginTransaction().replace(R.id.container, makePaymentFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
@@ -101,7 +101,7 @@ public class AccountsInfoFragment extends Fragment {
 
                 // Pass arguments from this fragment to the next
                 TransferFundsFragment transferFundsFragment = new TransferFundsFragment();
-                transferFundsFragment.setArguments(getArguments());
+                transferFundsFragment.setArguments(args);
 
                 fragmentManager.beginTransaction().replace(R.id.container, transferFundsFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
             }
@@ -131,5 +131,4 @@ public class AccountsInfoFragment extends Fragment {
     public String toString(){
         return getString(R.string.account_info_page);
     }
-
 }

@@ -54,7 +54,7 @@ public class PaymentConfirmFragment extends Fragment{
         fromAccountNo.setText(fromAccount.getAccountNumber());
         fromSortCode.setText(fromAccount.getFormattedSortCode());
 
-        toReference.setText(args.getString(Constants.BUNDLE_KEY_TO_REF));
+        toReference.setText(args.getString(Constants.BUNDLE_KEY_REF));
         toAccountNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
@@ -62,7 +62,7 @@ public class PaymentConfirmFragment extends Fragment{
         // Get the fragment manager
         final FragmentManager fragmentManager = getFragmentManager();
 
-        // On Clicking the Confirm button
+        // On Clicking the confirm button
         confirmPaymentButton = (Button) paymentConfirmView.findViewById(R.id.confirmPayment);
         confirmPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class PaymentConfirmFragment extends Fragment{
                         args.getString(Constants.BUNDLE_KEY_TO_ACC_NO),
                         args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE),
                         args.getLong(Constants.BUNDLE_KEY_AMOUNT),
-                        args.getString(Constants.BUNDLE_KEY_TO_REF),
+                        args.getString(Constants.BUNDLE_KEY_REF),
                         new Callback<APIResponse>() {
                             @Override
                             public void success(APIResponse apiResponse, Response response) {
@@ -93,13 +93,12 @@ public class PaymentConfirmFragment extends Fragment{
                                 ProgressDialog.removeLoading(PaymentConfirmFragment.this);
 
                                 if (apiResponse.getStatus() == APIResponse.Status.SUCCESS) {
-                                    PaymentSuccessfulFragment paymentsSuccess = new PaymentSuccessfulFragment();
+                                    PaymentSuccessfulFragment paymentSuccess = new PaymentSuccessfulFragment();
                                     // Pass the bundle arguments to the next fragment.
-                                    paymentsSuccess.setArguments(args);
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                    fragmentManager.beginTransaction().replace(R.id.container, paymentsSuccess).commit();
+                                    paymentSuccess.setArguments(args);
+                                    fragmentManager.beginTransaction().replace(R.id.container, paymentSuccess).commit();
                                 } else {
-                                    ErrorHandler.fail(getFragmentManager(), apiResponse.getErrorMessage());
+                                    ErrorHandler.fail(fragmentManager, apiResponse.getErrorMessage());
                                 }
                             }
 
@@ -112,7 +111,7 @@ public class PaymentConfirmFragment extends Fragment{
                                 ProgressDialog.removeLoading(getActivity());
 
                                 // Handle error
-                                ErrorHandler.fail(getActivity(), getFragmentManager(), error);
+                                ErrorHandler.fail(getActivity(), fragmentManager, error);
                             }
                         }
                 );
@@ -124,7 +123,6 @@ public class PaymentConfirmFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 GraphicsUtils.buttonClickEffectShow(v);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.popBackStack();
             }
         });
