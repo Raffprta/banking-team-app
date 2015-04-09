@@ -266,6 +266,9 @@ public class TransactionsFragment extends Fragment {
             // Withdrawals get the red outgoing arrow, deposits get the green
             inOutIndicator.setImageDrawable(getResources().getDrawable(isWithdrawal ? R.drawable.out : R.drawable.in));
 
+            // Must be selected in order for marquee to work
+            transactionInfo.setSelected(true);
+
             return convertView;
         }
 

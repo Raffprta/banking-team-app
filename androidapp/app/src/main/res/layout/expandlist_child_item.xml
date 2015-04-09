@@ -23,7 +23,10 @@
         android:layout_centerVertical="true"
         android:fontFamily="sans-serif-condensed"
         android:layout_toLeftOf="@+id/transactionAmount"
-        android:text="some infos" />
+        android:text="some infos"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"/>
 
     <TextView
         android:id="@+id/transactionAmount"
