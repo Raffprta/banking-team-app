@@ -188,11 +188,10 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/set_for"
                     android:id="@+id/setForGoalsTextView"
-                    android:layout_below="@+id/setYourGoalsTextView"
+                    android:textColor="@color/lloyds_darkgreen"
+                    android:layout_below="@+id/divisionGridLayoutGoals"
                     android:layout_alignLeft="@+id/setGoalsSpendTextView"
-                    android:layout_alignStart="@+id/setGoalsSpendTextView"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/lloyds_darkgreen" />
+                    android:layout_alignStart="@+id/setGoalsSpendTextView" />
 
                 <Spinner
                     android:layout_width="wrap_content"
@@ -205,6 +204,17 @@
                     android:layout_alignBottom="@+id/setForGoalsTextView"
                     android:layout_alignRight="@+id/setYourGoalsTextView"
                     android:layout_alignEnd="@+id/setYourGoalsTextView" />
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/setYourGoalsTextView"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/divisionGridLayoutGoals"
+                    android:layout_alignParentEnd="true"
+                    android:background="@color/lloyds_lightergreen_transparent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"></GridLayout>
 
             </RelativeLayout>
 

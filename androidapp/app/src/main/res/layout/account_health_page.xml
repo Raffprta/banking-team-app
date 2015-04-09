@@ -262,6 +262,15 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp" />
 
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/textView75"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/lloyds_lightergreen_transparent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"></GridLayout>
+
             </RelativeLayout>
 
             <Button

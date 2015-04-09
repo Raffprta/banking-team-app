@@ -1,5 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp.accounts;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,7 +37,6 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 
-
 /**
  * @author Yessengerey Bolatov (XML), Raffaello Perrotta
  * @author Dale Whinham - Spinner/List adapters, backend integration
@@ -53,9 +55,7 @@ public class TransactionsFragment extends Fragment {
     TransactionListAdapter listAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final View transactionsView = inflater.inflate(R.layout.transaction_history_page, container, false);
 
@@ -139,7 +139,7 @@ public class TransactionsFragment extends Fragment {
         return transactionsView;
     }
 
-    public class TransactionYearSpinnerAdapter extends ArrayAdapter<String> {
+    private class TransactionYearSpinnerAdapter extends ArrayAdapter<String> {
         public TransactionYearSpinnerAdapter(List<Transaction> transactions) {
             super(getActivity(), android.R.layout.simple_spinner_item);
 
@@ -160,7 +160,7 @@ public class TransactionsFragment extends Fragment {
         }
     }
 
-    public class TransactionListAdapter extends BaseExpandableListAdapter {
+    private class TransactionListAdapter extends BaseExpandableListAdapter {
         // LinkedHashMap retains order
         private LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
 
@@ -224,37 +224,56 @@ public class TransactionsFragment extends Fragment {
         }
 
         @Override
-        public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-            TextView textView = new TextView(TransactionsFragment.this.getActivity());
-            textView.setText(getGroup(i).toString());
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            String headerTitle = (String) getGroup(groupPosition);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.expandlist_group_item, null);
+            }
 
-            return textView;
+            TextView lblListHeader = (TextView) convertView.findViewById(R.id.groupName);
+            lblListHeader.setTypeface(null, Typeface.BOLD);
+            lblListHeader.setText(headerTitle);
+
+            return convertView;
         }
 
         @Override
-        public View getChildView(int i, int j, boolean b, View view, ViewGroup viewGroup) {
-            TextView textView = new TextView(TransactionsFragment.this.getActivity());
-            Transaction t = (Transaction) getChild(i, j);
+        public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            Transaction t = (Transaction) getChild(groupPosition, childPosition);
+
             // If the from account ID matches the ID of the account we're inspecting, it's a withdrawal
             boolean isWithdrawal = t.getFromAccountId() == currentAccount.getId();
 
-            // TODO: MAKE RED ARROW STUFF HAPPEN HERE BOOM
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.expandlist_child_item, null);
+            }
 
-            String dateString = new SimpleDateFormat("E d @ k:m").format(t.getDate());
+            // References to subviews
+            TextView transactionInfo = (TextView) convertView.findViewById(R.id.transactionInfo);
+            TextView transactionAmount = (TextView) convertView.findViewById(R.id.transactionAmount);
+            ImageView inOutIndicator = (ImageView) convertView.findViewById(R.id.inOutIndicator);
 
-            String transactionString = String.format("%s - %s%s %s", dateString, isWithdrawal ? "-" : "", CurrencyMangler.integerToSterlingString(t.getAmount()), t.getReference());
-            textView.setText(transactionString);
+            String dateString = new SimpleDateFormat("E d, k:m").format(t.getDate());
+            String transactionInfoString = String.format("%s: %s", dateString, t.getReference());
+            String transactionAmountString = (isWithdrawal ? "-" : "") + CurrencyMangler.integerToSterlingString(t.getAmount());
 
-            return textView;
+            // Set the transaction string
+            transactionInfo.setText(transactionInfoString);
+            transactionAmount.setText(transactionAmountString);
+
+            // Withdrawals get the red outgoing arrow, deposits get the green
+            inOutIndicator.setImageDrawable(getResources().getDrawable(isWithdrawal ? R.drawable.out : R.drawable.in));
+
+            return convertView;
         }
 
         @Override
-        public boolean isChildSelectable(int i, int i1) {
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
-
     }
-
 
     @Override
     public String toString(){

@@ -58,6 +58,24 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_column="0"
+                    android:background="@color/lloyds_lightgreen"
+                    android:layout_marginBottom="5dp"></GridLayout>
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_column="1"
+                    android:background="@color/lloyds_lightergreen_transparent"></GridLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,10 +164,29 @@
                     android:ems="10"
                     android:maxLength="6"
                     android:id="@+id/sortCodePayment"
-                    android:layout_column="1" />
+                    android:layout_column="1"
+                    android:layout_marginBottom="5dp" />
 
 
 
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_column="0"
+                    android:background="@color/lloyds_lightgreen"
+                    android:layout_marginBottom="5dp" />
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_column="1"
+                    android:background="@color/lloyds_lightergreen_transparent" />
             </TableRow>
 
             <TableRow

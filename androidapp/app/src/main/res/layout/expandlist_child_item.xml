@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dip"
-    android:background="@color/lloyds_white"
     android:orientation="vertical" >
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/inOutIndicator"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/in"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false" />
 
     <TextView
-        android:id="@+id/tvChild"
-        android:layout_width="fill_parent"
+        android:id="@+id/transactionInfo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/lloyds_acc_info_green_button"
-        android:textSize="17dip" />
+        android:textSize="17sp"
+        android:layout_toRightOf="@+id/inOutIndicator"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_toLeftOf="@+id/transactionAmount"
+        android:text="some infos" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/transactionAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_alignParentRight="true"
+        android:text="£2.00"
+        android:textStyle="bold|italic" />
+</RelativeLayout>
