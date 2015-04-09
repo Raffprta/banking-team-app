@@ -39,20 +39,30 @@
                     android:layout_marginBottom="5dp"
                     android:background="@color/lloyds_lightergreen_transparent"></GridLayout>
 
-                <TextView
+                <RelativeLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/transaction_history_year"
-                    android:id="@+id/year"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/lloyds_lightgreen" />
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal">
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/yearSpinner"
-                    android:layout_gravity="center_horizontal" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/transaction_history_select_year"
+                        android:id="@+id/year"
+                        android:layout_gravity="center"
+                        android:textColor="@color/lloyds_lightgreen"
+                        android:layout_centerVertical="true" />
+
+                    <Spinner
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/yearSpinner"
+                        android:layout_gravity="center"
+                        android:layout_toRightOf="@+id/year"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
 
                 <ExpandableListView
                     android:layout_width="match_parent"

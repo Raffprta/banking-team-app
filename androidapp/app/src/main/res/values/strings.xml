@@ -168,7 +168,7 @@
 
     <!-- Transaction History -->
     <string name="transaction_history_title">Your Transaction History</string>
-    <string name="transaction_history_year">Year</string>
+    <string name="transaction_history_select_year">Select year: </string>
     <string name="transaction_history_no_transactions">There are currently no transactions to show.</string>
 
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
