@@ -12,6 +12,11 @@ section{
     background-color:#006A4D;
 }
 
+#about p {
+    color: black;
+}
+
+
 span.login{
     padding:8px;
     margin-right:12px;
@@ -46,7 +51,7 @@ section{
     background-color:#006A4D;
 }
 
-#features{
+#features, #about{
     background-color:#C4D2DF;
 }
 h1{
@@ -87,17 +92,14 @@ article{
     display:inline;
 }
 
-#slider{
-    margin-left:3px;
-}
 
 /* Media sheets to ensure that the screenshots are dropped after their size gets too large for the screen */
 @media all and (max-width: 1220px) {
-    #features div.img-wrapper{
+    #features, #about div.img-wrapper{
         display:none;
     }
 
-    #features div.features-wrapper{
+    #features, #about div.features-wrapper{
         width:85%;
     }
 }
