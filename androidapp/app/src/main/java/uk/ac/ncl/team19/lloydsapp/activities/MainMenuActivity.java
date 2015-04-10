@@ -254,10 +254,12 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             HelpMenuOverlayDialog help = new HelpMenuOverlayDialog();
 
             // Switch the class you're currently at.
-            switch(fragmentAt){
-                default:
-                    bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_no_class));
-                    help.setArguments(bundle);
+            if(fragmentAt.equals(ProfileFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_profile_page));
+                help.setArguments(bundle);
+            }else{
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_no_class));
+                help.setArguments(bundle);
             }
 
             help.show(getSupportFragmentManager(), "Help Menu");

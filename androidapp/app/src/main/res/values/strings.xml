@@ -198,6 +198,8 @@
 
     <!-- Help manual Strings -->
     <string name="man_no_class">The help menu could not find a class loader.</string>
+    <string name="man_profile_page">Example :: Edit and add manual strings here.</string>
+
 
     <!-- Drop down menu strings for setting goals page -->
     <string-array name="set_for_period_goals">
