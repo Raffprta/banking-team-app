@@ -7,13 +7,13 @@
     <article class="row" id="accounts">
 
         <div class="page-header">
-			<h1>Accounts Information</h1>
-		</div>
-	
-	<p>
-	  This page will show a view of your bank accounts that you have set up with Lloyds bank. Click on an account to see a history of
-	  your past transactions pertaining to that account.
-	</p>
+            <h1>Accounts Information</h1>
+        </div>
+    
+    <p>
+      This page will show a view of your bank accounts that you have set up with Lloyds bank. Click on an account to see a history of
+      your past transactions pertaining to that account.
+    </p>
     {% if accounts %}
             <table class="table table-hover table-condensed accountClick">
             <thead>
@@ -55,12 +55,12 @@
             {% endfor %}
             </tbody>
         </table>
-		{% if transactions %}
-		  {% for account in accounts %}
-		  {% set ctr = loop.index %}
-		  {% for transactionsGroup in transactions %}
-		    {% if loop.index == ctr %}
-			<table class="table table-hover table-condensed hidden" id="transaction{{account.id}}">
+        {% if transactions %}
+          {% for account in accounts %}
+          {% set ctr = loop.index %}
+          {% for transactionsGroup in transactions %}
+            {% if loop.index == ctr %}
+            <table class="table table-hover table-condensed hidden" id="transaction{{account.id}}">
             <thead>
             <tr>
                 <th class="col-md-3">Date</th>
@@ -71,54 +71,54 @@
             </tr>
             </thead>
             <tbody>
-			{% for transaction in transactionsGroup %}
-			  <tr>
-			    <td>{{ transaction.time|date('d/m/Y') }}</td>
-				<td>&pound;{{ transaction.amount/100|number_format(2, '.', ',') }}</td>
-				<td>	
-					{{ transaction.reference }}
-				</td>
-				<td>
-					{% if transaction.tag == TAG_FOODDRINK %}
-					  Food &amp; Drink
-					{% elseif transaction.tag == TAG_CLOTHES %}
-					  Clothing
-					{% elseif transaction.tag == TAG_WITHDRAWAL %}
-					  Withdrawal
-					{% elseif transaction.tag == TAG_ENTERTAINMENT %}
-					  Entertainment
-					{% elseif transaction.tag == TAG_OTHER %}
-					  Other
-					{% elseif transaction.tag == TAG_UTILITY %}
-					  Utilities and Bills
-					{% elseif transaction.tag == TAG_TRANSPORT %}		
-					  Transport
-					{% elseif transaction.tag == TAG_DONATION %}		
-					  Donation
-					{% else %}
-					  No Tag was Found
-					{% endif %}
-				</td>
-				<td>
-				  {% if transaction.from_account_id == account.id %}
-				    <img src="images/out.png" width="30" height="30"/>
-				  {% else %}
-				    <img src="images/in.png" width="30" height="30"/>
-				  {% endif %}
-				</td>
-			    </tr>
-			  {% endfor %}
-			{% endif %}
-			{% endfor %}
-			</tbody>
-			</table>
-		{% endfor %}
-		{% else %}
-			<div class="alert alert-info" role="alert">
-				<p><span class="glyphicon glyphicon-info-sign"></span> This account does not have any transactions.</p>
-			</div>
-		{% endif %}
-		
+            {% for transaction in transactionsGroup %}
+              <tr>
+                <td>{{ transaction.time|date('d/m/Y') }}</td>
+                <td>&pound;{{ transaction.amount/100|number_format(2, '.', ',') }}</td>
+                <td>    
+                    {{ transaction.reference }}
+                </td>
+                <td>
+                    {% if transaction.tag == TAG_FOODDRINK %}
+                      Food &amp; Drink
+                    {% elseif transaction.tag == TAG_CLOTHES %}
+                      Clothing
+                    {% elseif transaction.tag == TAG_WITHDRAWAL %}
+                      Withdrawal
+                    {% elseif transaction.tag == TAG_ENTERTAINMENT %}
+                      Entertainment
+                    {% elseif transaction.tag == TAG_OTHER %}
+                      Other
+                    {% elseif transaction.tag == TAG_UTILITY %}
+                      Utilities and Bills
+                    {% elseif transaction.tag == TAG_TRANSPORT %}        
+                      Transport
+                    {% elseif transaction.tag == TAG_DONATION %}        
+                      Donation
+                    {% else %}
+                      No Tag was Found
+                    {% endif %}
+                </td>
+                <td>
+                  {% if transaction.from_account_id == account.id %}
+                    <img src="images/out.png" width="30" height="30"/>
+                  {% else %}
+                    <img src="images/in.png" width="30" height="30"/>
+                  {% endif %}
+                </td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+            {% endfor %}
+            </tbody>
+            </table>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                <p><span class="glyphicon glyphicon-info-sign"></span> This account does not have any transactions.</p>
+            </div>
+        {% endif %}
+        
     {% else %}
         <div class="alert alert-info" role="alert">
             <p><span class="glyphicon glyphicon-info-sign"></span> This user does not have any accounts set up.</p>
@@ -131,9 +131,9 @@
 
 {% block scripts %}
     {{ parent() }}
-	<script>
-	  $("table.accountClick tr").click(function() {
+    <script>
+      $("table.accountClick tr").click(function() {
         $("#transaction"+$(this).attr("bankValue").toString()).toggle().removeClass('hidden');
       });
-	</script>
+    </script>
 {% endblock %}

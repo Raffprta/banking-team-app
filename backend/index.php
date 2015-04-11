@@ -265,24 +265,24 @@ $klein->respond('GET', '/', function() use ($twig) {
     initRedBean();
 
     if (userIsLoggedIn()) {
-	    // Grab a user bean of the user's bank accounts.
-		$user = R::findOne('user', "id=?", array($_SESSION['userId']));
-		$accounts = R::exportAll($user->xownAccountList);
-		
-		// set up transactions array
-		$transactions = array();
-		$i = 0;
-		
-		foreach ($accounts as $account){
-		   // And of their transaction listing.
-		    $transactions[$i++] = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
+        // Grab a user bean of the user's bank accounts.
+        $user = R::findOne('user', "id=?", array($_SESSION['userId']));
+        $accounts = R::exportAll($user->xownAccountList);
+        
+        // set up transactions array
+        $transactions = array();
+        $i = 0;
+        
+        foreach ($accounts as $account){
+           // And of their transaction listing.
+            $transactions[$i++] = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
                 array(
                     $account['id'],
-					$account['id']
+                    $account['id']
                 )
             ); 
-			
-		}
+            
+        }
         displayPage('logged_in_index.twig', array('accounts' => $accounts, 'transactions' => $transactions));
     } else {
         displayPage('index.twig', null);
@@ -307,8 +307,8 @@ $klein->respond('GET', '/achievements', function ($request, $response, $service)
     initRedBean();
 
     if (isset($_SESSION['userId'])) {
-	    $user = R::findOne('user', "id=?", array($_SESSION['userId']));
-		
+        $user = R::findOne('user', "id=?", array($_SESSION['userId']));
+        
         displayPage('achievements.twig', array('playerId' => str_replace("@", "", $user->player_id)));
     } else {
         displayPage('index.twig', null);
@@ -557,8 +557,8 @@ function createUser($registrationData, $admin) {
     $user->accessLevel = $admin ? ACCESS_LEVEL_ADMINISTRATOR : ACCESS_LEVEL_USER;
     $user->password = password_hash($registrationData['password'], PASSWORD_DEFAULT);
     $user->security = $registrationData['security'];
-	$user->email_notifications = true;
-	$user->push_notifications = true;
+    $user->email_notifications = true;
+    $user->push_notifications = true;
     $user->deviceId = null;
 
     // Save to database

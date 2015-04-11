@@ -102,13 +102,13 @@ select.inline{
 }
 
 #accounts{
-	color:white;
-	background-color:#006A4D;
+    color:white;
+    background-color:#006A4D;
 }
 
 #accounts tr:hover{
-	background-color:black;
-	cursor: pointer;
+    background-color:black;
+    cursor: pointer;
 }
 
 /* Media sheets to ensure that the screenshots are dropped after their size gets too large for the screen */
