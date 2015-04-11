@@ -8,7 +8,12 @@
 //
 //================================================================================
 
-// TODO: Transaction simulation methods
+//================================================================================
+// Initialisation
+//================================================================================
+$this->respond(function() {
+    initRedBean();
+});
 
 //================================================================================
 // Admin: PHPInfo
@@ -71,7 +76,7 @@ $this->respond('GET', '/pushmessages', function () {
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     try {
-        $recipients = R::find('user', 'gcm_id IS NOT NULL');
+        $recipients = R::find('user', 'gcm_id IS NOT NULL AND push_notifications = 1');
         displayPage('pushmessages.twig', array('recipients' => $recipients));
     } catch (Exception $e) {
         displayError($e->getMessage());
@@ -150,6 +155,92 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
         }
 
         displayPage('pushmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: Send email messages page
+//================================================================================
+$this->respond('GET', '/emailmessages', function () {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        $recipients = R::find('user', 'email_notifications = 1');
+        displayPage('emailmessages.twig', array('recipients' => $recipients));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Send email messages
+//================================================================================
+$this->respond('POST', '/emailmessages', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        // Validate recipients and message.
+        $errorMessages = array();
+
+        if (!isset($_POST['recipients'])) {
+            $errorMessages[] = 'Please select one or more recipients for the email message.';
+        }
+        
+        if (!isset($_POST['title']) || empty($_POST['title'])) {
+            $errorMessages[] = 'Please enter a title to the email.';
+        }
+
+        if (!isset($_POST['message']) || empty($_POST['message'])) {
+            $errorMessages[] = 'Please enter a message to send.';
+        }
+
+        // Get all potential recipients from the database
+        $recipientBeans = R::find('user', 'email_notifications = 1');
+
+        if (count($errorMessages) === 0) {
+            // Variables from form POST
+            $recipients = $_POST['recipients'];
+            $title = trim($_POST['title']);
+            $message = trim($_POST['message']);
+
+            $recipientEmails = array();
+
+            // Match checked recipients with database recipients
+            foreach ($recipients as $id => $value) {
+
+                // If checked, add their email to the array
+                if ($value === "on") {
+                    foreach ($recipientBeans as $recipientBean) {
+                        if ($recipientBean->id == $id)
+                            $recipientEmails[] = $recipientBean->email;
+                    }
+                }
+            }
+            
+            $failedEmails = 0;
+            $successfulEmails = 0;
+            
+            // Send the emails
+            foreach($recipientEmails as $emailAddress) {
+                $sent = mail($emailAddress, $title, $message);
+                if (!$sent) {
+                    $failedEmails++;
+                } else {
+                    $successfulEmails++;
+                }
+            }
+            
+            if ($failedEmails != 0) {
+                 $errorMessages[] = sprintf('%d %s not sent successfully.', $failedEmails, $failedEmails == 1 ? 'email was' : 'emails were');
+            } else {
+                 $service->flash(sprintf('%d %s successfully sent!', $successfulEmails, $successfulEmails == 1 ? 'email was' : 'emails were'), FLASH_SUCCESS);
+            }
+            
+        }
+
+        displayPage('emailmessages.twig', array('recipients' => $recipientBeans, 'errorMessages' => $errorMessages));
     } catch (Exception $e) {
         displayError($e->getMessage());
     }
@@ -237,7 +328,7 @@ $this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $res
                         'account' => $bankAccountData
                     )
                 );
-                logActivity('Account creation failed: validation errors.');
+                logActivity('Bank account creation failed: validation errors.');
             }
 
             // We're good, notify success and display correct page
@@ -252,12 +343,20 @@ $this->respond('POST', '/createbankaccount/[i:userId]', function ($request, $res
                 $service->back();
                 $response->send();
 
-                logActivity('Account creation succeeded (' . $bankAccountData['email'] . ').');
+                logActivity('Bank account creation succeeded ('
+                    . $bankAccountData['accountNumber']
+                    . '/'
+                    . $bankAccountData['sortCode1']
+                    . '-'
+                    . $bankAccountData['sortCode2']
+                    . '-'
+                    . $bankAccountData['sortCode3']
+                    . ').');
             }
         }
     } catch (Exception $e) {
         displayError($e->getMessage());
-        logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
+        logActivity('Bank account creation failed because an exception was thrown: ' . $e->getMessage());
     }
 });
 
@@ -281,12 +380,12 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
     checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
 
     $userData = formatUserData($_POST);
-    $errorMessages = validateRegistrationData($userData, true);
+    $errorMessages = validateRegistrationData($userData, true, true);
 
     // Check if user already exists
     if (emailAddressExists($userData['email'])) {
         $errorMessages[] = 'An account already exists for the email address \'' . $userData['email'] . '\'.';
-        logActivity('Account creation failed: account already exists for the email address \'' . $userData['email'] . '\'.');
+        logActivity('User account creation failed: account already exists for the email address \'' . $userData['email'] . '\'.');
     }
 
     // Display any form errors and re-populate registration form
@@ -298,7 +397,7 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
                 'user' => $userData
             )
         );
-        logActivity('Account creation failed: validation errors.');
+        logActivity('User account creation failed: validation errors.');
     }
 
     // We're good, present user with login form and success notice
@@ -314,10 +413,10 @@ $this->respond('POST', '/createuser', function ($request, $response, $service) {
             $service->back();
             $response->send();
 
-            logActivity('Account creation succeeded (' . $userData['email'] . ').');
+            logActivity('User account creation succeeded (' . $userData['email'] . ').');
         } catch (Exception $e) {
             displayError($e->getMessage());
-            logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
+            logActivity('User account creation failed because an exception was thrown: ' . $e->getMessage());
         }
     }
 });
@@ -330,10 +429,11 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
 
     $updatedUserData = formatUserData($_POST);
 
-    // Only validate passwords if both form fields were empty
+    // Only validate passwords or security prompts if both form fields were empty
     $hasNewPassword = empty($updatedUserData['password']) && empty($updatedUserData['passwordVerify']) ? false : true;
+    $hasNewSecurity = empty($updatedUserData['security']) && empty($updatedUserData['securityVerify']) ? false : true;
 
-    $errorMessages = validateRegistrationData($updatedUserData, $hasNewPassword);
+    $errorMessages = validateRegistrationData($updatedUserData, $hasNewPassword, $hasNewSecurity);
 
     // Check the new email address isn't already in use
     if (R::findOne('user', 'id != ? and email = ?', array($request->userId, $updatedUserData['email'])) !== null) {
@@ -359,6 +459,11 @@ $this->respond('POST', '/edituser/[i:userId]', function ($request, $response, $s
                 if ($hasNewPassword === true) {
                     $userBean->password = password_hash($updatedUserData['password'], PASSWORD_DEFAULT);
                 }
+                
+                if ($hasNewSecurity === true) {
+                    $userBean->security = $updatedUserData['security'];
+                }
+                
                 R::store($userBean);
 
                 // Pass success message to edit user page
@@ -405,7 +510,7 @@ $this->respond('POST', '/editbankaccount/[i:accountId]', function ($request, $re
                 $accountBean->accountNumber = $updatedBankAccountData['accountNumber'];
                 $accountBean->sortCode = $updatedBankAccountData['sortCode'];
                 $accountBean->interest = $updatedBankAccountData['interest'];
-                $accountBean->overdraft = $updatedBankAccountData['overdraft'];
+                $accountBean->overdraft = $updatedBankAccountData['overdraft'] * 100;
                 R::store($accountBean);
 
                 // Pass success message to edit user page
@@ -470,6 +575,45 @@ $this->respond('GET', '/deletebankaccount/[i:accountId]', function ($request, $r
         } else {
             displayError('Bank account not found.');
         }
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin: View Activity Log
+//================================================================================
+$this->respond('GET', '/activitylog', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+    // Order the events descending and limit them by 100
+    $sql = 'ORDER BY id DESC LIMIT 100';
+
+    try {
+        // Create an array of beans with the last 100 events
+        $eventBeans = R::findAll('logevent', $sql);
+
+        // Display the page of events
+        displayPage('activitylog.twig', array('events' => $eventBeans));
+    } catch (Exception $e) {
+        displayError($e->getMessage());
+    }
+});
+
+//================================================================================
+// Admin Action: Clear Activity Log
+//================================================================================
+$this->respond('GET', '/clearactivitylog', function ($request, $response, $service) {
+    checkAccessLevel(ACCESS_LEVEL_ADMINISTRATOR);
+
+    try {
+        // Find and delete all events
+        $eventBeans = R::findAll('logevent');
+        R::trashAll($eventBeans);
+
+        // Redirect back to activity log page
+        $service->flash('The activity log was cleared.', FLASH_INFO);
+        $response->redirect('/admin/activitylog');
+        $response->send();
     } catch (Exception $e) {
         displayError($e->getMessage());
     }

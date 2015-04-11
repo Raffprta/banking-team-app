@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,7 +26,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
+import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.push.DBOpenHelper;
 import uk.ac.ncl.team19.lloydsapp.utils.push.GcmIntentService;
 import uk.ac.ncl.team19.lloydsapp.utils.push.LloydsNotification;
@@ -66,7 +74,10 @@ public class PushFragment extends Fragment {
     String regId;
 
     // Logging tag for debugging
-    private static final String TAG = "MainActivity";
+    private final String TAG = getClass().getName();
+
+    // Shared preferences
+    SharedPreferences sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +87,9 @@ public class PushFragment extends Fragment {
         View pushView = inflater.inflate(R.layout.push_layout, container, false);
         // Store context
         context = getActivity().getApplicationContext();
+
+        // Get s.p.
+        sp = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Bail out if Google Play services are unavailable
         if (hasGooglePlayServices()) {
@@ -242,17 +256,43 @@ public class PushFragment extends Fragment {
                     regId = gcm.register(SENDER_ID);
                     msg = "Device registered, registration ID=" + regId;
 
-                    // You should send the registration ID to your server over HTTP,
-                    // so it can use GCM/HTTP or CCS to send messages to your app.
-                    // The request to your server should be authenticated if your app
-                    // is using accounts.
-                    //sendRegistrationIdToBackend();
+                    ProgressDialog.showLoading(PushFragment.this);
+                    final FragmentManager fragmentManager = getFragmentManager();
 
-                    // For this demo: we don't need to send it because the device
-                    // will send upstream messages to a server that echo back the
-                    // message using the 'from' address in the message.
+                    APIConnector ac = new APIConnector(context);
+                    ac.updateGcmId(regId, new Callback<APIResponse>() {
+                        @Override
+                        public void success(APIResponse apiResponse, Response response) {
+                            // Fail silently if not on the same class.
+                            if(!FragmentChecker.checkFragment(fragmentManager, PushFragment.this))
+                                return;
+                            // Remove progress bar
+                            ProgressDialog.removeLoading(PushFragment.this);
 
-                    // Persist the regID - no need to register again.
+                            switch (apiResponse.getStatus()) {
+                                case SUCCESS:
+                                    Log.i(TAG, "GCM ID update successful.");
+                                    break;
+
+                                case ERROR:
+                                    fail(apiResponse.getErrorMessage());
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            fail(error.getMessage());
+                        }
+
+                        private void fail(String errorMessage) {
+                            // Remove progress bar
+                            ProgressDialog.removeLoading(PushFragment.this);
+
+                            Log.e(TAG, "GCM ID update failed: " + errorMessage);
+                        }
+                    });
+
                     storeRegistrationId(context, regId);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();

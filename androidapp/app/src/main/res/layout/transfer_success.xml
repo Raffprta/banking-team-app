@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                         android:text="Current Account"
                         android:layout_column="1"
 
-                         />
+                        android:id="@+id/fromAccount" />
                 </TableRow>
 
                 <TableRow
@@ -99,7 +99,7 @@
                         android:text="12345678"
                         android:ems="10"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/transferAccountNoFrom"
+                        android:id="@+id/fromAccNo"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -129,7 +129,7 @@
                         android:text="00-00-00"
                         android:ems="10"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/transferSortcodeFrom"
+                        android:id="@+id/fromSortCode"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -169,7 +169,7 @@
                         android:text="Current Account"
                         android:layout_column="1"
 
-                        />
+                        android:id="@+id/toAccount" />
                 </TableRow>
                 <TableRow
                     android:layout_width="fill_parent"
@@ -197,7 +197,7 @@
                         android:text="87654321"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:ems="10"
-                        android:id="@+id/transferAccountNoTo"
+                        android:id="@+id/toAccNo"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -227,7 +227,7 @@
                         android:text="00-00-00"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:ems="10"
-                        android:id="@+id/transferSortcodeTo"
+                        android:id="@+id/toSortCode"
                         android:layout_column="1" />
                 </TableRow>
 
@@ -250,7 +250,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="$100.99"
-                        android:id="@+id/transferPaymentSuccess"
+                        android:id="@+id/amount"
                         android:layout_column="1"
                         />
                 </TableRow>

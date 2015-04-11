@@ -56,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/account_type"
+                            android:text="@string/account"
                             android:id="@+id/textView40"
                             android:layout_column="1" />
                     </TableRow>
@@ -71,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="eSavings Account"
-                            android:id="@+id/accountTransTypeFrom"
+                            android:id="@+id/fromAccount"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -99,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="12345678"
-                            android:id="@+id/accountNoTransFrom"
+                            android:id="@+id/fromAccNo"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="00-00-00"
-                            android:id="@+id/accountSortcodeTransFrom"
+                            android:id="@+id/fromSortCode"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -149,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/account_type"
+                            android:text="@string/account"
                             android:id="@+id/textView45"
                             android:layout_column="1" />
                     </TableRow>
@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="Current Account"
-                            android:id="@+id/accountTypeTransTo"
+                            android:id="@+id/toAccount"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="87654321"
-                            android:id="@+id/accountNoTransTo"
+                            android:id="@+id/toAccNo"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -219,9 +219,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="00-00-00"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
                             android:ems="10"
-                            android:id="@+id/accountSortcodeTransTo"
+                            android:id="@+id/toSortCode"
                             android:layout_column="1" />
                     </TableRow>
 
@@ -244,7 +244,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:text="£100.99"
-                            android:id="@+id/amountTrans"
+                            android:id="@+id/amount"
                             android:layout_column="1"
                             android:layout_marginLeft="10dp" />
                     </TableRow>

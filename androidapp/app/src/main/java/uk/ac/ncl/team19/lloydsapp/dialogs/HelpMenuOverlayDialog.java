@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrotta
+ * @author Dale Whinham - minor alteration to simplify Bundle key access
  *
  * Dialog which shows methods for updating individual help items on the screen.
  *
@@ -30,7 +32,7 @@ public class HelpMenuOverlayDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Get message to display
-        text = this.getArguments().getString(getString(R.string.help_bundle));
+        text = this.getArguments().getString(Constants.BUNDLE_KEY_HELP);
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_Transparent);
         LayoutInflater inflater = getActivity().getLayoutInflater();

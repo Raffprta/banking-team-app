@@ -26,6 +26,36 @@
                             <input id="password" name="password" type="password" placeholder="" value="{{ password }}" class="form-control input-md" required="">
                         </div>
                     </div>
+                    
+                    {# Security digit one input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="secDigOne">Security Digit {{ digitOne }} </label>
+                        <input id="digitOne" name="digitOne" type="hidden" value="{{ digitOne }}">
+                        <div class="col-md-2">
+                            <input id="secDigOne" name="secDigOne" maxlength="1" type="password" placeholder="" value="{{ secDigOne }}" class="form-control input-md" required="">
+                        </div>
+                    </div>
+                    
+                    {# Security digit two input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="secDigTwo">Security Digit {{ digitTwo }} </label>
+                        <input id="digitTwo" name="digitTwo" type="hidden" value="{{ digitTwo }}">
+                        <div class="col-md-2">
+                            <input id="secDigTwo" name="secDigTwo" maxlength="1" type="password" placeholder="" value="{{ secDigTwo }}" class="form-control input-md" required="">
+                        </div>
+                    </div>
+                    
+                    {# Security digit three input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="secDigThree">Security Digit {{ digitThree }} </label>
+                        <input id="digitThree" name="digitThree" type="hidden" value="{{ digitThree }}">
+                        <div class="col-md-2">
+                            <input id="secDigThree" name="secDigThree" maxlength="1" type="password" placeholder="" value="{{ secDigThree }}" class="form-control input-md" required="">
+                        </div>
+                    </div>
+
+                    
+                    
 
                     {# Login button #}
                     <div class="form-group">

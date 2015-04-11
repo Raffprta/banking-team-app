@@ -15,11 +15,13 @@ import android.widget.Toast;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
+import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
 
 /**
- * @Author Raffaello Perrotta
+ * @author Raffaello Perrotta
+ * @author Dale Whinham - simplify Bundle key access
  *
  * A fragment which will provide the user an opportunity to leave feedback which is then
  * sent to an administrator email address to be reviewed. The email process is done within the background.
@@ -53,8 +55,8 @@ public class FeedbackFragment extends Fragment{
                 if(rating <= 0.0f || feedback.toString().length() == 0){
                     // Show error as custom dialog.
                     Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), getString(R.string.error_form));
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_form));
+                    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
                     CustomDialog custom = new CustomDialog();
                     custom.setArguments(b);
                     custom.show(getChildFragmentManager(), "Custom Dialog");

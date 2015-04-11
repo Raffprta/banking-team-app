@@ -8,9 +8,6 @@
 //
 //================================================================================
 
-// TODO: User logged-in area with account overview and device pairing status
-// TODO: Auth code from app??
-
 //================================================================================
 // Initialisation
 //================================================================================
@@ -29,17 +26,9 @@ require_once __DIR__.'/config.php';
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/rb.php';
 
-// Init RedBean
-R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, REDBEAN_FREEZE_ENABLED);
-if (!R::testConnection()) {
-    die('Error: Couldn\'t connect to database. Please check configuration.');
-}
-
-// Enable debug mode
-R::debug(REDBEAN_DEBUG_ENABLED);
-
-// Use camelCase for bean export
-R::useExportCase('camel');
+// Init error handlers
+set_error_handler("webErrorHandler");
+set_exception_handler("webExceptionHandler");
 
 // Update request when app is installed in a subdirectory
 $base = dirname($_SERVER['PHP_SELF']);
@@ -66,21 +55,6 @@ $twig->addFunction(new Twig_SimpleFunction('userIdToName', function ($userId) {
     return is_null($user) ? null : $user->firstName . ' ' . $user->surname;
 }));
 
-// Init admin account if one doesn't exist
-$admin = R::findOne('user', 'id = ?', array(1));
-if (is_null($admin)) {
-    $registrationdata = array(
-        'firstName' => 'Administrator',
-        'surname' => '',
-        'email' => 'admin@lloyds.com',
-        'password' => 'admin'
-    );
-
-    createUser($registrationdata, true);
-
-    die('An administrator account has been created.');
-}
-
 //================================================================================
 // Separate routes for admin and API namespaces
 //================================================================================
@@ -93,9 +67,17 @@ foreach(array('admin', 'api') as $controller) {
 // Public Action: Login
 //================================================================================
 $klein->respond('POST', '/login', function ($request, $response, $service) {
+    initRedBean();
+
     // Login details from form
     $username = strtolower(trim($_POST['username']));
     $password = $_POST['password'];
+    $secDigOne = $_POST['secDigOne'];
+    $secDigTwo = $_POST['secDigTwo'];
+    $secDigThree = $_POST['secDigThree'];
+    $digitOne = $_POST['digitOne'];
+    $digitTwo = $_POST['digitTwo'];
+    $digitThree = $_POST['digitThree'];
 
     $errorMessages = array();
 
@@ -110,9 +92,13 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
     if (empty($password)) {
         $errorMessages[] = 'The password was empty.';
     }
+    
+    if(empty($secDigOne) || empty($secDigTwo) || empty($secDigThree)){
+        $errorMessages[] = 'One of the security characters was empty.';
+    }
 
     if (count($errorMessages) > 0) {
-        displayLoginError($errorMessages, $username, $password);
+        displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree);
         logActivity('Login attempt failed: validation error.');
         exit;
     }
@@ -121,8 +107,28 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
     $user = R::findOne('user', 'email = ?', array($username));
     if (is_null($user) || !password_verify($password, $user->password)) {
         $errorMessages[] = 'The username or password was incorrect.';
-        displayLoginError($errorMessages, $username, $password);
+        displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree);
         logActivity('Login attempt failed: incorrect username and/or password.');
+        exit;
+    } 
+    
+    // Boolean to represent whether a security code was successfully validated
+    $validated = false;
+    
+    // Get the set security code
+    $securityCode = $user->security;
+    
+    // If all digits are correct, validate as true.
+    if($securityCode[$digitOne-1] === $secDigOne
+       && $securityCode[$digitTwo-1] === $secDigTwo
+       && $securityCode[$digitThree-1] === $secDigThree){
+       $validated = true;
+    }
+    
+    if (!$validated) {
+        $errorMessages[] = 'The security digits were entered incorrectly.';
+        displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree);
+        logActivity('Login attempt failed: The security digits were entered incorrectly.');
         exit;
     } else {
         // Login successful; store session information
@@ -139,8 +145,10 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
 // Public Action: Register account
 //================================================================================
 $klein->respond('POST', '/register', function ($request, $response, $service) use ($twig) {
+    initRedBean();
+
     $registrationData = formatUserData($_POST);
-    $errorMessages = validateRegistrationData($registrationData, true);
+    $errorMessages = validateRegistrationData($registrationData, true, true);
 
     // Check if user already exists
     if (emailAddressExists($registrationData['email'])) {
@@ -193,8 +201,15 @@ $klein->respond('GET', '/login', function ($request, $response, $service) {
         $response->header('Location', BASE_URL);
         $response->send();
     } else {
+        // Generate three random numbers in the range acceptable and sort them.
+        $randomNumbers = uniqueRandomNumbersWithinRange(1, MINIMUM_SECURITY_LENGTH, 3);
+        sort($randomNumbers);
         // Display login form
-        displayPage('login.twig', null);
+        displayPage('login.twig', array(
+                'digitOne' => $randomNumbers[0],
+                'digitTwo' => $randomNumbers[1],
+                'digitThree' => $randomNumbers[2]
+            ));
     }
 });
 
@@ -232,6 +247,7 @@ $klein->onHttpError(function ($code, $router) use ($twig) {
 // Private Action: Logout
 //================================================================================
 $klein->respond('GET', '/logout', function ($request, $response, $service) {
+    initRedBean();
     checkAuthentication();
     logActivity($_SESSION['email'] . ' logged out.');
     destroySession();
@@ -243,9 +259,55 @@ $klein->respond('GET', '/logout', function ($request, $response, $service) {
 //================================================================================
 // Public: Default page
 //================================================================================
-$klein->respond('GET', '/', function () use ($twig) {
+$klein->respond('GET', '/', function() use ($twig) {
+    initRedBean();
+
     if (userIsLoggedIn()) {
-        displayPage('logged_in_index.twig', null);
+        // Grab a user bean of the user's bank accounts.
+        $user = R::findOne('user', "id=?", array($_SESSION['userId']));
+        $accounts = R::exportAll($user->xownAccountList);
+        
+        // set up transactions array
+        $transactions = array();
+        $i = 0;
+        
+        foreach ($accounts as $account){
+           // And of their transaction listing.
+            $transactions[$i++] = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
+                array(
+                    $account['id'],
+                    $account['id']
+                )
+            ); 
+            
+        }
+        displayPage('logged_in_index.twig', array('accounts' => $accounts, 'transactions' => $transactions));
+    } else {
+        displayPage('index.twig', null);
+    }
+});
+
+//================================================================================
+// Public: Leaderboards page
+//================================================================================
+$klein->respond('GET', '/leaderboards', function ($request, $response, $service) {
+    if (isset($_SESSION['userId'])) {
+        displayPage('leaderboards.twig', null);
+    } else {
+        displayPage('index.twig', null);
+    }
+});
+
+//================================================================================
+// Public: Achievements page
+//================================================================================
+$klein->respond('GET', '/achievements', function ($request, $response, $service) {
+    initRedBean();
+
+    if (isset($_SESSION['userId'])) {
+        $user = R::findOne('user', "id=?", array($_SESSION['userId']));
+        
+        displayPage('achievements.twig', array('playerId' => str_replace("@", "", $user->player_id)));
     } else {
         displayPage('index.twig', null);
     }
@@ -255,8 +317,54 @@ $klein->respond('GET', '/', function () use ($twig) {
 $klein->dispatch();
 
 //================================================================================
+// Error handlers
+//================================================================================
+function webErrorHandler($errno, $errstr, $file, $line) {
+    $error = 'Internal server error. Code ' . $errno . ': ' . $errstr;
+    error_log($error);
+    displayError($error);
+    exit;
+}
+
+function webExceptionHandler($exception) {
+    $error = 'Internal server error. ' . $exception->getMessage();
+    error_log($error);
+    displayError($error);
+}
+
+//================================================================================
 // Utility functions
 //================================================================================
+function initRedBean() {
+    // Init RedBean
+    R::setup('mysql:host=' . DATABASE_HOST . '; dbname=' . DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD, REDBEAN_FREEZE_ENABLED);
+    if (!R::testConnection()) {
+        throw new Exception('Couldn\'t connect to database. Please check backend configuration.');
+    }
+
+    // Enable debug mode
+    R::debug(REDBEAN_DEBUG_ENABLED);
+
+    // Use camelCase for bean export
+    R::useExportCase('camel');
+
+    // Create default admin account if one doesn't exist
+    $admin = R::load('user', 1);
+    if (is_null($admin)) {
+        $registrationdata = array(
+            'firstName' => 'Administrator',
+            'surname' => '',
+            'email' => 'admin@lloyds.com',
+            'password' => 'admin',
+            'security' => 'lloyds'
+        );
+
+        createUser($registrationdata, true);
+
+        die('An administrator account has been created.');
+    }
+}
+
 function userIsLoggedIn() {
     $user = null;
     if (isset($_SESSION['userId'])) {
@@ -308,8 +416,10 @@ function destroySession() {
     session_regenerate_id(true);
 }
 
-function displayLoginError($errorMessages, $username, $password) {
-    displayPage('login.twig', array('username' => $username, 'password' => $password, 'errorMessages' => $errorMessages));
+function displayLoginError($errorMessages, $username, $password, $secDigOne, $secDigTwo, $secDigThree, $digitOne, $digitTwo, $digitThree) {
+    displayPage('login.twig', array('username' => $username, 'password' => $password, 'errorMessages' => $errorMessages,
+                                    'secDigOne' => $secDigOne, 'secDigTwo' => $secDigTwo, 'secDigThree' => $secDigThree,
+                                    'digitOne' => $digitOne, 'digitTwo' => $digitTwo, 'digitThree' => $digitThree));
 }
 
 function displayError($error) {
@@ -322,7 +432,9 @@ function formatUserData($postData) {
         'surname' => trim($postData['surname']),
         'email' => strtolower(trim($postData['email'])),
         'password' => $postData['password'],
-        'passwordVerify' => $postData['passwordVerify']
+        'passwordVerify' => $postData['passwordVerify'],
+        'security' => $postData['security'],
+        'securityVerify' => $postData['securityVerify']
     );
 }
 
@@ -343,7 +455,7 @@ function formatBankAccountData($postData) {
     );
 }
 
-function validateRegistrationData($formattedRegistrationData, $checkPasswords) {
+function validateRegistrationData($formattedRegistrationData, $checkPasswords, $checkSecurity) {
     $errorMessages = array();
 
     // Validate email address
@@ -370,7 +482,19 @@ function validateRegistrationData($formattedRegistrationData, $checkPasswords) {
         if ($formattedRegistrationData['password'] !== $formattedRegistrationData['passwordVerify']) {
             $errorMessages[] = 'The passwords you entered do not match.';
         }
+        
     }
+    
+    if($checkSecurity === true){
+        if (strlen($formattedRegistrationData['security']) < MINIMUM_SECURITY_LENGTH) {
+            $errorMessages[] = 'Please ensure the security prompt contains a minimum of ' . MINIMUM_SECURITY_LENGTH . ' characters.';
+        }
+
+        if ($formattedRegistrationData['security'] !== $formattedRegistrationData['securityVerify']) {
+            $errorMessages[] = 'The security prompts you entered do not match.';
+        }
+    }
+    
 
     return $errorMessages;
 }
@@ -380,9 +504,9 @@ function validateBankAccountData($formattedBankAccountData, $editMode)
     $errorMessages = array();
 
     // Validate account type
-    if ($formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_CURRENT
-        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_SAVINGS
-        && $formattedBankAccountData['accountType'] !== ACCOUNT_TYPE_STUDENT
+    if ($formattedBankAccountData['type'] !== ACCOUNT_TYPE_CURRENT
+        && $formattedBankAccountData['type'] !== ACCOUNT_TYPE_SAVINGS
+        && $formattedBankAccountData['type'] !== ACCOUNT_TYPE_STUDENT
     ) {
         $errorMessages[] = 'The account type was invalid.';
     }
@@ -430,6 +554,9 @@ function createUser($registrationData, $admin) {
     $user->surname = $registrationData['surname'];
     $user->accessLevel = $admin ? ACCESS_LEVEL_ADMINISTRATOR : ACCESS_LEVEL_USER;
     $user->password = password_hash($registrationData['password'], PASSWORD_DEFAULT);
+    $user->security = $registrationData['security'];
+    $user->email_notifications = true;
+    $user->push_notifications = true;
     $user->deviceId = null;
 
     // Save to database
@@ -447,8 +574,8 @@ function createBankAccount($user, $accountData) {
     $account->accountNumber = $accountData['accountNumber'];
     $account->sortCode = $accountData['sortCode'];
     $account->interest = $accountData['interest'];
-    $account->overdraft = $accountData['overdraft'];
-    $account->balance = 0.0;
+    $account->overdraft = $accountData['overdraft'] * 100;
+    $account->balance = 0;
 
     // Associate account with user
     $account->user = $user;
@@ -463,6 +590,7 @@ function createTransaction($fromAccount, $toAccount, $amount, $reference, $tag) 
     $transaction = R::dispense('transaction');
 
     // Assign fields
+    $transaction->time = time();
     $transaction->fromAccount = $fromAccount;
     $transaction->toAccount = $toAccount;
     $transaction->amount = $amount;
@@ -539,4 +667,10 @@ function emailAddressExists($email) {
 
 function bankAccountNumberExistsForSortCode($sortCode, $accountNumber) {
     return R::findOne('account', 'sort_code = ? AND account_number = ?', array($sortCode, $accountNumber)) !== null;
+}
+
+function uniqueRandomNumbersWithinRange($min, $max, $quantity) {
+    $numbers = range($min, $max);
+    shuffle($numbers);
+    return array_slice($numbers, 0, $quantity);
 }

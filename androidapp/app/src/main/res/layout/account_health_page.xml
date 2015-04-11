@@ -8,7 +8,28 @@
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- This is shown programmatically -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/progressBarAPI"
+            android:layout_gravity="center"
+            android:layout_marginTop="150dp"
+             />
 
+        <!-- This is shown programmatically -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/errorOnHealth"
+            android:layout_gravity="center"
+            android:textColor="@color/lloyds_darkgreen"
+            android:gravity="center"
+            android:paddingTop="50dp"
+            android:visibility="gone" />
 
         <GridLayout
             android:layout_width="fill_parent"
@@ -22,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/lloyds_white" >
+
 
                 <ProgressBar
                     style="@android:style/Widget.ProgressBar.Horizontal"
@@ -230,7 +252,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/donateProgressBar"
-                    android:progress="65"
+                    android:progress="0"
                     android:progressDrawable="@drawable/goals_donate_progress_bar"
                     android:layout_below="@+id/donateStartView"
                     android:layout_alignLeft="@+id/donateStartView"
@@ -239,6 +261,15 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp" />
+
+                <GridLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="3dp"
+                    android:layout_below="@+id/textView75"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/lloyds_lightergreen_transparent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"></GridLayout>
 
             </RelativeLayout>
 

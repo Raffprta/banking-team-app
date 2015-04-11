@@ -70,6 +70,26 @@
                             <input id="passwordVerify" name="passwordVerify" type="password" placeholder="" class="form-control input-md">
                         </div>
                     </div>
+                    
+                    {# Security prompt input #}
+                    <div class="form-group">
+                        {% if editMode %}
+                            <label class="col-md-4 control-label" for="security">Security Prompt (leave blank to keep current)</label>
+                        {% else %}
+                            <label class="col-md-4 control-label" for="password">Security Prompt</label>
+                        {% endif %}
+                        <div class="col-md-5">
+                            <input id="security" name="security" type="password" placeholder="Minimum 6 characters" value="{{ registrationData.security }}" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    {# Security prompt confirmation input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="securityVerify">Confirm security prompt</label>
+                        <div class="col-md-5">
+                            <input id="securityVerify" name="securityVerify" type="password" placeholder="" value="{{ registrationData.securityVerify }}" class="form-control input-md">
+                        </div>
+                    </div>
 
                     {# Create/save changes button #}
                     <div class="form-group">

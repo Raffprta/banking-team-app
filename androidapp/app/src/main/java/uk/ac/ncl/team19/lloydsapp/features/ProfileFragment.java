@@ -3,6 +3,7 @@ package uk.ac.ncl.team19.lloydsapp.features;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -16,19 +17,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.os.AsyncTask;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.Games;
-import com.google.android.gms.plus.Plus;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.GamesStatusCodes;
 import com.google.android.gms.games.achievement.Achievement;
 import com.google.android.gms.games.achievement.AchievementBuffer;
 import com.google.android.gms.games.achievement.Achievements;
-import com.google.android.gms.games.GamesStatusCodes;
-
+import com.google.android.gms.plus.Plus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,17 +36,25 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.PaymentConfirmFragment;
+import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
+import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.notifications.Toaster;
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 /**
  * @author Yessengerey Bolatov (XML Designs) and Raffaello Perrotta
+ * @author Dale Whinham - simplify Bundle key access
  *
  * Profile page fragment, which contains hotlinks as well as all gamification aspects.
  */
@@ -57,6 +65,10 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
     private GoogleApiClient mGoogleApiClient;
     private View profileView;
     private AchievementBuffer buff = null;
+    private final String TAG = "PLAY UPDATE";
+
+    private SharedPreferences sp;
+    private ProgressBar hpBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,26 +79,18 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Inflate the default view for the profile page.
         profileView = inflater.inflate(R.layout.profile_page, container, false);
 
-        // Get the Health Bar.
-        final ProgressBar hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
+        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        // Determine what colour to set.
-        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
-        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
-        }else{
-            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
-        }
+        // Get the Health Bar.
+        hpBar = (ProgressBar) profileView.findViewById(R.id.hpBar);
+
 
         // Show the percentage points of the current health
         hpBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString(getString(R.string.custom_bundle), getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
+                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.your_prog) + " " + Integer.toString(hpBar.getProgress()) + "%");
                 CustomDialog custom = new CustomDialog();
                 custom.setArguments(b);
                 custom.show(getChildFragmentManager(), "Custom Dialog");
@@ -119,9 +123,8 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
                 // Determine whether goals were set or not, load the setting of goals if not.
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-                if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+                if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
                     fragmentManager.beginTransaction().replace(R.id.container, new HealthFragment()).addToBackStack(null).commit();
                 }else{
                     fragmentManager.beginTransaction().replace(R.id.container, new SetGoalsFragment()).addToBackStack(null).commit();
@@ -201,13 +204,16 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // The shared preferences key/value pair system.
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        // Set the username
+        ((TextView)profileView.findViewById(R.id.usernameProfile)).setText(sp.getString(Constants.SP_USERNAME, null));
+
         // Set up status  and bio with stored value.
-        if(sp.contains(getString(R.string.sp_status))){
-            statusEditText.setText(sp.getString(getString(R.string.sp_status), null));
+        if(sp.contains(Constants.SP_STATUS)){
+            statusEditText.setText(sp.getString(Constants.SP_STATUS, null));
         }
 
-        if(sp.contains(getString(R.string.sp_bio))){
-            bioEditText.setText(sp.getString(getString(R.string.sp_bio), null));
+        if(sp.contains(Constants.SP_BIO)){
+            bioEditText.setText(sp.getString(Constants.SP_BIO, null));
         }
 
         // Listeners for when the status is updated
@@ -219,7 +225,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sp.edit().putString(getString(R.string.sp_status), statusEditText.getText().toString()).apply();
+                sp.edit().putString(Constants.SP_STATUS, statusEditText.getText().toString()).apply();
             }
 
             @Override
@@ -237,7 +243,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                sp.edit().putString(getString(R.string.sp_bio), bioEditText.getText().toString()).apply();
+                sp.edit().putString(Constants.SP_BIO, bioEditText.getText().toString()).apply();
             }
 
             @Override
@@ -271,9 +277,59 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         // Debug
         Log.i("Google Play", "Services Connected.");
 
-        // Remove loading bar
-        ProgressDialog.removeLoading(ProfileFragment.this);
+        // Register the current player.
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String playerId = Games.Players.getCurrentPlayerId(mGoogleApiClient);
+        String registeredPlayer = sp.getString(Constants.SP_PLAYID, null);
 
+        // Get the fragment manager
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        if(registeredPlayer == null || !registeredPlayer.equals(playerId)){
+            sp.edit().putString(Constants.SP_PLAYID, playerId).apply();
+            // Update on the server side
+            APIConnector ac = new APIConnector(getActivity());
+            ac.updatePlayId(playerId, new Callback<APIResponse>() {
+                @Override
+                public void success(APIResponse apiResponse, Response response) {
+
+                    // Fail silently if not on the same class.
+                    if(!FragmentChecker.checkFragment(fragmentManager, ProfileFragment.this))
+                        return;
+
+                    switch (apiResponse.getStatus()) {
+                        case SUCCESS:
+                            Log.i(TAG, "Player ID update successful.");
+                            break;
+
+                        case ERROR:
+                            Log.e(TAG, "Player ID update failed: " + apiResponse.getErrorMessage());
+                            showErrorDialog(apiResponse.getErrorMessage());
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    showErrorDialog(error.getMessage());
+                }
+
+                private void showErrorDialog(String errorMessage) {
+                    // Make a new error dialog and display it
+                    Bundle b = new Bundle();
+                    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, errorMessage);
+                    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
+                    CustomDialog custom = new CustomDialog();
+                    custom.setArguments(b);
+                    custom.show(getActivity().getSupportFragmentManager(), "Custom Dialog");
+                }
+
+            });
+
+        }
+
+        // Remove loading bar whatever the case.
+        ProgressDialog.removeLoading(ProfileFragment.this);
+        // Update the achievement progress.
         updateAchievements();
 
 
@@ -294,35 +350,33 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Toaster toaster = new Toaster(getActivity());
 
-        // TODO wearable notifications are only shown if enabled on the settings.
-
         // If a login was detected then first timer can be unlocked - the shared preference must not contain an instance of it being unlocked.
-        if(sp.getString(getString(R.string.sp_first_login), null) != null && !sp.getBoolean(getString(R.string.sp_ach_first_login), false)){
+        if(sp.getString(Constants.SP_FIRST_LOGIN, null) != null && !sp.getBoolean(Constants.SP_ACH_FIRST_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_first_timer));
             toaster.grabToastForWearable(getString(R.string.first_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
-            sp.edit().putBoolean(getString(R.string.sp_ach_first_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_FIRST_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.GOLD_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_gold_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.GOLD_LOGIN && !sp.getBoolean(Constants.SP_ACH_GOLD_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_gold_login));
             toaster.grabToastForWearable(getString(R.string.gold_login_unlock), getString(R.string.wearable_preview), R.drawable.gold_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_gold_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_GOLD_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.SILVER_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_silver_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.SILVER_LOGIN && !sp.getBoolean(Constants.SP_ACH_SILVER_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_silver_login));
             toaster.grabToastForWearable(getString(R.string.silver_login_unlock), getString(R.string.wearable_preview), R.drawable.silver_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_silver_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_SILVER_LOGIN, true).apply();
         }
 
-        if(sp.getInt(getString(R.string.sp_logins), 0) >= Constants.BRONZE_LOGIN && !sp.getBoolean(getString(R.string.sp_ach_bronze_login), false)){
+        if(sp.getInt(Constants.SP_LOGINS, 0) >= Constants.BRONZE_LOGIN && !sp.getBoolean(Constants.SP_ACH_BRONZE_LOGIN, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_bronze_login));
             toaster.grabToastForWearable(getString(R.string.bronze_login_unlock), getString(R.string.wearable_preview), R.drawable.bronze_login);
-            sp.edit().putBoolean(getString(R.string.sp_ach_bronze_login), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_BRONZE_LOGIN, true).apply();
         }
 
         // Calculate how many days the user has been a member for.
-        String dateThen = sp.getString(getString(R.string.sp_first_login), null);
+        String dateThen = sp.getString(Constants.SP_FIRST_LOGIN, null);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
         int daysBetween = 0;
@@ -335,46 +389,46 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
         // Debug
         Log.i("TIME PASSED", Long.toString(daysBetween));
-        Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(getString(R.string.sp_last_date_inc),0)));
+        Log.i("TIME PASSED LAST", Integer.toString(sp.getInt(Constants.SP_LAST_DATE_INC,0)));
 
-        int daysNow = sp.getInt(getString(R.string.sp_last_date_inc), 0);
+        int daysNow = sp.getInt(Constants.SP_LAST_DATE_INC, 0);
 
         // If they are not equal we can increment the value
         if(daysBetween != daysNow){
             // Store the days between value
-            sp.edit().putInt(getString(R.string.sp_last_date_inc), daysBetween).apply();
+            sp.edit().putInt(Constants.SP_LAST_DATE_INC, daysBetween).apply();
             // Increment the achievement appropriately.
             Games.Achievements.increment(mGoogleApiClient, getString(R.string.achievement_old_timer), daysBetween-daysNow);
         }
 
         // Unlock the achievement after a month passes
-        if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(getString(R.string.sp_ach_old_timer), false)){
+        if(daysBetween >= Constants.OLD_TIMER && !sp.getBoolean(Constants.SP_ACH_OLD_TIMER, false)){
             toaster.grabToastForWearable(getString(R.string.old_timer_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
-            sp.edit().putBoolean(getString(R.string.sp_ach_old_timer), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_OLD_TIMER, true).apply();
         }
 
         // Check to see if a branch has been encountered (true)
-        if(sp.getBoolean(getString(R.string.sp_ach_branch_explorer), false) && !sp.getBoolean(getString(R.string.sp_ach_branch_explorer_mutex), false)){
+        if(sp.getBoolean(Constants.SP_ACH_BRANCH_EXPLORER, false) && !sp.getBoolean(Constants.SP_ACH_BRANCH_EXPLORER_MUTEX, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_branch_explorer));
             toaster.grabToastForWearable(getString(R.string.branch_finder_unlock), getString(R.string.wearable_preview), R.drawable.branch_explorer);
             // Lock the mutex so this achievement can't be unlocked again.
-            sp.edit().putBoolean(getString(R.string.sp_ach_branch_explorer_mutex), true).apply();
+            sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER_MUTEX, true).apply();
         }
 
         // Magic number is in fact a random achievement
         Random r = new Random();
-        int magic_no_attempt = r.nextInt(Constants.MAGIC_NO_SEEDER);
+        int magicNoAttempt = r.nextInt(Constants.MAGIC_NO_SEEDER);
 
         // Test to see if the magic number is achieved
-        if(magic_no_attempt == Constants.MAGIC_NO)
-            sp.edit().putBoolean(getString(R.string.sp_magic_no), true).apply();
+        if(magicNoAttempt == Constants.MAGIC_NO)
+            sp.edit().putBoolean(Constants.SP_MAGIC_NO, true).apply();
 
         // Check to see if the magic number has been encountered (true)
-        if(sp.getBoolean(getString(R.string.sp_magic_no), false) && !sp.getBoolean(getString(R.string.sp_magic_no_mutex), false)){
+        if(sp.getBoolean(Constants.SP_MAGIC_NO, false) && !sp.getBoolean(Constants.SP_MAGIC_NO_MUTEX, false)){
             Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_magic_number));
             toaster.grabToastForWearable(getString(R.string.magic_no_unlock), getString(R.string.wearable_preview), R.drawable.ic_action_help);
             // Lock the mutex so this achievement can't be unlocked again.
-            sp.edit().putBoolean(getString(R.string.sp_magic_no_mutex), true).apply();
+            sp.edit().putBoolean(Constants.SP_MAGIC_NO_MUTEX, true).apply();
         }
 
         // If there is no achievements buffer.
@@ -508,6 +562,24 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
         }
 
 
+    }
+
+    @Override
+    public void onViewStateRestored (Bundle savedInstanceState){
+        super.onViewStateRestored(savedInstanceState);
+        // Set its value, if it has been calculated - at default this is 100.
+        hpBar.setProgress(sp.getInt(Constants.SP_ACCOUNTS_HP, 100));
+
+        // Determine what colour to set.
+        if(hpBar.getProgress() >= Constants.HEALTH_GOOD){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar));
+        }else if(hpBar.getProgress() >= Constants.HEALTH_AVG && hpBar.getProgress() < Constants.HEALTH_GOOD){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_medium));
+        }else if(hpBar.getProgress() >= Constants.HEALTH_POOR && hpBar.getProgress() < Constants.HEALTH_AVG){
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_poor));
+        }else{
+            hpBar.setProgressDrawable(getResources().getDrawable(R.drawable.hpbar_dismal));
+        }
     }
 
     @Override

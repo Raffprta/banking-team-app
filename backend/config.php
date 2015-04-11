@@ -12,9 +12,10 @@ define('BASE_URL', 'http://team19.ngrok.com/');        // Root URL of this app (
 define('DATABASE_HOST', 'localhost');           // Database location
 define('DATABASE_NAME', 'lloydsapp');           // Database name
 define('DATABASE_USERNAME', 'root');            // Database username
-define('DATABASE_PASSWORD', '');                // Database password
+define('DATABASE_PASSWORD', 'Coronary616');                // Database password
 
 define('MINIMUM_PASSWORD_LENGTH', 6);           // Minimum password length
+define('MINIMUM_SECURITY_LENGTH', 6);           // Minimum security prompt length
 define('WEB_SESSION_EXPIRY_TIME', 3600);        // Time in seconds before a website user is automatically logged-out (60 * 60 = 1 hour)
 define('DEVICE_TOKEN_EXPIRY_TIME', 2592000);    // Time in seconds before a device token expires (60 * 60 * 24 * 30 = 30 days)
 
@@ -43,14 +44,15 @@ define('ACCOUNT_TYPE_SAVINGS',          1);     // Savings account
 define('ACCOUNT_TYPE_STUDENT',          2);     // Student account
 
 // Tags for transaction types
-define('TAG_FOODDRINK',                 0);     // Food and Drinks
-define('TAG_CLOTHES',                   1);     // Clothes
-define('TAG_WITHDRAWAL',                2);     // Withdrawals
-define('TAG_ENTERTAINMENT',             3);     // Entertainment
-define('TAG_OTHER',                     4);     // Other
-define('TAG_UTILITY',                   5);     // Utilities
-define('TAG_TRANSPORT',                 6);     // Transport
-define('TAG_DONATION',                  7);     // Donation
+define('TAG_UNTAGGED',                  0);     // Untagged transaction
+define('TAG_FOODDRINK',                 1);     // Food and Drinks
+define('TAG_CLOTHES',                   2);     // Clothes
+define('TAG_WITHDRAWAL',                3);     // Withdrawals
+define('TAG_ENTERTAINMENT',             4);     // Entertainment
+define('TAG_OTHER',                     5);     // Other
+define('TAG_UTILITY',                   6);     // Utilities
+define('TAG_TRANSPORT',                 7);     // Transport
+define('TAG_DONATION',                  8);     // Donation
 
 // Klein flash message types
 define('FLASH_SUCCESS',         'success');     // Success message
@@ -63,5 +65,5 @@ define('API_ERROR',             'error');       // Error condition
 
 // Push notification type tags
 define('PUSH_TYPE_HEARTBEAT',        'heartbeat');  // Notifications informing the app a transaction has occurred etc.
-define('PUSH_TYPE_OFFERS',           'offer');     // Notifications about special offers
+define('PUSH_TYPE_OFFERS',           'offer');      // Notifications about special offers
 define('PUSH_TYPE_INFO',             'info');       // General information notifications

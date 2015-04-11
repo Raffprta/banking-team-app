@@ -1,0 +1,41 @@
+{% extends "base.twig" %}
+
+{% block title %}Send Email Messages{% endblock %}
+
+{% block content %}
+    <form class="form-horizontal" action="admin/emailmessages" method="POST">
+    <div class="page-header">
+        <h1>Send Email Messages</h1>
+        <input id="title" ROWS="15" name="title" type="text" placeholder="Enter title here" class="form-control inline" required> </textarea>
+        <textarea id="message" ROWS="15" name="message" type="text" placeholder="Enter your email message here" style="margin-top:15px" class="form-control inline" required></textarea>
+        <button id="send" name="send" class="btn btn-primary col-md-offset-5" style="margin-top:15px"><span class="glyphicon glyphicon-send"></span> Send to Selected</button>
+    </div>
+
+    {% if recipients %}
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th class="col-md-1">Select</th>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">Surname</th>
+                <th class="col-md-4">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for recipient in recipients %}
+                <tr>
+                    <td><input type="checkbox" name="recipients[{{ recipient.id }}]" checked="checked"></td>
+                    <td>{{ recipient.firstName }}</td>
+                    <td>{{ recipient.surname }}</td>
+                    <td>{{ recipient.email }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <p><span class="glyphicon glyphicon-info-sign"></span> No users with paired devices available.</p>
+        </div>
+    {% endif %}
+    </form>
+{% endblock %}

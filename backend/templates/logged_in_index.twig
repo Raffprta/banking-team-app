@@ -4,53 +4,136 @@
 
 {% block content %}
 
-    <article class="row" id="intro">
+    <article class="row" id="accounts">
 
-        <h1>HTML Ipsum Presents</h1>
-
-        <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas.
-            Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-            egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et
-            sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit
-            amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
-            enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.
-        </p>
-
-        <h2>Header Level 2</h2>
-
-        <ol>
-            <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-            <li>Aliquam tincidunt mauris eu risus.</li>
-        </ol>
-
-        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-
-        <h3>Header Level 3</h3>
-
-        <ul>
-            <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-            <li>Aliquam tincidunt mauris eu risus.</li>
-        </ul>
-
-        <h4>Header Level 4</h4>
-        <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas.
-            Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-            egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et
-            sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit
-            amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
-            enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.
-        </p>
-
-        <h5>Header Level 5</h5>
-        <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas.
-            Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-            egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et
-            sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit
-            amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
-            enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.
-        </p>
-
+        <div class="page-header">
+            <h1>Accounts Information</h1>
+        </div>
+    
+    <p>
+      This page will show a view of your bank accounts that you have set up with Lloyds bank. Click on an account to see a history of
+      your past transactions pertaining to that account.
+    </p>
+    {% if accounts %}
+            <table class="table table-hover table-condensed accountClick big">
+            <thead>
+            <tr>
+                <th class="col-md-1">Type</th>
+                <th class="col-md-2">Account number</th>
+                <th class="col-md-2">Sort code</th>
+                <th class="col-md-2">Nickname</th>
+                <th class="col-md-1">Balance</th>
+                <th class="col-md-2">Overdraft</th>
+                <th class="col-md-2">Interest Rate</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr bankValue="{{account.id}}">
+                    <td>
+                        {% if account.accountType == constant('ACCOUNT_TYPE_CURRENT') %}
+                            Current
+                        {% elseif account.accountType == constant('ACCOUNT_TYPE_SAVINGS') %}
+                            Savings
+                        {% elseif account.accountType == constant('ACCOUNT_TYPE_STUDENT') %}
+                            Student
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td>{{ account.accountNumber }}</td>
+                    <td>
+                        {# Split sort code into three #}
+                        {% set sortCodeSplit = account.sortCode|split('', 2) %}
+                        {{ sortCodeSplit[0] }}-{{ sortCodeSplit[1] }}-{{ sortCodeSplit[2] }}
+                    </td>
+                    <td>{{ account.nickname }}</td>
+                    <td>&pound; {{ (account.balance / 100)|number_format(2, '.', ',') }}</td>
+                    <td>&pound; {{ (account.overdraft / 100)|number_format(2, '.', ',') }}</td>
+                    <td>{{ account.interest|number_format(1, '.', ',') }} &percnt;</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if transactions %}
+          {% for account in accounts %}
+          {% set ctr = loop.index %}
+          {% for transactionsGroup in transactions %}
+            {% if loop.index == ctr %}
+            <table class="table table-hover table-condensed hidden" id="transaction{{account.id}}">
+            <thead>
+            <tr>
+                <th class="col-md-3">Date</th>
+                <th class="col-md-2">Amount</th>
+                <th class="col-md-3">Reference</th>
+                <th class="col-md-2">Tag</th>
+                <th class="col-md-2">Ingoing/Outgoing</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactionsGroup %}
+              <tr>
+                <td>{{ transaction.time|date('d/m/Y') }}</td>
+                <td>&pound;{{ transaction.amount/100|number_format(2, '.', ',') }}</td>
+                <td>    
+                    {{ transaction.reference }}
+                </td>
+                <td>
+                    {% if transaction.tag == TAG_FOODDRINK %}
+                      Food &amp; Drink
+                    {% elseif transaction.tag == TAG_CLOTHES %}
+                      Clothing
+                    {% elseif transaction.tag == TAG_WITHDRAWAL %}
+                      Withdrawal
+                    {% elseif transaction.tag == TAG_ENTERTAINMENT %}
+                      Entertainment
+                    {% elseif transaction.tag == TAG_OTHER %}
+                      Other
+                    {% elseif transaction.tag == TAG_UTILITY %}
+                      Utilities and Bills
+                    {% elseif transaction.tag == TAG_TRANSPORT %}        
+                      Transport
+                    {% elseif transaction.tag == TAG_DONATION %}        
+                      Donation
+                    {% else %}
+                      No Tag was Found
+                    {% endif %}
+                </td>
+                <td>
+                  {% if transaction.from_account_id == account.id %}
+                    <img src="images/out.png" width="30" height="30"/>
+                  {% else %}
+                    <img src="images/in.png" width="30" height="30"/>
+                  {% endif %}
+                </td>
+                </tr>
+              {% endfor %}
+            {% endif %}
+            {% endfor %}
+            </tbody>
+            </table>
+        {% endfor %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                <p><span class="glyphicon glyphicon-info-sign"></span> This account does not have any transactions.</p>
+            </div>
+        {% endif %}
+        
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <p><span class="glyphicon glyphicon-info-sign"></span> This user does not have any accounts set up.</p>
+        </div>
+    {% endif %}
 
     </article>
 
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script>
+      $("table.accountClick tr").click(function() {
+        $("#transaction"+$(this).attr("bankValue").toString()).toggle().removeClass('hidden');
+      });
+    </script>
 {% endblock %}

@@ -26,6 +26,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
  * @author Raffaello Perrota, XML designs by Yessengerey Bolatov
+ * @author Dale Whinham - simplify Bundle key access
  */
 public class SetGoalsFragment extends Fragment{
 
@@ -35,6 +36,19 @@ public class SetGoalsFragment extends Fragment{
 
         super.onCreate(savedInstanceState);
         final View goalsView = inflater.inflate(R.layout.set_goals_page, container, false);
+
+        Bundle bundle = getArguments();
+
+        // If this page was loaded due to goals expiry, then check the bundle.
+        if(bundle != null){
+            if(bundle.getBoolean(Constants.BUNDLE_KEY_GOALS_EXPIRY)){
+                Bundle b = new Bundle();
+                b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.goals_expired));
+                CustomDialog custom = new CustomDialog();
+                custom.setArguments(b);
+                custom.show(getChildFragmentManager());
+            }
+        }
 
         // Get all respective fields
         final Spinner goalsSpinner = (Spinner)goalsView.findViewById(R.id.timeSpinner);
@@ -50,7 +64,7 @@ public class SetGoalsFragment extends Fragment{
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // If goals are already set then disable all editable views until reset button clicked.
-        if(sp.getBoolean(getString(R.string.sp_goals_set), false)){
+        if(sp.getBoolean(Constants.SP_GOALS_SET, false)){
             // Fixes android bug on views
             goalsSpinner.setEnabled(false);
             goalsSpinner.setClickable(false);
@@ -138,8 +152,8 @@ public class SetGoalsFragment extends Fragment{
                     // Use dialog to display the message over setError as setError is graphically unappealing
                     // on radio buttons
                     Bundle b = new Bundle();
-                    b.putString(getString(R.string.custom_bundle), getString(R.string.err_no_selection));
-                    b.putString(getString(R.string.custom_type_bundle), getString(R.string.custom_colour_type_red));
+                    b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.err_no_selection));
+                    b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
                     CustomDialog custom = new CustomDialog();
                     custom.setArguments(b);
                     custom.show(getChildFragmentManager(), "Custom Dialog");
@@ -149,40 +163,40 @@ public class SetGoalsFragment extends Fragment{
 
 
                 // If the input was correct - set that the goals were indeed set
-                sp.edit().putBoolean(getString(R.string.sp_goals_set), true).apply();
+                sp.edit().putBoolean(Constants.SP_GOALS_SET, true).apply();
 
                 // Set the date starting from.
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String dateSet = sdf.format(new Date());
-                sp.edit().putString(getString(R.string.sp_goals_start), dateSet).apply();
+                sp.edit().putString(Constants.SP_GOALS_START, dateSet).apply();
 
                 // Set whether it is weekly or monthly.
                 int weeklyOrMonthly = goalsSpinner.getSelectedItemPosition() + 1;
-                sp.edit().putInt(getString(R.string.sp_goals_set_for), weeklyOrMonthly).apply();
+                sp.edit().putInt(Constants.SP_GOALS_SET_FOR, weeklyOrMonthly).apply();
 
                 // Set spend amount
-                sp.edit().putFloat(getString(R.string.sp_goals_spend), Float.parseFloat(spendAmount.getText().toString())).apply();
+                sp.edit().putFloat(Constants.SP_GOALS_SPEND, Float.parseFloat(spendAmount.getText().toString())).apply();
 
                 // Set save amount
-                sp.edit().putFloat(getString(R.string.sp_goals_save), Float.parseFloat(saveAmount.getText().toString())).apply();
+                sp.edit().putFloat(Constants.SP_GOALS_SAVE, Float.parseFloat(saveAmount.getText().toString())).apply();
 
                 // Set overdraft amount
-                sp.edit().putFloat(getString(R.string.sp_goals_overdraft), Float.parseFloat(overdraftAmount.getText().toString())).apply();
+                sp.edit().putFloat(Constants.SP_GOALS_OVERDRAFT, Float.parseFloat(overdraftAmount.getText().toString())).apply();
 
                 // Set whether to donate or not
                 if (radioButtonID == R.id.setGoalsYesCheckBox)
-                    sp.edit().putBoolean(getString(R.string.sp_goals_donate), true).apply();
+                    sp.edit().putBoolean(Constants.SP_GOALS_DONATE, true).apply();
                 else
-                    sp.edit().putBoolean(getString(R.string.sp_goals_donate), false).apply();
+                    sp.edit().putBoolean(Constants.SP_GOALS_DONATE, false).apply();
 
                 // Various debug methods
-                Log.i("Debug Is the goal set?", Boolean.toString(sp.getBoolean(getString(R.string.sp_goals_set), false)));
-                Log.i("Debug date", sp.getString(getString(R.string.sp_goals_start), null));
-                Log.i("Debug weeklyOrMonthly", Integer.toString(sp.getInt(getString(R.string.sp_goals_set_for), -1)));
-                Log.i("Debug save amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_save), -1)));
-                Log.i("Debug spend amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_spend), -1)));
-                Log.i("Debug overdraft amount", Float.toString(sp.getFloat(getString(R.string.sp_goals_overdraft), -1)));
-                Log.i("Debug are we donating?", Boolean.toString(sp.getBoolean(getString(R.string.sp_goals_donate), false)));
+                Log.i("Debug Is the goal set?", Boolean.toString(sp.getBoolean(Constants.SP_GOALS_SET, false)));
+                Log.i("Debug date", sp.getString(Constants.SP_GOALS_START, null));
+                Log.i("Debug weeklyOrMonthly", Integer.toString(sp.getInt(Constants.SP_GOALS_SET_FOR, -1)));
+                Log.i("Debug save amount", Float.toString(sp.getFloat(Constants.SP_GOALS_SAVE, -1)));
+                Log.i("Debug spend amount", Float.toString(sp.getFloat(Constants.SP_GOALS_SPEND, -1)));
+                Log.i("Debug overdraft amount", Float.toString(sp.getFloat(Constants.SP_GOALS_OVERDRAFT, -1)));
+                Log.i("Debug are we donating?", Boolean.toString(sp.getBoolean(Constants.SP_GOALS_DONATE, false)));
 
                 // Make a new fragment transaction to go to the health page.
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -199,7 +213,7 @@ public class SetGoalsFragment extends Fragment{
 
             @Override
             public void onClick(View v) {
-                sp.edit().putBoolean(getString(R.string.sp_goals_set), false).apply();
+                sp.edit().putBoolean(Constants.SP_GOALS_SET, false).apply();
 
                 // Reload page via fragment transaction
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

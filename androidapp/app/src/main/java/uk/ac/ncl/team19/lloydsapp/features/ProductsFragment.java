@@ -23,8 +23,7 @@ import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
  */
 public class ProductsFragment extends Fragment{
 
-    private final String LLOYDS_URL = "http://www.lloydsbank.com/M/default.asp";
-    private ProgressDialog loading = new ProgressDialog();
+    private final String LLOYDS_URL = "file:///android_asset/lloyds/index.html";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

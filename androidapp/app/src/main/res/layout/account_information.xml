@@ -21,7 +21,7 @@
             android:layout_marginTop="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/gridLayout3"
+            android:id="@+id/container"
             android:layout_marginBottom="20dp">
 
             <GridLayout
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/acc_current"
-                    android:id="@+id/textView11"
+                    android:id="@+id/accountType"
                     android:layout_row="0"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_lightergreen"
@@ -53,9 +53,9 @@
                     android:inputType="textPersonName"
                     android:text="@string/acc_filler_john_smith"
                     android:ems="10"
-                    android:id="@+id/editText6"
+                    android:id="@+id/userName"
                     android:editable="false"
-                    android:layout_row="1"
+                    android:layout_row="2"
                     android:layout_column="0"
                     android:textColor="@color/lloyds_darkgreen_menu"
                     android:enabled="false" />
@@ -63,21 +63,21 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText5"
-                    android:layout_row="2"
+                    android:id="@+id/accountNumber"
+                    android:layout_row="3"
                     android:editable="false"
                     android:enabled="false"
                     android:layout_column="0"
                     android:inputType="text"
                     android:textColor="@color/lloyds_darkgreen_menu"
-                    android:text="@string/account_info_number" />
+                    android:text="@string/acc_number_filler" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:id="@+id/textView15"
-                    android:layout_row="5"
+                    android:id="@+id/balance"
+                    android:layout_row="6"
                     android:layout_column="0"
                     android:textColor="#ff3f3f3f"
                     android:text="@string/account_info_balance" />
@@ -85,8 +85,8 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText7"
-                    android:layout_row="3"
+                    android:id="@+id/sortCode"
+                    android:layout_row="4"
                     android:editable="false"
                     android:enabled="false"
                     android:layout_column="0"
@@ -97,15 +97,15 @@
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
-                    android:layout_row="4"
+                    android:layout_row="5"
                     android:layout_column="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textView14"
-                    android:layout_row="6"
+                    android:id="@+id/availableFunds"
+                    android:layout_row="7"
                     android:layout_column="0"
                     android:textColor="@color/hint_foreground_material_light"
                     android:text="@string/account_info_avail_funds" />
@@ -113,10 +113,10 @@
             </GridLayout>
 
             <Button
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info_transac_button"
-                android:id="@+id/makeTransaction"
+                android:id="@+id/viewTransactions"
                 android:background="#ffffffff"
                 android:paddingLeft="10dp"
                 android:paddingTop="0dp"
@@ -129,10 +129,11 @@
                 android:layout_alignStart="@+id/gridLayout3"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
 
             <Button
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/makePayment"
                 android:background="#ffffffff"
@@ -142,16 +143,17 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="0dp"
                 android:text="@string/account_info_make_pay_button"
-                android:layout_alignTop="@+id/makeTransaction"
+                android:layout_alignTop="@+id/viewTransactions"
                 android:layout_alignRight="@+id/gridLayout3"
                 android:layout_alignEnd="@+id/gridLayout3"
                 android:layout_row="2"
                 android:layout_column="0"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
 
             <Button
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info_transfer_button"
                 android:id="@+id/makeTransfer"
@@ -169,10 +171,11 @@
                 android:layout_alignStart="@+id/makePayment"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:layout_marginLeft="12dp" />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
 
             <Button
-                android:layout_width="290dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info_health_button"
                 android:id="@+id/accountHealthButton"
@@ -185,7 +188,8 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="0dp"
                 android:background="@color/lloyds_acc_info_green_button"
-                android:textColor="@color/lloyds_white" />
+                android:textColor="@color/lloyds_white"
+                android:layout_marginRight="12dp" />
         </GridLayout>
 
     </RelativeLayout>

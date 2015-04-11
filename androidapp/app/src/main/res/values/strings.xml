@@ -3,6 +3,17 @@
 
     <string name="app_name">Lloyds App</string>
 
+    <!-- Backend/API strings -->
+    <string name="api_key">93d2e2620252446abbf63a82d3c3fb81</string>
+    <string name="api_base_url">http://team19.ngrok.com/api</string>
+    <string name="api_auth">authenticate</string>
+    <string name="api_settings">updatesettings</string>
+    <string name="api_gcmid">updategcmid</string>
+    <string name="api_playid">updateplayid</string>
+    <string name="api_bank_account_details">bankaccountdetails</string>
+
+    <string name="api_error_connection">Couldn\'t connect to server</string>
+
     <!-- For each of the menu sections. -->
     <string name="profile_page">Profile</string>
     <string name="accounts_dashboard_page">Accounts Dashboard</string>
@@ -12,6 +23,7 @@
     <string name="location_page">Location Services</string>
     <string name="account_health_page">Account Health</string>
     <string name="log_off_dialog">Log Off</string>
+    <string name="settings">Settings</string>
 
     <!-- For the page identifiers -->
     <string name="set_goals_page">Set Goals</string>
@@ -67,12 +79,15 @@
     <string name="transfer_successful">Transfer Successful</string>
     <string name="transfer_failed">Transfer Failed</string>
 
-    <string name="account_type">Account Type</string>
-    <string name="name">Name</string>
+    <string name="account">Account</string>
+    <string name="reference">Reference:</string>
+    <string name="reference_opt">Reference: (optional)</string>
+    <string name="reference_hint">e.g. \'Groceries\'</string>
     <string name="from">From:</string>
     <string name="to">To:</string>
-    <string name="account_number">Account Number</string>
-    <string name="sort_code">Sort Code</string>
+    <string name="account_type">Account Type:</string>
+    <string name="account_number">Account Number:</string>
+    <string name="sort_code">Sort Code:</string>
     <string name="amount">Amount:</string>
 
     <string name="tran_continue">Continue</string>
@@ -84,8 +99,6 @@
     <string name="payment_failed_info">Sorry, your payment has failed. Please check all the account details and try again. </string>
     <string name="tag">Tag:</string>
     <string name="tag_appear">(The tag will appear in your history)</string>
-
-
 
     <!-- For dialogs -->
     <string name="logoff">Are you sure?</string>
@@ -102,7 +115,7 @@
     <string name="rating_feedback">Provide feedback about the application:</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="submit_success">Your feedback was successfully submitted.</string>
-    <string name="team_email">csc2-team19@ncl.ac.uk</string>
+    <string name="team_email">team.19.service@gmail.com</string>
     <string name="error_form">Please ensure you have given a rating or some feedback.</string>
     <string name="error_email">A network error when attempting to send the email occurred.</string>
     <string name="email_subject">Feedback Form</string>
@@ -124,21 +137,24 @@
     <string name="google_play_sign_in">Sign into Google Play</string>
     <string name="google_play_sign_out">Sign out from Google Play</string>
 
-    <!-- Account information fillers -->
+    <!-- Account information -->
+    <string name="acc_current">Current Account</string>
+    <string name="acc_savings">Savings Account</string>
+    <string name="acc_student">Student Account</string>
+
     <string name="acc_page_title">Your Accounts</string>
     <string name="int_stu_account">International Student Account</string>
-    <string name="acc_current">Current Account</string>
+
+    <string name="acc_number_filler">12345678</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
     <string name="acc_funds_filler">£999.99</string>
-    <string name="acc_avail_funds_filler">Available funds: £899.99</string>
-    <string name="acc_saving_filler">Savings Account</string>
 
     <string name="acc_filler_john_smith">John Smith</string>
-    <string name="acco_number_info">Account Number: 12345678</string>
-    <string name="account_info_number">12345678</string>
-    <string name="account_info_balance">Balance: £999.99</string>
+    <string name="account_number_info">Account Number: 12345678</string>
+
+    <string name="account_info_balance">Balance:</string>
     <string name="account_info_sort_code">00-00-00</string>
-    <string name="account_info_avail_funds">Available funds: £899.99</string>
+    <string name="account_info_avail_funds">Available funds:</string>
 
     <string name="account_info_profile_button">Profile details</string>
     <string name="account_info_acc_button">Account details</string>
@@ -147,6 +163,13 @@
     <string name="account_info_pend_button">Pending payments</string>
     <string name="account_info_make_pay_button">Make a payment</string>
     <string name="account_info_health_button">Account Health</string>
+
+    <string name="account_info_no_accounts">You currently don\'t have any bank accounts.\n\nPlease visit your local Lloyds branch to set up a bank account.</string>
+
+    <!-- Transaction History -->
+    <string name="transaction_history_title">Your Transaction History</string>
+    <string name="transaction_history_select_year">Select year: </string>
+    <string name="transaction_history_no_transactions">There are currently no transactions to show.</string>
 
     <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
 
@@ -173,29 +196,10 @@
     <string name="bio">Bios:</string>
     <string name="sign_into_google_play">Sign into Google Play</string>
 
-
-    <!-- Bundle Key pair -->
-    <string name="help_bundle">HELP</string>
-    <string name="custom_bundle">CUSTOM</string>
-    <string name="custom_type_bundle">TYPE</string>
-    <string name="custom_colour_type_red">RED</string>
-
-    <string name="login_user_bundle">LOGIN</string>
-    <string name="login_pass_bundle">PASS</string>
-
-    <string name="from_account_pay_bundle">FROM_ACC</string>
-    <string name="to_name_pay_bundle">TO_NAME</string>
-    <string name="acc_no_pay_bundle">ACC_NO_TO</string>
-    <string name="sort_code_pay_bundle">SORT_CODE_TO</string>
-    <string name="amount_pay_bundle">AMOUNT</string>
-
-    <string name="from_account_transfer_bundle">FROM_ACC_TRANS</string>
-    <string name="to_account_transfer_bundle">TO_ACC_TRANS</string>
-    <string name="amount_transfer_bundle">AMOUNT_TRANS</string>
-
-
     <!-- Help manual Strings -->
     <string name="man_no_class">The help menu could not find a class loader.</string>
+    <string name="man_profile_page">Example :: Edit and add manual strings here.</string>
+
 
     <!-- Drop down menu strings for setting goals page -->
     <string-array name="set_for_period_goals">
@@ -203,51 +207,28 @@
         <item>Week</item>
     </string-array>
 
-    <!-- Drop Down menu strings list of accounts -->
-    <string-array name="user_accounts">
-        <item>Current Account</item>
-        <item>eSavings Account</item>
-        <item>Mega Account</item>
+    <!-- Drop Down menu strings list of tags -->
+    <string-array name="tags">
+        <item>&lt; Untagged &gt;</item>
+        <item>Food &amp; Drink</item>
+        <item>Clothes</item>
+        <item>Cash</item>
+        <item>Entertainment</item>
+        <item>Other</item>
+        <item>Utility</item>
+        <item>Transport</item>
+        <item>Donation</item>
     </string-array>
 
-    <!-- Drop down menu strings for Years in Transaction history -->
-    <string-array name="transactions_years">
-        <item>2015</item>
-        <item>2014</item>
-        <item>2013</item>
-        <item>2012</item>
-    </string-array>
-
-
-
-    <!-- Shared preferences Key Strings -->
-    <string name="sp_status">STATUS</string>
-    <string name="sp_bio">BIO</string>
-    <string name="sp_logins">LOGINS</string>
-    <string name="sp_first_login">FIRST_LOGIN</string>
-    <string name="sp_ach_branch_explorer">ACH_BRANCH_EXP</string>
-    <string name="sp_ach_branch_explorer_mutex">ACH_BRANCH_EXP_MUTEX</string>
-    <string name="sp_ach_first_login">ACH_FIRST_LOGIN</string>
-    <string name="sp_ach_gold_login">ACH_GOLD_LOGIN</string>
-    <string name="sp_ach_silver_login">ACH_SILVER_LOGIN</string>
-    <string name="sp_ach_bronze_login">ACH_BRONZE_LOGIN</string>
-    <string name="sp_ach_old_timer">ACH_OLD_TIMER</string>
-    <string name="sp_last_date_inc">LAST_INC</string>
-    <string name="sp_magic_no">MAGIC_NO</string>
-    <string name="sp_magic_no_mutex">MAGIC_NO_MUTEX</string>
-
-    <string name="sp_goals_set">GOALS_SET</string>
-
-    <string name="sp_goals_set_for">GOALS_SET_FOR</string>
-    <string name="sp_goals_start">GOALS_START</string>
-    <string name="sp_goals_spend">GOALS_SPEND</string>
-    <string name="sp_goals_save">GOALS_SAVE</string>
-    <string name="sp_goals_overdraft">GOALS_OVERDRAFT</string>
-    <string name="sp_goals_donate">GOALS_DONATE</string>
+    <!-- Shared preferences Key Strings mapped to Settings XML -->
+    <string name="sp_notif_email">NOTIF_EMAIL</string>
+    <string name="sp_notif_push">NOTIF_PUSH</string>
+    <string name="sp_notif_wearable">NOTIF_WEARABLE</string>
 
     <!-- Health page fillers -->
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
+    <string name="goals_expired">Your goals for this period have expired, you can now set new goals for the next period!</string>
 
     <!-- Login / Security error messages -->
     <string name="err_empty_login">Your username cannot be empty. Please enter your username correctly.</string>
@@ -263,6 +244,7 @@
     <string name="err_sc_not_no">The sort-code must only contain numerical digits or dashes.</string>
     <string name="err_payment_empty">The payment must not be empty. Please enter an amount to pay.</string>
     <string name="err_payment_wrong_form">The payment must be a GBP valid decimal amount. i.e. ## or ##.## are both permissible.</string>
+    <string name="err_no_other_accounts">You must hold at least one other bank account with Lloyds in order to use the Transfer feature.</string>
 
     <!-- Push notification ic_formats-->
     <string name="ic_offers">[ic_offers]</string>
@@ -290,7 +272,19 @@
     <string name="err_health_od_min">The overdraft amount must be greater than £</string>
     <string name="err_no_selection">You must select whether you wish to donate or not.</string>
 
+    <!-- Settings -->
+    <string name="category_notif">Notification Settings</string>
+    <string name="notif_email">Receive Email Notifications</string>
+    <string name="notif_email_summary">Un-check this value if you wish to not receive email notifications from the Lloyds Bank.</string>
+    <string name="notif_push">Receive Push Notifications</string>
+    <string name="notif_push_summary">Un-check this value if you wish to not receive push notifications from the Lloyds Bank directly to your phone.</string>
+    <string name="notif_wearable">Receive Wearable Notifications</string>
+    <string name="notif_wearable_summary">Un-check this value if you wish to not receive notifications to your wearable device from the Lloyds bank if you have one configured.</string>
 
-
+    <!-- Strings for the error handler -->
+    <string name="error_network">A network error occurred. Please check your device\'s Internet connectivity and try again.\n\nTechnical info:\n</string>
+    <string name="error_conversion">A (de)serialisation error occurred. Please contact support.\n\nTechnical info:\n</string>
+    <string name="error_http">Lloyds Bank is currently experiencing technical difficulties. Please try again shortly. If the problem still occurs, please contact support.\n\nTechnical info:\n</string>
+    <string name="error_unexpected">An unexpected error occurred. Please contact support.\n\nTechnical info:\n</string>
 </resources>
 
