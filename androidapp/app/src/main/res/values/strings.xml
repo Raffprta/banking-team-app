@@ -197,8 +197,19 @@
     <string name="sign_into_google_play">Sign into Google Play</string>
 
     <!-- Help manual Strings -->
-    <string name="man_no_class">The help menu could not find a class loader.</string>
-    <string name="man_profile_page">Example :: Edit and add manual strings here.</string>
+    <string name="man_no_class">The menu is too tired to provide any help</string>
+    <string name="man_profile_page">Press Health Bar to check account health percentage\n\nPress Account Dashboard to access account information\n\nPress Account Health to set goals\n\nPress Sign Into Google Play to enable scoreboard\n\nTap status/ bio to edit your own story</string>
+    <string name="man_acc_dashboard">Press Current Account to manage current account\n\nPress Saving Account to manage saving account</string>
+    <string name="man_current_acc">Press Transactions to view transaction history\n\nPress Make A Payment to pay bill\n\nPress Transfer funds to transfer between accounts\n\nPress Account Health to set/view goals</string>
+    <string name="man_transactions">Press Year to view transactions in different years\n\nPress Month to view transactions in particular month</string>
+    <string name="man_mk_payment">Press account to choose to pay from which account\n\nPress Continue to go confirm page\n\nPress Cancel to cancel payment</string>
+    <string name="man_transfer">Tap From/To to choose account\n\nTap Amount to enter amount\n\nTap Tag to choose tags\n\nTap Continue to go confirm page\n\nTap Cancel to go back</string>
+    <string name="man_feedback">Tap the stars to rate the app\n\nTap the grey area to write your comment\n\nTap Submit Feedback to submit</string>
+    <string name="man_map">Tap Find Branches to find nearby branches\n\nTap Find ATMs to find nearby ATMs\n\nTap and input postcode to find branches using postcode</string>
+    <string name="man_noti">Swipe to discard notifications</string>
+    <string name="man_set_goals">Press Set For to set Month/Week\n\nPress set goals to confirm settings\n\nPress reset to reset all inputs\n\nPress Cancel to go back</string>
+    <string name="man_health">Tap the Health Bar to view the Health percentage\n\nTap Set Goals to set new goals\n\n Tap Back To Profile to go back to profile</string>
+    <string name="man_confirm">Tap confirm to make the transfer\n\nTap cancel to go back</string>
 
 
     <!-- Drop down menu strings for setting goals page -->

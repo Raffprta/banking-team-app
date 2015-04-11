@@ -22,6 +22,12 @@ import java.util.Date;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.accounts.AccountsDashboardFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.AccountsInfoFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.MakePaymentFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.PaymentConfirmFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.TransactionsFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.TransferConfirmFragment;
+import uk.ac.ncl.team19.lloydsapp.accounts.TransferFundsFragment;
 import uk.ac.ncl.team19.lloydsapp.dialogs.HelpMenuOverlayDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.LogOffDialog;
 import uk.ac.ncl.team19.lloydsapp.drawer.NavigationDrawerFragment;
@@ -256,6 +262,54 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             // Switch the class you're currently at.
             if(fragmentAt.equals(ProfileFragment.class.getSimpleName())){
                 bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_profile_page));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(PushFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_noti));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(AccountsDashboardFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_acc_dashboard));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(AccountsInfoFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_current_acc));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(TransactionsFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_transactions));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(MakePaymentFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_mk_payment));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(TransferFundsFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_transfer));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(FeedbackFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_feedback));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(MapsFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_map));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(SetGoalsFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_set_goals));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(HealthFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_health));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(PaymentConfirmFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_confirm));
+                help.setArguments(bundle);
+            }
+            else if(fragmentAt.equals(TransferConfirmFragment.class.getSimpleName())){
+                bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_confirm));
                 help.setArguments(bundle);
             }else{
                 bundle.putString(Constants.BUNDLE_KEY_HELP, getString(R.string.man_no_class));
