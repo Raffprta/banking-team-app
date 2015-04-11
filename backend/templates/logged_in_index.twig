@@ -15,7 +15,7 @@
 	  your past transactions pertaining to that account.
 	</p>
     {% if accounts %}
-            <table class="table table-hover table-condensed">
+            <table class="table table-hover table-condensed accountClick">
             <thead>
             <tr>
                 <th class="col-md-2">Type</th>
@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             {% for account in accounts %}
-                <tr>
+                <tr bankValue="{{account.id}}">
                     <td>
                         {% if account.accountType == constant('ACCOUNT_TYPE_CURRENT') %}
                             Current
@@ -60,7 +60,7 @@
 		  {% set ctr = loop.index %}
 		  {% for transactionsGroup in transactions %}
 		    {% if loop.index == ctr %}
-			<table class="table table-hover table-condensed">
+			<table class="table table-hover table-condensed hidden" id="transaction{{account.id}}">
             <thead>
             <tr>
                 <th class="col-md-3">Date</th>
@@ -127,4 +127,13 @@
 
     </article>
 
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+	<script>
+	  $("table.accountClick tr").click(function() {
+        $("#transaction"+$(this).attr("bankValue").toString()).toggle().removeClass('hidden');
+      });
+	</script>
 {% endblock %}
