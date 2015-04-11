@@ -101,6 +101,16 @@ select.inline{
     margin-left:3px;
 }
 
+#accounts{
+	color:white;
+	background-color:#006A4D;
+}
+
+#accounts tr:hover{
+	background-color:black;
+	cursor: pointer;
+}
+
 /* Media sheets to ensure that the screenshots are dropped after their size gets too large for the screen */
 @media all and (max-width: 1220px) {
     #features div.img-wrapper{

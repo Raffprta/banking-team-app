@@ -265,7 +265,25 @@ $klein->respond('GET', '/', function() use ($twig) {
     initRedBean();
 
     if (userIsLoggedIn()) {
-        displayPage('logged_in_index.twig', null);
+	    // Grab a user bean of the user's bank accounts.
+		$user = R::findOne('user', "id=?", array($_SESSION['userId']));
+		$accounts = R::exportAll($user->xownAccountList);
+		
+		// set up transactions array
+		$transactions = array();
+		$i = 0;
+		
+		foreach ($accounts as $account){
+		   // And of their transaction listing.
+		    $transactions[$i++] = R::find('transaction', 'from_account_id = ? OR to_account_id = ?',
+                array(
+                    $account['id'],
+					$account['id']
+                )
+            ); 
+			
+		}
+        displayPage('logged_in_index.twig', array('accounts' => $accounts, 'transactions' => $transactions));
     } else {
         displayPage('index.twig', null);
     }
