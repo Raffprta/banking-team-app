@@ -65,10 +65,6 @@ article:nth-child(even) p{
     font-size:1.4em;
 }
 
-section.container{
-    height:100%;
-}
-
 div.img-container{
     margin-top:15px;
 }
