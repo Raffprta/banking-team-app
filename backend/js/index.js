@@ -9,7 +9,6 @@ var transition_at = 0;
  *
  * Images loaded from 1 -> n+1
  *
- * -- Apologies for quick ugly code, it was 11pm when I realised this --
  * @param no_images The number of images to be loaded
  * @param img_name the prefix name of the image such as slide_
  * @param img_ext the file extension such as .png

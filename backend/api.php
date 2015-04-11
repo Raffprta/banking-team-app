@@ -19,8 +19,6 @@
 // If the request was successful, 'status' will contain 'success'.
 // Otherwise 'status' will contain 'error', and another field, 'errorMessage' will contain the reason.
 
-// TODO: Retrieve game state for a user
-// TODO: Store/update game state for a user
 
 // Log file tag
 define('TAG', 'API: ');
