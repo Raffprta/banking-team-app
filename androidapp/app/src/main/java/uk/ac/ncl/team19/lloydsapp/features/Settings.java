@@ -45,6 +45,10 @@ public class Settings extends PreferenceFragment {
         sp.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                // Fail silently if not on the same class - this is because shared preferences listeners are registered globally.
+                if(!FragmentChecker.checkFragment(fragmentManager, Settings.this))
+                    return;
+
                 ProgressDialog.showLoading(Settings.this);
                 APIConnector ac = new APIConnector(getActivity());
                 ac.updateSettings(
