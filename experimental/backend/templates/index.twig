@@ -1,0 +1,110 @@
+{% extends "base.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {# Idea: this index.twig is only rendered if the user is NOT logged in, i.e. this functions as the promotion page
+    If the user is logged in, then some PHP code will display them a different login page, this check is done in index.php #}
+
+    <article class="row" id="intro">
+        {# Hide the image on extra small devices #}
+        <div class="col-md-12 text-center hidden-xs img-container">
+            <img src="images/logo.png" title="The Logo" alt="The Logo"/>
+        </div>
+
+        <div class="col-md-12 text-center">
+            <h1>How Healthy is your bank account?</h1>
+        </div>
+
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <p class="big">
+               The application aims to educate students about money management by creating a fun
+               and engaging experience that rewards them for good budgeting and sensible spending patterns.
+            </p>
+        </div>
+
+        {# The download would theoretically take us to the Play Store, but since it's not published
+             we'd probably just include a direct link to download the built .apk (app executable) #}
+
+        <div class="col-md-4 col-md-offset-4 text-center button-container">
+            <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-download"></span> Download Now
+            </button>
+            <button type="button" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-info-sign"></span> Read On
+            </button>
+        </div>
+
+    </article>
+
+    <article class="row" id="features">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <h1>Our Features: Interactive User Experience, Integrated Google Maps and 100% Secure Mobile Banking</h1>
+
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-1 inline features-wrapper">
+
+                <span class="glyphicon glyphicon-user"></span><h3> Educative and Encourages Personal Financing</h3>
+                <p>
+                    Transform your banking experience to being fully in control of your budgets and expenditures with
+                    handy graphs and pie charts. Receive alerts as soon as transactions are completed; monitor your
+                    bank account's health in real-time whilst keeping on top of your financial information with interactive
+                    help guides!
+                </p>
+
+                <span class="glyphicon glyphicon-th"></span><h3> Clean, easy to use Interface</h3>
+                <p>
+                    A user interface based on Google's latest "material design" philosophies, leading to an easy to use
+                    and crisp looking application!
+                </p>
+
+                <img class="" src="images/play.png" alt="Google Play Compatible" title="Google Play Compatible" />
+                <h3>
+                    Google Play Compatible
+                </h3>
+                <p>
+                    Ever wanted to improve your banking experience? Bored of monotonous applications? Our application
+                    provides full integration with Google Play -- no extra setup is required other than posessing a Google
+                    account on your phone!
+                </p>
+
+                <span class="glyphicon glyphicon-star"></span><h3> Making Banking Enjoyable</h3>
+                <p>
+                    Leaderboards, achievements, unlockables and customisable skins! Our application has it all, personalise
+                    your banking experience!
+                </p>
+
+                <span class="glyphicon glyphicon-cog"></span><h3> Secure and Fast</h3>
+                <p>
+                    Security is of the utmost importance in banking. This application will encrypt all the transmitted
+                    data from a secure central database as well as its requests preventing any chances of malicious users
+                    getting at your data. The application offers banking standard protection and sign-in so your
+                    details are always secure!
+                </p>
+
+                <span class="glyphicon glyphicon-map-marker"></span><h3> Locate your nearest Branch or ATM!</h3>
+                <p>
+                    Always on the go? Unsure where your nearest ATM or Lloyd's Branch is located? No worries! This application
+                    provides a one click method of showing you a Google Maps integrated listing of all the nearest branches available and
+                    directions to get there!
+                </p>
+
+            </div>
+            <div class="col-md-4 inline img-wrapper hidden-xs">
+                <button class="btn btn-default btn-lg btn-lg" id="goLeft"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                <img id="slider" src="images/slide_1.png" width="237" height="450" title="Slider Images" alt="Slider Images" />
+                <button class="btn btn-default btn-lg" id="goRight"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            </div>
+
+        </div>
+    </article>
+
+    {# By no means does this mean the articles have ended, feel free to add in your own if there are any relevant
+         landing page sections you can think of :-) #}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="js/index.js"></script>
+{% endblock %}
