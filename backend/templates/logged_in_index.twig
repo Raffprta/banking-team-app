@@ -74,7 +74,7 @@
             {% for transaction in transactionsGroup %}
               <tr>
                 <td>{{ transaction.time|date('d/m/Y') }}</td>
-                <td>&pound;{{ transaction.amount/100|number_format(2, '.', ',') }}</td>
+                <td>&pound;{{ (transaction.amount/100)|number_format(2, '.', ',') }}</td>
                 <td>    
                     {{ transaction.reference }}
                 </td>
