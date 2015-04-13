@@ -79,24 +79,24 @@
                     {{ transaction.reference }}
                 </td>
                 <td>
-                    {% if transaction.tag == TAG_FOODDRINK %}
+                    {% if transaction.tag == constant('TAG_FOODDRINK') %}
                       Food &amp; Drink
-                    {% elseif transaction.tag == TAG_CLOTHES %}
+                    {% elseif transaction.tag == constant('TAG_CLOTHES') %}
                       Clothing
-                    {% elseif transaction.tag == TAG_WITHDRAWAL %}
+                    {% elseif transaction.tag == constant('TAG_WITHDRAWAL') %}
                       Withdrawal
-                    {% elseif transaction.tag == TAG_ENTERTAINMENT %}
+                    {% elseif transaction.tag == constant('TAG_ENTERTAINMENT') %}
                       Entertainment
-                    {% elseif transaction.tag == TAG_OTHER %}
+                    {% elseif transaction.tag == constant('TAG_OTHER') %}
                       Other
-                    {% elseif transaction.tag == TAG_UTILITY %}
+                    {% elseif transaction.tag == constant('TAG_UTILITY') %}
                       Utilities and Bills
-                    {% elseif transaction.tag == TAG_TRANSPORT %}        
+                    {% elseif transaction.tag == constant('TAG_TRANSPORT') %}
                       Transport
-                    {% elseif transaction.tag == TAG_DONATION %}        
+                    {% elseif transaction.tag == constant('TAG_DONATION') %}
                       Donation
                     {% else %}
-                      No Tag was Found
+                      <em>< Untagged ></em>
                     {% endif %}
                 </td>
                 <td>
