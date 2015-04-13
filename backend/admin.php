@@ -106,7 +106,7 @@ $this->respond('POST', '/pushmessages', function ($request, $response, $service)
         }
 
         // Get all potential recipients from the database
-        $recipientBeans = R::find('user', 'gcm_id IS NOT NULL');
+        $recipientBeans = R::find('user', 'gcm_id IS NOT NULL AND push_notifications = 1');
 
         if (count($errorMessages) === 0) {
             // Variables from form POST
