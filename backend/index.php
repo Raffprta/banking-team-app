@@ -350,7 +350,7 @@ function initRedBean() {
 
     // Create default admin account if one doesn't exist
     $admin = R::load('user', 1);
-    if (is_null($admin)) {
+    if (!$admin->id) {
         $registrationdata = array(
             'firstName' => 'Administrator',
             'surname' => '',
