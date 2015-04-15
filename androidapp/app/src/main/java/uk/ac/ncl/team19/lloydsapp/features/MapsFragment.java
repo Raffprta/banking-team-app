@@ -81,8 +81,7 @@ public class MapsFragment extends SupportMapFragment {
     boolean postcodeResolved = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         super.onCreateView(inflater, container, savedInstanceState);
 
@@ -270,7 +269,6 @@ public class MapsFragment extends SupportMapFragment {
 
             @Override
             public void onClick(View v) {
-
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Do common validation functions to set location.
@@ -291,14 +289,13 @@ public class MapsFragment extends SupportMapFragment {
 
             @Override
             public void onClick(View v) {
-
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Do common validation functions to set location.
                 if (googlePlacesHelper()) {
                     // Show loading
-
                     ProgressDialog.showLoading(MapsFragment.this);
+
                     // Query for ATMs
                     GooglePlacesConnector gpc = new GooglePlacesConnector(getActivity());
                     gpc.findLloydsAtms(myLocation, SEARCH_RADIUS, googlePlacesCallback);
@@ -326,19 +323,26 @@ public class MapsFragment extends SupportMapFragment {
                     List<Place> places = googlePlacesResponse.getResults();
                     Log.d (TAG, places.size() + " results found!");
 
+                    // Flag to say a nearby branch was found
+                    boolean foundNearbyBranch = false;
                     for (Place p: places) {
                         PlaceLocation location = p.getGeometry().getLocation();
+                        double lat = location.getLatitude();
+                        double lng = location.getLongitude();
+
+                        // Is this a branch? (as opposed to an ATM)
+                        boolean isBranch = p.getTypes().contains("branch");
 
                         // If you are mathematically in vicinity of a branch, then update the state of the achievement to be unlocked on next sign in
-                        if (p.getTypes().contains("branch")
-                                && Math.abs(p.getGeometry().getLocation().getLatitude() - location.getLatitude()) <= Constants.LLOYDS_VICINITY
-                                && Math.abs(p.getGeometry().getLocation().getLongitude() - location.getLongitude()) <= Constants.LLOYDS_VICINITY) {
+                        if (!foundNearbyBranch
+                                && isBranch
+                                && Math.abs(lat - myLocation.getLatitude()) <= Constants.LLOYDS_VICINITY
+                                && Math.abs(lng - myLocation.getLongitude()) <= Constants.LLOYDS_VICINITY) {
+                            foundNearbyBranch = true;
                             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
                             sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER, true).apply();
                         }
 
-                        double lat = location.getLatitude();
-                        double lng = location.getLongitude();
                         if (lat != 0 && lng != 0) {
                             // Add map markers
                             map.addMarker(new MarkerOptions()
