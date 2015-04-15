@@ -2,6 +2,7 @@
 <resources>
     <!-- Taken from Lloyds website -->
     <color name="lloyds_darkgreen">#ff0d573d</color>
+    <color name="lloyds_darkergreen">#ff073224</color>
     <color name="lloyds_lightgreen">#ff6ca291</color>
     <color name="lloyds_lightgreen_transparent">#336ca291</color>
     <color name="lloyds_lightergreen">#6ACA25</color>
