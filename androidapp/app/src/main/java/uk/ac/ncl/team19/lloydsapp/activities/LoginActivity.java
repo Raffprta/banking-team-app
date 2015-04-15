@@ -3,8 +3,10 @@ package uk.ac.ncl.team19.lloydsapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
@@ -70,6 +72,10 @@ public class LoginActivity extends FragmentActivity {
                 GraphicsUtils.buttonClickEffectHide(v);
             }
         });
+
+        // Enable visit website link
+        TextView visitWebsite = (TextView) findViewById(R.id.visitWebsite);
+        visitWebsite.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
