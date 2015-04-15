@@ -5,7 +5,7 @@
 
     <!-- Backend/API strings -->
     <string name="api_key">93d2e2620252446abbf63a82d3c3fb81</string>
-    <string name="api_base_url">http://homepages.cs.ncl.ac.uk/2014-15/csc2022_team19/api</string>
+    <string name="api_base_url">https://homepages.cs.ncl.ac.uk/2014-15/csc2022_team19/api</string>
     <string name="api_auth">authenticate</string>
     <string name="api_settings">updatesettings</string>
     <string name="api_gcmid">updategcmid</string>
