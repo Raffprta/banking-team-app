@@ -5,19 +5,19 @@
  * Dale Whinham / 130343550
  */
 
-package uk.ac.ncl.team19.lloydsapp.utils.maps;
+package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 import com.google.gson.annotations.SerializedName;
 
 public class Geometry {
     @SerializedName("location")
-    private Location location;
+    private PlaceLocation location;
 
-    public Location getLocation() {
+    public PlaceLocation getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(PlaceLocation location) {
         this.location = location;
     }
 }

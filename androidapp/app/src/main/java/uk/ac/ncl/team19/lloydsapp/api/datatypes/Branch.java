@@ -1,4 +1,4 @@
-package uk.ac.ncl.team19.lloydsapp.utils.maps;
+package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 import java.util.List;
 

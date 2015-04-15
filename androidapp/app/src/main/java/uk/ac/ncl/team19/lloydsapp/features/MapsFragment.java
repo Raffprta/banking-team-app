@@ -4,7 +4,6 @@ package uk.ac.ncl.team19.lloydsapp.features;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,22 +25,22 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.api.GooglePlacesConnector;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Place;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.PlaceLocation;
+import uk.ac.ncl.team19.lloydsapp.api.response.GooglePlacesResponse;
+import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
-import uk.ac.ncl.team19.lloydsapp.utils.maps.GooglePlacesResponse;
-import uk.ac.ncl.team19.lloydsapp.utils.maps.Place;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
 
 /**
@@ -54,11 +53,6 @@ import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
  */
 
 public class MapsFragment extends SupportMapFragment {
-
-    // Types of search query
-    private static final int QUERY_ATM = 0;
-    private static final int QUERY_BRANCH = 1;
-
     // 10 Kilometres (10,000 metres)
     private static final int SEARCH_RADIUS = 10000;
 
@@ -233,7 +227,7 @@ public class MapsFragment extends SupportMapFragment {
         LatLng currentLocation;
 
         if(postcodeResolved)
-            currentLocation = Utility.locationFromPostcode(getActivity().getApplicationContext(), postcodeEntryEditText.getText().toString());
+            currentLocation = Utility.locationFromPostcode(getActivity(), postcodeEntryEditText.getText().toString());
         else
             currentLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
 
@@ -266,7 +260,6 @@ public class MapsFragment extends SupportMapFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
 
         // Make all map related items
@@ -281,14 +274,16 @@ public class MapsFragment extends SupportMapFragment {
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Do common validation functions to set location.
-                if(googlePlacesHelper()){
+                if (googlePlacesHelper()) {
+                    // Show loading
+                    ProgressDialog.showLoading(MapsFragment.this);
+
                     // Query for branches.
-                    QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
-                    qg.execute(myLocation, QUERY_BRANCH);
+                    GooglePlacesConnector gpc = new GooglePlacesConnector(getActivity());
+                    gpc.findLloydsBranches(myLocation, SEARCH_RADIUS, googlePlacesCallback);
                 }
 
                 GraphicsUtils.buttonClickEffectHide(v);
-
             }
         });
 
@@ -300,149 +295,72 @@ public class MapsFragment extends SupportMapFragment {
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Do common validation functions to set location.
-                if(googlePlacesHelper()){
-                    // Query for branches
-                    QueryGooglePlacesTask qg = new QueryGooglePlacesTask();
-                    qg.execute(myLocation, QUERY_ATM);
+                if (googlePlacesHelper()) {
+                    // Show loading
+
+                    ProgressDialog.showLoading(MapsFragment.this);
+                    // Query for ATMs
+                    GooglePlacesConnector gpc = new GooglePlacesConnector(getActivity());
+                    gpc.findLloydsAtms(myLocation, SEARCH_RADIUS, googlePlacesCallback);
                 }
 
                 GraphicsUtils.buttonClickEffectHide(v);
-
             }
         });
-
-
     }
 
-
-    private GooglePlacesResponse queryGooglePlaces(Location location, int type) throws IOException {
-        String nameField = "";
-        String typeField = "";
-
-        // Determine what kind of query was requested and set up correct query string.
-        switch (type) {
-            // Leave name field empty for ATMs (so ATMs from other branches are returned)
-            case QUERY_ATM:
-                typeField = "atm";
-                break;
-
-            // Supply company name to Google Places when searching for bank branches
-            case QUERY_BRANCH:
-                typeField = "bank";
-                nameField = "Lloyds";
-                break;
-        }
-
-        // Insert latitude, longitude, radius and search fields into the Google Places API URL (defined in strings.xml)
-        String postURL = String.format(getString(R.string.places_request_url),
-                location.getLatitude(),
-                location.getLongitude(),
-                SEARCH_RADIUS,
-                typeField,
-                nameField);
-
-        // Input stream for holding the response
-        InputStream inputStream = null;
-
-        // Output stream for sending the POST data
-        DataOutputStream dataOutputStream = null;
-        Log.i(TAG, "Querying Google Places using URL: " + postURL);
-        try {
-            URL url = new URL(postURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);     // milliseconds
-            conn.setConnectTimeout(15000);  // milliseconds
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-
-            // Starts the query
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            Log.d(TAG, "The response was: " + responseCode);
-
-            inputStream = conn.getInputStream();
-
-            // Convert the InputStream into a string
-            String responseBody = Utility.inputStreamToString(inputStream);
-
-            // Convert JSON response into Java objects
-            Gson gson = new Gson();
-            return gson.fromJson(responseBody, GooglePlacesResponse.class);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Close streams no matter what happens
-            if (inputStream != null) {
-                inputStream.close();
-            }
-
-            if (dataOutputStream != null) {
-                dataOutputStream.close();
-            }
-        }
-        return null;
-    }
-
-    // Async task with multiple parameters.
-    private class QueryGooglePlacesTask extends AsyncTask<Object, Void, GooglePlacesResponse> {
-
-        private int type;
-
+    // Callback for when Places query has completed
+    private Callback<GooglePlacesResponse> googlePlacesCallback = new Callback<GooglePlacesResponse>() {
         @Override
-        protected GooglePlacesResponse doInBackground(Object... params) {
+        public void success(GooglePlacesResponse googlePlacesResponse, Response response) {
+            // Loading has finished so remove the progress dialog fragment
+            ProgressDialog.removeLoading(MapsFragment.this);
 
-            // Show loading
-            ProgressDialog.showLoading(MapsFragment.this);
+            switch (googlePlacesResponse.getStatus()) {
+                case ZERO_RESULTS:
+                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_no_results), Toast.LENGTH_LONG).show();
+                    break;
 
-            // Attempt to query Google Places
-            try {
-                type = (int)params[1];
-                GooglePlacesResponse response = queryGooglePlaces((Location)params[0], (int)params[1]);
-                // Loading has finished so remove the fragment.
-                ProgressDialog.removeLoading(MapsFragment.this);
-                return response;
-            } catch (IOException e) {
-                return null;
+                // We got some results - display them
+                case OK:
+                    List<Place> places = googlePlacesResponse.getResults();
+                    Log.d (TAG, places.size() + " results found!");
+
+                    for (Place p: places) {
+                        PlaceLocation location = p.getGeometry().getLocation();
+
+                        // If you are mathematically in vicinity of a branch, then update the state of the achievement to be unlocked on next sign in
+                        if (p.getTypes().contains("branch")
+                                && Math.abs(p.getGeometry().getLocation().getLatitude() - location.getLatitude()) <= Constants.LLOYDS_VICINITY
+                                && Math.abs(p.getGeometry().getLocation().getLongitude() - location.getLongitude()) <= Constants.LLOYDS_VICINITY) {
+                            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER, true).apply();
+                        }
+
+                        double lat = location.getLatitude();
+                        double lng = location.getLongitude();
+                        if (lat != 0 && lng != 0) {
+                            // Add map markers
+                            map.addMarker(new MarkerOptions()
+                                    .title(p.getName())
+                                    .snippet(p.getVicinity())
+                                    .position(new LatLng(lat, lng))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        }
+                    }
+                    break;
+
+                // Display any errors returned by Places API
+                default:
+                    ErrorHandler.fail(getFragmentManager(), googlePlacesResponse.getErrorMessage());
             }
         }
 
         @Override
-        protected void onPostExecute(GooglePlacesResponse googlePlacesResponse) {
-
-            if (googlePlacesResponse == null) {
-                // Query failed
-                Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_no_results), Toast.LENGTH_LONG).show();
-            } else {
-                List<Place> places = googlePlacesResponse.getResults();
-
-                // Query succeeded
-                Log.d (TAG, places.size() + " results found!");
-
-                for (Place p: places) {
-                    uk.ac.ncl.team19.lloydsapp.utils.maps.Location location = p.getGeometry().getLocation();
-
-                    // If you are mathematically in vicinity, then update the state of the achievement to be unlocked on next sign in
-                    if(Math.abs(p.getGeometry().getLocation().getLatitude() - location.getLatitude()) <= Constants.LLOYDS_VICINITY
-                       && Math.abs(p.getGeometry().getLocation().getLongitude() - location.getLongitude()) <= Constants.LLOYDS_VICINITY
-                       && type == QUERY_BRANCH){
-                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        sp.edit().putBoolean(Constants.SP_ACH_BRANCH_EXPLORER, true).apply();
-
-                    }
-
-                    double lat = location.getLatitude();
-                    double lng = location.getLongitude();
-                    if (lat != 0 && lng != 0) {
-                        // Add map markers
-                        map.addMarker(new MarkerOptions()
-                                .title(p.getName())
-                                .snippet(p.getVicinity())
-                                .position(new LatLng(lat, lng))
-                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                    }
-                }
-            }
+        public void failure(RetrofitError error) {
+            // Loading has finished so remove the progress dialog fragment
+            ProgressDialog.removeLoading(MapsFragment.this);
+            ErrorHandler.fail(getActivity(), getFragmentManager(), error);
         }
-    }
+    };
 }

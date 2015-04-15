@@ -5,11 +5,11 @@
  * Dale Whinham / 130343550
  */
 
-package uk.ac.ncl.team19.lloydsapp.utils.maps;
+package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Location{
+public class PlaceLocation{
     @SerializedName("lat")
     private double latitude;
 
