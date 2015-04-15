@@ -84,10 +84,8 @@ public class HealthFragment extends Fragment {
             e.printStackTrace();
         }
 
-        int daysPeriod = 7;
-
         // If the period is set per week, return 7 otherwise it's a monthly period hence return 30.
-        daysPeriod = sp.getInt(Constants.SP_GOALS_SET_FOR, -1) == Constants.WEEKLY ? 7 : 30;
+        int daysPeriod = sp.getInt(Constants.SP_GOALS_SET_FOR, -1) == Constants.WEEKLY ? 7 : 30;
 
         Log.i("Debugging Goals:", "Have been set for " + Integer.toString(daysPeriod) + " days.");
         Log.i("Debugging Goals:", "Currently they have been going for " + Integer.toString(daysBetween) + " days");
@@ -322,7 +320,6 @@ public class HealthFragment extends Fragment {
 
         int spend = 0;
         int moneyIn = 0;
-        int save = 0;
         int overdraft = 0;
         int donationAmount = 0;
         boolean donation = false;
@@ -360,7 +357,7 @@ public class HealthFragment extends Fragment {
         }
 
         // Calculate save amount.
-        save = moneyIn - spend;
+        int save = moneyIn - spend;
 
         double calculation = save / sp.getFloat(Constants.SP_GOALS_SAVE, -1);
 
@@ -433,7 +430,6 @@ public class HealthFragment extends Fragment {
         colourBar(overdraftBar);
         colourBar(donateBar);
         colourBar(hpBar);
-
     }
 
     /**

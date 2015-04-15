@@ -12,15 +12,15 @@ public class TransferRequest {
     private Long tag;
 
     public TransferRequest(long fromAccId, String toAccNo, String toSortCode, long amount, String reference) {
-        this.fromAccId = Long.valueOf(fromAccId);
+        this.fromAccId = fromAccId;
         this.toAccNo = toAccNo;
         this.toSortCode = toSortCode;
-        this.amount = Long.valueOf(amount);
+        this.amount = amount;
         this.reference = reference;
     }
 
     public TransferRequest(long fromAccId, String toAccNo, String toSortCode, long amount, long tag) {
         this(fromAccId, toAccNo, toSortCode, amount, null);
-        this.tag = Long.valueOf(tag);
+        this.tag = tag;
     }
 }

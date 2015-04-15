@@ -48,7 +48,7 @@ public class PieChartView extends View {
     private int mPostRotateDegrees = -90;
     private float mStrokeWidth = 1f;
 
-    private ArrayList<Slice> mSlices = new ArrayList<Slice>();
+    private ArrayList<Slice> mSlices = new ArrayList<>();
 
     private int mOriginAngle;
     private Matrix mMatrix = new Matrix();

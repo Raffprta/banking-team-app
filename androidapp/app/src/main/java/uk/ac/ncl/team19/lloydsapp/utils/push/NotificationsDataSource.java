@@ -65,7 +65,7 @@ public class NotificationsDataSource {
     }
 
     public List<LloydsNotification> getAllNotifications() {
-        List<LloydsNotification> notifications = new ArrayList<LloydsNotification>();
+        List<LloydsNotification> notifications = new ArrayList<>();
 
         Cursor cursor = database.query( DBOpenHelper.TABLE_NOTIFICATIONS,
                 notificationsColumns,

@@ -52,7 +52,7 @@ public class FeedbackFragment extends Fragment{
                 String feedback = feedbackEditText.getText().toString();
 
                 // Check if any data was entered - if there wasn't give an error message.
-                if(rating <= 0.0f || feedback.toString().length() == 0){
+                if(rating <= 0.0f || feedback.length() == 0){
                     // Show error as custom dialog.
                     Bundle b = new Bundle();
                     b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_form));
@@ -69,7 +69,7 @@ public class FeedbackFragment extends Fragment{
                 ProgressDialog.showLoading(FeedbackFragment.this);
                 (new EmailTask()).execute(getString(R.string.email_subject),
                         getString(R.string.rating) + "\n" + rating + "\n\n" +
-                                getString(R.string.feedback) + "\n" + feedback.toString());
+                                getString(R.string.feedback) + "\n" + feedback);
 
 
 

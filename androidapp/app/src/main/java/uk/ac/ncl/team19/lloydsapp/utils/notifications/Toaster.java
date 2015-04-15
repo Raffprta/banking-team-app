@@ -68,7 +68,7 @@ public class Toaster{
      * @param text the title of the notification
      */
     public void modifyWearableTitle(String text){
-        this.title = title;
+        this.title = text;
     }
 
     /**
@@ -86,7 +86,7 @@ public class Toaster{
         }
 
         // Increment the id of the notification
-        this.id++;
+        id++;
 
         // Builds the intent which will be launched to the wearable device
         Intent viewIntent = new Intent(this.a, WearableActivity.class);
@@ -111,7 +111,7 @@ public class Toaster{
                 NotificationManagerCompat.from(this.a);
 
         // Build the notification and issues it with notification manager.
-        notificationManager.notify(this.id, notificationBuilder.build());
+        notificationManager.notify(id, notificationBuilder.build());
 
     }
 

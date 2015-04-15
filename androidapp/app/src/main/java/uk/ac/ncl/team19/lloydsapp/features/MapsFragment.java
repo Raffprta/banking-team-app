@@ -176,7 +176,7 @@ public class MapsFragment extends SupportMapFragment {
     // Check to see if the location services are enabled.
     public boolean isLocationServicesOn(Context context) {
         String provider;
-        int locationToggle = 0;
+        int locationToggle;
 
         // Check settings on varsions KitKat and above.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
@@ -217,10 +217,7 @@ public class MapsFragment extends SupportMapFragment {
     public boolean googlePlacesHelper(){
 
         // Check if user has entered any postcodes.
-        if(postcodeEntryEditText.length() > 0)
-            postcodeResolved = true;
-        else
-            postcodeResolved = false;
+        postcodeResolved = postcodeEntryEditText.length() > 0;
 
         // Bail out if location is undetermined
         if (myLocation == null) {

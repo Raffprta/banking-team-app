@@ -10,7 +10,7 @@
 
         <GridLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
             android:background="@color/lloyds_lightergreen_transparent"
             android:id="@+id/accountHealthGridLayout"
@@ -41,8 +41,6 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/spend"
                     android:id="@+id/setGoalsSpendTextView"
-                    android:layout_row="1"
-                    android:layout_column="0"
                     android:textColor="@color/lloyds_darkgreen"
                     android:layout_below="@+id/setForGoalsTextView"
                     android:layout_alignLeft="@+id/setGoalsSaveTextView"
@@ -167,9 +165,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/yes"
                         android:id="@+id/setGoalsYesCheckBox"
-                        android:layout_alignTop="@+id/setGoalsDonateTextView"
-                        android:layout_alignLeft="@+id/textView34"
-                        android:layout_alignStart="@+id/textView34"
                         android:checked="false" />
 
                     <RadioButton
@@ -177,9 +172,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/no"
                         android:id="@+id/setGoalsNoCheckBox"
-                        android:layout_alignTop="@+id/setGoalsYesCheckBox"
-                        android:layout_alignRight="@+id/setYourGoalsTextView"
-                        android:layout_alignEnd="@+id/setYourGoalsTextView"
                         android:checked="false" />
                 </RadioGroup>
                 <TextView
@@ -224,8 +216,6 @@
                 android:text="@string/set_goals"
                 android:id="@+id/setGoalsButton"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_row="2"
                 android:layout_column="0"
                 android:background="@color/lloyds_white"

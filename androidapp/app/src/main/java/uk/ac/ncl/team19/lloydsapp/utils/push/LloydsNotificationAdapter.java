@@ -18,7 +18,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
  */
 public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotificationAdapter.ViewHolder> {
 
-    private static List<LloydsNotification> mDataset;
+    private List<LloydsNotification> mDataset;
     private Context ctx;
 
     // Provide a reference to the views for each data item

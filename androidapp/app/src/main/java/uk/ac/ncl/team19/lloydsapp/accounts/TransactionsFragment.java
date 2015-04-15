@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -143,7 +144,7 @@ public class TransactionsFragment extends Fragment {
         public TransactionYearSpinnerAdapter(List<Transaction> transactions) {
             super(getActivity(), android.R.layout.simple_spinner_item);
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy", Locale.ROOT);
 
             // Get all the unique years from the transactions
             List<String> years = new ArrayList<>();
@@ -165,8 +166,8 @@ public class TransactionsFragment extends Fragment {
         private LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
 
         public TransactionListAdapter(List<Transaction> transactions, String forYear) {
-            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
-            SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM");
+            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ROOT);
+            SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM", Locale.ROOT);
 
             // Filter out transactions for this year
             for (Transaction t: transactions) {
@@ -255,7 +256,7 @@ public class TransactionsFragment extends Fragment {
             TextView transactionAmount = (TextView) convertView.findViewById(R.id.transactionAmount);
             ImageView inOutIndicator = (ImageView) convertView.findViewById(R.id.inOutIndicator);
 
-            String dateString = new SimpleDateFormat("E d, k:m").format(t.getDate());
+            String dateString = new SimpleDateFormat("E d, kk:mm", Locale.ROOT).format(t.getDate());
             String transactionInfoString = String.format("%s: %s", dateString, t.getReference());
             String transactionAmountString = (isWithdrawal ? "-" : "") + CurrencyMangler.integerToSterlingString(t.getAmount());
 

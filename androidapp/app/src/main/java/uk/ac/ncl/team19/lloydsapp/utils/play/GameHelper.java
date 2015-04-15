@@ -773,7 +773,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         SharedPreferences.Editor editor = mAppContext.getSharedPreferences(
                 GAMEHELPER_SHARED_PREFS, Context.MODE_PRIVATE).edit();
         editor.putInt(KEY_SIGN_IN_CANCELLATIONS, cancellations + 1);
-        editor.commit();
+        editor.apply();
         return cancellations + 1;
     }
 
@@ -783,7 +783,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         SharedPreferences.Editor editor = mAppContext.getSharedPreferences(
                 GAMEHELPER_SHARED_PREFS, Context.MODE_PRIVATE).edit();
         editor.putInt(KEY_SIGN_IN_CANCELLATIONS, 0);
-        editor.commit();
+        editor.apply();
     }
 
     /** Handles a connection failure. */
@@ -801,7 +801,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         debugLog("   - details: " + mConnectionResult.toString());
 
         int cancellations = getSignInCancellations();
-        boolean shouldResolve = false;
+        boolean shouldResolve;
 
         if (mUserInitiatedSignIn) {
             debugLog("onConnectionFailed: WILL resolve because user initiated sign-in.");
@@ -941,6 +941,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /** Shows an error dialog that's appropriate for the failure reason. */
+    @SuppressWarnings("UnusedAssignment")
     public static void showFailureDialog(Activity activity, int actResp,
                                          int errorCode) {
         if (activity == null) {

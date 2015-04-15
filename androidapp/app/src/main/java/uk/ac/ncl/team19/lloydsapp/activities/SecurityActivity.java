@@ -149,19 +149,19 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Check if the user entered a character. If not set the error message.
-                if(firstCharacter == null || firstCharacter.getText().length() <= 0){
+                if(firstCharacter.getText().length() <= 0){
                     firstCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
-                if(secondCharacter == null || secondCharacter.getText().length() <= 0){
+                if(secondCharacter.getText().length() <= 0){
                     secondCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
-                if(thirdCharacter == null || thirdCharacter.getText().length() <= 0){
+                if(thirdCharacter.getText().length() <= 0){
                     thirdCharacter.setError(getString(R.string.err_empty_sec));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;

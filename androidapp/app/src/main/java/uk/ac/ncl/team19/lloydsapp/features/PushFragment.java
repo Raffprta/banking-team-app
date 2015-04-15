@@ -23,7 +23,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -117,10 +116,6 @@ public class PushFragment extends Fragment {
             // Setup RecyclerView adapter
             mAdapter = new LloydsNotificationAdapter(mListDataSet, context);
             mRecyclerView.setAdapter(mAdapter);
-
-            // Cache indexes we changed
-            final List<Integer> cache = new ArrayList<Integer>();
-
 
             // Set up swiping for removing push notification cards.
             SwipeableRecyclerViewTouchListener swipeTouchListener =
@@ -246,6 +241,7 @@ public class PushFragment extends Fragment {
      */
     private void registerInBackground() {
         new AsyncTask<Void, Void, String>() {
+            @SuppressWarnings("UnusedAssignment")
             @Override
             protected String doInBackground(Void... params) {
                 String msg = "";
@@ -311,7 +307,7 @@ public class PushFragment extends Fragment {
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString(PROPERTY_REG_ID, regId);
-        editor.commit();
+        editor.apply();
     }
 
 

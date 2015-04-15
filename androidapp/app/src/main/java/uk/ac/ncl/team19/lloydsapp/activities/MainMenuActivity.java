@@ -108,7 +108,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         if(sp.getInt(Constants.SP_LOGINS, 0) == 1){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String dateJoined = sdf.format(new Date());
-            sp.edit().putString(Constants.SP_FIRST_LOGIN, dateJoined.toString()).apply();
+            sp.edit().putString(Constants.SP_FIRST_LOGIN, dateJoined).apply();
         }
 
         // Debug the shared preferences
@@ -215,7 +215,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
     }

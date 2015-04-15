@@ -9,6 +9,6 @@ public class CurrencyMangler {
     }
 
     public static Long sterlingStringToInteger(String s) {
-        return Long.valueOf((long) (Double.parseDouble(s) * 100));
+        return (long) (Double.parseDouble(s) * 100);
     }
 }
