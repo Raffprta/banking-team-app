@@ -1,0 +1,88 @@
+{% extends "base.twig" %}
+
+{% block title %}
+    {% if editMode %}
+        Edit User
+    {% else %}
+        Create User
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        {% if editMode %}
+            <h1>Edit User <small>(ID: {{ id }})</small></h1>
+        {% else %}
+            <h1>Create User</h1>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            {% if editMode %}
+            <form class="form-horizontal" action="admin/edituser/{{ id }}" method="POST">
+            {% else %}
+            <form class="form-horizontal" action="admin/createuser" method="POST">
+            {% endif %}
+                <fieldset>
+                    {# Email input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="email">Email address</label>
+                        <div class="col-md-5">
+                            <input id="email" name="email" type="text" placeholder="eg. john.smith@ncl.ac.uk" value="{{ email }}" class="form-control input-md" required>
+                        </div>
+                    </div>
+
+                    {# First name input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="firstName">First name</label>
+                        <div class="col-md-5">
+                            <input id="firstName" name="firstName" type="text" placeholder="eg. John" value="{{ firstName }}" class="form-control input-md" required>
+                        </div>
+                    </div>
+
+                    {# Surname input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="surname">Surname</label>
+                        <div class="col-md-5">
+                            <input id="surname" name="surname" type="text" placeholder="eg. Smith" value="{{ surname }}" class="form-control input-md" required>
+                        </div>
+                    </div>
+
+                    {# Password input #}
+                    <div class="form-group">
+                        {% if editMode %}
+                        <label class="col-md-4 control-label" for="password">New password (leave blank to keep current)</label>
+                        {% else %}
+                        <label class="col-md-4 control-label" for="password">Password</label>
+                        {% endif %}
+                        <div class="col-md-5">
+                            <input id="password" name="password" type="password" placeholder="Minimum 6 characters" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    {# Password confirmation input #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="passwordVerify">Confirm password</label>
+                        <div class="col-md-5">
+                            <input id="passwordVerify" name="passwordVerify" type="password" placeholder="" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    {# Create/save changes button #}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="register"></label>
+                        <div class="col-md-5">
+                            {% if editMode %}
+                            <button id="register" name="register" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Save Changes</button>
+                            {% else %}
+                            <button id="register" name="register" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Create User</button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

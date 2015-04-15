@@ -33,13 +33,15 @@
                         {% if loggedInUser.accessLevel >= constant('ACCESS_LEVEL_ADMINISTRATOR') %}
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span> Admin Tools<span class="caret"></span></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span> Admin Tools
+                                        <span class="caret"></span>
+                                    </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="admin/users"><span class="glyphicon glyphicon-user"></span> User Management</a></li>
                                         <li><a href="admin/pushmessages"><span class="glyphicon glyphicon-phone"></span> Push Messages</a></li>
                                         <li><a href="admin/emailmessages"><span class="glyphicon glyphicon-envelope"></span> Email Messages</a></li>
-										<li class="divider"></li>
-									    <li><a href="admin/activitylog"><span class="glyphicon glyphicon-list-alt"></span> Activity Log</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="admin/activitylog"><span class="glyphicon glyphicon-list-alt"></span> Activity Log</a></li>
                                         <li><a href="admin/phpinfo"><span class="glyphicon glyphicon-usd"></span> PHP Info</a></li>
                                     </ul>
                                 </li>
@@ -63,7 +65,8 @@
                         <ul class="nav navbar-nav">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> {{ loggedInUser.firstName }} {{ loggedInUser.surname }}
-                                    <span class="caret"></span></a>
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
@@ -76,7 +79,7 @@
                     {% else %}
                         <ul class="nav navbar-nav">
                             <li>
-                                <a href="about"><span class="glyphicon glyphicon-info-sign"></span> About</a>
+                                <a href="#about"><span class="glyphicon glyphicon-info-sign"></span> About</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav">

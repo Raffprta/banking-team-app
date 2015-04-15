@@ -1,0 +1,103 @@
+header{
+    background-color:#E8E9E8;
+    padding:1%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+section{
+    /* Keeping to Lloyd's colour scheme */
+    background-color:#006A4D;
+}
+
+span.login{
+    padding:8px;
+    margin-right:12px;
+    margin-top:4px;
+}
+
+div.link-container{
+    padding:5%;
+    display:inline;
+}
+
+nav.login{
+    font-size:1.5em;
+    margin-top:1%;
+}
+
+nav.login a{
+    padding-right:5%;
+    color:inherit;
+}
+
+nav.login a:hover{
+    color:royalblue;
+    text-decoration:none;
+}
+
+section{
+    width:100% !important;
+}
+
+#intro{
+    background-color:#006A4D;
+}
+
+#features{
+    background-color:#C4D2DF;
+}
+h1{
+    color:black;
+}
+
+article:nth-child(odd) p{
+    color:white;
+}
+
+article:nth-child(even) p{
+    color:black;
+}
+
+.big{
+    font-size:1.4em;
+}
+
+div.img-container{
+    margin-top:15px;
+}
+
+article div{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+footer{
+    background-color:black;
+    padding:1%;
+}
+
+article{
+    padding:6px;
+}
+
+.inline img, .inline span, .inline h3{
+    display:inline;
+}
+
+#slider{
+    margin-left:3px;
+}
+
+/* Media sheets to ensure that the screenshots are dropped after their size gets too large for the screen */
+@media all and (max-width: 1220px) {
+    #features div.img-wrapper{
+        display:none;
+    }
+
+    #features div.features-wrapper{
+        width:85%;
+    }
+}

@@ -3,15 +3,12 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-    <article class="row" id="accounts">
-
         <div class="page-header">
             <h1>Accounts Information</h1>
         </div>
     
     <p>
-      This page will show a view of your bank accounts that you have set up with Lloyds bank. Click on an account to see a history of
+      This page will show a view of your bank accounts that you have set up with Lloyds Bank. Click on an account to see a history of
       your past transactions pertaining to that account.
     </p>
     {% if accounts %}
@@ -67,7 +64,7 @@
                 <th class="col-md-2">Amount</th>
                 <th class="col-md-3">Reference</th>
                 <th class="col-md-2">Tag</th>
-                <th class="col-md-2">Ingoing/Outgoing</th>
+                <th class="col-md-2">Incoming/Outgoing</th>
             </tr>
             </thead>
             <tbody>
@@ -124,8 +121,6 @@
             <p><span class="glyphicon glyphicon-info-sign"></span> This user does not have any accounts set up.</p>
         </div>
     {% endif %}
-
-    </article>
 
 {% endblock %}
 

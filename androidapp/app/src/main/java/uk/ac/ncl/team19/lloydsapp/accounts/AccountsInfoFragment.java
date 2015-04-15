@@ -42,7 +42,7 @@ public class AccountsInfoFragment extends Fragment {
 
         // References to text views
         TextView accountType = (TextView) accountsInfoView.findViewById(R.id.accountType);
-        TextView userName = (TextView) accountsInfoView.findViewById(R.id.userName);
+        TextView accountNickname = (TextView) accountsInfoView.findViewById(R.id.accountNickname);
         TextView accountNumber = (TextView) accountsInfoView.findViewById(R.id.accountNumber);
         TextView sortCode = (TextView) accountsInfoView.findViewById(R.id.sortCode);
         TextView balance = (TextView) accountsInfoView.findViewById(R.id.balance);
@@ -60,8 +60,7 @@ public class AccountsInfoFragment extends Fragment {
 
             accountType.setText(currentAccount.getAccountTypeString(getActivity()));
             // Set information.
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            userName.setText(sp.getString(Constants.SP_USERNAME, null));
+            accountNickname.setText(currentAccount.getNickname());
             accountNumber.setText(currentAccount.getAccountNumber());
             sortCode.setText(currentAccount.getFormattedSortCode());
             balance.setText(balanceString);

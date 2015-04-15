@@ -5,7 +5,7 @@
 
     <!-- Backend/API strings -->
     <string name="api_key">93d2e2620252446abbf63a82d3c3fb81</string>
-    <string name="api_base_url">http://homepages.cs.ncl.ac.uk/2014-15/csc2022_team19/api</string>
+    <string name="api_base_url">https://homepages.cs.ncl.ac.uk/2014-15/csc2022_team19/api</string>
     <string name="api_auth">authenticate</string>
     <string name="api_settings">updatesettings</string>
     <string name="api_gcmid">updategcmid</string>
@@ -58,7 +58,7 @@
     <string name="login">Login</string>
     <string name="logo">App Logo</string>
     <string name="visit_website">If you don\'t want to register your device with Mobile Banking right now you can still use our mobile site.</string>
-    <string name="visit_website_link">Visit our website</string>
+    <string name="visit_website_link"><a href="http://www.lloydsbank.com/">Visit our website</a></string>
     <string name="bundle_autokick">AUTOKICK</string>
 
     <!-- Security Page -->
@@ -145,11 +145,11 @@
     <string name="acc_page_title">Your Accounts</string>
     <string name="int_stu_account">International Student Account</string>
 
+    <string name="acc_nickname_filler">My Account</string>
     <string name="acc_number_filler">12345678</string>
     <string name="acc_sort_code_number_filler">00-00-00 12345678</string>
     <string name="acc_funds_filler">£999.99</string>
 
-    <string name="acc_filler_john_smith">John Smith</string>
     <string name="account_number_info">Account Number: 12345678</string>
 
     <string name="account_info_balance">Balance:</string>
@@ -171,7 +171,8 @@
     <string name="transaction_history_select_year">Select year: </string>
     <string name="transaction_history_no_transactions">There are currently no transactions to show.</string>
 
-    <string name="profile_status_filler_love_lloyds">I love Lloyds</string>
+    <string name="profile_name_filler">John Smith</string>
+    <string name="profile_status_filler">I love Lloyds</string>
 
 
     <!--Health and Set Goals Page -->

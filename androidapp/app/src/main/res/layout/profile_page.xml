@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/acc_filler_john_smith"
+                    android:text="@string/profile_name_filler"
                     android:id="@+id/usernameProfile"
                     android:textColor="@color/lloyds_lightgreen"
                     android:paddingBottom="5dp"
@@ -83,7 +83,7 @@
                     android:layout_toRightOf="@+id/profile_status"
                     android:layout_toEndOf="@+id/profile_status"
                     android:inputType="text"
-                    android:text="@string/profile_status_filler_love_lloyds" />
+                    android:text="@string/profile_status_filler" />
 
                 <TextView
                     android:layout_width="wrap_content"

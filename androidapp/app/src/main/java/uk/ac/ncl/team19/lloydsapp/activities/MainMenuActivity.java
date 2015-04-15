@@ -80,18 +80,16 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     protected void onCreate(Bundle savedInstanceState) {
         // Set the content.
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         // Build up the drawer menu.
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, drawerLayout);
 
         // Force the drawer to close as in the activity creation the drawer is closed after the menu is inflated
         // hence interfering with the Google Splash screen.
