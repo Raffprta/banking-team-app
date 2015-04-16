@@ -10,7 +10,10 @@ import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 /**
- * Created by Dale Whinham on 03/04/15.
+ * @author Dale Whinham
+ *
+ * A custom error handler to read error conditions in the network or in JSON deserialisation and
+ * statically show an error dialog to the calling fragment or activity.
  */
 public class ErrorHandler {
     public static void fail(FragmentManager f, String errorMessage) {

@@ -21,7 +21,9 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.MailHelper;
 
 /**
  * @author Raffaello Perrotta
- * @author Dale Whinham - simplify Bundle key access
+ * Create all email processing code as well as fragment set up and related async. tasks.
+ * @author Dale Whinham
+ * Simplify Bundle key access
  *
  * A fragment which will provide the user an opportunity to leave feedback which is then
  * sent to an administrator email address to be reviewed. The email process is done within the background.
@@ -80,6 +82,12 @@ public class FeedbackFragment extends Fragment{
 
     }
 
+    /**
+     * @author Raffaello Perrotta
+     *
+     * A private class which performs an async. task which sets up a Mailer as a daemon which then sends the
+     * feedback email to a pre-configured email client accessible via the Installation guide to view the feedback.
+     */
     private class EmailTask extends AsyncTask<String, Void, Void>{
 
         @Override

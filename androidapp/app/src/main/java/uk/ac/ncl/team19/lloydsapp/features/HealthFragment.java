@@ -37,7 +37,7 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrotta (backend integration, algorithms and client side programming)
+ * @author Raffaello Perrotta (backend integration, algorithms and client side programming and algorithms)
  * @author Yessengerey Bolatov (all XML).
  * @author Dale Whinham - simplify Bundle key access
  *

@@ -3,7 +3,11 @@ package uk.ac.ncl.team19.lloydsapp.api.response;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Dale Whinham
+ *
+ * A generic class that represents a reply from the backend including the status
+ * of the request as well as a custom JSON field as well as any respective error messages.
+ *
  */
 public class APIResponse {
     public enum Status {

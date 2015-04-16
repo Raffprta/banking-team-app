@@ -1,8 +1,13 @@
 package uk.ac.ncl.team19.lloydsapp.api.request;
 
 /**
- * Created by Dale Whinham on 03/04/15.
+ * @author Dale Whinham
+ *
+ * A class to pass a transfer request to the backend, via the API Connector. Transfers may contain
+ * a reference indicating what the transfer is, or can contain a tag indicating what type of transaction it is.
+ *
  */
+
 public class TransferRequest {
     private Long fromAccId;
     private String toAccNo;

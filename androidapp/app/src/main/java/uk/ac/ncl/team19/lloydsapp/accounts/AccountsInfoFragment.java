@@ -20,8 +20,16 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author XML by Yessengerey Bolatov, conversion into Fragment by Raffaello Perrotta
- * @author Dale Whinham - XML modifications, added backend integration
+ * @author Yessengerey Bolatov
+ * Full XML design.
+ * @author Raffaello Perrotta
+ * Fragment handling, transactions and getting references to the views used in the banking.
+ * @author Dale Whinham
+ * Various XML modifications. Refactor information to use serialisable methods.
+ *
+ * This class provides an implementation of the various features which a user can access pertaining
+ * to their individual bank account. The user will have options to make transfers, payments, view transactions history
+ * and other information relating to their account.
  */
 public class AccountsInfoFragment extends Fragment {
 

@@ -5,7 +5,9 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 
 /**
- * Created by Dale Whinham on 27/03/15.
+ * @author Dale Whinham
+ *
+ * A class to represent the response given by the backend when a list of transactions is returned.
  */
 public class TransactionsResponse extends APIResponse {
     private List<Transaction> transactions;

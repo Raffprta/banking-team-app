@@ -34,7 +34,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import static android.content.DialogInterface.OnDismissListener;
 
 /**
- * @author Raffaello Perrotta, XML creation by Ivy Tong
+ * @author Raffaello Perrotta
+ * Passing data between intents. Security code implementation and backend integration.
+ * @author Ivy Tong
+ * All XML Designs.
+ * @author Dale Whinham
+ * Login details backend implementation. Device token management. Auto-seleting the seurity code inputs.
+ *
+ * This class provides a security code implementation which auto-generates characters to enter within the
+ * activity every tiem a user logs in. The log in details are validated against the backend server and
+ * appropriate error handling exists within this class.
+ *
  */
 public class SecurityActivity extends FragmentActivity implements OnDismissListener{
     // Login credentials

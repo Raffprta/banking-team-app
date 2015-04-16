@@ -25,8 +25,16 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrota, XML designs by Yessengerey Bolatov
- * @author Dale Whinham - simplify Bundle key access
+ * @author Raffaello Perrota
+ * Full implementation of client-side and server-side integration. Algorithms for setting the data and
+ * passing them to the Health monitoring classes.
+ * @author Yessengerey Bolatov
+ * All XML Designs.
+ * @author Dale Whinham
+ * Simplify Bundle key access
+ *
+ * A class to provide to the user to set their goals. Goals an be how much a user spends, saves, donates as well as
+ * how much overdraft they can use, if any, in a set period. Goals are automatically reset after the period.
  */
 public class SetGoalsFragment extends Fragment{
 

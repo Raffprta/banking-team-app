@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Created by btco on 2/10/14.
+ * Refer to GameHelper for credits, author and license details.
  */
 class GameHelperUtils {
     public static final int R_UNKNOWN_ERROR = 0;

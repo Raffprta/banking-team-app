@@ -25,14 +25,29 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 
 /**
- * @Author Yao Tong, Yessengerey Bolatov conversion to Fragment by Raffaello Perrotta
- * Backend Integration by Dale Whinham, fragment related error handling by Raffaello Perrotta
+ * @Author Yao Tong
+ * Minor XML changes.
+ * @Author Yessengerey Bolatov
+ * Created entire XML structure.
+ * @Author Raffaello Perrotta
+ * Created Fragment instance. Handled error checking in fragment instances.
+ * @Author Dale Whinham
+ * Full backend integration including accessing the list of accounts and populating them.
+ *
+ * This class aims to provide a fragment view that will access a user's bank accounts via
+ * a request to the server containing the user's session token. This will return JSON data
+ * with a list of the user's bank accounts and promptly will be loaded into grid views which are
+ * interactable for the user to access their account.
+ *
+ *
  */
 public class AccountsDashboardFragment extends Fragment {
 
     private static final String TAG = AccountsDashboardFragment.class.getName();
 
+    // The progress bar used for requesting information
     private ProgressBar progressBar;
+    // The list of accounts where the information is loaded to.
     List<BankAccount> accounts;
 
     @Override
@@ -40,10 +55,13 @@ public class AccountsDashboardFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        // Inflate view into a viewgroup.
         final ViewGroup accountsDashboardView = (ViewGroup) inflater.inflate(R.layout.account_dashboard, container, false);
 
+        // Prime the progress bar for loading.
         progressBar = (ProgressBar) accountsDashboardView.findViewById(R.id.progressBar);
 
+        // Prepare the accounts list.
         final ViewGroup accountsList = (ViewGroup) accountsDashboardView.findViewById(R.id.accountsList);
         final FragmentManager fragmentManager = AccountsDashboardFragment.this.getFragmentManager();
 

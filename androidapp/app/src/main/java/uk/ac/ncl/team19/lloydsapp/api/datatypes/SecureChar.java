@@ -1,7 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Dale Whinham
+ *
+ * A helper class to store secure characters as an object. These can then be packed into JSON.
  */
 public class SecureChar {
     private int index;

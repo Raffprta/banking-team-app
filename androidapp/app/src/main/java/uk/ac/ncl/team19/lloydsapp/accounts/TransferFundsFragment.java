@@ -21,9 +21,16 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Yessengerey Bolatov (XML Design), Raffaello Perrotta
- * @author Dale Whinham - backend integration
- * Fragment for making transfers to other personal accounts.
+ * @author Yessengerey Bolatov
+ * All XML Designs.
+ * @author Raffaello Perrotta
+ * Client side validation. Information passing between fragments and fragment transaction maangement.
+ * @author Dale Whinham
+ * Backend integration. Client-side logic for transferring data. Minor XML modifications.
+ *
+ * This class provides a fragment with an intuitive design for transferring funds between a users'
+ * set up bank accounts. The funds will not be able to be transferred if the user does not have at least
+ * two accounts set up. This class will proceed to a confirmation page on the user making a transfer.
  */
 
 public class TransferFundsFragment extends Fragment {

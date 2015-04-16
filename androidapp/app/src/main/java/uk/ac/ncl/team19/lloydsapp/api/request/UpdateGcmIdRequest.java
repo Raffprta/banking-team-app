@@ -1,7 +1,12 @@
 package uk.ac.ncl.team19.lloydsapp.api.request;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Raffaello Perrotta
+ * Original GCMID update code.
+ * @author Dale Whinham
+ * Refactor to RetroFit.
+ *
+ * A lass to provide a method to update the GCMID of a user via the APIConnector.
  */
 public class UpdateGcmIdRequest {
     String gcmId;

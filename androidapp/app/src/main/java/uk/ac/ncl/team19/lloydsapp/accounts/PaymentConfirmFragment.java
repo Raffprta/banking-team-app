@@ -24,8 +24,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Ivy Tong (XML), Raffaello Perrotta
- * @author Dale Whinham - backend integration
+ * @author Ivy Tong
+ * XML design and structure.
+ * @author Raffaello Perrotta
+ * Passing information between fragments and setting up all fragment transactions. Fragment instance error handling.
+ * @author Dale Whinham
+ * All Backend integration and respective error/success handling from responses.
+ *
+ * This class provides the user a fragment where they may confirm whether they want to submit their payment.
+ * An option to cancel and fully decouple the payment from being executed is also provided, should the user
+ * want to cancel their payment at this stage or review it.
+ *
  */
 public class PaymentConfirmFragment extends Fragment{
 

@@ -14,7 +14,14 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Created by Dale Whinham on 10/11/14. Modified by Raffaello Perrotta on 15/03/2015
+ * @author Dale Whinham
+ * Entire class implementation.
+ * @author Raffaello Perrotta
+ * Iconisation methods.
+ *
+ * An adapter class that adapts a RecyclerView's internal views to post individual LLoyds Notifications
+ * to it. Methods to display it to the RecyclerView and bind icons and messages are included within this
+ * adapter.
  */
 public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotificationAdapter.ViewHolder> {
 

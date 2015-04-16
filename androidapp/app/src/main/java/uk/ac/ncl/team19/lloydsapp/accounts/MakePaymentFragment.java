@@ -19,10 +19,15 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Yessengerey Bolatov (XML Design), Raffaello Perrotta
- * @author Dale Whinham - backend integration
+ * @author Yessengerey Bolatov
+ * XML design and structure.
+ * @author Raffaello Perrotta
+ * Minor modifications to the XML. Client-side validation. Passing information between fragments.
+ * @author Dale Whinham
+ * Backend integration. Refactor information passed between fragments to serialisable.
  *
- * Fragment for making payments to other accounts.
+ * This class provides a Fragment for making payments to other accounts. This will hence transition to
+ * a confirmation fragment unless the user cancels it.
  */
 
 public class MakePaymentFragment extends Fragment {

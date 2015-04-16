@@ -1,10 +1,3 @@
-/**
- * Google Places JSON Response Wrapper Classes
- *
- * CSC2022 Team Project 2014
- * Dale Whinham / 130343550
- */
-
 package uk.ac.ncl.team19.lloydsapp.api.response;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,6 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Place;
+
+/**
+ * @author Dale Whinham
+ *
+ * A class to represent the response given by the Google Places backend ontaining status results,
+ * error messages and HTML attributes of the request that was made.
+ */
 
 public class GooglePlacesResponse {
     public enum Status {

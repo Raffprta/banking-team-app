@@ -6,8 +6,9 @@ import android.view.View;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Static class to provide utility methods for drawing graphics.
  * @author Raffaello Perrotta
+ *
+ * Static class to provide utility methods for drawing graphics.
  */
 
 public class GraphicsUtils {

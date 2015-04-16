@@ -41,7 +41,15 @@ import uk.ac.ncl.team19.lloydsapp.api.ssl.CustomSSLSocketFactory;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 /**
- * Created by Dale Whinham on 17/03/15. Modified by Raffaello Perrotta.
+ * @author Dale Whinham
+ * All interfaces except /updatesettings, /updategcmid, /updateplayid. SSL integration.
+ * @author Raffaello Perrotta
+ * /updatesettings, /updategcmid, /updateplayid interfaces.
+ *
+ * A class to provide the boilerplate programming code to our application's connection mechanism
+ * towards a configured backend. A method of validating self-signed certificatins and adding them to the trusted
+ * list of certificate chains is also included to allow connections via HTTPS. All interfaces implemented are routed
+ * via this connector that adds common HTTP/S headers that are read by the backend.
  */
 public class APIConnector {
     // Logging tag

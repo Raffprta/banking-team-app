@@ -39,19 +39,31 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 
 /**
- * @author Yessengerey Bolatov (XML), Raffaello Perrotta
- * @author Dale Whinham - Spinner/List adapters, backend integration
+ * @author Yessengerey Bolatov
+ * XML design and structure. Collaboration in setting up adapter classes. Icons.
+ * @author Raffaello Perrotta
+ * Minor set up of the class.
+ * @author Dale Whinham
+ * Major XML integration, plus marquee effects. Spinner/List adapters, full backend integration and respective viewing methods.
+ *
+ * This fragment allows the user to view the transaction history pertaining to one acount. The transactions
+ * are automatically categorised by date, and the user may intuitively navigate the dates. Transactions are iconised depending
+ * if they are outbound or inbound.
  */
 public class TransactionsFragment extends Fragment {
 
+    // The user's current account that they are viewing the history from.
     BankAccount currentAccount;
+    // Where the transaction history is loaded into.
     List<Transaction> transactions;
 
+    // Various views used by this class
     Spinner yearSpinner;
     ExpandableListView elv;
     ProgressBar progressBar;
     TextView noTransactions;
 
+    // Adapters.
     TransactionYearSpinnerAdapter spinnerAdapter;
     TransactionListAdapter listAdapter;
 

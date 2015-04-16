@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
- * Created by Dale Whinham on 27/03/15.
+ * @author Dale Whinham
+ *
+ * A data type to represent a transaction.
  */
 public class Transaction {
     private static final String STERLING_FORMATTING_STRING = "£%.2f";

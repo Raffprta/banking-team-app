@@ -9,6 +9,17 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Dale Whinham
+ * Implementation of the class and all of its methods except deleteRow.
+ * @author Raffaello Perrotta
+ * Deletion method implemented, minor modification to ids.
+ *
+ * A class that performs CRUD operations on data incoming to the set-up database. Data is then
+ * adapter to a LloydsNotification type via various getter methods implemented within this class.
+ * Setters work with raw data.
+ */
+
 public class NotificationsDataSource {
     private static final String TAG = NotificationsDataSource.class.getSimpleName();
 

@@ -11,6 +11,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * @author Dale Whinham
+ *
+ * A class to represent the opening hours of a Google Place.
+ */
+
 public class OpeningHours {
     @SerializedName("open_now")
     private boolean openNow;

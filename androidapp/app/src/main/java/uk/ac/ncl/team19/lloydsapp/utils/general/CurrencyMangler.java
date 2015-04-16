@@ -1,7 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.utils.general;
 
 /**
- * Created by Dale Whinham on 03/04/15.
+ * @author Dale Whinham
+ *
+ * A class to provide string "prettying" methods to be used when handling currency on the application.
  */
 public class CurrencyMangler {
     public static String integerToSterlingString(Long i) {

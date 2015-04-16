@@ -6,7 +6,10 @@ import android.support.v4.app.FragmentManager;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Created by Raffaello Perrotta on 05/04/2015.
+ * @author Raffaello Perrotta
+ *
+ * A general purpose class to compare if a fragment you are currently located on is equivalent to the
+ * class that the method is executing.
  */
 public class FragmentChecker {
 

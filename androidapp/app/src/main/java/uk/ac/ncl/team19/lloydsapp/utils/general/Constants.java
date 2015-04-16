@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Raffaello Perrotta - Class to hold general numeric constants which will be used throughout the application.
+ * @author Raffaello Perrotta
+ * @author Dale Whinham
+ *
+ * Class to hold general numeric constants which will be used throughout the application.
  */
 public class Constants {
 

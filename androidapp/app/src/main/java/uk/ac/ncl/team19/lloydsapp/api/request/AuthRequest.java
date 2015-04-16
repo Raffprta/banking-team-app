@@ -5,7 +5,10 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Dale Whinham
+ *
+ * A method to pass an authorisation request to the server which includes username, password and secure
+ * characters. This method is loaded into the APIConnector.
  */
 public class AuthRequest {
     private String username;

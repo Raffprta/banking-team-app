@@ -15,8 +15,15 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrotta, XML by Yessengerey Bolatov
- * @author Dale Whinham - backend integration
+ * @author Raffaello Perrotta
+ * Fragment set up, button listeners and information passing.
+ * @author Yessengerey Bolatov
+ * All XML Designs.
+ * @author Dale Whinham
+ * Refactor of information passing to serialisable.
+ *
+ * A class which is to provide a confirmation of the transfer on success. It additionally provides
+ * buttons to take the user back to the accounts dashboard.
  */
 public class TransferSuccessfulFragment extends Fragment {
 

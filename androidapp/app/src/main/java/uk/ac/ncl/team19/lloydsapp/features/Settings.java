@@ -20,7 +20,9 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.PreferenceFragment;
 
 /**
  * @author Raffaello Perrotta
+ * Implementations of Settings XML, Preference updating and backend integration.
  * @author Dale Whinham
+ * Refactor callbacks to RetroFit.
  *
  * A class to represent user settings which are used to determine certain
  * preferences both on the backend and on the phone.

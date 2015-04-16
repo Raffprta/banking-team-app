@@ -14,6 +14,10 @@ import com.google.android.gms.games.GamesActivityResultCodes;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 
+/**
+ * Refer to BaseGameActivity for credits, authors and license information.
+ */
+
 public class BaseGameUtils {
 
     /**

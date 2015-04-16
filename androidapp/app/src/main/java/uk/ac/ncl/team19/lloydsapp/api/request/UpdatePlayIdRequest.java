@@ -1,7 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.api.request;
 
 /**
- * Created by Raffaello Perrotta on 30/03/2015.
+ * @author Raffaello Perrotta
+ *
+ * A class to provide a method to update the Google Play ID of a user via the APIConnector.
  */
 public class UpdatePlayIdRequest {
 

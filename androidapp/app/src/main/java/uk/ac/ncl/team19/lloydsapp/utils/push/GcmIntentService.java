@@ -19,6 +19,12 @@ import java.util.Calendar;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 
+/**
+ * @author Dale Whinham
+ *
+ * A class to provide an intent service in reeiving and updating received messages to the user's phone.
+ */
+
 public class GcmIntentService extends IntentService {
     private static final String NOTIFICATION_TITLE = "Lloyds Bank";
     private static final long[] VIBRATE_PATTERN = { 0, 500, 150, 500 };

@@ -9,6 +9,12 @@ package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author Dale Whinham
+ *
+ * A representation of a Google Place location.
+ */
+
 public class PlaceLocation{
     @SerializedName("lat")
     private double latitude;

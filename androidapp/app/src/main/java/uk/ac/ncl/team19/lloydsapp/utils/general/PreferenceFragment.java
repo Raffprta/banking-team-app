@@ -1,8 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.utils.general;
 
-/**
- * Created by comet on 25/03/2015.
- */
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

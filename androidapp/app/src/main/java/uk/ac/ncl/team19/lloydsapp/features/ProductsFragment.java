@@ -17,6 +17,9 @@ import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 
 /**
  * @Author Raffaello Perrotta
+ * WebView handling and loading.
+ * @Author Abdulaziz AlSaad
+ * HTML for the Products Page.
  *
  * A Web View showing the official LLoyds Product section, in which the further products
  * offered by the banking company can be viewed by the user.

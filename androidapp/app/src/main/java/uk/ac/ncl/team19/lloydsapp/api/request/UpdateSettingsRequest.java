@@ -1,7 +1,12 @@
 package uk.ac.ncl.team19.lloydsapp.api.request;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Raffaello Perrotta
+ * Original Update Settings Code.
+ * @author Dale Whinham
+ * Refactor to RetroFit
+ *
+ * A class to provide a method to update the settings of a user via the APIConnector.
  */
 public class UpdateSettingsRequest {
     boolean emailNotifications;

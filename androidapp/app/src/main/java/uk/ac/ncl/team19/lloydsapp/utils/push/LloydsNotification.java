@@ -1,5 +1,12 @@
 package uk.ac.ncl.team19.lloydsapp.utils.push;
 
+/**
+ * @author Dale Whinham
+ *
+ * A data class to represent what a Lloyds Notification consists of. This includes
+ * a unique id, a time in milliseconds, a notification type which is then iconised as
+ * well as the message itself.
+ */
 
 public class LloydsNotification {
     // Notification types

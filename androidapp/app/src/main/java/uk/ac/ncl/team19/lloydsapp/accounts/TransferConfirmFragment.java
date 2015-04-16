@@ -24,8 +24,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrotta, XML by Yessengerey Bolatov
- * @author Dale Whinham - backend integration
+ * @author Raffaello Perrotta
+ * Fragment transaction and passing information between fragments.
+ * @author Yessengerey Bolatov
+ * Full XML design.
+ * @author Dale Whinham
+ * Full backend integration, including requests to the server and error handling. Refactor of information passing.
+ *
+ *  This class provides a fragment to confirm any transfers that the user wishes to make between their
+ *  bank accounts. Users may cancel the transfer at any time within this fragment, and the request to
+ *  perform the transfer is not sent to the backend. If the user confirms the transfer, then the information
+ *  is sent to the backend.
  */
 public class TransferConfirmFragment extends Fragment {
 
@@ -38,6 +47,7 @@ public class TransferConfirmFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get all views that will hold data.
         View transferConfirmView = inflater.inflate(R.layout.transfer_confirm, container, false);
 
         TextView fromAccountName = (TextView) transferConfirmView.findViewById(R.id.fromAccount);

@@ -1,7 +1,9 @@
 package uk.ac.ncl.team19.lloydsapp.api.response;
 
 /**
- * Created by Dale Whinham on 25/03/15.
+ * @author Dale Whinham
+ *
+ * A class to represent the response given by the backend when a device token is generated.
  */
 public class AuthResponse extends APIResponse {
     private String deviceToken;

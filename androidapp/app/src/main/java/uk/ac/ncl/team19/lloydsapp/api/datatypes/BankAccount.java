@@ -9,7 +9,10 @@ import java.io.Serializable;
 import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
- * Created by Dale Whinham on 27/03/15.
+ * @author Dale Whinham
+ *
+ * A class that represents a bank accoutn data type. Its main types are serialised.
+ *
  */
 public class BankAccount implements Serializable {
     private static final String STERLING_FORMATTING_STRING = "£%.2f";

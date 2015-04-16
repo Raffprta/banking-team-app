@@ -44,7 +44,11 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
 
 /**
- * @author Dale Whinham, with conversion to Fragment from Raffaello Perrotta
+ * @author Dale Whinham
+ * All Maps logic. All backend integration. Implementation of helper methods and callbacks.
+ * @author Raffaello Perrotta
+ * Error handling. Conversion to fragment. Abstract maps view to Viewgroup.
+ *
  * The purpose of this class is to provide an fragment that uses
  * the Google Places API to query for branch information within a specific
  * radius. This information is displayed via a Google maps wrapper.

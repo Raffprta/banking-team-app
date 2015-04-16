@@ -35,6 +35,10 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.features.Settings;
 
 /**
+ * @author Raffaello Perrotta
+ * @author Dale Whinham
+ * Perform Modifications to  Navigation Drawer from generated code. Add icons.
+ *
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.

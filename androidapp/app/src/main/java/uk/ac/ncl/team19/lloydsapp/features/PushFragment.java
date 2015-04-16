@@ -41,9 +41,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.push.NotificationsDataSource;
 import uk.ac.ncl.team19.lloydsapp.utils.push.SwipeableRecyclerViewTouchListener;
 
 /**
- * @author Dale Whinham with minor conversion to fragment by Raffaello Perrotta
- * Purpose: To provide a fragment which allows Google Cloud Messaging services to
- * send and render messages to the screen of the bank user.
+ * @author Dale Whinham
+ * Implementation of Pus notifications logic. All Client-Side Database implementation. Registration of
+ * the broadcast receiver. XML Designs and using list adapters to pass data to recycler views.
+ * @author Raffaello Perrotta
+ * Conversion to fragment. Iconising Push Notifications. Swiping and deletion implementation. Updating the GCMID.
+ * Minor XML modifications.
+ *
+ * This class provides a fragment which allows Google Cloud Messaging services to
+ * send and render messages to the screen of the bank user. These are sent via the backend server by
+ * the adminsitrator of the bank and the push notifications are iconised and saved to a client-side database
+ * even if the app is in the background as long as a broadcast receiver is registered. The GCMID is updated to the backend server.
  */
 public class PushFragment extends Fragment {
 
@@ -331,7 +339,7 @@ public class PushFragment extends Fragment {
     }
 
     // Broadcast receiver to listen for changes to notification DB
-    // casued by push messages being received
+    // caused by push messages being received
     private class DataChangedBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

@@ -3,8 +3,8 @@ package uk.ac.ncl.team19.lloydsapp.api.datatypes;
 import java.util.List;
 
 /**
- * A class to represent a bank branch.
- * Created by Dale Whinham on 22/10/14.
+ * @author Dale Whinham
+ * A class to represent a bank branch. Bank branches are used within Google Places code.
  */
 public class Branch {
     private String name;

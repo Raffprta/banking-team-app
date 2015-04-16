@@ -43,9 +43,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 
 
 /**
- * @author Dale Whinham, Raffaello Perrotta
- * Main activity associated with the drawer layout menu. Google Play services are also
- * enabled within this activity as well as the Fragment Management
+ * @author Dale Whinham
+ * Navigation drawer implementation.
+ * @author Raffaello Perrotta
+ * Help Menu mechanism. Gamification logging. Fragment loading per menu item. Auto-log off management.
+ * Fragment back stack management. Fragment title loading. Loading of settings.
+ * @author Timothy Lee
+ * Help menu integration.
+ *
+ * Main activity associated with the drawer layout menu. All fragments are loaded into this activity and
+ * inflated as part of it meaning that any events that occur within the fragments will be listened to within this
+ * activity.
  */
 
 public class MainMenuActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -213,6 +221,9 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         }
     }
 
+    /**
+     * Method to restore the action bar and re-set its title.
+     */
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);

@@ -15,7 +15,15 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Ivy Tong (XML), Raffaello Perrotta
+ * @author Yao Tong
+ * Entire XML Design and Structure
+ * @author Raffaello Perrotta
+ * Displaying information from prior fragment to XML and all respective fragment implementations.
+ * @author Dale Whinham
+ * Minor refactor of bundle data.
+ *
+ * This class provides a fragment to show to the user that their payment was successful and hence
+ * provides options for the user to return to their accounts dashboard.
  */
 public class PaymentSuccessfulFragment extends Fragment {
 
@@ -48,7 +56,7 @@ public class PaymentSuccessfulFragment extends Fragment {
         toAccNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
-
+        // Set the button to return back to the Accounts Dashboard when clicked.
         paymentSuccessView.findViewById(R.id.returnToAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

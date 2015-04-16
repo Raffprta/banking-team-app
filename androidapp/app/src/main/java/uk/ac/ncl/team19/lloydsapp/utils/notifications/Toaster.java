@@ -19,6 +19,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
  * @author Raffaello Perrotta
+ *
  * Adapted from: http://www.technotalkative.com/android-custom-toast-notification/
  * Creates a custom view for an Android toast using composition. A user may create
  * an icon displayed to the left of the toast, with text to the right. This is perfect

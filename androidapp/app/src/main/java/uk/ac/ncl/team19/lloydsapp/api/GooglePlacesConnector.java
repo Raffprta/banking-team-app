@@ -12,7 +12,11 @@ import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.response.GooglePlacesResponse;
 
 /**
- * Created by Dale Whinham on 15/04/15.
+ * @author Dale Whinham
+ *
+ * This class provides boilerplate programming code to allow implementing interfaces to connect
+ * to the Google Places Service backend. This class provides common methods for querying for branches
+ * and ATMs as well as useful formatting methods.
  */
 public class GooglePlacesConnector {
     private RestAdapter restAdapter;

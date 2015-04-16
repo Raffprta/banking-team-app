@@ -16,8 +16,14 @@ import java.util.List;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Branch;
 
 /**
- * Utility class with miscellaneous functions
- * Created by Dale Whinham on 22/10/14.
+ * @author Dale Whinham
+ * All implementations except location from postcode
+ * @author Raffaello Perrotta
+ * location from postcode.
+ *
+ * Utility class with miscellaneous functions which are used by Maps code. This class is documented
+ * thoroughly with its functionalities.
+ *
  */
 public class Utility {
     // Tag for logging

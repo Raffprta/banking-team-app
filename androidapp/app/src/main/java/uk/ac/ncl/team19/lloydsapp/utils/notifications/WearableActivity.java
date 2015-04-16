@@ -7,6 +7,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 
 /**
  * @author Raffaello Perrotta
+ *
  * A class that specifies an activity for wearable devices to load notifications through it.
  */
 public class WearableActivity extends Activity {

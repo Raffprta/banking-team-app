@@ -5,6 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * @author Dale Whinham
+ *
+ * A helper class to provide CRUD methods for setting up a SQLite database. The database
+ * will hold push notification information on a user's phone.
+ */
+
 public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String DATABASE_FILENAME = "data.db";
 

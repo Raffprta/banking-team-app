@@ -14,7 +14,16 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 
 /**
- * @author Raffaello Perrota, XML by Ivy Tong
+ * @author Raffaello Perrota
+ * Automatic log off display mechanism. Client-side validation. Intent management.
+ * @author Ivy Tong
+ * All XML Designs.
+ * @author Dale Whinham
+ * Add method to go to the site.
+ *
+ * This class is the entry point to our program. It provides inputs for the user to log into their account
+ * as well as passing these inputs to the next activity - the security activity. Client-side validation
+ * is done on this page, and this page is what is displayed on logging off in any way.
  */
 public class LoginActivity extends FragmentActivity {
 

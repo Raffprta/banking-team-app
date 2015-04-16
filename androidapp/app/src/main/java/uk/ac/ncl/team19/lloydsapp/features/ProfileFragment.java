@@ -52,10 +52,17 @@ import uk.ac.ncl.team19.lloydsapp.utils.notifications.Toaster;
 import uk.ac.ncl.team19.lloydsapp.utils.play.BaseGameUtils;
 
 /**
- * @author Yessengerey Bolatov (XML Designs) and Raffaello Perrotta
- * @author Dale Whinham - simplify Bundle key access
+ * @author Yessengerey Bolatov
+ * All XML Designs.
+ * @author Raffaello Perrotta
+ * All Google Play implementation. All Google Play backend requests and updates.
+ * Leaderboards and Ahievements unlocking and loading. Error resolution. Health, status, bio: implementation.
+ * @author Dale Whinham
+ * Simplify Bundle key access
  *
- * Profile page fragment, which contains hotlinks as well as all gamification aspects.
+ * Profile page fragment, which contains gamificatio naspects powered by Google Play. This class will provide
+ * the user a view of their account health as well as a view of their unlocked achievements and displayed leaderboards.
+ * Aspects of gamification are private to the user and do not reveal any sensitive details.
  */
 
 public class ProfileFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
