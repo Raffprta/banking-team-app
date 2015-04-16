@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Username</label>
                         <div class="col-md-5">
-                            <input id="username" name="username" type="text" placeholder="eg. john.smith@ncl.ac.uk" value="{{ username }}" class="form-control input-md" required="">
+                            <input id="username" name="username" type="text" placeholder="eg. john.smith@ncl.ac.uk" value="{{ username }}" class="form-control input-md" required="" onkeypress="capLock(event)">
                         </div>
                     </div>
 
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="password">Password</label>
                         <div class="col-md-5">
-                            <input id="password" name="password" type="password" placeholder="" value="{{ password }}" class="form-control input-md" required="">
+                            <input id="password" name="password" type="password" placeholder="" value="{{ password }}" class="form-control input-md" required="" onkeypress="capLock(event)">
                         </div>
                     </div>
                     
@@ -32,7 +32,7 @@
                         <label class="col-md-4 control-label" for="secDigOne">Security Digit {{ digitOne }} </label>
                         <input id="digitOne" name="digitOne" type="hidden" value="{{ digitOne }}">
                         <div class="col-md-2">
-                            <input id="secDigOne" name="secDigOne" maxlength="1" type="password" placeholder="" value="{{ secDigOne }}" class="form-control input-md" required="">
+                            <input id="secDigOne" name="secDigOne" maxlength="1" type="password" placeholder="" value="{{ secDigOne }}" class="form-control input-md" required="" onkeypress="capLock(event)">
                         </div>
                     </div>
                     
@@ -41,7 +41,7 @@
                         <label class="col-md-4 control-label" for="secDigTwo">Security Digit {{ digitTwo }} </label>
                         <input id="digitTwo" name="digitTwo" type="hidden" value="{{ digitTwo }}">
                         <div class="col-md-2">
-                            <input id="secDigTwo" name="secDigTwo" maxlength="1" type="password" placeholder="" value="{{ secDigTwo }}" class="form-control input-md" required="">
+                            <input id="secDigTwo" name="secDigTwo" maxlength="1" type="password" placeholder="" value="{{ secDigTwo }}" class="form-control input-md" required="" onkeypress="capLock(event)">
                         </div>
                     </div>
                     
@@ -50,7 +50,7 @@
                         <label class="col-md-4 control-label" for="secDigThree">Security Digit {{ digitThree }} </label>
                         <input id="digitThree" name="digitThree" type="hidden" value="{{ digitThree }}">
                         <div class="col-md-2">
-                            <input id="secDigThree" name="secDigThree" maxlength="1" type="password" placeholder="" value="{{ secDigThree }}" class="form-control input-md" required="">
+                            <input id="secDigThree" name="secDigThree" maxlength="1" type="password" placeholder="" value="{{ secDigThree }}" class="form-control input-md" required="" onkeypress="capLock(event)">
                         </div>
                     </div>
 
@@ -70,9 +70,31 @@
 
                 </fieldset>
             </form>
+			
+			<div id="caps" STYLE="visibility:hidden">
+			  <p> You have your caps locks key on, ensure this is not accidental and actually part of your input </p>
+			</div>
 
 
         </div>
     </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script>
+	  // Attribution and licenses for this snippet of code can be found: http://www.codeproject.com/Articles/17180/Detect-Caps-Lock-with-Javascript
+	  function capLock(e){
+	  
+        kc = e.keyCode?e.keyCode:e.which;
+        sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
+		
+        if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
+          document.getElementById('caps').style.visibility = 'visible';
+        else
+          document.getElementById('caps').style.visibility = 'hidden';
+        }
+		
+	</script>
+	
 {% endblock %}
