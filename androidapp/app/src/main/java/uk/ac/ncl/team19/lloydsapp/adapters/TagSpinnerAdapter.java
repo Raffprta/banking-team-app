@@ -29,6 +29,10 @@ public class TagSpinnerAdapter extends ArrayAdapter<String> {
 
         tagIcon.setVisibility(t == Transaction.Tag.UNTAGGED ? View.INVISIBLE : View.VISIBLE);
 
+        /**
+         * The following icons are taken from the Google Material Design icons pack,
+         * available at: https://github.com/google/material-design-icons
+         */
         int iconResource;
         switch (t) {
             case FOODDRINK:
