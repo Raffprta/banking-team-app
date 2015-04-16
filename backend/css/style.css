@@ -34,7 +34,17 @@ html, body {
     margin: 0 auto;
 }
 
-
+#list li  {
+ 
+    font-size: large;
+    left: 40px;
+    top: 20px;
+ 
+}
+ 
+#list ul{
+    font-size: medium;
+}
 
 
 #about p {
