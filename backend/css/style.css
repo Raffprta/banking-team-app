@@ -12,6 +12,31 @@ section{
     /*background-color:#006A4D;*/
 }
 
+* { 
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+
+    
+html, body {
+    height: 100% !important;
+}
+ 
+.container {
+    position: relative;
+    width: 60%;
+    min-height: 100%;
+    margin: 0 auto;
+}
+
+
+
+
 #about p {
     color: black;
 }
