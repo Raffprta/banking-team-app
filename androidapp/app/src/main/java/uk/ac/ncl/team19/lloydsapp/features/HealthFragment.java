@@ -204,9 +204,9 @@ public class HealthFragment extends Fragment {
             perMonthOrPerWeek.setText(getString(R.string.monthly));
         }
 
-        spendAmount.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_SPEND, -1)));
-        saveAmount.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_SAVE, -1)));
-        overdraft.setText(Float.toString(sp.getFloat(Constants.SP_GOALS_OVERDRAFT, -1)));
+        spendAmount.setText(CurrencyMangler.floatToSterlingString(sp.getFloat(Constants.SP_GOALS_SPEND, -1)));
+        saveAmount.setText(CurrencyMangler.floatToSterlingString(sp.getFloat(Constants.SP_GOALS_SAVE, -1)));
+        overdraft.setText(CurrencyMangler.floatToSterlingString(sp.getFloat(Constants.SP_GOALS_OVERDRAFT, -1)));
 
 
         // Show the percentage points of the current health
