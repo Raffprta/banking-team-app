@@ -26,7 +26,7 @@ import uk.ac.ncl.team19.lloydsapp.R;
 public class ProgressDialog extends DialogFragment {
 
     // Instance variables
-    private static ProgressDialog instance = new ProgressDialog();
+    private static final ProgressDialog instance = new ProgressDialog();
     private static final String TAG = "Loading";
     private static boolean shown = false;
 

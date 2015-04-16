@@ -61,7 +61,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
     private CharSequence mTitle;
 
     // Countdown timer to determine when user auto-logs out. 1000 represents the countdown interval in millis.
-    private CountDownTimer countDownTimer = new CountDownTimer(Constants.TIME_MILLIS_LOGOFF,1000) {
+    private final CountDownTimer countDownTimer = new CountDownTimer(Constants.TIME_MILLIS_LOGOFF,1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             // Do nothing on tick.
@@ -119,16 +119,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         countDownTimer.start();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     // Override clicking the back button as the user may not access the login and security page.
     // Fragments are instead kept track of.
     @Override
@@ -143,13 +133,13 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
         }
     }
 
-    private PushFragment push = new PushFragment();
-    private MapsFragment map = new MapsFragment();
-    private ProductsFragment products = new ProductsFragment();
-    private AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
-    private ProfileFragment profile = new ProfileFragment();
-    private HealthFragment health = new HealthFragment();
-    private SetGoalsFragment goals = new SetGoalsFragment();
+    private final PushFragment push = new PushFragment();
+    private final MapsFragment map = new MapsFragment();
+    private final ProductsFragment products = new ProductsFragment();
+    private final AccountsDashboardFragment accountsDashboard = new AccountsDashboardFragment();
+    private final ProfileFragment profile = new ProfileFragment();
+    private final HealthFragment health = new HealthFragment();
+    private final SetGoalsFragment goals = new SetGoalsFragment();
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -201,9 +191,6 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
                 break;
             case 6:
                 mTitle = getString(R.string.location_page);
-
-                if(map == null || !map.isAdded())
-                    map = new MapsFragment();
                 fragmentManager.beginTransaction().replace(R.id.container, map, mTitle.toString()).addToBackStack(mTitle.toString()).commit();
                 break;
             case 7:

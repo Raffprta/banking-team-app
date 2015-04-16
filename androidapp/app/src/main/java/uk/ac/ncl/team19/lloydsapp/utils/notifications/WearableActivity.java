@@ -17,9 +17,4 @@ public class WearableActivity extends Activity {
         setContentView(R.layout.iconised_layout);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
 }

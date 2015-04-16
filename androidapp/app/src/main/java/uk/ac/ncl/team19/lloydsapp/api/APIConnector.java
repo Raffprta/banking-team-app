@@ -28,6 +28,7 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.api.request.AuthRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.TransferRequest;
 import uk.ac.ncl.team19.lloydsapp.api.request.UpdateGcmIdRequest;
@@ -98,10 +99,10 @@ public class APIConnector {
         );
     }
 
-    private Context ctx;
+    private final Context ctx;
     private final String deviceToken;
-    private RestAdapter restAdapter;
-    private BackendService service;
+    private final RestAdapter restAdapter;
+    private final BackendService service;
 
     public APIConnector(Context ctx) {
         this.ctx = ctx;
@@ -166,13 +167,8 @@ public class APIConnector {
         service.getTransactions(deviceToken, accountId, periodFrom != null ? periodFrom.getTime()/1000 : null, periodTo != null ? periodTo.getTime()/1000 : null, callback);
     }
 
-    public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Callback<APIResponse> callback) {
-        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference);
-        service.transferMoney(deviceToken, transferMoneyRequest, callback);
-    }
-
-    public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, long tag, Callback<APIResponse> callback) {
-        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, tag);
+    public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Transaction.Tag tag, Callback<APIResponse> callback) {
+        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference, tag);
         service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }
 

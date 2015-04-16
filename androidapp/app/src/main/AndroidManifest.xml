@@ -13,8 +13,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-
-
     <!-- App specific permissions; prevents other apps from intercepting messages -->
     <permission android:name="uk.ac.ncl.team19.lloydsapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="uk.ac.ncl.team19.lloydsapp.permission.C2D_MESSAGE" />
@@ -26,7 +24,6 @@
         android:theme="@style/AppTheme" >
 
         <!-- Google Play -->
-
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
         <meta-data android:name="com.google.android.gms.version"
@@ -55,7 +52,6 @@
                 android:screenOrientation="portrait"
                 android:configChanges="orientation|keyboardHidden"></activity>
 
-
         <!-- Receiver for GCM -->
         <receiver
             android:name="uk.ac.ncl.team19.lloydsapp.utils.push.GcmBroadcastReceiver"
@@ -71,5 +67,4 @@
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyA8a5cTvL05FPcr52Mf0TAP3N9epM2a6sM"/>
 
     </application>
-
 </manifest>

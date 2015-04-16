@@ -4,16 +4,13 @@
     <color name="lloyds_darkgreen">#ff0d573d</color>
     <color name="lloyds_darkergreen">#ff073224</color>
     <color name="lloyds_lightgreen">#ff6ca291</color>
-    <color name="lloyds_lightgreen_transparent">#336ca291</color>
     <color name="lloyds_lightergreen">#6ACA25</color>
 
     <color name="lloyds_darkgreen_menu">#0a523c</color>
 
     <!-- Custom colour -->
-    <color name="lloyds_acc_info_lightgreen_blue_button">#ff34ae80</color>
     <color name="lloyds_lightergreen_transparent">#806ACA25</color>
     <color name="lloyds_lightergreen_moreTransparent">#336ACA25</color>
-    <color name="lloyds_darkgreen_menu_transparent">#800a523c</color>
     <color name="lloyds_acc_info_green_button">#ff0b8b07</color>
     <color name="lloyds_acc_info_green_button_transparent">#330b8b07</color>
     <color name="lloyds_white">#ffffffff</color>

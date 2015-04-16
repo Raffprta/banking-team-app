@@ -15,8 +15,8 @@ import uk.ac.ncl.team19.lloydsapp.api.response.GooglePlacesResponse;
  * Created by Dale Whinham on 15/04/15.
  */
 public class GooglePlacesConnector {
-    private RestAdapter restAdapter;
-    private GooglePlacesService service;
+    private final RestAdapter restAdapter;
+    private final GooglePlacesService service;
 
     private interface GooglePlacesService {
         @POST("/nearbysearch/json")

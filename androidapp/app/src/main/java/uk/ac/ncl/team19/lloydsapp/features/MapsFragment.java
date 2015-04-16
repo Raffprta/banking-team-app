@@ -195,11 +195,6 @@ public class MapsFragment extends SupportMapFragment {
         return getString(R.string.location_page);
     }
 
-    @Override
-    public void onAttach(android.app.Activity activity){
-        super.onAttach(activity);
-    }
-
     /**
      * Helper function common to both branch and ATM finder to assist with setting the correct location to
      * be queried in the Async. tasks. If no location or postcode is present then an error message is shown to
@@ -307,7 +302,7 @@ public class MapsFragment extends SupportMapFragment {
     }
 
     // Callback for when Places query has completed
-    private Callback<GooglePlacesResponse> googlePlacesCallback = new Callback<GooglePlacesResponse>() {
+    private final Callback<GooglePlacesResponse> googlePlacesCallback = new Callback<GooglePlacesResponse>() {
         @Override
         public void success(GooglePlacesResponse googlePlacesResponse, Response response) {
             // Loading has finished so remove the progress dialog fragment

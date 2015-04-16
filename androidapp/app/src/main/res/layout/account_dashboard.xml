@@ -25,8 +25,8 @@
                 android:id="@+id/textViewTitle" />
 
             <Space
-                android:layout_width="20px"
-                android:layout_height="20px" />
+                android:layout_width="fill_parent"
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:orientation="vertical"

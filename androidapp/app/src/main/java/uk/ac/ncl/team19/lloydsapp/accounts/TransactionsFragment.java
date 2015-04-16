@@ -163,7 +163,7 @@ public class TransactionsFragment extends Fragment {
 
     private class TransactionListAdapter extends BaseExpandableListAdapter {
         // LinkedHashMap retains order
-        private LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
+        private final LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
 
         public TransactionListAdapter(List<Transaction> transactions, String forYear) {
             SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ROOT);

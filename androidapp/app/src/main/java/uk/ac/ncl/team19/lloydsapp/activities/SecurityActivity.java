@@ -40,7 +40,7 @@ public class SecurityActivity extends FragmentActivity implements OnDismissListe
     // Login credentials
     private String username = "";
     private String password = "";
-    private List<SecureChar> secureChars = new ArrayList<>();
+    private final List<SecureChar> secureChars = new ArrayList<>();
 
     // Logging tag
     private static final String TAG = SecurityActivity.class.getName();

@@ -45,31 +45,31 @@ public class PieChartView extends View {
 
     private static final boolean FILL_GRADIENT = false;
 
-    private int mPostRotateDegrees = -90;
-    private float mStrokeWidth = 1f;
+    private final int mPostRotateDegrees = -90;
+    private final float mStrokeWidth = 1f;
 
-    private ArrayList<Slice> mSlices = new ArrayList<>();
+    private final ArrayList<Slice> mSlices = new ArrayList<>();
 
     private int mOriginAngle;
-    private Matrix mMatrix = new Matrix();
+    private final Matrix mMatrix = new Matrix();
 
-    private Paint mPaintOutline = new Paint();
+    private final Paint mPaintOutline = new Paint();
 
-    private Path mPathSide = new Path();
-    private Path mPathSideOutline = new Path();
+    private final Path mPathSide = new Path();
+    private final Path mPathSideOutline = new Path();
 
-    private Path mPathOutline = new Path();
+    private final Path mPathOutline = new Path();
 
-    private int mSideWidth;
+    private final int mSideWidth;
 
     public class Slice {
-        public long value;
+        public final long value;
 
-        public Path path = new Path();
-        public Path pathSide = new Path();
-        public Path pathOutline = new Path();
+        public final Path path = new Path();
+        public final Path pathSide = new Path();
+        public final Path pathOutline = new Path();
 
-        public Paint paint;
+        public final Paint paint;
 
         public Slice(long value, int color) {
             this.value = value;

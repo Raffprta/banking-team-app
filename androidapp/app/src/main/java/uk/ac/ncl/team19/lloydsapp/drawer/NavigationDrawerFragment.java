@@ -45,8 +45,8 @@ public class NavigationDrawerFragment extends Fragment {
      * A class to associate navigation items with icons
      */
     public class NavigationListItem {
-        public String name;
-        public Drawable icon;
+        public final String name;
+        public final Drawable icon;
         public NavigationListItem(int nameStringID, int iconDrawableID) {
             this.name = getString(nameStringID);
             this.icon = getResources().getDrawable(iconDrawableID);
@@ -319,7 +319,6 @@ public class NavigationDrawerFragment extends Fragment {
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
     }
 

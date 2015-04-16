@@ -26,10 +26,10 @@ import uk.ac.ncl.team19.lloydsapp.R;
  */
 public class Toaster{
 
-    private Toast toast;
-    private ImageView img;
-    private Activity a;
-    private TextView text;
+    private final Toast toast;
+    private final ImageView img;
+    private final Activity a;
+    private final TextView text;
     private String title;
 
     // Static int accumulates notification ids for wearables
@@ -90,7 +90,7 @@ public class Toaster{
 
         // Builds the intent which will be launched to the wearable device
         Intent viewIntent = new Intent(this.a, WearableActivity.class);
-        viewIntent.putExtra(NOTIFICATION_ID, this.id);
+        viewIntent.putExtra(NOTIFICATION_ID, id);
 
         PendingIntent viewPendingIntent = PendingIntent.getActivity(this.a, 0, viewIntent, 0);
         // Build the notification, defaults will ensure the watch will vibrate when receiving

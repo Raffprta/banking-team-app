@@ -7,7 +7,7 @@ public class LloydsNotification {
     public static final String TYPE_INFO = "info";
     public static final String TYPE_OFFER = "offer";
 
-    private int id;
+    private final int id;
     private long dateInMillis;
     private String notificationType;
     private String notificationMessage;

@@ -5,7 +5,7 @@ package uk.ac.ncl.team19.lloydsapp.api.request;
  */
 public class UpdatePlayIdRequest {
 
-    String playId;
+    final String playId;
 
     public UpdatePlayIdRequest(String playId) {
         this.playId = playId;
