@@ -15,6 +15,7 @@ import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.api.response.APIResponse;
 import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
@@ -88,6 +89,7 @@ public class PaymentConfirmFragment extends Fragment{
                         args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE),
                         args.getLong(Constants.BUNDLE_KEY_AMOUNT),
                         args.getString(Constants.BUNDLE_KEY_REF),
+                        (Transaction.Tag) args.getSerializable(Constants.BUNDLE_KEY_TAG),
                         new Callback<APIResponse>() {
                             @Override
                             public void success(APIResponse apiResponse, Response response) {

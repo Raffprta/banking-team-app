@@ -25,10 +25,11 @@ import javax.net.ssl.X509TrustManager;
  * Based on answer from StackOverflow: http://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https
  */
 public class CustomSSLSocketFactory extends SSLSocketFactory {
-    protected SSLContext sslContext = SSLContext.getInstance("TLS");
+    protected final SSLContext sslContext;
 
     public CustomSSLSocketFactory(KeyStore keyStore) throws NoSuchAlgorithmException, KeyManagementException {
         super();
+        sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, new TrustManager[]{new AdditionalKeyStoresTrustManager(keyStore)}, null);
     }
 
@@ -75,7 +76,7 @@ public class CustomSSLSocketFactory extends SSLSocketFactory {
     // Based on http://download.oracle.com/javase/1.5.0/docs/guide/security/jsse/JSSERefGuide.html#X509TrustManager
     private class AdditionalKeyStoresTrustManager implements X509TrustManager {
 
-        ArrayList<X509TrustManager> x509TrustManagers = new ArrayList<>();
+        final ArrayList<X509TrustManager> x509TrustManagers = new ArrayList<>();
 
         AdditionalKeyStoresTrustManager(KeyStore... additionalKeyStores) {
             ArrayList<TrustManagerFactory> factories = new ArrayList<>();

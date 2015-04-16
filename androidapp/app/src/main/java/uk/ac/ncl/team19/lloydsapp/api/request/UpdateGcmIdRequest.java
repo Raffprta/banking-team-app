@@ -9,7 +9,7 @@ package uk.ac.ncl.team19.lloydsapp.api.request;
  * A lass to provide a method to update the GCMID of a user via the APIConnector.
  */
 public class UpdateGcmIdRequest {
-    String gcmId;
+    final String gcmId;
 
     public UpdateGcmIdRequest(String gcmId) {
         this.gcmId = gcmId;

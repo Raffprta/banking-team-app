@@ -34,7 +34,7 @@ public class MailHelper {
     private String txtBody;
     private String replyToList;
     private boolean authenticationRequired = false;
-    private Fragment frag;
+    private final Fragment frag;
 
     public MailHelper(String from, String toList, String subject, String txtBody, Fragment frag) {
         this.txtBody = txtBody;
@@ -49,7 +49,7 @@ public class MailHelper {
     }
 
 
-    public void sendAuthenticated() throws AddressException, MessagingException {
+    public void sendAuthenticated() throws MessagingException {
         authenticationRequired = true;
         send();
     }
@@ -60,7 +60,7 @@ public class MailHelper {
      * @throws MessagingException
      * @throws AddressException
      */
-    public void send() throws AddressException, MessagingException {
+    public void send() throws MessagingException {
         Properties props = new Properties();
 
         // set the host smtp address

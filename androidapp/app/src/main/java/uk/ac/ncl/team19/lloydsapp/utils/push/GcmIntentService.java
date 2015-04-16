@@ -35,7 +35,7 @@ public class GcmIntentService extends IntentService {
     private NotificationManager mNotificationManager;
 
     // Log tag for debugging
-    private String TAG = "GcmIntentService";
+    private static final String TAG = "GcmIntentService";
 
     public GcmIntentService() {
         super("GcmIntentService");

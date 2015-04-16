@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="Hello"
                 android:textIsSelectable="false"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 

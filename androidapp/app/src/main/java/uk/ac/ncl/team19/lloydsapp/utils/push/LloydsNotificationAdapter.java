@@ -25,17 +25,17 @@ import uk.ac.ncl.team19.lloydsapp.R;
  */
 public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotificationAdapter.ViewHolder> {
 
-    private List<LloydsNotification> mDataset;
-    private Context ctx;
+    private final List<LloydsNotification> mDataset;
+    private final Context ctx;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Each data item is just a string in this case
-        public TextView mTextView;
+        public final TextView mTextView;
         // Icon item
-        public ImageView mImageView;
+        public final ImageView mImageView;
         public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.info_text);
@@ -58,8 +58,7 @@ public class LloydsNotificationAdapter extends RecyclerView.Adapter<LloydsNotifi
         View v = l.inflate(R.layout.message_row, parent, false);
 
         // Return the ViewHolder
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     // Replace the contents of a view (invoked by the layout manager)

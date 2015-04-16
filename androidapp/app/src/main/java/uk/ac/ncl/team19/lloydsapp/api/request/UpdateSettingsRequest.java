@@ -9,8 +9,8 @@ package uk.ac.ncl.team19.lloydsapp.api.request;
  * A class to provide a method to update the settings of a user via the APIConnector.
  */
 public class UpdateSettingsRequest {
-    boolean emailNotifications;
-    boolean pushNotifications;
+    final boolean emailNotifications;
+    final boolean pushNotifications;
 
     public UpdateSettingsRequest(boolean emailNotifications, boolean pushNotifications) {
         this.emailNotifications = emailNotifications;

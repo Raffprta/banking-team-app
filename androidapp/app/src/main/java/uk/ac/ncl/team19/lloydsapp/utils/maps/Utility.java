@@ -116,7 +116,7 @@ public class Utility {
     public static LatLng locationFromPostcode(Context ctx, String postCode) {
 
         final Geocoder geocoder = new Geocoder(ctx);
-        Address address = null;
+        Address address;
 
         try {
             List<Address> addresses = geocoder.getFromLocationName(postCode, 1);

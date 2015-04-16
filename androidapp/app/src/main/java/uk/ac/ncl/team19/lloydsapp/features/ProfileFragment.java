@@ -454,7 +454,7 @@ public class ProfileFragment extends Fragment implements GoogleApiClient.Connect
 
     }
 
-    private static int RC_SIGN_IN = 9001;
+    private static final int RC_SIGN_IN = 9001;
 
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;

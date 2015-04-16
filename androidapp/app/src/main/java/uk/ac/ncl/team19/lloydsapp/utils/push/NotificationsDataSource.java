@@ -21,19 +21,14 @@ import java.util.List;
  */
 
 public class NotificationsDataSource {
-    private static final String TAG = NotificationsDataSource.class.getSimpleName();
-
-    private Context context;
-
     private SQLiteDatabase database;
-    private DBOpenHelper dbHelper;
-    private String[] notificationsColumns = { DBOpenHelper.COLUMN_ID,
+    private final DBOpenHelper dbHelper;
+    private final String[] notificationsColumns = { DBOpenHelper.COLUMN_ID,
             DBOpenHelper.COLUMN_DATE,
             DBOpenHelper.COLUMN_NOTIFICATION_TYPE,
             DBOpenHelper.COLUMN_NOTIFICATION_MESSAGE };
 
     public NotificationsDataSource(Context context) {
-        this.context = context;
         dbHelper = new DBOpenHelper(context);
     }
 

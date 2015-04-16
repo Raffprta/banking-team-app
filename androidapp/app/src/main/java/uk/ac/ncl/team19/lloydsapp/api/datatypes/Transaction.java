@@ -4,33 +4,56 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
+
 /**
  * @author Dale Whinham
  *
  * A data type to represent a transaction.
  */
 public class Transaction {
-    private static final String STERLING_FORMATTING_STRING = "£%.2f";
-
     public enum Tag {
         @SerializedName("0")
-        UNTAGGED,
+        UNTAGGED(0),
         @SerializedName("1")
-        FOODDRINK,
+        FOODDRINK(1),
         @SerializedName("2")
-        CLOTHES,
+        CLOTHES(2),
         @SerializedName("3")
-        WITHDRAWAL,
+        WITHDRAWAL(3),
         @SerializedName("4")
-        ENTERTAINMENT,
+        ENTERTAINMENT(4),
         @SerializedName("5")
-        OTHER,
+        OTHER(5),
         @SerializedName("6")
-        UTILITY,
+        UTILITY(6),
         @SerializedName("7")
-        TRANSPORT,
+        TRANSPORT(7),
         @SerializedName("8")
-        DONATION
+        DONATION(8);
+
+        private long id;
+
+        Tag(long id) {
+            this.id = id;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public static Tag getTag(long id) {
+            // Look up tag
+            for (Transaction.Tag t: Transaction.Tag.values()) {
+                if (t.getId() == id) {
+                    return t;
+                }
+            }
+
+            // We should never reach here
+            assert false;
+            return null;
+        }
     }
 
     private long id;
@@ -62,7 +85,7 @@ public class Transaction {
     }
 
     public String getFormattedAmount() {
-        return String.format(STERLING_FORMATTING_STRING, amount / 100.0);
+        return CurrencyMangler.integerToSterlingString(amount);
     }
 
     public String getReference() {

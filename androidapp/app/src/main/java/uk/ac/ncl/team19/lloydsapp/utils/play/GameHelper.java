@@ -156,7 +156,7 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Print debug logs?
     boolean mDebugLog = false;
 
-    Handler mHandler;
+    final Handler mHandler;
 
     /*
      * If we got an invitation when we connected to the games client, it's here.

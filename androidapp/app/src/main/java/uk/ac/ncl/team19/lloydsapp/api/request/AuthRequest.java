@@ -11,9 +11,9 @@ import uk.ac.ncl.team19.lloydsapp.api.datatypes.SecureChar;
  * characters. This method is loaded into the APIConnector.
  */
 public class AuthRequest {
-    private String username;
-    private String password;
-    private List<SecureChar> secureChars;
+    private final String username;
+    private final String password;
+    private final List<SecureChar> secureChars;
 
     public AuthRequest(String username, String password, List<SecureChar> secureChars) {
         this.username = username;

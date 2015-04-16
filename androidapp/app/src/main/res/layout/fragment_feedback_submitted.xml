@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="@string/submit_success"
             android:id="@+id/submittedTextView"
-            android:textSize="40dp"
+            android:textSize="40sp"
             android:textColor="@color/lloyds_lightergreen" />
 
     </GridLayout>

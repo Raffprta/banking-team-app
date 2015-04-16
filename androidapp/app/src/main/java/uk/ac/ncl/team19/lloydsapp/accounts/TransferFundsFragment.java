@@ -15,6 +15,7 @@ import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
@@ -40,7 +41,6 @@ public class TransferFundsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         View transferFundsView = inflater.inflate(R.layout.transfer_funds_page, container, false);
         final EditText amountToPay = (EditText) transferFundsView.findViewById(R.id.amountToTransfer);
@@ -112,7 +112,7 @@ public class TransferFundsFragment extends Fragment {
                     args.putSerializable(Constants.BUNDLE_KEY_FROM_ACC, (BankAccount) fromAccount.getSelectedItem());
                     args.putSerializable(Constants.BUNDLE_KEY_TO_ACC, (BankAccount) toAccount.getSelectedItem());
                     args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
-                    args.putLong(Constants.BUNDLE_KEY_TAG, tags.getSelectedItemId());
+                    args.putSerializable(Constants.BUNDLE_KEY_TAG, Transaction.Tag.getTag(tags.getSelectedItemId()));
 
                     TransferConfirmFragment transferConfirmFragment = new TransferConfirmFragment();
                     transferConfirmFragment.setArguments(args);

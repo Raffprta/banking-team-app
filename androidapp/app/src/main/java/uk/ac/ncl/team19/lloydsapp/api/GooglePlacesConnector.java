@@ -19,8 +19,8 @@ import uk.ac.ncl.team19.lloydsapp.api.response.GooglePlacesResponse;
  * and ATMs as well as useful formatting methods.
  */
 public class GooglePlacesConnector {
-    private RestAdapter restAdapter;
-    private GooglePlacesService service;
+    private final RestAdapter restAdapter;
+    private final GooglePlacesService service;
 
     private interface GooglePlacesService {
         @POST("/nearbysearch/json")
