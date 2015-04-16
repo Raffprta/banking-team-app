@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.adapters.TagSpinnerAdapter;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
@@ -55,9 +56,10 @@ public class TransferFundsFragment extends Fragment {
         // Only proceed if there are 2 or more accounts
         if (accounts.size() >= 2) {
             // Setup spinners
-            final ArrayAdapter<BankAccount> accountSpinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accounts);
+            final ArrayAdapter<BankAccount> accountSpinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, accounts);
             fromAccount.setAdapter(accountSpinnerAdapter);
             toAccount.setAdapter(accountSpinnerAdapter);
+            tags.setAdapter(new TagSpinnerAdapter(getActivity()));
 
             // Force mutual exclusion for account spinners (prevents user trying to transferring to same account)
             fromAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

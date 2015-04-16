@@ -91,7 +91,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/textView33"
                     android:layout_column="1"
-                    android:layout_marginLeft="10dp"
                     android:text="@string/reference_opt" />
             </TableRow>
 
@@ -119,8 +118,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/account_number"
                     android:id="@+id/textView22"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_column="1" />
             </TableRow>
 
             <TableRow
@@ -149,8 +147,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/sort_code"
                     android:id="@+id/textView24"
-                    android:layout_column="1"
-                    android:layout_marginLeft="10dp" />
+                    android:layout_column="1" />
             </TableRow>
 
             <TableRow
@@ -209,6 +206,42 @@
                     android:ems="10"
                     android:id="@+id/amountPayment"
                     android:layout_column="1" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/tag"
+                    android:id="@+id/textView30"
+                    android:layout_column="0"
+                    android:textColor="@color/lloyds_darkgreen" />
+
+                <Spinner
+                    android:id="@+id/tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/tags"
+                    android:layout_marginBottom="10dp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/textView31"
+                    android:layout_column="1"
+                    android:textColor="@color/lloyds_lightgreen"
+                    android:text="@string/tag_appear" />
             </TableRow>
 
         </TableLayout>

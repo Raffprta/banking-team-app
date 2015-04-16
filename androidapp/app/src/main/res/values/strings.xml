@@ -188,7 +188,6 @@
     <string name="man_health">Tap the Health Bar to view the Health percentage\n\nTap Set Goals to set new goals\n\n Tap Back To Profile to go back to profile</string>
     <string name="man_confirm">Tap confirm to make the transfer\n\nTap cancel to go back</string>
 
-
     <!-- Drop down menu strings for setting goals page -->
     <string-array name="set_for_period_goals">
         <item>Month</item>

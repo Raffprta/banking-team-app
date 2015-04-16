@@ -13,7 +13,9 @@ import android.widget.Spinner;
 import java.util.List;
 
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.adapters.TagSpinnerAdapter;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
+import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
 import uk.ac.ncl.team19.lloydsapp.utils.general.CurrencyMangler;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
@@ -43,18 +45,22 @@ public class MakePaymentFragment extends Fragment {
         final View paymentView = inflater.inflate(R.layout.make_a_payment, container, false);
 
         // Get all views containing information.
-        final Spinner fromAccount = (Spinner)paymentView.findViewById(R.id.accountsSpinner);
-        final EditText transactionReference = (EditText)paymentView.findViewById(R.id.reference);
-        final EditText accountNumber = (EditText)paymentView.findViewById(R.id.accountNumberPayment);
-        final EditText sortCode = (EditText)paymentView.findViewById(R.id.sortCodePayment);
-        final EditText amountToPay = (EditText)paymentView.findViewById(R.id.amountPayment);
+        final Spinner fromAccount = (Spinner) paymentView.findViewById(R.id.accountsSpinner);
+        final EditText transactionReference = (EditText) paymentView.findViewById(R.id.reference);
+        final EditText accountNumber = (EditText) paymentView.findViewById(R.id.accountNumberPayment);
+        final EditText sortCode = (EditText) paymentView.findViewById(R.id.sortCodePayment);
+        final EditText amountToPay = (EditText) paymentView.findViewById(R.id.amountPayment);
+        final Spinner tags = (Spinner) paymentView.findViewById(R.id.tag);
+
+        // Setup spinner
+        tags.setAdapter(new TagSpinnerAdapter(getActivity()));
 
         // Unbundle accounts
         args = getArguments();
         accounts = (List<BankAccount>) args.getSerializable(Constants.BUNDLE_KEY_ACCOUNT_LIST);
 
         // Populate Spinner with bank accounts
-        fromAccount.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, accounts));
+        fromAccount.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, accounts));
 
         paymentView.findViewById(R.id.continuePayment).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +115,7 @@ public class MakePaymentFragment extends Fragment {
                 args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, sortCode.getText().toString());
                 args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
                 args.putString(Constants.BUNDLE_KEY_REF, transactionReference.getText().toString());
+                args.putSerializable(Constants.BUNDLE_KEY_TAG, Transaction.Tag.getTag(tags.getSelectedItemId()));
 
                 PaymentConfirmFragment paymentConfirmation = new PaymentConfirmFragment();
                 paymentConfirmation.setArguments(args);
