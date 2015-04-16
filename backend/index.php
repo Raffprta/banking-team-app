@@ -313,6 +313,13 @@ $klein->respond('GET', '/achievements', function ($request, $response, $service)
     }
 });
 
+//================================================================================
+// Public: Meet the team page
+//================================================================================
+$klein->respond('GET', '/team', function ($request, $response, $service) {
+    displayPage('team.twig', null);
+});
+
 // URL routing handlers are now installed; try to dispatch the request
 $klein->dispatch();
 
