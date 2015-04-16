@@ -57,7 +57,9 @@ public class TransferConfirmFragment extends Fragment {
         TextView toAccountName = (TextView) transferConfirmView.findViewById(R.id.toAccount);
         TextView toAccountNo = (TextView) transferConfirmView.findViewById(R.id.toAccNo);
         TextView toSortCode = (TextView) transferConfirmView.findViewById(R.id.toSortCode);
+        TextView reference = (TextView) transferConfirmView.findViewById(R.id.reference);
         TextView amount = (TextView) transferConfirmView.findViewById(R.id.amount);
+        TextView tag = (TextView) transferConfirmView.findViewById(R.id.tag);
 
         // Set values taken from bundle, i.e. what the user entered in the previous fragment.
         args = getArguments();
@@ -70,7 +72,9 @@ public class TransferConfirmFragment extends Fragment {
         toAccountName.setText(toAccount.toString());
         toAccountNo.setText(toAccount.getAccountNumber());
         toSortCode.setText(toAccount.getFormattedSortCode());
+        reference.setText(args.getString(Constants.BUNDLE_KEY_REF));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
+        tag.setText(args.getString(Constants.BUNDLE_KEY_TAG_STRING));
 
         // Get the fragment manager
         final FragmentManager fragmentManager = getFragmentManager();
@@ -91,7 +95,7 @@ public class TransferConfirmFragment extends Fragment {
                         toAccount.getAccountNumber(),
                         toAccount.getSortCode(),
                         args.getLong(Constants.BUNDLE_KEY_AMOUNT),
-                        null,
+                        args.getString(Constants.BUNDLE_KEY_REF),
                         (Transaction.Tag) args.getSerializable(Constants.BUNDLE_KEY_TAG),
                         new Callback<APIResponse>() {
                             @Override

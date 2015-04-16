@@ -49,25 +49,26 @@ public class PaymentConfirmFragment extends Fragment{
         super.onCreate(savedInstanceState);
         View paymentConfirmView = inflater.inflate(R.layout.payment_confirm, container, false);
 
-        TextView fromAccountName = (TextView) paymentConfirmView.findViewById(R.id.fromAccount);
-        TextView fromAccountNo = (TextView) paymentConfirmView.findViewById(R.id.fromAccNo);
+        TextView fromAccType = (TextView) paymentConfirmView.findViewById(R.id.fromAccType);
+        TextView fromAccNo = (TextView) paymentConfirmView.findViewById(R.id.fromAccNo);
         TextView fromSortCode = (TextView) paymentConfirmView.findViewById(R.id.fromSortCode);
-        TextView toReference = (TextView) paymentConfirmView.findViewById(R.id.toRef);
-        TextView toAccountNo = (TextView) paymentConfirmView.findViewById(R.id.toAccNo);
+        TextView toAccNo = (TextView) paymentConfirmView.findViewById(R.id.toAccNo);
         TextView toSortCode = (TextView) paymentConfirmView.findViewById(R.id.toSortCode);
+        TextView reference = (TextView) paymentConfirmView.findViewById(R.id.reference);
         TextView amount = (TextView) paymentConfirmView.findViewById(R.id.amount);
+        TextView tag = (TextView) paymentConfirmView.findViewById(R.id.tag);
 
         // Set the values from the bundle, i.e. what the user entered in the previous fragment.
         args = getArguments();
         fromAccount = (BankAccount) args.getSerializable(Constants.BUNDLE_KEY_FROM_ACC);
-        fromAccountName.setText(fromAccount.toString());
-        fromAccountNo.setText(fromAccount.getAccountNumber());
+        fromAccType.setText(fromAccount.getAccountTypeString(getActivity()));
+        fromAccNo.setText(fromAccount.getAccountNumber());
         fromSortCode.setText(fromAccount.getFormattedSortCode());
-
-        toReference.setText(args.getString(Constants.BUNDLE_KEY_REF));
-        toAccountNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
+        toAccNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
+        reference.setText(args.getString(Constants.BUNDLE_KEY_REF));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
+        tag.setText(args.getString(Constants.BUNDLE_KEY_TAG_STRING));
 
         // Get the fragment manager
         final FragmentManager fragmentManager = getFragmentManager();

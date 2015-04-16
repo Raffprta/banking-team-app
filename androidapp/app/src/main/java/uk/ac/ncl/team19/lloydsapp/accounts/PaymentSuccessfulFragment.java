@@ -40,10 +40,11 @@ public class PaymentSuccessfulFragment extends Fragment {
         TextView fromAccType = (TextView) paymentSuccessView.findViewById(R.id.fromAccType);
         TextView fromAccNo = (TextView) paymentSuccessView.findViewById(R.id.fromAccNo);
         TextView fromSortCode = (TextView) paymentSuccessView.findViewById(R.id.fromSortCode);
-        TextView toRef = (TextView) paymentSuccessView.findViewById(R.id.toRef);
         TextView toAccNo = (TextView) paymentSuccessView.findViewById(R.id.toAccNo);
         TextView toSortCode = (TextView) paymentSuccessView.findViewById(R.id.toSortCode);
+        TextView reference = (TextView) paymentSuccessView.findViewById(R.id.reference);
         TextView amount = (TextView) paymentSuccessView.findViewById(R.id.amount);
+        TextView tag = (TextView) paymentSuccessView.findViewById(R.id.tag);
 
         // Set the values from the bundle, i.e. what the user entered in the previous fragment.
         args = getArguments();
@@ -51,11 +52,12 @@ public class PaymentSuccessfulFragment extends Fragment {
         fromAccType.setText(fromAccount.getAccountTypeString(getActivity()));
         fromAccNo.setText(fromAccount.getAccountNumber());
         fromSortCode.setText(fromAccount.getFormattedSortCode());
-
-        toRef.setText(args.getString(Constants.BUNDLE_KEY_REF));
         toAccNo.setText(args.getString(Constants.BUNDLE_KEY_TO_ACC_NO));
         toSortCode.setText(args.getString(Constants.BUNDLE_KEY_TO_SORT_CODE));
+        reference.setText(args.getString(Constants.BUNDLE_KEY_REF));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
+        tag.setText(args.getString(Constants.BUNDLE_KEY_TAG_STRING));
+
         // Set the button to return back to the Accounts Dashboard when clicked.
         paymentSuccessView.findViewById(R.id.returnToAccount).setOnClickListener(new View.OnClickListener() {
             @Override

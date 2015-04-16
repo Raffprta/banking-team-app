@@ -32,7 +32,8 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp" >
+                android:padding="5dp"
+                android:stretchColumns="1">
 
                 <TableRow
                     android:layout_width="fill_parent"
@@ -131,6 +132,24 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/fromSortCode"
                         android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"
+                        android:layout_column="0"
+                        android:background="@color/lloyds_lightgreen"
+                        android:layout_marginBottom="5dp"></GridLayout>
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"
+                        android:layout_column="1"
+                        android:background="@color/lloyds_lightergreen_transparent"></GridLayout>
                 </TableRow>
 
                 <TableRow
@@ -234,6 +253,51 @@
                 <TableRow
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/reference"
+                        android:id="@+id/textView10"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/reference"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"
+                        android:layout_column="0"
+                        android:background="@color/lloyds_lightgreen"
+                        android:layout_marginBottom="5dp"></GridLayout>
+
+                    <GridLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="3dp"
+                        android:layout_column="1"
+                        android:background="@color/lloyds_lightergreen_transparent"></GridLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_marginTop="5dp">
 
                     <TextView
@@ -243,7 +307,8 @@
                         android:text="@string/amount"
                         android:id="@+id/textView57"
                         android:layout_column="0"
-                        android:textColor="@color/lloyds_darkgreen" />
+                        android:textColor="@color/lloyds_darkgreen"
+                        android:layout_marginRight="10dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -254,6 +319,28 @@
                         android:layout_column="1"
                         />
                 </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/tag"
+                        android:id="@+id/textView11"
+                        android:layout_column="0"
+                        android:textColor="@color/lloyds_darkgreen" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:id="@+id/tag"
+                        android:layout_column="1" />
+                </TableRow>
+
             </TableLayout>
         </view>
 
@@ -273,7 +360,8 @@
                 android:padding="10dp"
                 android:layout_gravity="top"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -79,6 +79,7 @@ public class Constants {
     public static final String BUNDLE_KEY_AMOUNT = "amount";
     public static final String BUNDLE_KEY_REF = "toRef";
     public static final String BUNDLE_KEY_TAG = "tag";
+    public static final String BUNDLE_KEY_TAG_STRING = "tagString";
 
     public static final String BUNDLE_KEY_GOALS_EXPIRY = "expiry";
 

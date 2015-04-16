@@ -47,6 +47,7 @@ public class TransferFundsFragment extends Fragment {
         final EditText amountToPay = (EditText) transferFundsView.findViewById(R.id.amountToTransfer);
         final Spinner fromAccount = (Spinner) transferFundsView.findViewById(R.id.accountTransferFrom);
         final Spinner toAccount = (Spinner) transferFundsView.findViewById(R.id.accountTransferTo);
+        final EditText transactionReference = (EditText) transferFundsView.findViewById(R.id.reference);
         final Spinner tags = (Spinner) transferFundsView.findViewById(R.id.tag);
 
         // Unbundle accounts
@@ -114,7 +115,9 @@ public class TransferFundsFragment extends Fragment {
                     args.putSerializable(Constants.BUNDLE_KEY_FROM_ACC, (BankAccount) fromAccount.getSelectedItem());
                     args.putSerializable(Constants.BUNDLE_KEY_TO_ACC, (BankAccount) toAccount.getSelectedItem());
                     args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
+                    args.putString(Constants.BUNDLE_KEY_REF, transactionReference.getText().toString());
                     args.putSerializable(Constants.BUNDLE_KEY_TAG, Transaction.Tag.getTag(tags.getSelectedItemId()));
+                    args.putSerializable(Constants.BUNDLE_KEY_TAG_STRING, (String) tags.getSelectedItem());
 
                     TransferConfirmFragment transferConfirmFragment = new TransferConfirmFragment();
                     transferConfirmFragment.setArguments(args);

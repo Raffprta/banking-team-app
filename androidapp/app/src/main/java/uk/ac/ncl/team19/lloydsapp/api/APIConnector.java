@@ -176,7 +176,7 @@ public class APIConnector {
     }
 
     public void transfer(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Transaction.Tag tag, Callback<APIResponse> callback) {
-        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference, tag);
+        TransferRequest transferMoneyRequest = new TransferRequest(fromAccId, toAccNo, toSortCode, amount, reference, tag.getId());
         service.transferMoney(deviceToken, transferMoneyRequest, callback);
     }
 

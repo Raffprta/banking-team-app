@@ -1,7 +1,5 @@
 package uk.ac.ncl.team19.lloydsapp.api.request;
 
-import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
-
 /**
  * @author Dale Whinham
  *
@@ -16,14 +14,14 @@ public class TransferRequest {
     private final String toSortCode;
     private final Long amount;
     private final String reference;
-    private final Transaction.Tag tag;
+    private final Long tag;
 
-    public TransferRequest(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, Transaction.Tag tag) {
+    public TransferRequest(long fromAccId, String toAccNo, String toSortCode, long amount, String reference, long tag) {
         this.fromAccId = fromAccId;
         this.toAccNo = toAccNo;
         this.toSortCode = toSortCode;
         this.amount = amount;
         this.reference = reference;
-        this.tag = tag == null ? Transaction.Tag.UNTAGGED : tag;
+        this.tag = tag;
     }
 }

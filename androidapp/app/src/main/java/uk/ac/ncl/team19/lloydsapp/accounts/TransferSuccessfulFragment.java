@@ -42,7 +42,10 @@ public class TransferSuccessfulFragment extends Fragment {
         TextView toAccountName = (TextView) transferSuccessView.findViewById(R.id.toAccount);
         TextView toAccountNo = (TextView) transferSuccessView.findViewById(R.id.toAccNo);
         TextView toSortCode = (TextView) transferSuccessView.findViewById(R.id.toSortCode);
+        TextView reference = (TextView) transferSuccessView.findViewById(R.id.reference);
         TextView amount = (TextView) transferSuccessView.findViewById(R.id.amount);
+        TextView tag = (TextView) transferSuccessView.findViewById(R.id.tag);
+
 
         // Set values taken from bundle, i.e. what the user entered in the previous fragment.
         args = getArguments();
@@ -55,7 +58,9 @@ public class TransferSuccessfulFragment extends Fragment {
         toAccountName.setText(toAccount.toString());
         toAccountNo.setText(toAccount.getAccountNumber());
         toSortCode.setText(toAccount.getFormattedSortCode());
+        reference.setText(args.getString(Constants.BUNDLE_KEY_REF));
         amount.setText(CurrencyMangler.integerToSterlingString(args.getLong(Constants.BUNDLE_KEY_AMOUNT)));
+        tag.setText(args.getString(Constants.BUNDLE_KEY_TAG_STRING));
 
         transferSuccessView.findViewById(R.id.backToAccount).setOnClickListener(new View.OnClickListener() {
             @Override

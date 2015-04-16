@@ -45,11 +45,11 @@ public class MakePaymentFragment extends Fragment {
         final View paymentView = inflater.inflate(R.layout.make_a_payment, container, false);
 
         // Get all views containing information.
-        final Spinner fromAccount = (Spinner) paymentView.findViewById(R.id.accountsSpinner);
+        final Spinner fromAccount = (Spinner) paymentView.findViewById(R.id.accounts);
+        final EditText toAccNo = (EditText) paymentView.findViewById(R.id.toAccNo);
+        final EditText toSortCode = (EditText) paymentView.findViewById(R.id.toSortCode);
         final EditText transactionReference = (EditText) paymentView.findViewById(R.id.reference);
-        final EditText accountNumber = (EditText) paymentView.findViewById(R.id.accountNumberPayment);
-        final EditText sortCode = (EditText) paymentView.findViewById(R.id.sortCodePayment);
-        final EditText amountToPay = (EditText) paymentView.findViewById(R.id.amountPayment);
+        final EditText amountToPay = (EditText) paymentView.findViewById(R.id.amount);
         final Spinner tags = (Spinner) paymentView.findViewById(R.id.tag);
 
         // Setup spinner
@@ -68,29 +68,29 @@ public class MakePaymentFragment extends Fragment {
                 GraphicsUtils.buttonClickEffectShow(v);
 
                 // Not a number entered as account number.
-                if(!accountNumber.getText().toString().matches("\\d+")){
-                    accountNumber.setError(getString(R.string.err_acc_not_no));
+                if(!toAccNo.getText().toString().matches("\\d+")){
+                    toAccNo.setError(getString(R.string.err_acc_not_no));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Account number not eight digits long.
-                if(accountNumber.getText().toString().length() != Constants.ACC_NO_SIZE){
-                    accountNumber.setError(getString(R.string.err_acc_len_not_eight));
+                if(toAccNo.getText().toString().length() != Constants.ACC_NO_SIZE){
+                    toAccNo.setError(getString(R.string.err_acc_len_not_eight));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Not a number or dash entered as sortcode number.
-                if(!sortCode.getText().toString().matches("^[\\d-]*$")){
-                    sortCode.setError(getString(R.string.err_sc_not_no));
+                if(!toSortCode.getText().toString().matches("^[\\d-]*$")){
+                    toSortCode.setError(getString(R.string.err_sc_not_no));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
 
                 // Sortcode number not six digits long.
-                if(sortCode.getText().toString().length() != Constants.SORT_CODE_NO_SIZE){
-                    sortCode.setError(getString(R.string.err_acc_not_six));
+                if(toSortCode.getText().toString().length() != Constants.SORT_CODE_NO_SIZE){
+                    toSortCode.setError(getString(R.string.err_acc_not_six));
                     GraphicsUtils.buttonClickEffectHide(v);
                     return;
                 }
@@ -111,11 +111,12 @@ public class MakePaymentFragment extends Fragment {
 
                 // If all validation conditions passed, then add information to bundle and pass to the next fragment
                 args.putSerializable(Constants.BUNDLE_KEY_FROM_ACC, (BankAccount) fromAccount.getSelectedItem());
-                args.putString(Constants.BUNDLE_KEY_TO_ACC_NO, accountNumber.getText().toString());
-                args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, sortCode.getText().toString());
+                args.putString(Constants.BUNDLE_KEY_TO_ACC_NO, toAccNo.getText().toString());
+                args.putString(Constants.BUNDLE_KEY_TO_SORT_CODE, toSortCode.getText().toString());
                 args.putLong(Constants.BUNDLE_KEY_AMOUNT, CurrencyMangler.sterlingStringToInteger(amountToPay.getText().toString()));
                 args.putString(Constants.BUNDLE_KEY_REF, transactionReference.getText().toString());
                 args.putSerializable(Constants.BUNDLE_KEY_TAG, Transaction.Tag.getTag(tags.getSelectedItemId()));
+                args.putString(Constants.BUNDLE_KEY_TAG_STRING, (String) tags.getSelectedItem());
 
                 PaymentConfirmFragment paymentConfirmation = new PaymentConfirmFragment();
                 paymentConfirmation.setArguments(args);
