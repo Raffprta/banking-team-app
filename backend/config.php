@@ -4,6 +4,9 @@
 //
 // CSC2022 Team Project - Team 19 - Lloyds App Backend
 //
+// Created by: Dale Whinham
+// Additional contributions from: Raffaello Perrotta
+//
 // config.php - configuration variables and constant definitions
 //
 //================================================================================
