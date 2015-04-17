@@ -519,14 +519,12 @@ function validateBankAccountData($formattedBankAccountData, $editMode)
     }
 
     // Validate account number
-    if (!is_numeric($formattedBankAccountData['accountNumber'])
-        || strlen($formattedBankAccountData['accountNumber']) !== 8
-    ) {
+    if (!isAnAccountNumber($formattedBankAccountData['accountNumber'])) {
         $errorMessages[] = 'Account number must be an 8-digit number.';
     }
 
     // Validate sort code
-    if (strlen($formattedBankAccountData['sortCode']) !== 6) {
+    if (!isASortCode($formattedBankAccountData['sortCode'])) {
         $errorMessages[] = 'Please enter 2-digit numbers in each of the sort code fields.';
     }
 
@@ -543,7 +541,7 @@ function validateBankAccountData($formattedBankAccountData, $editMode)
     }
 
     // Validate overdraft
-    if (!is_numeric($formattedBankAccountData['overdraft'])) {
+    if (!isACurrency($formattedBankAccountData['overdraft'])) {
         $errorMessages[] = 'Please enter a decimal number for the overdraft limit.';
     }
 
@@ -680,4 +678,19 @@ function uniqueRandomNumbersWithinRange($min, $max, $quantity) {
     $numbers = range($min, $max);
     shuffle($numbers);
     return array_slice($numbers, 0, $quantity);
+}
+
+function isAnAccountNumber($accountNumber) {
+    // Must be 8 digit number
+    return preg_match('/^[0-9]{8,8}$/', $accountNumber);
+}
+
+function isASortCode($sortCode) {
+    // Must be 6 digit number
+    return preg_match('/^[0-9]{6,6}$/', $sortCode);
+}
+
+function isACurrency($currency) {
+    // Must be a decimal with a max precision of 2
+    return preg_match('/^\d+(\.\d{1,2})?$/', $currency);
 }
