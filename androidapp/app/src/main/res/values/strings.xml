@@ -191,7 +191,7 @@
     <string name="man_feedback">Tap the stars to rate the app\n\nTap the grey area to write your comment\n\nTap Submit Feedback to submit your feedback anonymously.</string>
     <string name="man_map">Tap Find Branches to find nearby branches\n\nTap Find ATMs to find nearby ATMs\n\nTap and input postcode to find branches using postcode; hint: you may also type place names, i.e. York</string>
     <string name="man_noti">Swipe left or right to discard notifications. You can disable notifications at any time via the Settings page.</string>
-    <string name="man_set_goals">Press Set For to set Month/Week\n\nPress set goals to confirm settings\n\nPress reset to reset all inputs and set new goals for the next banking period.</string>
+    <string name="man_set_goals">Press Set For to set Month/Week\n\nPress Set Goals to confirm settings\n\nPress Reset to reset all inputs and set new goals for the next banking period.</string>
     <string name="man_health">Tap the Health Bar to view the Health percentage.\n\nTap Set Goals to set new goals.\n\n Tap Back To Profile to go back to your profile.</string>
     <string name="man_confirm">Tap Confirm to make the transfer.\n\nTap ancel to go back.</string>
 
