@@ -504,7 +504,7 @@ $this->respond('POST', '/editbankaccount/[i:accountId]', function ($request, $re
         try {
             $accountBean = R::findOne('account', 'id = ?', array($request->accountId));
             if (!is_null($accountBean)) {
-                $accountBean->accountType = $updatedBankAccountData['accountType'];
+                $accountBean->type = $updatedBankAccountData['type'];
                 $accountBean->nickname = $updatedBankAccountData['nickname'];
                 $accountBean->accountNumber = $updatedBankAccountData['accountNumber'];
                 $accountBean->sortCode = $updatedBankAccountData['sortCode'];
