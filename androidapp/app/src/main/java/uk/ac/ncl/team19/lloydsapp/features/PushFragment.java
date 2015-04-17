@@ -60,7 +60,6 @@ public class PushFragment extends Fragment {
 
     // RecyclerView stuff
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
     private LloydsNotificationAdapter mAdapter;
 
     private List<LloydsNotification> mListDataSet;
@@ -114,7 +113,8 @@ public class PushFragment extends Fragment {
             mRecyclerView.setHasFixedSize(true);
 
             // Use a linear layout manager
-            mLayoutManager = new LinearLayoutManager(getActivity());
+            final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // Refresh notifications

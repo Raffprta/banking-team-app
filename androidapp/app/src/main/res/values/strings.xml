@@ -40,6 +40,7 @@
     <string name="loc_now">Where you are searching from right now.</string>
     <string name="error_undetermined_loc">Error: Your location could not be determined.</string>
     <string name="error_loc_svc_disabled">Your location services are disabled; please re-enable them to use this feature.</string>
+    <string name="error_map_null">There was a problem rendering the Maps view. Please ensure your phone has the latest version of Google Play Services.</string>
     <string name="error_no_results">"No results found."</string>
     <string name="places_api_key">AIzaSyAnOqe2hy_znuRnk6pfijuHXOFBH_Z6r6M</string>
     <string name="places_base_url">https://maps.googleapis.com/maps/api/place</string>

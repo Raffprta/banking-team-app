@@ -120,6 +120,17 @@ public class MapsFragment extends SupportMapFragment {
                 = (SupportMapFragment)myFragmentManager.findFragmentById(R.id.googleMap);
         map = mySupportMapFragment.getMap();
 
+        // Bail out if map returned was null
+        if (map == null) {
+            Bundle b = new Bundle();
+            b.putString(Constants.BUNDLE_KEY_CUSTOM_DIALOG_MESSAGE, getString(R.string.error_map_null));
+            b.putBoolean(Constants.BUNDLE_KEY_CUSTOM_DIALOG_IS_ERROR, true);
+            CustomDialog custom = new CustomDialog();
+            custom.setArguments(b);
+            custom.show(getChildFragmentManager(), "Custom Dialog");
+            return;
+        }
+
         // Check to see if location services are on - if not, show an information message.
         if(!isLocationServicesOn(getActivity().getApplicationContext())){
             Bundle b = new Bundle();
