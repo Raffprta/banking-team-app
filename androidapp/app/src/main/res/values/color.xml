@@ -21,4 +21,15 @@
     <!-- Custom colours for goals -->
     <color name="lloyds_goals_orange">#ffffcb28</color>
     <color name="lloyds_goals_orange_transparent">#33ffcb28</color>
+
+    <!-- Tag/pie chart colours -->
+    <color name="tag_untagged">#ffffe5</color>
+    <color name="tag_food_drink">#ff2478ba</color>
+    <color name="tag_clothes">#ff45ca58</color>
+    <color name="tag_withdrawal">#fff4ba1d</color>
+    <color name="tag_entertainment">#fff37f17</color>
+    <color name="tag_other">#ff6faaf4</color>
+    <color name="tag_utility">#ff87ce97</color>
+    <color name="tag_transport">#fff12a24</color>
+    <color name="tag_donation">#ffc000db</color>
 </resources>

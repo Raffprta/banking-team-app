@@ -71,6 +71,7 @@ public class Constants {
 
     public static final String BUNDLE_KEY_CURRENT_ACCOUNT = "currentAccount";
     public static final String BUNDLE_KEY_ACCOUNT_LIST = "accountList";
+    public static final String BUNDLE_KEY_TRANSACTIONS_LIST = "transactionsList";
 
     public static final String BUNDLE_KEY_FROM_ACC = "fromAcc";
     public static final String BUNDLE_KEY_TO_ACC = "toAcc";
@@ -80,6 +81,8 @@ public class Constants {
     public static final String BUNDLE_KEY_REF = "toRef";
     public static final String BUNDLE_KEY_TAG = "tag";
     public static final String BUNDLE_KEY_TAG_STRING = "tagString";
+
+    public static final String BUNDLE_KEY_YEAR = "year";
 
     public static final String BUNDLE_KEY_GOALS_EXPIRY = "expiry";
 

@@ -1,41 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="55dip"
-    android:orientation="vertical" >
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:shrinkColumns="2"
+    android:stretchColumns="2">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/inOutIndicator"
-        android:focusableInTouchMode="false"
-        android:src="@drawable/in"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false" />
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <TextView
-        android:id="@+id/transactionInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:layout_toRightOf="@+id/inOutIndicator"
-        android:layout_centerVertical="true"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_toLeftOf="@+id/transactionAmount"
-        android:text="some infos"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"/>
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/inOutIndicator"
+            android:src="@drawable/in"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:scaleType="fitCenter"
+            android:layout_column="0"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp" />
 
-    <TextView
-        android:id="@+id/transactionAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="19sp"
-        android:layout_centerVertical="true"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_alignParentRight="true"
-        android:text="£2.00"
-        android:textStyle="bold|italic" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_toRightOf="@+id/inOutIndicator"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_toLeftOf="@+id/transactionAmount"
+            android:text="Jan 1, 18:00"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_column="1"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/reference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif-condensed"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_below="@+id/date"
+            android:layout_toRightOf="@+id/inOutIndicator"
+            android:layout_toEndOf="@+id/inOutIndicator"
+            android:layout_centerVertical="true"
+            android:layout_column="2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:text="Reference" />
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_alignParentRight="true"
+            android:text="£2.00"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center_vertical"
+            android:layout_column="3"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+
+    </TableRow>
+</TableLayout>

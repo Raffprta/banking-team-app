@@ -31,9 +31,7 @@ public class PaymentSuccessfulFragment extends Fragment {
     private BankAccount fromAccount;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View paymentSuccessView = inflater.inflate(R.layout.payment_success, container, false);
 

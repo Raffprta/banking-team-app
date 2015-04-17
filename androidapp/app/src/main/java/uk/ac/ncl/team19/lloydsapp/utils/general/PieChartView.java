@@ -32,8 +32,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-//import com.google.android.collect.Lists;
-
 import java.util.ArrayList;
 
 /**
@@ -172,7 +170,7 @@ public class PieChartView extends View {
 
         int startAngle = mOriginAngle;
         for (Slice slice : mSlices) {
-            final int sweepAngle = (int) (slice.value * 360 / total);
+            final int sweepAngle = (int) (Math.round(slice.value * 360.0 / total));
             final int endAngle = startAngle + sweepAngle;
 
             final float startAngleMod = startAngle % 360;

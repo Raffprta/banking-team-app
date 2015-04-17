@@ -1,6 +1,7 @@
 package uk.ac.ncl.team19.lloydsapp.accounts;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +29,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.ac.ncl.team19.lloydsapp.R;
+import uk.ac.ncl.team19.lloydsapp.adapters.TransactionYearSpinnerAdapter;
 import uk.ac.ncl.team19.lloydsapp.api.APIConnector;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.BankAccount;
 import uk.ac.ncl.team19.lloydsapp.api.datatypes.Transaction;
@@ -53,19 +55,23 @@ import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 public class TransactionsFragment extends Fragment {
 
     // The user's current account that they are viewing the history from.
-    BankAccount currentAccount;
+    private BankAccount currentAccount;
     // Where the transaction history is loaded into.
-    List<Transaction> transactions;
+    private List<Transaction> transactions;
 
     // Various views used by this class
-    Spinner yearSpinner;
-    ExpandableListView elv;
-    ProgressBar progressBar;
-    TextView noTransactions;
+    private Spinner yearSpinner;
+    private ExpandableListView elv;
+    private ProgressBar progressBar;
+    private TextView noTransactions;
 
-    // Adapters.
-    TransactionYearSpinnerAdapter spinnerAdapter;
-    TransactionListAdapter listAdapter;
+    // Adapters
+    private TransactionYearSpinnerAdapter spinnerAdapter;
+    private TransactionListAdapter listAdapter;
+
+    // Date formatters
+    private static final SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ROOT);
+    private static final SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM", Locale.ROOT);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +95,28 @@ public class TransactionsFragment extends Fragment {
         // Get the fragment manager
         final FragmentManager fragmentManager = getFragmentManager();
 
+        // Setup tags button
+        final Button tagsAnalysisButton = (Button) transactionsView.findViewById(R.id.tags);
+        tagsAnalysisButton.setEnabled(false);
+        tagsAnalysisButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+
+                // Pass withdrawals for the selected year to the tags analysis fragment
+                String year = (String) yearSpinner.getSelectedItem();
+                List<Transaction> transactionsForSelectedYear = getOutgoingTransactionsForYear(year);
+                b.putString(Constants.BUNDLE_KEY_YEAR, year);
+                b.putSerializable(Constants.BUNDLE_KEY_TRANSACTIONS_LIST, (Serializable) transactionsForSelectedYear);
+
+                // Pass arguments from this fragment to the next
+                TagsAnalysisFragment tagsAnalysisFragment = new TagsAnalysisFragment();
+                tagsAnalysisFragment.setArguments(b);
+
+                fragmentManager.beginTransaction().replace(R.id.container, tagsAnalysisFragment).addToBackStack(getString(R.string.accounts_dashboard_page)).commit();
+            }
+        });
+
         // Retrieve transactions
         APIConnector ac = new APIConnector(getActivity());
         ac.getTransactions(currentAccount.getId(), null, null, new Callback<TransactionsResponse>() {
@@ -102,6 +130,7 @@ public class TransactionsFragment extends Fragment {
                 // Hide progress
                 progressBar.setVisibility(View.GONE);
 
+
                 if (transactionsResponse.getStatus() == APIResponse.Status.SUCCESS) {
                     // Store transactions
                     transactions = transactionsResponse.getTransactions();
@@ -112,12 +141,15 @@ public class TransactionsFragment extends Fragment {
                         return;
                     }
 
+                    // Enable Tags button
+                    tagsAnalysisButton.setEnabled(true);
+
                     // Show spinner/elv, hide progress
                     yearSpinner.setVisibility(View.VISIBLE);
                     elv.setVisibility(View.VISIBLE);
 
                     // Setup adapters
-                    spinnerAdapter = new TransactionYearSpinnerAdapter(transactions);
+                    spinnerAdapter = new TransactionYearSpinnerAdapter(getActivity(), transactions);
                     listAdapter = new TransactionListAdapter(transactions, spinnerAdapter.getItem(0));
 
                     yearSpinner.setAdapter(spinnerAdapter);
@@ -128,6 +160,9 @@ public class TransactionsFragment extends Fragment {
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             listAdapter = new TransactionListAdapter(transactions, (String) yearSpinner.getSelectedItem());
                             elv.setAdapter(listAdapter);
+
+                            // Pop the first group open by default
+                            elv.expandGroup(0);
                         }
 
                         @Override
@@ -152,35 +187,11 @@ public class TransactionsFragment extends Fragment {
         return transactionsView;
     }
 
-    private class TransactionYearSpinnerAdapter extends ArrayAdapter<String> {
-        public TransactionYearSpinnerAdapter(List<Transaction> transactions) {
-            super(getActivity(), android.R.layout.simple_spinner_item);
-
-            SimpleDateFormat df = new SimpleDateFormat("yyyy", Locale.ROOT);
-
-            // Get all the unique years from the transactions
-            List<String> years = new ArrayList<>();
-            for (Transaction t: transactions) {
-                String yearString = df.format(t.getDate());
-                if (!years.contains(yearString)) {
-                    years.add(yearString);
-                }
-            }
-
-            // Add them to the adapter
-            Collections.sort(years);
-            addAll(years);
-        }
-    }
-
     private class TransactionListAdapter extends BaseExpandableListAdapter {
         // LinkedHashMap retains order
         private final LinkedHashMap<String, List<Transaction>> transactionMap = new LinkedHashMap<>();
 
         public TransactionListAdapter(List<Transaction> transactions, String forYear) {
-            SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy", Locale.ROOT);
-            SimpleDateFormat monthFormatter = new SimpleDateFormat("MMMM", Locale.ROOT);
-
             // Filter out transactions for this year
             for (Transaction t: transactions) {
                 String yearString = yearFormatter.format(t.getDate());
@@ -264,23 +275,34 @@ public class TransactionsFragment extends Fragment {
             }
 
             // References to subviews
-            TextView transactionInfo = (TextView) convertView.findViewById(R.id.transactionInfo);
-            TextView transactionAmount = (TextView) convertView.findViewById(R.id.transactionAmount);
-            ImageView inOutIndicator = (ImageView) convertView.findViewById(R.id.inOutIndicator);
+            TextView date = (TextView) convertView.findViewById(R.id.date);
+            TextView reference = (TextView) convertView.findViewById(R.id.reference);
+            TextView amount = (TextView) convertView.findViewById(R.id.amount);
+            ImageButton inOutIndicator = (ImageButton) convertView.findViewById(R.id.inOutIndicator);
 
             String dateString = new SimpleDateFormat("E d, kk:mm", Locale.ROOT).format(t.getDate());
-            String transactionInfoString = String.format("%s: %s", dateString, t.getReference());
             String transactionAmountString = (isWithdrawal ? "-" : "") + CurrencyMangler.integerToSterlingString(t.getAmount());
 
-            // Set the transaction string
-            transactionInfo.setText(transactionInfoString);
-            transactionAmount.setText(transactionAmountString);
-
-            // Withdrawals get the red outgoing arrow, deposits get the green
-            inOutIndicator.setImageDrawable(getResources().getDrawable(isWithdrawal ? R.drawable.out : R.drawable.in));
+            // Set the transaction strings
+            date.setText(dateString);
+            reference.setText(t.getReference());
+            amount.setText(transactionAmountString);
 
             // Must be selected in order for marquee to work
-            transactionInfo.setSelected(true);
+            reference.setSelected(true);
+
+            // Tagged withdrawals get a coloured icon
+            // Untagged withdrawals get the red outgoing arrow, deposits get the green incoming arrow
+            Transaction.Tag tag = t.getTag();
+            if (isWithdrawal && tag != null && tag != Transaction.Tag.UNTAGGED) {
+                int drawableId = Transaction.Tag.getDrawableIdForTag(t.getTag());
+                int colorId = Transaction.Tag.getColorIdForTag(t.getTag());
+                inOutIndicator.setImageDrawable(getResources().getDrawable(drawableId));
+                inOutIndicator.setBackgroundColor(getResources().getColor(colorId));
+            } else {
+                inOutIndicator.setImageDrawable(getResources().getDrawable(isWithdrawal ? R.drawable.out : R.drawable.in));
+                inOutIndicator.setBackgroundColor(Color.TRANSPARENT);
+            }
 
             return convertView;
         }
@@ -289,6 +311,20 @@ public class TransactionsFragment extends Fragment {
         public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
+    }
+
+    // Filters a list of transactions by a given year
+    private List<Transaction> getOutgoingTransactionsForYear(String year) {
+        List<Transaction> filteredTransactions = new ArrayList<>();
+        for (Transaction t: transactions) {
+            String transactionYear = yearFormatter.format(t.getDate());
+            boolean isWithdrawal = t.getFromAccountId() == currentAccount.getId();
+            if (transactionYear.equals(year) && isWithdrawal) {
+                filteredTransactions.add(t);
+            }
+        }
+
+        return filteredTransactions;
     }
 
     @Override

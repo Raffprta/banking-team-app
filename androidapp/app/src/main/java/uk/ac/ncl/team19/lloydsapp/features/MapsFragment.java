@@ -40,6 +40,7 @@ import uk.ac.ncl.team19.lloydsapp.api.utility.ErrorHandler;
 import uk.ac.ncl.team19.lloydsapp.dialogs.CustomDialog;
 import uk.ac.ncl.team19.lloydsapp.dialogs.ProgressDialog;
 import uk.ac.ncl.team19.lloydsapp.utils.general.Constants;
+import uk.ac.ncl.team19.lloydsapp.utils.general.FragmentChecker;
 import uk.ac.ncl.team19.lloydsapp.utils.general.GraphicsUtils;
 import uk.ac.ncl.team19.lloydsapp.utils.maps.Utility;
 
@@ -309,6 +310,10 @@ public class MapsFragment extends SupportMapFragment {
     private final Callback<GooglePlacesResponse> googlePlacesCallback = new Callback<GooglePlacesResponse>() {
         @Override
         public void success(GooglePlacesResponse googlePlacesResponse, Response response) {
+            // Fail silently if not on the same class.
+            if(!FragmentChecker.checkFragment(getFragmentManager(), MapsFragment.this))
+                return;
+
             // Loading has finished so remove the progress dialog fragment
             ProgressDialog.removeLoading(MapsFragment.this);
 
