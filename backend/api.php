@@ -4,6 +4,9 @@
 //
 // CSC2022 Team Project - Team 19 - Lloyds App Backend
 //
+// Created by: Dale Whinham
+// Additional contributions from: Raffaello Perrotta
+//
 // api.php - public API calls for mobile apps and other external clients
 //
 //================================================================================

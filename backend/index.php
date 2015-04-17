@@ -4,6 +4,9 @@
 //
 // CSC2022 Team Project - Team 19 - Lloyds App Backend
 //
+// Created by: Dale Whinham
+// Additional contributions from: Raffaello Perrotta
+//
 // index.php - main catch-all/routing class
 //
 //================================================================================
@@ -142,58 +145,6 @@ $klein->respond('POST', '/login', function ($request, $response, $service) {
 });
 
 //================================================================================
-// Public Action: Register account
-//================================================================================
-$klein->respond('POST', '/register', function ($request, $response, $service) use ($twig) {
-    initRedBean();
-
-    $registrationData = formatUserData($_POST);
-    $errorMessages = validateRegistrationData($registrationData, true, true);
-
-    // Check if user already exists
-    if (emailAddressExists($registrationData['email'])) {
-        $errorMessages[] = 'An account already exists for the email address \'' . $registrationData['email'] . '\'.';
-        logActivity('Account creation failed: account already exists for the email address \'' . $registrationData['email'] . '\'.');
-    }
-
-    // Display any form errors and re-populate registration form
-    if (count($errorMessages) > 0) {
-        displayPage('register.twig', array(
-                'errorMessages' => $errorMessages,
-
-                // Pass the bad data back to the form so the user can amend it
-                'registrationData' => array(
-                    'firstName' => $registrationData['firstName'],
-                    'surname' => $registrationData['surname'],
-                    'email' => $registrationData['email'],
-                    'password' => $registrationData['password'],
-                    'passwordVerify' => $registrationData['passwordVerify'],
-                )
-            )
-        );
-        logActivity('Account creation failed: validation errors.');
-    }
-
-    // We're good, present user with login form and success notice
-    else {
-        try {
-            // Create the user
-            createUser($registrationData, false);
-
-            // Pass success message to login form
-            $service->flash('Your account has been created. You may now log in.', FLASH_SUCCESS);
-            $response->header('Location', BASE_URL . 'login');
-            $response->send();
-
-            logActivity('Account creation succeeded (' . $registrationData['email'] . ').');
-        } catch (Exception $e) {
-            displayError($e->getMessage());
-            logActivity('Account creation failed because an exception was thrown: ' . $e->getMessage());
-        }
-    }
-});
-
-//================================================================================
 // Public: Login page
 //================================================================================
 $klein->respond('GET', '/login', function ($request, $response, $service) {
@@ -210,22 +161,6 @@ $klein->respond('GET', '/login', function ($request, $response, $service) {
                 'digitTwo' => $randomNumbers[1],
                 'digitThree' => $randomNumbers[2]
             ));
-    }
-});
-
-//================================================================================
-// Public: Registration page
-//================================================================================
-$klein->respond('GET', '/register', function () use ($twig) {
-    // From password-compat 'version-test.php'
-    $hash = '$2y$04$usesomesillystringfore7hnbRJHxXVLeakoG8K30oukPsA.ztMG';
-    $test = crypt("password", $hash);
-    $pass = $test == $hash;
-
-    if (!$pass) {
-        displayError('This version of PHP doesn\'t support password_hash() or the password-compat library. Please upgrade to PHP v5.3.7+.');
-    } else {
-        displayPage('register.twig', null);
     }
 });
 
