@@ -81,6 +81,7 @@ public class MainMenuActivity extends ActionBarActivity implements NavigationDra
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.putExtra(getString(R.string.bundle_autokick), true);
             startActivity(intent);
+            finish();
         }
     };
 
